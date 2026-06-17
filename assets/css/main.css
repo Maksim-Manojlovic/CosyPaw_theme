@@ -1,0 +1,530 @@
+/**
+ * CosyPaw global styles.
+ *
+ * Design system mapped from claude/design source (CosyPaw.dc.html).
+ * Brand: soft, playful, LIGHT pastel — cream/pink/rose/mint on warm ink text.
+ * (Not dark mode — the architecture boilerplate's dark placeholder was replaced
+ * with the real CosyPaw palette.)
+ *
+ * Fonts: "Baloo 2" (headings), "Nunito" (body) — enqueued via inc/Assets.php.
+ */
+
+:root {
+	/* --- Raw brand tokens (match the design source 1:1 for direct markup reuse). --- */
+	--cream: #fff7f2;
+	--cream2: #fdefe8;
+	--pink: #fbe3e9;
+	--pinkmid: #f6bacb;
+	--rose: #ec7e99;
+	--rosedk: #e06a88;
+	--mint: #bfe2d6;
+	--mintdk: #79c3af;
+	--ink: #4b3a38;
+	--muted: #9c857f;
+	--line: rgba(75, 58, 56, 0.1);
+
+	/* --- Semantic aliases (architecture naming → brand tokens). --- */
+	--color-surface: var(--cream);
+	--color-surface-elevated: #ffffff;
+	--color-surface-sunken: var(--cream2);
+	--color-text-primary: var(--ink);
+	--color-text-secondary: var(--muted);
+	--color-accent: var(--rose);
+	--color-accent-strong: var(--rosedk);
+	--color-accent-soft: var(--pink);
+	--color-success: var(--mintdk);
+	--color-border: var(--line);
+
+	/* Glass surfaces (light, used by sticky nav + floating hero pill). */
+	--glass-bg: rgba(255, 247, 242, 0.82);
+	--glass-bg-strong: rgba(255, 255, 255, 0.92);
+	--glass-border: var(--line);
+
+	/* Typography. */
+	--font-heading: "Baloo 2", system-ui, sans-serif;
+	--font-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+	/* Spacing scale — 4px base. */
+	--space-1: 0.25rem; /* 4px  */
+	--space-2: 0.5rem;  /* 8px  */
+	--space-3: 0.75rem; /* 12px */
+	--space-4: 1rem;    /* 16px */
+	--space-5: 1.5rem;  /* 24px */
+	--space-6: 2rem;    /* 32px */
+	--space-7: 3rem;    /* 48px */
+	--space-8: 4rem;    /* 64px */
+
+	/* Border radius (design uses soft, rounded shapes + pills). */
+	--radius-sm: 12px;
+	--radius-md: 18px;
+	--radius-lg: 24px;
+	--radius-xl: 28px;
+	--radius-pill: 999px;
+
+	/* Shadows (soft, warm). */
+	--shadow-sm: 0 14px 30px rgba(75, 58, 56, 0.06);
+	--shadow-md: 0 16px 36px rgba(75, 58, 56, 0.08);
+	--shadow-lg: 0 30px 60px rgba(75, 58, 56, 0.16);
+	--shadow-accent: 0 10px 24px rgba(236, 126, 153, 0.4);
+
+	--maxw-content: 1160px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	background-color: var(--color-surface);
+	color: var(--color-text-primary);
+	font-family: var(--font-body);
+	line-height: 1.5;
+	overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	letter-spacing: -0.3px;
+}
+
+::selection {
+	background: var(--pinkmid);
+	color: #fff;
+}
+
+/**
+ * Glassmorphism surface (light variant).
+ *
+ * NOTE: keep text on this surface at >= 4.5:1 contrast (WCAG 2.1 AA). Default
+ * ink (#4B3A38) on the cream glass meets AA. Re-check if --glass-bg is changed.
+ */
+.glass-card {
+	background: var(--glass-bg);
+	border: 1px solid var(--glass-border);
+	border-radius: var(--radius-lg);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+
+/* Fallback for browsers without backdrop-filter: solid surface, same contrast. */
+@supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+	.glass-card {
+		background: var(--color-surface);
+	}
+}
+
+/* --- Layout helpers — CSS Grid + modern Flexbox only. --- */
+.container {
+	max-width: var(--maxw-content);
+	margin-inline: auto;
+	padding-inline: var(--space-5);
+}
+
+.layout-grid {
+	display: grid;
+	gap: var(--space-5);
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.cluster {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	align-items: center;
+}
+
+/* --- Buttons / pills. --- */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border: none;
+	cursor: pointer;
+	border-radius: var(--radius-pill);
+	padding: 15px 28px;
+	text-decoration: none;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn--primary {
+	background: var(--color-accent);
+	color: #fff;
+	box-shadow: var(--shadow-accent);
+}
+
+.btn--primary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 14px 30px rgba(236, 126, 153, 0.5);
+}
+
+.btn--ghost {
+	background: #fff;
+	color: var(--color-text-primary);
+	box-shadow: inset 0 0 0 1.5px var(--color-border);
+}
+
+/* --- Vertical carousel (hero featured motifs). Transforms applied by JS. --- */
+.vertical-carousel {
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+}
+
+.vertical-carousel__track {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	will-change: transform;
+}
+
+/* Each slide fills the carousel; flex:0 0 100% needs the track to have a
+   definite height (above) or slides collapse to 0 and images don't show. */
+.vertical-carousel__slide {
+	flex: 0 0 100%;
+	height: 100%;
+	min-height: 0;
+}
+
+.vertical-carousel:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+/* Custom add-to-cart button class injected via woocommerce_loop_add_to_cart_args. */
+.cosypaw-add-to-cart {
+	border-radius: var(--radius-pill);
+}
+
+/* --- Brand animations (from design source). --- */
+@keyframes floaty {
+	0%, 100% { transform: translateY(0) rotate(-1deg); }
+	50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+
+@keyframes floaty2 {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(10px); }
+}
+
+@keyframes pop {
+	0% { transform: translateY(14px) scale(0.96); opacity: 0; }
+	100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes marquee {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vertical-carousel__track {
+		transition: none !important;
+	}
+	* {
+		animation-duration: 0.001s !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+/* ==========================================================================
+   GLOBAL CHROME — header, nav, cart button, language switcher, footer.
+   These render on every page, so they live in the global stylesheet (not
+   landing.css, which only loads on the front page).
+   ========================================================================== */
+
+/* ---------- Announcement marquee ---------- */
+.announce {
+	background: var(--rose);
+	color: #fff;
+	font-weight: 700;
+	font-size: 13.5px;
+	letter-spacing: 0.3px;
+	overflow: hidden;
+	white-space: nowrap;
+	padding: 8px 0;
+}
+
+.announce__track {
+	display: flex;
+	width: max-content;
+	animation: marquee 40s linear infinite;
+}
+
+.announce__group {
+	display: flex;
+	flex: 0 0 auto;
+}
+
+.announce__group span {
+	padding: 0 28px;
+}
+
+.announce__group .announce__dot {
+	padding: 0;
+	opacity: 0.6;
+}
+
+/* ---------- Header / nav ---------- */
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	background: var(--glass-bg);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-bottom: 1px solid var(--line);
+}
+
+@supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+	.site-header {
+		background: var(--cream);
+	}
+}
+
+/* Keep the sticky header below the WordPress admin bar when logged in. */
+.admin-bar .site-header {
+	top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+	.admin-bar .site-header {
+		top: 46px;
+	}
+}
+
+.nav {
+	max-width: var(--maxw-content);
+	margin: 0 auto;
+	padding: 14px 22px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.nav__brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	color: var(--ink);
+}
+
+.brand-mark {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	background: var(--rose);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 12px rgba(236, 126, 153, 0.35);
+	flex: none;
+}
+
+.brand-name {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 22px;
+	letter-spacing: 0.2px;
+}
+
+.nav__links {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+}
+
+.nav__link {
+	text-decoration: none;
+	color: var(--ink);
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.cart-btn {
+	position: relative;
+	border: none;
+	cursor: pointer;
+	background: var(--cream2);
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 0 0 0 1px var(--line);
+	color: var(--ink);
+}
+
+.cart-btn__badge {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 5px;
+	border-radius: 10px;
+	background: var(--rose);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 800;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 6px rgba(236, 126, 153, 0.5);
+}
+
+/* ---------- Language switcher ---------- */
+.lang-switch {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	background: var(--cream2);
+	border-radius: var(--radius-pill);
+	padding: 3px;
+	box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.lang-switch__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px;
+	border-radius: 7px;
+	line-height: 0;
+	text-decoration: none;
+	opacity: 0.5;
+	transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.lang-switch__btn:hover {
+	opacity: 1;
+	transform: translateY(-1px);
+}
+
+.lang-switch__btn.is-active {
+	opacity: 1;
+	box-shadow: 0 0 0 2px var(--rose);
+}
+
+.lang-flag {
+	display: block;
+	width: 24px;
+	height: 16px;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(75, 58, 56, 0.25);
+}
+
+/* Accessible hidden text. */
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	position: absolute !important;
+	word-wrap: normal !important;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+	background: var(--ink);
+	color: #fff;
+	padding: 56px 0 30px;
+}
+
+.footer-inner {
+	max-width: var(--maxw-content);
+	margin: 0 auto;
+	padding: 0 22px;
+}
+
+.footer-grid {
+	display: grid;
+	grid-template-columns: 1.4fr 1fr 1fr;
+	gap: 40px;
+	align-items: start;
+}
+
+.footer-brand__text {
+	color: rgba(255, 255, 255, 0.62);
+	font-size: 15px;
+	line-height: 1.6;
+	margin: 16px 0 0;
+	max-width: 320px;
+}
+
+.footer-col__title {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 17px;
+	margin-bottom: 14px;
+}
+
+.footer-links {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.footer-links a,
+.footer-col a.footer-ig {
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.footer-ig {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	color: #fff !important;
+	font-weight: 700 !important;
+	background: rgba(255, 255, 255, 0.1);
+	padding: 11px 16px;
+	border-radius: var(--radius-pill);
+}
+
+.footer-note {
+	color: rgba(255, 255, 255, 0.62);
+	font-size: 14px;
+	line-height: 1.6;
+	margin: 14px 0 0;
+}
+
+.footer-bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	margin-top: 36px;
+	padding-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px;
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 13.5px;
+	font-weight: 600;
+}
+
+/* ---------- Chrome responsive ---------- */
+@media (max-width: 880px) {
+	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
+}
+
+@media (max-width: 560px) {
+	.nav__links .nav__link { display: none; }
+}

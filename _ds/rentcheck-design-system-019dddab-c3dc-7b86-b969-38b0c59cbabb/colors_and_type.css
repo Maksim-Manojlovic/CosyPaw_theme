@@ -1,0 +1,307 @@
+/**
+ * RentCheck — Design Tokens
+ * CSS custom properties derived from src/design-system/tokens.ts + tailwind.config.ts
+ * Dark-first, trust-focused platform for the Serbian rental market.
+ *
+ * Usage: @import this file, then reference vars in HTML/JSX.
+ * Fonts: DM Sans (body/display), JetBrains Mono (mono/code)
+ *   → Google Fonts: https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ─── Surface / Background Layers ─────────────────────────────────────── */
+  --color-surface-base:     #0A1628; /* page background — deepest obsidian navy */
+  --color-surface-raised:   #111E33; /* card background */
+  --color-surface-elevated: #1A2D47; /* elevated panels, inputs */
+  --color-surface-overlay:  #243656; /* modals, tooltips, dropdowns */
+  --color-surface-border:   #2E4268; /* subtle dividers and outlines */
+
+  /* ─── Emerald — Primary Accent (Trust) ─────────────────────────────────── */
+  --color-emerald-50:  #E1F5EE;
+  --color-emerald-100: #9FE1CB; /* light tint, text on dark */
+  --color-emerald-200: #5DCAA5;
+  --color-emerald-400: #1D9E75; /* active states, rings, icons */
+  --color-emerald-600: #0F6E56; /* CTA button bg */
+  --color-emerald-800: #085041;
+  --color-emerald-900: #04342C;
+
+  /* ─── Trust Score Scale ─────────────────────────────────────────────────── */
+  --color-trust-low:     #E24B4A; /* 0–49  Pod proverom */
+  --color-trust-mid:     #EF9F27; /* 50–69 Neutralan */
+  --color-trust-good:    #639922; /* 70–89 Pouzdan */
+  --color-trust-premium: #1D9E75; /* 90–100 Elite Partner */
+
+  /* ─── Semantic Status Colors ────────────────────────────────────────────── */
+  --color-danger:  #E24B4A;
+  --color-warning: #EF9F27;
+  --color-success: #1D9E75;
+  --color-info:    #378ADD;
+
+  /* Amber (warning) */
+  --color-amber-50:  #FAEEDA;
+  --color-amber-100: #FAC775;
+  --color-amber-200: #EF9F27;
+  --color-amber-400: #BA7517;
+  --color-amber-600: #854F0B;
+  --color-amber-800: #633806;
+  --color-amber-900: #412402;
+
+  /* Red (danger) */
+  --color-red-50:  #FCEBEB;
+  --color-red-100: #F7C1C1;
+  --color-red-400: #E24B4A;
+  --color-red-600: #A32D2D;
+  --color-red-800: #791F1F;
+
+  /* Blue (info) */
+  --color-blue-50:  #E6F1FB;
+  --color-blue-100: #B5D4F4;
+  --color-blue-400: #378ADD;
+  --color-blue-600: #185FA5;
+  --color-blue-800: #0C447C;
+
+  /* Green */
+  --color-green-50:  #EAF3DE;
+  --color-green-100: #C0DD97;
+  --color-green-400: #639922;
+  --color-green-600: #3B6D11;
+
+  /* Gray (neutral) */
+  --color-gray-50:  #F1EFE8;
+  --color-gray-100: #D3D1C7;
+  --color-gray-200: #B4B2A9;
+  --color-gray-400: #888780;
+  --color-gray-600: #5F5E5A;
+  --color-gray-800: #444441;
+  --color-gray-900: #2C2C2A;
+
+  /* ─── Text / Ink ───────────────────────────────────────────────────────── */
+  --color-ink-primary:   #EDF2F7; /* headings, prominent labels */
+  --color-ink-secondary: #8DA4BE; /* body text, descriptions */
+  --color-ink-tertiary:  #4A6280; /* captions, placeholders, hints */
+  --color-ink-accent:    #9FE1CB; /* highlighted text, emerald shine */
+
+  /* ─── Borders ──────────────────────────────────────────────────────────── */
+  --color-border-default:  rgba(46, 66, 104, 0.8);
+  --color-border-subtle:   rgba(46, 66, 104, 0.4);
+  --color-border-emphasis: #1D9E75;
+
+  /* ─── Shadows ──────────────────────────────────────────────────────────── */
+  --shadow-card:  0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-modal: 0 4px 24px rgba(0, 0, 0, 0.6);
+  --shadow-focus: 0 0 0 3px rgba(29, 158, 117, 0.35);
+
+  /* ─── Typography ───────────────────────────────────────────────────────── */
+  --font-sans:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  --font-display: 'DM Sans', sans-serif;
+
+  /* Font sizes */
+  --text-2xs:  10px; /* line-height 1.4, tracking 0.04em */
+  --text-xs:   11px; /* line-height 1.5, tracking 0.03em */
+  --text-sm:   12px; /* line-height 1.5 */
+  --text-base: 14px; /* line-height 1.7 — body default */
+  --text-md:   15px; /* line-height 1.5 */
+  --text-lg:   18px; /* line-height 1.4, tracking -0.01em */
+  --text-xl:   24px; /* line-height 1.25, tracking -0.03em */
+  --text-2xl:  32px; /* line-height 1.1, tracking -0.04em */
+  --text-3xl:  36px; /* line-height 1.05, tracking -0.05em */
+
+  /* Font weights — only 400 and 500 used; 600/700 are deliberately avoided */
+  --font-normal: 400;
+  --font-medium: 500;
+
+  /* Letter spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight:   -0.03em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.04em;
+  --tracking-widest:   0.08em;
+
+  /* ─── Spacing (8px base grid) ──────────────────────────────────────────── */
+  --space-px:  1px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-7:   28px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-14:  56px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+
+  /* ─── Border Radius ────────────────────────────────────────────────────── */
+  --radius-sm:   4px;   /* tags, badges */
+  --radius-md:   8px;   /* buttons, inputs */
+  --radius-lg:   12px;  /* cards, panels */
+  --radius-xl:   16px;  /* modals, drawers */
+  --radius-2xl:  24px;  /* full-page elements */
+  --radius-full: 9999px; /* avatars, pills */
+
+  /* ─── Transitions ──────────────────────────────────────────────────────── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --transition-base: 200ms cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+
+  /* ─── Z-Index ───────────────────────────────────────────────────────────── */
+  --z-base:     0;  /* @kind other */
+  --z-raised:   10; /* @kind other */
+  --z-dropdown: 20; /* @kind other */
+  --z-sticky:   30; /* @kind other */
+  --z-overlay:  40; /* @kind other */
+  --z-modal:    50; /* @kind other */
+  --z-toast:    60; /* @kind other */
+
+  /* ─── Badge / Verification Levels ──────────────────────────────────────── */
+  --badge-id-verified-bg:   #0C447C;
+  --badge-id-verified-text: #B5D4F4;
+
+  --badge-gold-bg:   #0F6E56;
+  --badge-gold-text: #9FE1CB;
+
+  --badge-silver-bg:   #3d3d3a;
+  --badge-silver-text: #D3D1C7;
+
+  --badge-unverified-bg:   #1a1a18;
+  --badge-unverified-text: #888780;
+
+  /* ─── Review Status ─────────────────────────────────────────────────────── */
+  --status-published-bg:   #0F6E56;
+  --status-published-text: #9FE1CB;
+
+  --status-pending-bg:   #633806;
+  --status-pending-text: #FAC775;
+
+  --status-disputed-bg:   #A32D2D;
+  --status-disputed-text: #F7C1C1;
+}
+
+/* ─── Semantic Typography Classes ──────────────────────────────────────────── */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-tighter);
+  line-height: 1.05;
+  color: var(--color-ink-primary);
+}
+
+.t-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  color: var(--color-ink-primary);
+}
+
+.t-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--color-ink-primary);
+}
+
+.t-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--color-ink-primary);
+}
+
+.t-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  color: var(--color-ink-primary);
+}
+
+.t-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: 1.7;
+  color: var(--color-ink-secondary);
+}
+
+.t-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  line-height: 1.5;
+  color: var(--color-ink-secondary);
+}
+
+.t-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-tertiary);
+}
+
+.t-label-accent {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-emerald-400);
+}
+
+.t-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-normal);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-tertiary);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  color: var(--color-ink-secondary);
+}
+
+.t-code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--color-emerald-200);
+  background: var(--color-surface-elevated);
+  border: 0.5px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Utility Helpers ─────────────────────────────────────────────────────── */
+.surface-base     { background: var(--color-surface-base); }
+.surface-raised   { background: var(--color-surface-raised); }
+.surface-elevated { background: var(--color-surface-elevated); }
+.surface-overlay  { background: var(--color-surface-overlay); }
+
+.text-primary   { color: var(--color-ink-primary); }
+.text-secondary { color: var(--color-ink-secondary); }
+.text-tertiary  { color: var(--color-ink-tertiary); }
+.text-accent    { color: var(--color-ink-accent); }
+
+.border-default  { border: 0.5px solid var(--color-border-default); }
+.border-subtle   { border: 0.5px solid var(--color-border-subtle); }
+.border-emphasis { border: 1px solid var(--color-border-emphasis); }

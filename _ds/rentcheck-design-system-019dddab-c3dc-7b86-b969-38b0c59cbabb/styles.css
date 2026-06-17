@@ -1,0 +1,15 @@
+/**
+ * RentCheck Design System — global stylesheet entry point.
+ *
+ * This is the single file consumers should link. It re-exports the
+ * canonical design tokens + semantic type/utility classes.
+ *
+ * Token source: colors_and_type.css
+ *   - Surface/ink/emerald/trust/status colors, the full type scale,
+ *     spacing, radii, shadows, transitions, badge + review-status tokens.
+ *
+ * Page/feature stylesheets (add-property/styles.css, assets/*.css) build
+ * ON these tokens and are linked per-surface — they are not part of the
+ * global token closure.
+ */
+@import url('colors_and_type.css');

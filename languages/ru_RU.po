@@ -1,0 +1,517 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "CosyPaw žurnal"
+msgstr "Журнал CosyPaw"
+
+msgid "Prethodna"
+msgstr "Предыдущая"
+
+msgid "Sledeća"
+msgstr "Следующая"
+
+msgid "Ova stranica se sakrila"
+msgstr "Эта страница спряталась"
+
+msgid "Stranicu nismo našli — možda je premeštena. Probaj pretragu ili se vrati na početnu."
+msgstr "Мы не нашли страницу — возможно, она перемещена. Попробуйте поиск или вернитесь на главную."
+
+msgid "Nazad na početnu"
+msgstr "На главную"
+
+msgid "Pretraga"
+msgstr "Поиск"
+
+msgid "Pretraži…"
+msgstr "Поиск…"
+
+msgid "Traži"
+msgstr "Найти"
+
+msgid "Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim."
+msgstr "Сшитые вручную полотенца-зверушки, которые делают ванную мягкой, аккуратной и — очаровательной."
+
+msgid "Mekani svet peškiriča"
+msgstr "Мягкий мир полотенчиков"
+
+msgid "Slatki peškirići koji grle %s"
+msgstr "Милые полотенца, что обнимают %s"
+
+msgid "tvoje kupatilo"
+msgstr "твою ванную"
+
+msgid "Izaberi paket"
+msgstr "Выбери набор"
+
+msgid "Pogledaj motive"
+msgstr "Смотреть мотивы"
+
+msgid "Ručni rad"
+msgstr "Ручная работа"
+
+msgid "Mekano i upijajuće"
+msgstr "Мягко и впитывает"
+
+msgid "Besplatna dostava na 3"
+msgstr "Бесплатная доставка от 3"
+
+msgid "Izdvojeni motivi"
+msgstr "Избранные мотивы"
+
+msgid "od %s"
+msgstr "от %s"
+
+msgid "Zašto CosyPaw"
+msgstr "Почему CosyPaw"
+
+msgid "Mali zagrljaj pored sudopere"
+msgstr "Маленькое объятие у раковины"
+
+msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
+msgstr "Каждое полотенце мягкое, впитывающее и с петелькой — всегда под рукой, всегда милое."
+
+msgid "Mekano kao oblak"
+msgstr "Мягкое, как облако"
+
+msgid "Plišana mikrofibra prijatna i nežnoj dečjoj koži."
+msgstr "Плюшевая микрофибра, приятная даже нежной детской коже."
+
+msgid "Upija u trenu"
+msgstr "Впитывает мгновенно"
+
+msgid "Brzo suši ručice i ostaje suv i svež tokom dana."
+msgstr "Быстро сушит ручки и остаётся сухим и свежим весь день."
+
+msgid "Alka za kačenje"
+msgstr "Петелька для подвешивания"
+
+msgid "Okačiš ga na kuku ili ručku — uvek na svom mestu."
+msgstr "Повесь на крючок или ручку — всегда на своём месте."
+
+msgid "Savršen poklon"
+msgstr "Идеальный подарок"
+
+msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
+msgstr "Милая мелочь, что всегда вызывает улыбку и «ня»."
+
+msgid "Što više grlića, veća ušteda"
+msgstr "Чем больше обнимашек, тем больше выгода"
+
+msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
+msgstr "Сочетай мотивы как хочешь — цена за штуку падает с каждым следующим."
+
+msgid "kom"
+msgstr "шт"
+
+msgid "Besplatna dostava"
+msgstr "Бесплатная доставка"
+
+msgid "Dodaj u korpu"
+msgstr "В корзину"
+
+msgid "Plaćanje pouzećem • Dostava 2–4 radna dana"
+msgstr "Оплата при получении • Доставка 2–4 рабочих дня"
+
+msgid "Cela družina"
+msgstr "Вся компания"
+
+msgid "Upoznaj sve motive"
+msgstr "Познакомься со всеми мотивами"
+
+msgid "Svaki po %s pojedinačno — ili ih spoji u paket i uštedi."
+msgstr "Каждый по %s по отдельности — или собери в набор и сэкономь."
+
+msgid "%s • 1 kom"
+msgstr "%s • 1 шт"
+
+msgid "Korpa"
+msgstr "Корзина"
+
+msgid "Kupi"
+msgstr "Купить"
+
+msgid "Dodato u korpu"
+msgstr "Добавлено в корзину"
+
+msgid "Dodato"
+msgstr "Добавлено"
+
+msgid "Rezultati za „%s”"
+msgstr "Результаты по запросу «%s»"
+
+msgid "Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgstr "Мягкий мир полотенчиков. Сшитые вручную зверушки, что делают любую ванную теплее."
+
+msgid "Brzi linkovi"
+msgstr "Быстрые ссылки"
+
+msgid "Paketi"
+msgstr "Наборы"
+
+msgid "Svi motivi"
+msgstr "Все мотивы"
+
+msgid "Poručivanje"
+msgstr "Заказ"
+
+msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
+msgstr "Заказывай через DM или корзину.<br>Оплата при получении."
+
+msgid "© %d CosyPaw — Mekani svet peškiriča"
+msgstr "© %d CosyPaw — Мягкий мир полотенчиков"
+
+msgid "Ručni rad • Made with love"
+msgstr "Ручная работа • Сделано с любовью"
+
+msgid "Zatvori korpu"
+msgstr "Закрыть корзину"
+
+msgid "Tvoja korpa"
+msgstr "Твоя корзина"
+
+msgid "Zatvori"
+msgstr "Закрыть"
+
+msgid "Korpa je još prazna"
+msgstr "Корзина пока пуста"
+
+msgid "Izaberi paket ili omiljeni motiv."
+msgstr "Выбери набор или любимый мотив."
+
+msgid "Ukupno"
+msgstr "Итого"
+
+msgid "Nastavi ka plaćanju"
+msgstr "Перейти к оплате"
+
+msgid "Ručni rad sa puno ljubavi"
+msgstr "Ручная работа с большой любовью"
+
+msgid "Besplatna dostava na Trio paket"
+msgstr "Бесплатная доставка для набора Trio"
+
+msgid "Glavna navigacija"
+msgstr "Основная навигация"
+
+msgid "Motivi"
+msgstr "Мотивы"
+
+msgid "Pogledaj korpu"
+msgstr "Посмотреть корзину"
+
+msgid "Otvori korpu"
+msgstr "Открыть корзину"
+
+msgid "dodat u korpu"
+msgstr "добавлено в корзину"
+
+msgid "Demo prodavnice — porudžbina nije aktivna"
+msgstr "Демо-магазин — заказ недоступен"
+
+msgid "Ukloni"
+msgstr "Удалить"
+
+msgid "RSD"
+msgstr "RSD"
+
+msgid "Žirafa"
+msgstr "Жираф"
+
+msgid "Koala"
+msgstr "Коала"
+
+msgid "Pingvin"
+msgstr "Пингвин"
+
+msgid "Sova"
+msgstr "Сова"
+
+msgid "Avokado"
+msgstr "Авокадо"
+
+msgid "Ananas"
+msgstr "Ананас"
+
+msgid "Biskvit"
+msgstr "Бисквит"
+
+msgid "Čokoladni keks"
+msgstr "Шоколадное печенье"
+
+msgid "Tost"
+msgstr "Тост"
+
+msgid "Pojedinačno"
+msgstr "Поштучно"
+
+msgid "Jedan omiljeni motiv"
+msgstr "Один любимый мотив"
+
+msgid "Duo paket"
+msgstr "Набор Duo"
+
+msgid "Ušteda 380 RSD"
+msgstr "Экономия 380 RSD"
+
+msgid "Dva motiva po izboru"
+msgstr "Два мотива на выбор"
+
+msgid "Trio paket"
+msgstr "Набор Trio"
+
+msgid "Najpopularnije"
+msgstr "Самое популярное"
+
+msgid "Tri motiva po izboru"
+msgstr "Три мотива на выбор"
+
+msgid "Žurnal"
+msgstr "Журнал"
+
+msgid "Pročitaj više"
+msgstr "Читать далее"
+
+msgid "Strane:"
+msgstr "Страницы:"
+
+msgid "Ništa nije pronađeno"
+msgstr "Ничего не найдено"
+
+msgid "Nažalost, ništa ne odgovara pretrazi. Probaj druge ključne reči."
+msgstr "К сожалению, ничего не найдено. Попробуйте другие ключевые слова."
+
+msgid "Ovde još nema sadržaja."
+msgstr "Здесь пока нет содержимого."
+
+msgid "Napravi svoj paket"
+msgstr "Собери свой набор"
+
+msgid "Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim."
+msgstr "Выбери размер набора, затем добавь любимые мотивы. Цена за штуку падает с каждым следующим."
+
+msgid "Izaberi veličinu paketa"
+msgstr "Выбери размер набора"
+
+msgid "Ubaci svoje motive"
+msgstr "Добавь свои мотивы"
+
+msgid "Izabrano"
+msgstr "Выбрано"
+
+msgid "Iznenadi me"
+msgstr "Удиви меня"
+
+msgid "Očisti"
+msgstr "Очистить"
+
+msgid "Motiv %d"
+msgstr "Мотив %d"
+
+msgid "Dodaj u korpu • %s"
+msgstr "В корзину • %s"
+
+msgid "Izaberi još %d"
+msgstr "Выбери ещё %d"
+
+msgid "motiv"
+msgstr "мотив"
+
+msgid "motiva"
+msgstr "мотива"
+
+msgid "Paket je pun — ukloni motiv da dodaš drugi"
+msgstr "Набор заполнен — удали мотив, чтобы добавить другой"
+
+msgid "Izaberi još %d — paket nije popunjen"
+msgstr "Выбери ещё %d — набор не заполнен"
+
+msgid "Ukloni motiv"
+msgstr "Удалить мотив"
+
+msgid "U tvom domu"
+msgstr "У тебя дома"
+
+msgid "Tvoj kutak, malo mekši"
+msgstr "Твой уголок, чуть мягче"
+
+msgid "Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgstr "У раковины, на крючке или на полке — полотенца впишутся в любой дом и добавят капельку тепла."
+
+msgid "Spremni za jutarnju rutinu"
+msgstr "Готовы к утренним делам"
+
+msgid "Cela družina na okupu"
+msgstr "Вся компания в сборе"
+
+msgid "Stiže spremno za poklon"
+msgstr "Приходит готовым к подарку"
+
+msgid "Svaki paket je mali poklon"
+msgstr "Каждый набор — маленький подарок"
+
+msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande. Trio paket stiže uz <strong>besplatnu dostavu</strong> — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
+msgstr "Аккуратно упаковано в коробку CosyPaw, с приветственной открыткой и ароматом лаванды. Набор Trio приходит с <strong>бесплатной доставкой</strong> — идеально на день рождения, бэби-шауэр или просто чтобы кого-то побаловать."
+
+msgid "Jezik"
+msgstr "Язык"
+
+msgid "Komentari (%s)"
+msgstr "Комментарии (%s)"
+
+msgid "Prethodni"
+msgstr "Предыдущие"
+
+msgid "Sledeći"
+msgstr "Следующие"
+
+msgid "Komentari su zatvoreni."
+msgstr "Комментарии закрыты."
+
+msgid "Ostavi komentar"
+msgstr "Оставить комментарий"
+
+msgid "Pošalji"
+msgstr "Отправить"
+
+msgid "Zadovoljne mušterije"
+msgstr "Довольные покупатели"
+
+msgid "Mali peškirići, veliki osmesi"
+msgstr "Маленькие полотенца, большие улыбки"
+
+msgid "Hiljade ručica već se suše uz CosyPaw — evo šta kažu njihovi vlasnici."
+msgstr "Тысячи ручек уже сохнут с CosyPaw — вот что говорят их владельцы."
+
+msgid "Prosečna ocena"
+msgstr "Средняя оценка"
+
+msgid "Prodatih peškiriča"
+msgstr "Продано полотенец"
+
+msgid "Preporučuje prijateljima"
+msgstr "Рекомендуют друзьям"
+
+msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
+msgstr "Пришли быстрее, чем я ожидала, и мягче, чем на фото. Дочка сама выбирает, какое использовать каждый день."
+
+msgid "Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
+msgstr "Купила набор Trio в подарок — и это был настоящий хит. Упаковка очаровательна, ничего дополнительно заворачивать не нужно."
+
+msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
+msgstr "Петелька — мелочь, которая много значит: полотенце всегда на своём месте и не падает на пол."
+
+msgid "5 od 5 zvezdica"
+msgstr "5 из 5 звёзд"
+
+msgid "Jovana M."
+msgstr "Йована М."
+
+msgid "Milica P."
+msgstr "Милица П."
+
+msgid "Ana T."
+msgstr "Ана Т."
+
+msgid "Novi Sad"
+msgstr "Нови-Сад"
+
+msgid "Beograd"
+msgstr "Белград"
+
+msgid "Niš"
+msgstr "Ниш"
+
+msgid "Česta pitanja"
+msgstr "Частые вопросы"
+
+msgid "Sve što te zanima"
+msgstr "Всё, что вас интересует"
+
+msgid "Ako ne nađeš odgovor, piši nam — rado pomažemo."
+msgstr "Если не найдёте ответ — напишите нам, мы рады помочь."
+
+msgid "Od čega su peškirići napravljeni?"
+msgstr "Из чего сделаны полотенца?"
+
+msgid "Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži."
+msgstr "Из плюшевой микрофибры — мягкой, лёгкой и очень впитывающей. Приятна даже нежной детской коже."
+
+msgid "Kako se peru?"
+msgstr "Как их стирать?"
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik."
+msgstr "Машинная стирка при 40°C, без кондиционера, чтобы сохранить впитываемость. Быстро сохнут и держат форму."
+
+msgid "Koliko traje dostava?"
+msgstr "Сколько занимает доставка?"
+
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu."
+msgstr "Доставка 2–4 рабочих дня по всей Сербии. Набор Trio — с бесплатной доставкой."
+
+msgid "Kako mogu da platim?"
+msgstr "Как я могу оплатить?"
+
+msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
+msgstr "Оплата при получении — вы платите курьеру при получении посылки."
+
+msgid "Mogu li da vratim proizvod?"
+msgstr "Могу ли я вернуть товар?"
+
+msgid "Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca."
+msgstr "Конечно. У вас есть 14 дней, чтобы вернуть неиспользованное полотенце с возвратом денег."
+
+msgid "Nothing found."
+msgstr "Ничего не найдено."
+
+msgid "Primary Sidebar"
+msgstr "Основной сайдбар"
+
+msgid "Appears beside posts and archives."
+msgstr "Отображается рядом с записями и архивами."
+
+msgid "Primary Menu"
+msgstr "Основное меню"
+
+msgid "Footer Menu"
+msgstr "Меню в подвале"
+
+msgid "CosyPaw recommends the WooCommerce plugin. Shop features are disabled until it is installed and active."
+msgstr "CosyPaw рекомендует плагин WooCommerce. Функции магазина отключены, пока он не установлен и не активирован."
+
+msgid "CosyPaw Seeder"
+msgstr "CosyPaw Seeder"
+
+msgid "Done — %d new product(s) created."
+msgstr "Готово — создано %d новых товаров."
+
+msgid "Currently mapped: %1$d motif products, %2$d package products."
+msgstr "Сейчас сопоставлено: %1$d товаров-мотивов, %2$d товаров-наборов."
+
+msgid "Create / update CosyPaw products"
+msgstr "Создать / обновить товары CosyPaw"
+
+msgid "Safe to run repeatedly — existing products are skipped."
+msgstr "Можно запускать повторно — существующие товары пропускаются."
+
+msgid "You are not allowed to do this."
+msgstr "У вас нет прав для этого действия."
+
+msgid "WooCommerce is not active."
+msgstr "WooCommerce не активен."
+
+msgid "Cart"
+msgstr "Корзина"
+
+msgid "Checkout"
+msgstr "Оформление заказа"
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "My account"
+msgstr "Мой аккаунт"
+

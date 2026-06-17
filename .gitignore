@@ -1,0 +1,27 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Build output
+/dist
+/.vite
+
+# Packaged theme zip (tools/package-theme.ps1)
+/build
+
+# PHPUnit cache
+.phpunit.result.cache
+
+# Vite dev server marker (written by vite.config.js while `npm run dev` runs)
+/hot
+
+# Lock files for dev tooling (optional to commit; ignored here by default)
+composer.lock
+package-lock.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/

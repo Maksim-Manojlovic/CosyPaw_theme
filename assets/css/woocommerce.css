@@ -1,0 +1,467 @@
+/**
+ * CosyPaw WooCommerce styles.
+ *
+ * Brand-skins WooCommerce core templates (shop archive, single product, cart,
+ * checkout, account, notices) to the pastel design. Everything is scoped under
+ * WC's own classes (.woocommerce, ul.products, …) so the landing is untouched.
+ * Consumes tokens from main.css.
+ */
+
+/* Shop archive / single-product content wrapper (printed by Theme\WooCommerce).
+   NOTE: body carries the .woocommerce class on WC pages — never put layout/width
+   on `.woocommerce` itself or it constrains the whole body. Scope to .shop-main. */
+.shop-main {
+	max-width: var(--maxw-content);
+	margin-inline: auto;
+	padding: 40px 22px 64px;
+}
+
+/* ---------- Buttons ---------- */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce .added_to_cart {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	background: var(--rose);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border: none;
+	border-radius: var(--radius-pill);
+	padding: 12px 24px;
+	box-shadow: var(--shadow-accent);
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+	text-decoration: none;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce .added_to_cart:hover {
+	background: var(--rosedk);
+	color: #fff;
+	transform: translateY(-2px);
+	box-shadow: 0 14px 30px rgba(236, 126, 153, 0.5);
+}
+
+.woocommerce a.button.added::after {
+	content: none;
+}
+
+/* Secondary / ghost buttons (e.g. "Continue shopping"). */
+.woocommerce .button.wc-backward {
+	background: #fff;
+	color: var(--ink);
+	box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
+/* ---------- Notices ---------- */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error,
+.woocommerce-noreviews {
+	border-top: none;
+	border-radius: var(--radius-md);
+	background: #fff;
+	border: 1px solid var(--line);
+	box-shadow: var(--shadow-sm);
+	color: var(--ink);
+	padding: 16px 20px 16px 48px;
+}
+
+.woocommerce-message::before,
+.woocommerce-info::before,
+.woocommerce-error::before {
+	color: var(--rose);
+	left: 1.2em;
+}
+
+.woocommerce-message {
+	border-left: 4px solid var(--mintdk);
+}
+
+/* Links inside notices (e.g. the "Undo?" restore-item link). */
+.woocommerce-message a,
+.woocommerce-info a,
+.woocommerce-error a,
+.woocommerce a.restore-item {
+	color: var(--rosedk);
+	font-weight: 800;
+	text-decoration: none;
+}
+
+.woocommerce-message a:hover,
+.woocommerce-info a:hover,
+.woocommerce-error a:hover,
+.woocommerce a.restore-item:hover {
+	color: var(--rose);
+	text-decoration: underline;
+}
+
+.woocommerce-info {
+	border-left: 4px solid var(--pinkmid);
+}
+
+.woocommerce-error {
+	border-left: 4px solid var(--rosedk);
+}
+
+/* ---------- Shop / archive loop ---------- */
+.woocommerce .woocommerce-result-count,
+.woocommerce .woocommerce-ordering {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.woocommerce .woocommerce-ordering select {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-pill);
+	padding: 8px 16px;
+	background: #fff;
+	color: var(--ink);
+	font: inherit;
+}
+
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	padding: 14px 14px 20px;
+	text-align: center;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.woocommerce ul.products li.product:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--shadow-md);
+}
+
+.woocommerce ul.products li.product a img {
+	border-radius: var(--radius-md);
+	margin-bottom: 12px;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 18px;
+	color: var(--ink);
+	padding: 6px 0;
+}
+
+.woocommerce ul.products li.product .price {
+	color: var(--rose);
+	font-weight: 800;
+	font-size: 16px;
+}
+
+.woocommerce ul.products li.product .price del {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.woocommerce span.onsale {
+	background: var(--mint);
+	color: #3c6e60;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-radius: var(--radius-pill);
+	min-height: auto;
+	min-width: auto;
+	padding: 6px 14px;
+	line-height: 1;
+}
+
+/* ---------- Breadcrumb ---------- */
+.woocommerce .woocommerce-breadcrumb {
+	color: var(--muted);
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 22px;
+}
+
+.woocommerce .woocommerce-breadcrumb a {
+	color: var(--rose);
+	text-decoration: none;
+}
+
+.woocommerce .woocommerce-breadcrumb a:hover {
+	color: var(--rosedk);
+}
+
+/* ---------- Related / up-sell blocks ---------- */
+.woocommerce .related.products,
+.woocommerce .upsells.products {
+	margin-top: 56px;
+	border-top: 1px solid var(--line);
+	padding-top: 36px;
+}
+
+.woocommerce .related.products > h2,
+.woocommerce .upsells.products > h2 {
+	font-family: var(--font-heading);
+	font-size: 28px;
+	color: var(--ink);
+	margin-bottom: 24px;
+}
+
+/* ---------- Single product ---------- */
+.woocommerce div.product .product_title {
+	font-family: var(--font-heading);
+	font-size: 38px;
+	color: var(--ink);
+}
+
+.woocommerce div.product p.price,
+.woocommerce div.product span.price {
+	color: var(--rose);
+	font-weight: 800;
+	font-size: 26px;
+}
+
+.woocommerce div.product .woocommerce-product-gallery__image img {
+	border-radius: var(--radius-lg);
+}
+
+.woocommerce div.product form.cart .quantity .qty {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	padding: 10px;
+	background: #fff;
+	color: var(--ink);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+	padding: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+	background: var(--cream2);
+	border: 1px solid var(--line);
+	border-radius: var(--radius-pill);
+	margin-right: 8px;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+	background: var(--rose);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+	color: #fff;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs::before {
+	border-bottom-color: var(--line);
+}
+
+/* ---------- Cart ---------- */
+.woocommerce table.shop_table {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	background: #fff;
+}
+
+.woocommerce table.shop_table th {
+	font-family: var(--font-heading);
+	color: var(--ink);
+}
+
+/* Product name + the "Motivi: …" line. */
+.woocommerce table.cart .product-name a {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	color: var(--ink);
+	text-decoration: none;
+}
+
+.woocommerce table.cart .product-name a:hover {
+	color: var(--rose);
+}
+
+.woocommerce table.cart .product-name .variation,
+.woocommerce table.cart .product-name dl.variation {
+	margin: 6px 0 0;
+	font-size: 13px;
+	color: var(--muted);
+}
+
+.woocommerce table.cart .product-name dl.variation dt,
+.woocommerce table.cart .product-name dl.variation dd {
+	display: inline;
+	margin: 0;
+	font-weight: 600;
+}
+
+.woocommerce table.cart .product-name dl.variation dd p {
+	display: inline;
+	margin: 0;
+}
+
+/* Coupon row — branded pill input. */
+.woocommerce .cart .coupon .input-text {
+	min-width: 200px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-pill);
+	padding: 12px 18px;
+	background: #fff;
+	color: var(--ink);
+	font: inherit;
+}
+
+.woocommerce .cart .coupon .input-text:focus-visible {
+	outline: 2px solid var(--rose);
+	outline-offset: 1px;
+}
+
+/* No shipping/tax → Subtotal equals Total (both read "Укупно" in sr). Drop the
+   redundant subtotal row so only the Total shows. */
+.woocommerce .cart_totals .cart-subtotal {
+	display: none;
+}
+
+.woocommerce table.cart img {
+	border-radius: var(--radius-sm);
+}
+
+/* Quantity input (cart + single product). */
+.woocommerce .quantity .qty {
+	width: 72px;
+	height: 44px;
+	padding: 8px 10px;
+	text-align: center;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-pill);
+	background: #fff;
+	color: var(--ink);
+	font: inherit;
+	font-weight: 700;
+}
+
+.woocommerce .quantity .qty:focus-visible {
+	outline: 2px solid var(--rose);
+	outline-offset: 1px;
+}
+
+/* Bundle composite thumbnail (chosen motif photos, fanned). */
+.cosypaw-bundle-thumb {
+	display: inline-flex;
+	align-items: center;
+}
+
+.cosypaw-bundle-thumb__tile {
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	background-color: var(--cream2);
+	background-size: cover;
+	background-position: center;
+	box-shadow: 0 0 0 2px #fff;
+	flex: none;
+}
+
+.cosypaw-bundle-thumb__tile + .cosypaw-bundle-thumb__tile {
+	margin-left: -16px;
+}
+
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-cart .cart-collaterals .cart_totals {
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	padding: 8px 20px 20px;
+}
+
+.woocommerce .cart_totals h2 {
+	font-family: var(--font-heading);
+}
+
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce .select2-container .select2-selection {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	padding: 12px 14px;
+	background: #fff;
+	color: var(--ink);
+	font: inherit;
+}
+
+.woocommerce form .form-row input.input-text:focus-visible,
+.woocommerce form .form-row textarea:focus-visible {
+	outline: 2px solid var(--rose);
+	outline-offset: 1px;
+}
+
+/* ---------- Checkout ---------- */
+.woocommerce-checkout #payment {
+	background: var(--cream2);
+	border-radius: var(--radius-lg);
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+	border-bottom-color: var(--line);
+}
+
+.woocommerce-checkout #payment div.payment_box {
+	background: #fff;
+	color: var(--ink);
+}
+
+.woocommerce-checkout #payment div.payment_box::before {
+	border-bottom-color: #fff;
+}
+
+.woocommerce #order_review,
+.woocommerce-checkout #order_review {
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	padding: 8px 20px 16px;
+}
+
+#order_review_heading {
+	font-family: var(--font-heading);
+	color: var(--ink);
+}
+
+/* ---------- Account / forms ---------- */
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 8px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li {
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li.is-active {
+	background: var(--rose);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li.is-active a {
+	color: #fff;
+}
+
+/* Price suffix / small print. */
+.woocommerce .price ins {
+	text-decoration: none;
+}

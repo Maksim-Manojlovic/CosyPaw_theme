@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap&subset=latin-ext" rel="stylesheet">
+  <style>
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{ margin:0; }
+    :root{
+      --cream:#FFF7F2; --cream2:#FDEFE8; --pink:#FBE3E9; --pinkmid:#F6BACB;
+      --rose:#EC7E99; --rosedk:#E06A88; --mint:#BFE2D6; --mintdk:#79C3AF;
+      --ink:#4B3A38; --muted:#9C857F; --line:rgba(75,58,56,.10);
+    }
+    ::selection{ background:var(--pinkmid); color:#fff; }
+    @keyframes floaty{ 0%,100%{ transform:translateY(0) rotate(-1deg);} 50%{ transform:translateY(-14px) rotate(1.5deg);} }
+    @keyframes floaty2{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(10px);} }
+    @keyframes pop{ 0%{ transform:translateY(14px) scale(.96); opacity:0;} 100%{ transform:translateY(0) scale(1); opacity:1;} }
+    @keyframes marquee{ 0%{ transform:translateX(0);} 100%{ transform:translateX(-50%);} }
+    @media(max-width:880px){
+      .cp-hero{ grid-template-columns:1fr !important; text-align:center; }
+      .cp-hero .cp-heroart{ order:-1; min-height:440px !important; }
+      .cp-hero h1{ font-size:46px !important; }
+      .cp-hero .cp-herobtns, .cp-hero .cp-trust{ justify-content:center; }
+      .cp-hero p{ margin-left:auto !important; margin-right:auto !important; }
+      .cp-bene{ grid-template-columns:1fr 1fr !important; }
+      .cp-pkg{ grid-template-columns:1fr !important; max-width:420px; margin-left:auto; margin-right:auto; }
+      .cp-gal{ grid-template-columns:1fr 1fr !important; }
+      .cp-foot{ grid-template-columns:1fr !important; gap:30px !important; }
+    }
+    @media(max-width:560px){
+      .cp-nav-links a{ display:none !important; }
+      .cp-hero h1{ font-size:38px !important; }
+      .cp-bene, .cp-gal{ grid-template-columns:1fr !important; }
+      .cp-sec-h2{ font-size:30px !important; }
+    }
+  </style>
+</helmet>
+
+<div data-screen-label="CosyPaw Landing" style="--rose: {{ pink }}; --mint: {{ mint }}; font-family:'Nunito',system-ui,sans-serif; color:var(--ink); background:var(--cream); min-height:100%; overflow-x:hidden;">
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div style="background:var(--rose); color:#fff; font-weight:700; font-size:13.5px; letter-spacing:.3px; overflow:hidden; white-space:nowrap; padding:8px 0;">
+    <div style="display:inline-block; animation:marquee 26s linear infinite;">
+      <span style="padding:0 28px;">Ručni rad sa puno ljubavi</span><span style="opacity:.6;">•</span>
+      <span style="padding:0 28px;">Besplatna dostava na Trio paket</span><span style="opacity:.6;">•</span>
+      <span style="padding:0 28px;">Mekani svet peškiriča</span><span style="opacity:.6;">•</span>
+      <span style="padding:0 28px;">Ručni rad sa puno ljubavi</span><span style="opacity:.6;">•</span>
+      <span style="padding:0 28px;">Besplatna dostava na Trio paket</span><span style="opacity:.6;">•</span>
+      <span style="padding:0 28px;">Mekani svet peškiriča</span><span style="opacity:.6;">•</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:40; background:rgba(255,247,242,.82); backdrop-filter:blur(12px); border-bottom:1px solid var(--line);">
+    <nav style="max-width:1160px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#top" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);">
+        <span style="width:38px; height:38px; border-radius:50%; background:var(--rose); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(236,126,153,.35);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
+        </span>
+        <span style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:22px; letter-spacing:.2px;">CosyPaw</span>
+      </a>
+      <div class="cp-nav-links" style="display:flex; align-items:center; gap:28px;">
+        <a href="#paketi" style="text-decoration:none; color:var(--ink); font-weight:600; font-size:15px;">Paketi</a>
+        <a href="#zasto" style="text-decoration:none; color:var(--ink); font-weight:600; font-size:15px;">Zašto CosyPaw</a>
+        <a href="#galerija" style="text-decoration:none; color:var(--ink); font-weight:600; font-size:15px;">Motivi</a>
+        <button onClick="{{ toggleCart }}" style="position:relative; border:none; cursor:pointer; background:var(--cream2); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 0 1px var(--line);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>
+          <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}">
+            <span style="position:absolute; top:-4px; right:-4px; min-width:20px; height:20px; padding:0 5px; border-radius:10px; background:var(--rose); color:#fff; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(236,126,153,.5);">{{ cartCount }}</span>
+          </sc-if>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="cp-hero" style="position:relative; max-width:1160px; margin:0 auto; padding:54px 22px 30px; display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;">
+    <div>
+      <span style="display:inline-flex; align-items:center; gap:8px; background:var(--pink); color:var(--rosedk); font-weight:800; font-size:13px; padding:7px 14px; border-radius:999px; letter-spacing:.3px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.6-9.3-9C1.2 9 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.4 0 4.8 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
+        Mekani svet peškiriča
+      </span>
+      <h1 style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:50px; line-height:1.1; margin:18px 0 0; letter-spacing:-.5px; text-wrap:balance;">
+        Slatki peškirići koji grle <span style="color:var(--rose);">tvoje kupatilo</span>
+      </h1>
+      <p style="position:relative; font-size:18px; line-height:1.6; color:var(--muted); margin:22px 0 0; max-width:440px; text-wrap:pretty;">{{ tagline }}</p>
+      <div class="cp-herobtns" style="display:flex; gap:14px; flex-wrap:wrap; margin-top:28px;">
+        <a href="#paketi" style="text-decoration:none; background:var(--rose); color:#fff; font-weight:800; font-size:16px; padding:15px 28px; border-radius:999px; box-shadow:0 10px 24px rgba(236,126,153,.4); transition:transform .15s, box-shadow .15s;" style-hover="transform:translateY(-2px); box-shadow:0 14px 30px rgba(236,126,153,.5);">Izaberi paket</a>
+        <a href="#galerija" style="text-decoration:none; background:#fff; color:var(--ink); font-weight:800; font-size:16px; padding:15px 28px; border-radius:999px; box-shadow:inset 0 0 0 1.5px var(--line); transition:transform .15s;" style-hover="transform:translateY(-2px);">Pogledaj motive</a>
+      </div>
+      <div class="cp-trust" style="display:flex; gap:22px; flex-wrap:wrap; margin-top:30px;">
+        <div style="display:flex; align-items:center; gap:9px; font-weight:700; font-size:14px; color:var(--ink);">
+          <span style="width:30px; height:30px; border-radius:50%; background:var(--mint); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          Ručni rad
+        </div>
+        <div style="display:flex; align-items:center; gap:9px; font-weight:700; font-size:14px; color:var(--ink);">
+          <span style="width:30px; height:30px; border-radius:50%; background:var(--mint); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          Mekano i upijajuće
+        </div>
+        <div style="display:flex; align-items:center; gap:9px; font-weight:700; font-size:14px; color:var(--ink);">
+          <span style="width:30px; height:30px; border-radius:50%; background:var(--mint); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          Besplatna dostava na 3
+        </div>
+      </div>
+    </div>
+
+    <div class="cp-heroart" style="position:relative; display:flex; align-items:center; justify-content:center; min-height:520px;">
+      <div style="position:absolute; width:360px; height:360px; border-radius:46% 54% 60% 40% / 52% 44% 56% 48%; background:var(--pink); top:40px; right:20px; filter:blur(6px);"></div>
+      <div style="position:absolute; width:150px; height:150px; border-radius:50%; background:var(--mint); bottom:30px; left:0; opacity:.7; animation:floaty2 6s ease-in-out infinite;"></div>
+      <div style="position:relative; width:380px; height:480px; border-radius:34px; background:#fff; padding:16px; box-shadow:0 30px 60px rgba(75,58,56,.16); transform:rotate(-2deg); animation:floaty 7s ease-in-out infinite;">
+        <div style="position:relative; width:100%; height:100%; border-radius:22px; overflow:hidden; background:var(--cream2);">
+          <sc-for list="{{ featuredSlides }}" as="slide" hint-placeholder-count="1">
+            <div role="img" aria-label="CosyPaw peškirić" style="position:absolute; inset:0; background-size:cover; background-position:center; background-image: {{ slide.bg }}; opacity:{{ slide.op }}; z-index:{{ slide.z }}; transition:opacity 1s ease;"></div>
+          </sc-for>
+          <div style="position:absolute; left:14px; bottom:14px; z-index:5; background:rgba(255,255,255,.92); backdrop-filter:blur(4px); padding:8px 16px; border-radius:999px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; color:var(--ink); box-shadow:0 6px 16px rgba(75,58,56,.12);">{{ heroName }}</div>
+        </div>
+      </div>
+      <div style="position:absolute; top:18px; left:26px; z-index:6; background:var(--rose); color:#fff; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:15px; padding:10px 16px; border-radius:18px 18px 18px 4px; box-shadow:0 10px 22px rgba(236,126,153,.4); transform:rotate(-6deg);">od 790 RSD</div>
+    </div>
+  </section>
+
+  <!-- ZASTO -->
+  <section id="zasto" style="max-width:1160px; margin:0 auto; padding:50px 22px;">
+    <div style="text-align:center; max-width:600px; margin:0 auto 40px;">
+      <span style="font-weight:800; color:var(--rose); font-size:14px; letter-spacing:1.5px; text-transform:uppercase;">Zašto CosyPaw</span>
+      <h2 class="cp-sec-h2" style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:40px; margin:10px 0 0; letter-spacing:-.3px;">Mali zagrljaj pored sudopere</h2>
+      <p style="font-size:17px; color:var(--muted); margin:14px 0 0; line-height:1.6;">Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.</p>
+    </div>
+    <div class="cp-bene" style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <div style="background:#fff; border-radius:24px; padding:26px 22px; box-shadow:0 14px 30px rgba(75,58,56,.06); border:1px solid var(--line);">
+        <span style="width:52px; height:52px; border-radius:16px; background:var(--pink); display:flex; align-items:center; justify-content:center; color:var(--rosedk);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.6A4 4 0 0 1 17 18z"/></svg></span>
+        <h3 style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; margin:16px 0 6px;">Mekano kao oblak</h3>
+        <p style="font-size:15px; color:var(--muted); line-height:1.55; margin:0;">Plišana mikrofibra prijatna i nežnoj dečjoj koži.</p>
+      </div>
+      <div style="background:#fff; border-radius:24px; padding:26px 22px; box-shadow:0 14px 30px rgba(75,58,56,.06); border:1px solid var(--line);">
+        <span style="width:52px; height:52px; border-radius:16px; background:var(--mint); display:flex; align-items:center; justify-content:center; color:var(--mintdk);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z"/></svg></span>
+        <h3 style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; margin:16px 0 6px;">Upija u trenu</h3>
+        <p style="font-size:15px; color:var(--muted); line-height:1.55; margin:0;">Brzo suši ručice i ostaje suv i svež tokom dana.</p>
+      </div>
+      <div style="background:#fff; border-radius:24px; padding:26px 22px; box-shadow:0 14px 30px rgba(75,58,56,.06); border:1px solid var(--line);">
+        <span style="width:52px; height:52px; border-radius:16px; background:var(--pink); display:flex; align-items:center; justify-content:center; color:var(--rosedk);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v6"/><circle cx="12" cy="15" r="5"/></svg></span>
+        <h3 style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; margin:16px 0 6px;">Alka za kačenje</h3>
+        <p style="font-size:15px; color:var(--muted); line-height:1.55; margin:0;">Okačiš ga na kuku ili ručku — uvek na svom mestu.</p>
+      </div>
+      <div style="background:#fff; border-radius:24px; padding:26px 22px; box-shadow:0 14px 30px rgba(75,58,56,.06); border:1px solid var(--line);">
+        <span style="width:52px; height:52px; border-radius:16px; background:var(--mint); display:flex; align-items:center; justify-content:center; color:var(--mintdk);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5zM12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5z"/></svg></span>
+        <h3 style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; margin:16px 0 6px;">Savršen poklon</h3>
+        <p style="font-size:15px; color:var(--muted); line-height:1.55; margin:0;">Slatka sitnica koja uvek izmami osmeh i „awww”.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAKETI -->
+  <section id="paketi" style="background:linear-gradient(180deg,var(--cream2),var(--pink)); padding:64px 0;">
+    <div style="max-width:1160px; margin:0 auto; padding:0 22px;">
+      <div style="text-align:center; max-width:600px; margin:0 auto 40px;">
+        <span style="font-weight:800; color:var(--rose); font-size:14px; letter-spacing:1.5px; text-transform:uppercase;">Izaberi paket</span>
+        <h2 class="cp-sec-h2" style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:40px; margin:10px 0 0; letter-spacing:-.3px;">Što više grlića, veća ušteda</h2>
+        <p style="font-size:17px; color:var(--muted); margin:14px 0 0; line-height:1.6;">Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim.</p>
+      </div>
+
+      <div class="cp-pkg" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:stretch;">
+        <sc-for list="{{ packages }}" as="pkg" hint-placeholder-count="3">
+          <button onClick="{{ pkg.select }}" style="position:relative; text-align:left; cursor:pointer; font-family:inherit; color:var(--ink); background:#fff; border:none; border-radius:28px; padding:30px 26px 26px; box-shadow:0 16px 36px rgba(75,58,56,.08); display:flex; flex-direction:column; gap:6px; transition:transform .18s;" style-hover="transform:translateY(-4px);">
+            <!-- selection ring -->
+            <span style="position:absolute; inset:0; border-radius:28px; box-shadow:0 0 0 3px var(--rose); opacity:{{ pkg.sel }}; transition:opacity .18s; pointer-events:none;"></span>
+            <sc-if value="{{ pkg.badge }}" hint-placeholder-val="x">
+              <span style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); white-space:nowrap; background:var(--rose); color:#fff; font-weight:800; font-size:12.5px; padding:6px 14px; border-radius:999px; box-shadow:0 6px 14px rgba(236,126,153,.4);">{{ pkg.badge }}</span>
+            </sc-if>
+            <span style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px;">{{ pkg.name }}</span>
+            <span style="font-size:14px; color:var(--muted); font-weight:600;">{{ pkg.desc }}</span>
+            <div style="display:flex; align-items:baseline; gap:10px; margin-top:14px;">
+              <span style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:34px; color:var(--rose);">{{ pkg.priceFmt }}</span>
+              <sc-if value="{{ pkg.oldFmt }}" hint-placeholder-val="x">
+                <span style="font-size:16px; color:var(--muted); text-decoration:line-through; font-weight:600;">{{ pkg.oldFmt }}</span>
+              </sc-if>
+            </div>
+            <span style="font-size:13.5px; color:var(--muted); font-weight:700; margin-top:2px;">{{ pkg.perFmt }}</span>
+            <sc-if value="{{ pkg.freeShip }}" hint-placeholder-val="x">
+              <span style="display:inline-flex; align-items:center; gap:7px; margin-top:14px; background:var(--mint); color:#3c6e60; font-weight:800; font-size:13px; padding:7px 12px; border-radius:999px; align-self:flex-start;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+                Besplatna dostava
+              </span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:34px;">
+        <button onClick="{{ addSelected }}" style="cursor:pointer; border:none; font-family:'Baloo 2',sans-serif; background:var(--rose); color:#fff; font-weight:800; font-size:18px; padding:17px 40px; border-radius:999px; box-shadow:0 14px 30px rgba(236,126,153,.45); transition:transform .15s, box-shadow .15s;" style-hover="transform:translateY(-2px); box-shadow:0 18px 36px rgba(236,126,153,.55);">
+          Dodaj u korpu &nbsp;•&nbsp; {{ selPkgName }} — {{ selPriceFmt }}
+        </button>
+        <span style="font-size:13.5px; color:var(--muted); font-weight:600;">Plaćanje pouzećem • Dostava 2–4 radna dana</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIJA -->
+  <section id="galerija" style="max-width:1160px; margin:0 auto; padding:64px 22px;">
+    <div style="text-align:center; max-width:600px; margin:0 auto 40px;">
+      <span style="font-weight:800; color:var(--rose); font-size:14px; letter-spacing:1.5px; text-transform:uppercase;">Cela družina</span>
+      <h2 class="cp-sec-h2" style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:40px; margin:10px 0 0; letter-spacing:-.3px;">Upoznaj sve motive</h2>
+      <p style="font-size:17px; color:var(--muted); margin:14px 0 0; line-height:1.6;">Svaki po 790 RSD pojedinačno — ili ih spoji u paket i uštedi.</p>
+    </div>
+    <div class="cp-gal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px;">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="9">
+        <div style="background:#fff; border-radius:24px; padding:14px; box-shadow:0 14px 30px rgba(75,58,56,.07); border:1px solid var(--line);">
+          <div role="img" aria-label="{{ p.name }}" style="position:relative; border-radius:18px; aspect-ratio:1/1.18; background-color:var(--cream2); background-size:cover; background-position:center; background-image: {{ p.bg }};"></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 8px 6px; gap:10px;">
+            <div>
+              <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px;">{{ p.name }}</div>
+              <div style="font-size:14px; color:var(--rose); font-weight:800;">790 RSD</div>
+            </div>
+            <button onClick="{{ p.add }}" style="cursor:pointer; border:none; background:var(--pink); color:var(--rosedk); font-weight:800; font-size:14px; padding:10px 16px; border-radius:999px; display:flex; align-items:center; gap:6px; transition:background .15s;" style-hover="background:var(--rose); color:#fff;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Korpa
+            </button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--ink); color:#fff; padding:56px 0 30px;">
+    <div style="max-width:1160px; margin:0 auto; padding:0 22px;">
+      <div class="cp-foot" style="display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; align-items:start;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:38px; height:38px; border-radius:50%; background:var(--rose); display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
+            </span>
+            <span style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:24px;">CosyPaw</span>
+          </div>
+          <p style="color:rgba(255,255,255,.62); font-size:15px; line-height:1.6; margin:16px 0 0; max-width:320px;">Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.</p>
+        </div>
+        <div>
+          <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; margin-bottom:14px;">Brzi linkovi</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="#paketi" style="color:rgba(255,255,255,.7); text-decoration:none; font-size:15px; font-weight:600;">Paketi</a>
+            <a href="#zasto" style="color:rgba(255,255,255,.7); text-decoration:none; font-size:15px; font-weight:600;">Zašto CosyPaw</a>
+            <a href="#galerija" style="color:rgba(255,255,255,.7); text-decoration:none; font-size:15px; font-weight:600;">Svi motivi</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; margin-bottom:14px;">Poručivanje</div>
+          <a href="https://instagram.com" target="_blank" style="display:inline-flex; align-items:center; gap:9px; color:#fff; text-decoration:none; font-weight:700; font-size:15px; background:rgba(255,255,255,.1); padding:11px 16px; border-radius:999px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            @cosypaw
+          </a>
+          <p style="color:rgba(255,255,255,.62); font-size:14px; line-height:1.6; margin:14px 0 0;">Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem.</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.12); margin-top:36px; padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:rgba(255,255,255,.5); font-size:13.5px; font-weight:600;">
+        <span>© 2026 CosyPaw — Mekani svet peškiriča</span>
+        <span>Ručni rad • Made with love</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="">
+    <div style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%); z-index:80; background:var(--ink); color:#fff; font-weight:700; font-size:15px; padding:14px 22px; border-radius:999px; box-shadow:0 16px 40px rgba(75,58,56,.35); display:flex; align-items:center; gap:10px; animation:pop .25s ease;">
+      <span style="width:22px; height:22px; border-radius:50%; background:var(--mint); display:flex; align-items:center; justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3c6e60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      {{ toast }}
+    </div>
+  </sc-if>
+
+  <!-- CART DRAWER -->
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="">
+    <div onClick="{{ closeCart }}" style="position:fixed; inset:0; z-index:90; background:rgba(75,58,56,.4); backdrop-filter:blur(2px);"></div>
+    <aside style="position:fixed; top:0; right:0; z-index:91; width:380px; max-width:92vw; height:100%; background:var(--cream); box-shadow:-20px 0 50px rgba(75,58,56,.2); display:flex; flex-direction:column; animation:pop .25s ease;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:22px 24px; border-bottom:1px solid var(--line);">
+        <span style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:22px;">Tvoja korpa</span>
+        <button onClick="{{ closeCart }}" style="cursor:pointer; border:none; background:var(--cream2); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div style="flex:1; overflow-y:auto; padding:18px 24px;">
+        <sc-if value="{{ cartEmpty }}" hint-placeholder-val="">
+          <div style="text-align:center; padding:60px 10px; color:var(--muted);">
+            <div style="font-size:46px; margin-bottom:8px;">🧺</div>
+            <p style="font-weight:700; font-size:16px; margin:0;">Korpa je još prazna</p>
+            <p style="font-size:14px; margin:6px 0 0;">Izaberi paket ili omiljeni motiv.</p>
+          </div>
+        </sc-if>
+        <sc-for list="{{ cartItems }}" as="item" hint-placeholder-count="0">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:14px 16px; margin-bottom:12px;">
+            <div>
+              <div style="font-weight:800; font-size:15px; color:var(--ink);">{{ item.name }}</div>
+              <div style="font-size:13.5px; color:var(--rose); font-weight:800;">{{ item.priceFmt }}</div>
+            </div>
+            <button onClick="{{ item.remove }}" style="cursor:pointer; border:none; background:var(--cream2); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--muted);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ cartHasItems }}" hint-placeholder-val="">
+        <div style="padding:20px 24px; border-top:1px solid var(--line); background:#fff;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;">
+            <span style="font-weight:700; font-size:15px; color:var(--muted);">Ukupno</span>
+            <span style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:26px; color:var(--ink);">{{ cartTotalFmt }}</span>
+          </div>
+          <button onClick="{{ checkout }}" style="width:100%; cursor:pointer; border:none; font-family:'Baloo 2',sans-serif; background:var(--rose); color:#fff; font-weight:800; font-size:17px; padding:15px; border-radius:999px; box-shadow:0 12px 26px rgba(236,126,153,.4);">Nastavi ka plaćanju</button>
+        </div>
+      </sc-if>
+    </aside>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;brandPink&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#EC7E99&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;brandMint&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#BFE2D6&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;heroTagline&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim.&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  state = { heroIndex: 0, selectedPkg: 'trio', cart: [], toast: null, cartOpen: false };
+
+  componentDidMount() {
+    this._t = setInterval(() => {
+      this.setState(s => ({ heroIndex: (s.heroIndex + 1) % this._featured().length }));
+    }, 3200);
+  }
+  componentWillUnmount() {
+    clearInterval(this._t);
+    if (this._toastT) clearTimeout(this._toastT);
+  }
+
+  _products() {
+    return [
+      { id: 'zirafa', name: 'Žirafa', img: 'assets/zirafa.png' },
+      { id: 'koala', name: 'Koala', img: 'assets/koala.png' },
+      { id: 'pingvin', name: 'Pingvin', img: 'assets/pingvin.png' },
+      { id: 'sova', name: 'Sova', img: 'assets/sova.png' },
+      { id: 'avokado', name: 'Avokado', img: 'assets/avokado.png' },
+      { id: 'ananas', name: 'Ananas', img: 'assets/ananas.png' },
+      { id: 'biskvit', name: 'Biskvit', img: 'assets/biskvit.png' },
+      { id: 'keks', name: 'Čokoladni keks', img: 'assets/keks.png' },
+      { id: 'tost', name: 'Tost', img: 'assets/tost.png' },
+    ];
+  }
+  _featured() {
+    const ids = ['zirafa', 'koala', 'pingvin', 'ananas', 'tost'];
+    const all = this._products();
+    return ids.map(id => all.find(p => p.id === id));
+  }
+  _packages() {
+    return [
+      { id: 'solo', name: 'Pojedinačno', qty: 1, price: 790, old: null, per: 790, badge: null, best: false, freeShip: false, desc: 'Jedan omiljeni motiv' },
+      { id: 'duo', name: 'Duo paket', qty: 2, price: 1200, old: 1580, per: 600, badge: 'Ušteda 380 RSD', best: false, freeShip: false, desc: 'Dva motiva po izboru' },
+      { id: 'trio', name: 'Trio paket', qty: 3, price: 1600, old: 2370, per: 534, badge: 'Najpopularnije', best: true, freeShip: true, desc: 'Tri motiva po izboru' },
+    ];
+  }
+  fmt(n) { return n.toLocaleString('de-DE'); }
+
+  selectPkg(id) { this.setState({ selectedPkg: id }); }
+  showToast(msg) {
+    if (this._toastT) clearTimeout(this._toastT);
+    this.setState({ toast: msg });
+    this._toastT = setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+  addSelected() {
+    const p = this._packages().find(x => x.id === this.state.selectedPkg);
+    this.setState(s => ({ cart: [...s.cart, { name: p.name, price: p.price }] }));
+    this.showToast(p.name + ' dodat u korpu');
+  }
+  addSolo(prod) {
+    this.setState(s => ({ cart: [...s.cart, { name: prod.name + ' • 1 kom', price: 790 }] }));
+    this.showToast(prod.name + ' dodat u korpu');
+  }
+  removeItem(i) {
+    this.setState(s => ({ cart: s.cart.filter((_, idx) => idx !== i) }));
+  }
+  toggleCart() { this.setState(s => ({ cartOpen: !s.cartOpen })); }
+  checkout() {
+    this.setState({ cartOpen: false });
+    this.showToast('Demo prodavnice — porudžbina nije aktivna');
+  }
+
+  renderVals() {
+    const hi = this.state.heroIndex;
+    const featured = this._featured();
+    const featuredSlides = featured.map((p, i) => ({ bg: 'url("' + p.img + '")', op: i === hi ? 1 : 0, z: i === hi ? 2 : 1 }));
+    const heroName = featured[hi].name;
+
+    const packages = this._packages().map(p => ({
+      id: p.id, name: p.name, qty: p.qty, desc: p.desc, badge: p.badge, best: p.best, freeShip: p.freeShip,
+      priceFmt: this.fmt(p.price) + ' RSD',
+      oldFmt: p.old ? this.fmt(p.old) + ' RSD' : null,
+      perFmt: this.fmt(p.per) + ' RSD / kom',
+      sel: this.state.selectedPkg === p.id ? 1 : 0,
+      select: () => this.selectPkg(p.id),
+    }));
+    const sel = this._packages().find(p => p.id === this.state.selectedPkg);
+
+    const products = this._products().map(p => ({ ...p, bg: 'url("' + p.img + '")', add: () => this.addSolo(p) }));
+
+    const cart = this.state.cart;
+    const total = cart.reduce((a, c) => a + c.price, 0);
+    const cartItems = cart.map((c, i) => ({ name: c.name, priceFmt: this.fmt(c.price) + ' RSD', remove: () => this.removeItem(i) }));
+
+    return {
+      featuredSlides, heroName,
+      packages,
+      selPkgName: sel.name,
+      selPriceFmt: this.fmt(sel.price) + ' RSD',
+      addSelected: () => this.addSelected(),
+      products,
+      cart, cartCount: cart.length, cartHasItems: cart.length > 0, cartEmpty: cart.length === 0,
+      cartItems, cartTotalFmt: this.fmt(total) + ' RSD',
+      toggleCart: () => this.toggleCart(),
+      cartOpen: this.state.cartOpen,
+      closeCart: () => this.setState({ cartOpen: false }),
+      checkout: () => this.checkout(),
+      toast: this.state.toast, hasToast: !!this.state.toast,
+      pink: this.props.brandPink ?? '#EC7E99',
+      mint: this.props.brandMint ?? '#BFE2D6',
+      tagline: this.props.heroTagline ?? 'Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim.',
+    };
+  }
+}
+</script>
+</body>
+</html>

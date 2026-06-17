@@ -1,0 +1,466 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "CosyPaw žurnal"
+msgstr "CosyPaw journal"
+
+msgid "Prethodna"
+msgstr "Previous"
+
+msgid "Sledeća"
+msgstr "Next"
+
+msgid "Ova stranica se sakrila"
+msgstr "This page is hiding"
+
+msgid "Stranicu nismo našli — možda je premeštena. Probaj pretragu ili se vrati na početnu."
+msgstr "We couldn't find the page — it may have moved. Try a search or head back home."
+
+msgid "Nazad na početnu"
+msgstr "Back to home"
+
+msgid "Pretraga"
+msgstr "Search"
+
+msgid "Pretraži…"
+msgstr "Search…"
+
+msgid "Traži"
+msgstr "Search"
+
+msgid "Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim."
+msgstr "Hand-sewn towel pets that make your bathroom soft, tidy and — adorable."
+
+msgid "Mekani svet peškiriča"
+msgstr "A soft world of little towels"
+
+msgid "Slatki peškirići koji grle %s"
+msgstr "Cute towels that hug %s"
+
+msgid "tvoje kupatilo"
+msgstr "your bathroom"
+
+msgid "Izaberi paket"
+msgstr "Choose a package"
+
+msgid "Pogledaj motive"
+msgstr "See the designs"
+
+msgid "Ručni rad"
+msgstr "Handmade"
+
+msgid "Mekano i upijajuće"
+msgstr "Soft & absorbent"
+
+msgid "Besplatna dostava na 3"
+msgstr "Free shipping on 3"
+
+msgid "Izdvojeni motivi"
+msgstr "Featured designs"
+
+msgid "od %s"
+msgstr "from %s"
+
+msgid "Zašto CosyPaw"
+msgstr "Why CosyPaw"
+
+msgid "Mali zagrljaj pored sudopere"
+msgstr "A little hug by the sink"
+
+msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
+msgstr "Every towel is soft, absorbent and has a hanging loop — always at hand, always cute."
+
+msgid "Mekano kao oblak"
+msgstr "Soft as a cloud"
+
+msgid "Plišana mikrofibra prijatna i nežnoj dečjoj koži."
+msgstr "Plush microfiber, gentle even on a child's skin."
+
+msgid "Upija u trenu"
+msgstr "Absorbs instantly"
+
+msgid "Brzo suši ručice i ostaje suv i svež tokom dana."
+msgstr "Dries little hands fast and stays dry and fresh all day."
+
+msgid "Alka za kačenje"
+msgstr "Hanging loop"
+
+msgid "Okačiš ga na kuku ili ručku — uvek na svom mestu."
+msgstr "Hang it on a hook or handle — always in its place."
+
+msgid "Savršen poklon"
+msgstr "Perfect gift"
+
+msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
+msgstr "A sweet little thing that always brings a smile and an “awww”."
+
+msgid "Što više grlića, veća ušteda"
+msgstr "The more cuties, the bigger the saving"
+
+msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
+msgstr "Mix the designs however you like — the price per piece drops with each one."
+
+msgid "kom"
+msgstr "pc"
+
+msgid "Besplatna dostava"
+msgstr "Free shipping"
+
+msgid "Dodaj u korpu"
+msgstr "Add to cart"
+
+msgid "Plaćanje pouzećem • Dostava 2–4 radna dana"
+msgstr "Cash on delivery • Delivery in 2–4 business days"
+
+msgid "Cela družina"
+msgstr "The whole crew"
+
+msgid "Upoznaj sve motive"
+msgstr "Meet all the designs"
+
+msgid "Svaki po %s pojedinačno — ili ih spoji u paket i uštedi."
+msgstr "Each one %s individually — or bundle them and save."
+
+msgid "%s • 1 kom"
+msgstr "%s • 1 pc"
+
+msgid "Korpa"
+msgstr "Cart"
+
+msgid "Kupi"
+msgstr "Buy"
+
+msgid "Dodato u korpu"
+msgstr "Added to cart"
+
+msgid "Dodato"
+msgstr "Added"
+
+msgid "Rezultati za „%s”"
+msgstr "Results for “%s”"
+
+msgid "Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgstr "A soft world of little towels. Hand-sewn pets that make every bathroom warmer."
+
+msgid "Brzi linkovi"
+msgstr "Quick links"
+
+msgid "Paketi"
+msgstr "Packages"
+
+msgid "Svi motivi"
+msgstr "All designs"
+
+msgid "Poručivanje"
+msgstr "Ordering"
+
+msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
+msgstr "Order via DM or the cart.<br>Cash on delivery."
+
+msgid "© %d CosyPaw — Mekani svet peškiriča"
+msgstr "© %d CosyPaw — A soft world of little towels"
+
+msgid "Ručni rad • Made with love"
+msgstr "Handmade • Made with love"
+
+msgid "Zatvori korpu"
+msgstr "Close cart"
+
+msgid "Tvoja korpa"
+msgstr "Your cart"
+
+msgid "Zatvori"
+msgstr "Close"
+
+msgid "Korpa je još prazna"
+msgstr "Your cart is still empty"
+
+msgid "Izaberi paket ili omiljeni motiv."
+msgstr "Pick a package or a favorite design."
+
+msgid "Ukupno"
+msgstr "Total"
+
+msgid "Nastavi ka plaćanju"
+msgstr "Proceed to checkout"
+
+msgid "Ručni rad sa puno ljubavi"
+msgstr "Handmade with lots of love"
+
+msgid "Besplatna dostava na Trio paket"
+msgstr "Free shipping on the Trio package"
+
+msgid "Glavna navigacija"
+msgstr "Main navigation"
+
+msgid "Motivi"
+msgstr "Designs"
+
+msgid "Pogledaj korpu"
+msgstr "View cart"
+
+msgid "Otvori korpu"
+msgstr "Open cart"
+
+msgid "dodat u korpu"
+msgstr "added to cart"
+
+msgid "Demo prodavnice — porudžbina nije aktivna"
+msgstr "Demo shop — ordering is not active"
+
+msgid "Ukloni"
+msgstr "Remove"
+
+msgid "RSD"
+msgstr "RSD"
+
+msgid "Žirafa"
+msgstr "Giraffe"
+
+msgid "Koala"
+msgstr "Koala"
+
+msgid "Pingvin"
+msgstr "Penguin"
+
+msgid "Sova"
+msgstr "Owl"
+
+msgid "Avokado"
+msgstr "Avocado"
+
+msgid "Ananas"
+msgstr "Pineapple"
+
+msgid "Biskvit"
+msgstr "Biscuit"
+
+msgid "Čokoladni keks"
+msgstr "Chocolate cookie"
+
+msgid "Tost"
+msgstr "Toast"
+
+msgid "Pojedinačno"
+msgstr "Single"
+
+msgid "Jedan omiljeni motiv"
+msgstr "One favorite design"
+
+msgid "Duo paket"
+msgstr "Duo package"
+
+msgid "Ušteda 380 RSD"
+msgstr "Save 380 RSD"
+
+msgid "Dva motiva po izboru"
+msgstr "Two designs of your choice"
+
+msgid "Trio paket"
+msgstr "Trio package"
+
+msgid "Najpopularnije"
+msgstr "Most popular"
+
+msgid "Tri motiva po izboru"
+msgstr "Three designs of your choice"
+
+msgid "Žurnal"
+msgstr "Journal"
+
+msgid "Pročitaj više"
+msgstr "Read more"
+
+msgid "Strane:"
+msgstr "Pages:"
+
+msgid "Ništa nije pronađeno"
+msgstr "Nothing found"
+
+msgid "Nažalost, ništa ne odgovara pretrazi. Probaj druge ključne reči."
+msgstr "Sorry, nothing matches your search. Try other keywords."
+
+msgid "Ovde još nema sadržaja."
+msgstr "There's no content here yet."
+
+msgid "Napravi svoj paket"
+msgstr "Build your package"
+
+msgid "Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim."
+msgstr "Pick a package size, then drop in your favorite designs. The price per piece drops with each one."
+
+msgid "Izaberi veličinu paketa"
+msgstr "Choose a package size"
+
+msgid "Ubaci svoje motive"
+msgstr "Add your designs"
+
+msgid "Izabrano"
+msgstr "Selected"
+
+msgid "Iznenadi me"
+msgstr "Surprise me"
+
+msgid "Očisti"
+msgstr "Clear"
+
+msgid "Motiv %d"
+msgstr "Design %d"
+
+msgid "Dodaj u korpu • %s"
+msgstr "Add to cart • %s"
+
+msgid "Izaberi još %d"
+msgstr "Choose %d more"
+
+msgid "motiv"
+msgstr "design"
+
+msgid "motiva"
+msgstr "designs"
+
+msgid "Paket je pun — ukloni motiv da dodaš drugi"
+msgstr "The package is full — remove a design to add another"
+
+msgid "Izaberi još %d — paket nije popunjen"
+msgstr "Choose %d more — the package isn't full"
+
+msgid "Ukloni motiv"
+msgstr "Remove design"
+
+msgid "U tvom domu"
+msgstr "In your home"
+
+msgid "Tvoj kutak, malo mekši"
+msgstr "Your corner, a little softer"
+
+msgid "Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgstr "By the sink, on a hook or a shelf — the towels fit into any home and add a touch of warmth."
+
+msgid "Spremni za jutarnju rutinu"
+msgstr "Ready for the morning routine"
+
+msgid "Cela družina na okupu"
+msgstr "The whole crew together"
+
+msgid "Stiže spremno za poklon"
+msgstr "Arrives gift-ready"
+
+msgid "Svaki paket je mali poklon"
+msgstr "Every package is a little gift"
+
+msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande. Trio paket stiže uz <strong>besplatnu dostavu</strong> — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
+msgstr "Carefully packed in a CosyPaw box, with a welcome note and a scent of lavender. The Trio package arrives with <strong>free shipping</strong> — perfect for a birthday, baby shower, or just to spoil someone."
+
+msgid "Jezik"
+msgstr "Language"
+
+msgid "Komentari (%s)"
+msgstr "Comments (%s)"
+
+msgid "Prethodni"
+msgstr "Previous"
+
+msgid "Sledeći"
+msgstr "Next"
+
+msgid "Komentari su zatvoreni."
+msgstr "Comments are closed."
+
+msgid "Ostavi komentar"
+msgstr "Leave a comment"
+
+msgid "Pošalji"
+msgstr "Send"
+
+msgid "Zadovoljne mušterije"
+msgstr "Happy customers"
+
+msgid "Mali peškirići, veliki osmesi"
+msgstr "Little towels, big smiles"
+
+msgid "Hiljade ručica već se suše uz CosyPaw — evo šta kažu njihovi vlasnici."
+msgstr "Thousands of little hands already dry with CosyPaw — here is what their owners say."
+
+msgid "Prosečna ocena"
+msgstr "Average rating"
+
+msgid "Prodatih peškiriča"
+msgstr "Towels sold"
+
+msgid "Preporučuje prijateljima"
+msgstr "Recommend to friends"
+
+msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
+msgstr "They arrived faster than I expected and are softer than in the photos. My daughter picks which one to use every day."
+
+msgid "Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
+msgstr "I bought the Trio package as a gift and it was a real hit. The packaging is adorable, no extra wrapping needed."
+
+msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
+msgstr "The hanging loop is a small thing that means a lot — the towel is always in its place and never ends up on the floor."
+
+msgid "5 od 5 zvezdica"
+msgstr "5 out of 5 stars"
+
+msgid "Jovana M."
+msgstr "Jovana M."
+
+msgid "Milica P."
+msgstr "Milica P."
+
+msgid "Ana T."
+msgstr "Ana T."
+
+msgid "Novi Sad"
+msgstr "Novi Sad"
+
+msgid "Beograd"
+msgstr "Belgrade"
+
+msgid "Niš"
+msgstr "Niš"
+
+msgid "Česta pitanja"
+msgstr "FAQ"
+
+msgid "Sve što te zanima"
+msgstr "Everything you want to know"
+
+msgid "Ako ne nađeš odgovor, piši nam — rado pomažemo."
+msgstr "If you don't find an answer, write to us — we're happy to help."
+
+msgid "Od čega su peškirići napravljeni?"
+msgstr "What are the towels made of?"
+
+msgid "Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži."
+msgstr "From plush microfiber — soft, light and highly absorbent. Gentle even on a child's skin."
+
+msgid "Kako se peru?"
+msgstr "How are they washed?"
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik."
+msgstr "Machine wash at 40°C, without fabric softener so they stay absorbent. They dry fast and keep their shape."
+
+msgid "Koliko traje dostava?"
+msgstr "How long does delivery take?"
+
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu."
+msgstr "Delivery is 2–4 business days across Serbia. The Trio package comes with free shipping."
+
+msgid "Kako mogu da platim?"
+msgstr "How can I pay?"
+
+msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
+msgstr "Payment is cash on delivery — you pay the courier when you receive the package."
+
+msgid "Mogu li da vratim proizvod?"
+msgstr "Can I return a product?"
+
+msgid "Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca."
+msgstr "Of course. You have 14 days to return an unused towel for a refund."
+

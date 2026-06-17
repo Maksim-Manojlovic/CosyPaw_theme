@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sr_RS\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Nothing found."
+msgstr "Ništa nije pronađeno."
+
+msgid "Primary Sidebar"
+msgstr "Glavna bočna traka"
+
+msgid "Appears beside posts and archives."
+msgstr "Pojavljuje se pored objava i arhiva."
+
+msgid "Primary Menu"
+msgstr "Glavni meni"
+
+msgid "Footer Menu"
+msgstr "Meni u podnožju"
+
+msgid "CosyPaw recommends the WooCommerce plugin. Shop features are disabled until it is installed and active."
+msgstr "CosyPaw preporučuje WooCommerce dodatak. Funkcije prodavnice su onemogućene dok se ne instalira i aktivira."
+
+msgid "CosyPaw Seeder"
+msgstr "CosyPaw Seeder"
+
+msgid "Done — %d new product(s) created."
+msgstr "Gotovo — kreirano %d novih proizvoda."
+
+msgid "Currently mapped: %1$d motif products, %2$d package products."
+msgstr "Trenutno mapirano: %1$d proizvoda motiva, %2$d proizvoda paketa."
+
+msgid "Create / update CosyPaw products"
+msgstr "Kreiraj / ažuriraj CosyPaw proizvode"
+
+msgid "Safe to run repeatedly — existing products are skipped."
+msgstr "Bezbedno za ponovno pokretanje — postojeći proizvodi se preskaču."
+
+msgid "You are not allowed to do this."
+msgstr "Nije vam dozvoljeno da ovo uradite."
+
+msgid "WooCommerce is not active."
+msgstr "WooCommerce nije aktivan."
+
+msgid "Cart"
+msgstr "Korpa"
+
+msgid "Checkout"
+msgstr "Plaćanje"
+
+msgid "Shop"
+msgstr "Prodavnica"
+
+msgid "My account"
+msgstr "Moj nalog"
+

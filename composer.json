@@ -1,0 +1,22 @@
+{
+	"name": "cosypaw/theme",
+	"description": "CosyPaw WordPress theme — DEV/TEST tooling only. The runtime theme uses the native spl_autoload_register in functions.php and does NOT depend on Composer or vendor/.",
+	"type": "wordpress-theme",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^10.5",
+		"brain/monkey": "^2.6"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Theme\\Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"sort-packages": true,
+		"optimize-autoloader": true
+	}
+}

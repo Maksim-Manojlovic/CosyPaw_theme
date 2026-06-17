@@ -1,0 +1,118 @@
+<?php
+/**
+ * Site header — opening document, announcement marquee, sticky nav.
+ *
+ * @package CosyPaw
+ */
+
+declare(strict_types=1);
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+
+<!-- Announcement marquee -->
+<div class="announce" aria-hidden="true">
+	<?php
+	$announcements = array(
+		__( 'Ručni rad sa puno ljubavi', 'cosypaw' ),
+		__( 'Besplatna dostava na Trio paket', 'cosypaw' ),
+		__( 'Mekani svet peškiriča', 'cosypaw' ),
+	);
+	// One group is rendered twice; the track animates -50% (one full group),
+	// so the second group is in place exactly when the first scrolls out =
+	// seamless, gap-free loop. Phrases are repeated inside each group so a
+	// single group is wider than the viewport.
+	?>
+	<div class="announce__track">
+		<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
+			<div class="announce__group">
+				<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
+					<span><?php echo esc_html( $line ); ?></span><span class="announce__dot">•</span>
+				<?php endforeach; ?>
+			</div>
+		<?php endfor; ?>
+	</div>
+</div>
+
+<header class="site-header">
+	<nav class="nav" aria-label="<?php esc_attr_e( 'Glavna navigacija', 'cosypaw' ); ?>">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav__brand">
+			<span class="brand-mark">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
+			</span>
+			<span class="brand-name"><?php bloginfo( 'name' ); ?></span>
+		</a>
+
+		<div class="nav__links">
+			<?php
+			if ( has_nav_menu( 'primary' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'nav__menu',
+						'depth'          => 1,
+						'fallback_cb'    => false,
+						'link_before'    => '<span class="nav__link">',
+						'link_after'     => '</span>',
+					)
+				);
+			} else {
+				// Default in-page anchors (resolve from any page back to the homepage sections).
+				$cosypaw_home = home_url( '/' );
+				$cosypaw_anchors = array(
+					'#paketi'   => __( 'Paketi', 'cosypaw' ),
+					'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
+					'#galerija' => __( 'Motivi', 'cosypaw' ),
+				);
+				foreach ( $cosypaw_anchors as $anchor => $label ) {
+					printf(
+						'<a href="%1$s" class="nav__link">%2$s</a>',
+						esc_url( ( is_front_page() ? '' : $cosypaw_home ) . $anchor ),
+						esc_html( $label )
+					);
+				}
+			}
+			?>
+
+			<?php
+			$cosypaw_wc    = function_exists( 'WC' ) && function_exists( 'wc_get_cart_url' );
+			$cosypaw_count = ( $cosypaw_wc && WC()->cart ) ? (int) WC()->cart->get_cart_contents_count() : 0;
+			$cosypaw_cart_svg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>';
+			$cosypaw_badge = sprintf(
+				'<span class="cart-btn__badge" data-cart-count%1$s>%2$s</span>',
+				$cosypaw_count < 1 ? ' hidden' : '',
+				esc_html( (string) $cosypaw_count )
+			);
+			$cosypaw_svg_allowed = array(
+				'svg'    => array( 'width' => array(), 'height' => array(), 'viewbox' => array(), 'fill' => array(), 'stroke' => array(), 'stroke-width' => array(), 'stroke-linecap' => array(), 'stroke-linejoin' => array(), 'aria-hidden' => array() ),
+				'path'   => array( 'd' => array() ),
+				'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ),
+				'span'   => array( 'class' => array(), 'data-cart-count' => array(), 'hidden' => array() ),
+			);
+			if ( $cosypaw_wc ) :
+				?>
+				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="cart-btn" aria-label="<?php esc_attr_e( 'Pogledaj korpu', 'cosypaw' ); ?>">
+					<?php echo wp_kses( $cosypaw_cart_svg . $cosypaw_badge, $cosypaw_svg_allowed ); ?>
+				</a>
+			<?php else : ?>
+				<button type="button" class="cart-btn" data-cart-toggle aria-label="<?php esc_attr_e( 'Otvori korpu', 'cosypaw' ); ?>">
+					<?php echo wp_kses( $cosypaw_cart_svg . $cosypaw_badge, $cosypaw_svg_allowed ); ?>
+				</button>
+			<?php endif; ?>
+
+			<?php if ( function_exists( 'cosypaw_language' ) ) { cosypaw_language()->switcher(); } ?>
+		</div>
+	</nav>
+</header>

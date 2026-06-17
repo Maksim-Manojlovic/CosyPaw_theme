@@ -1,0 +1,16 @@
+{
+	"name": "cosypaw-theme",
+	"version": "1.0.0",
+	"private": true,
+	"description": "CosyPaw WordPress theme — Vite asset pipeline.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"package": "vite build && powershell -ExecutionPolicy Bypass -File tools/package-theme.ps1"
+	},
+	"devDependencies": {
+		"vite": "^5.4.0"
+	}
+}

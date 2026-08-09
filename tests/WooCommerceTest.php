@@ -26,6 +26,8 @@ if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
 	define( 'HOUR_IN_SECONDS', 3600 );
 }
 
+require_once __DIR__ . '/stubs.php';
+
 // The runtime theme is NOT Composer-autoloaded (it uses spl_autoload_register in
 // functions.php). For tests we require the classes under test directly.
 require_once dirname( __DIR__ ) . '/inc/Setup.php';
@@ -62,6 +64,9 @@ final class WooCommerceTest extends TestCase {
 				// where no override is ever consulted.
 				'determine_locale'   => 'sr_RS',
 				'get_post_meta'      => '',
+				// Mapped products default to on-sale and purchasable.
+				'get_post_status'    => 'publish',
+				'wc_get_product'     => static fn() => new \WC_Product(),
 			)
 		);
 	}
@@ -138,6 +143,28 @@ final class WooCommerceTest extends TestCase {
 		$this->assertSame( 'Gentle Giraffe', $out[0]['name'] );
 		// Unmapped row keeps its translated name.
 		$this->assertSame( 'Koala', $out[1]['name'] );
+	}
+
+	/**
+	 * A retired (trashed) product is flagged unavailable so the front page can
+	 * drop its tile, while the row itself stays in the catalog for order history.
+	 */
+	public function test_inject_product_ids_flags_retired_products_unavailable(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42, 'koala' => 43 ) );
+		Functions\when( 'get_post_status' )->alias( static fn( $id ) => 42 === $id ? 'trash' : 'publish' );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_product_ids(
+			array(
+				array( 'id' => 'zirafa', 'name' => 'Žirafa' ),
+				array( 'id' => 'koala', 'name' => 'Koala' ),
+			)
+		);
+
+		$this->assertFalse( $out[0]['available'] );
+		$this->assertTrue( $out[1]['available'] );
+		// The retired row is still present, name intact.
+		$this->assertSame( 'Žirafa', $out[0]['name'] );
 	}
 
 	/**

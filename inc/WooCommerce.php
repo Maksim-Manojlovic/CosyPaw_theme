@@ -477,6 +477,17 @@ final class WooCommerce {
 				if ( '' !== $override ) {
 					$row['name'] = $override;
 				}
+
+				// Trashing or unpublishing a product is how the shop retires a
+				// motif, but the Catalog is a static list and keeps rendering its
+				// tile — with a working add-to-cart URL for something that can no
+				// longer be bought. Flag it so the front page can leave it out.
+				// The row itself stays in the catalog: motif_map() still has to
+				// resolve the name for orders placed while it was on sale.
+				$product           = wc_get_product( $pid );
+				$row['available']  = $product instanceof \WC_Product
+					&& 'publish' === get_post_status( $pid )
+					&& $product->is_purchasable();
 			}
 		}
 		unset( $row );

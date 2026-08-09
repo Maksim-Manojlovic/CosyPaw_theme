@@ -17,8 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 $catalog       = new \Theme\Catalog();
-$products      = $catalog->products();
-$featured      = $catalog->featured();
+
+/**
+ * Motifs whose product has been retired (trashed or unpublished) keep their row
+ * in the Catalog so past orders can still resolve their name, but they must not
+ * be offered for sale. Rows carry no 'available' key at all when WooCommerce is
+ * inactive or the motif is unmapped — the demo catalog stays fully browsable.
+ */
+$in_stock = static fn( array $row ): bool => (bool) ( $row['available'] ?? true );
+
+$products      = array_values( array_filter( $catalog->products(), $in_stock ) );
+$featured      = array_values( array_filter( $catalog->featured(), $in_stock ) );
 $packages      = $catalog->packages();
 $default_pkg   = $catalog->default_package();
 $tagline       = __( 'Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim.', 'cosypaw' );

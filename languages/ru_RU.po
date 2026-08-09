@@ -527,6 +527,15 @@ msgstr "WooCommerce не активен."
 msgid "This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again."
 msgstr "Этот сайт не может обрабатывать изображения AVIF, а фотографии мотивов CosyPaw поставляются именно в этом формате. Seeder создаст товары, но их изображения будут отсутствовать или остаться без миниатюр. Для AVIF нужен WordPress 6.5 или новее и GD/Imagick с поддержкой AVIF — попроси хостинг включить её и запусти seeder снова."
 
+msgid "CosyPaw — names"
+msgstr "CosyPaw — названия"
+
+msgid "The title field above is the Serbian name. Fill these in to set the name shown to English and Russian visitors."
+msgstr "Поле заголовка выше — сербское название. Заполни эти поля, чтобы задать название для англоязычных и русскоязычных посетителей."
+
+msgid "Leave empty to use the translation from the theme language files (shown greyed out)."
+msgstr "Оставь пустым, чтобы использовать перевод из языковых файлов темы (показан серым)."
+
 msgid "Cart"
 msgstr "Корзина"
 

@@ -80,6 +80,13 @@ final class WooCommerce {
 	private ProductSeeder $seeder;
 
 	/**
+	 * Per-product name overrides (admin-editable EN/RU names).
+	 *
+	 * @var ProductNames
+	 */
+	private ProductNames $names;
+
+	/**
 	 * Cached list of our product IDs (motifs + packages).
 	 *
 	 * @var int[]|null
@@ -96,6 +103,7 @@ final class WooCommerce {
 		$this->text_domain = $text_domain;
 		$this->catalog     = $catalog;
 		$this->seeder      = new ProductSeeder( $catalog );
+		$this->names       = new ProductNames();
 
 		$this->register_layout_hooks();
 		$this->register_cache_invalidation();
@@ -349,12 +357,49 @@ final class WooCommerce {
 	 * @return string
 	 */
 	public function translate_product_title( $title, $post_id = 0 ): string {
-		if ( $post_id && in_array( (int) $post_id, array_merge( $this->our_product_ids(), $this->wc_page_ids() ), true ) ) {
-			// translators: dynamic product/page title, already present as a msgid.
+		$post_id = (int) $post_id;
+
+		if ( ! $post_id ) {
+			return (string) $title;
+		}
+
+		if ( 'product' === get_post_type( $post_id ) ) {
+			return $this->product_name( $post_id, (string) $title );
+		}
+
+		if ( in_array( $post_id, $this->wc_page_ids(), true ) ) {
+			// translators: dynamic page title, already present as a msgid.
 			return __( $title, 'cosypaw' ); // phpcs:ignore WordPress.WP.I18n
 		}
 
 		return (string) $title;
+	}
+
+	/**
+	 * A product's name in the current language.
+	 *
+	 * A manual override from the product editor wins for any product. Gettext is
+	 * consulted only for the products we seeded, whose titles are known msgids —
+	 * running an arbitrary shop-entered title through __() risks colliding with
+	 * an unrelated theme string that happens to match.
+	 *
+	 * @param int    $product_id Product ID.
+	 * @param string $source     Source-language name (post_title).
+	 * @return string
+	 */
+	private function product_name( int $product_id, string $source ): string {
+		$override = $this->names->get( $product_id );
+
+		if ( '' !== $override ) {
+			return $override;
+		}
+
+		if ( in_array( $product_id, $this->our_product_ids(), true ) ) {
+			// translators: dynamic product title, already present as a msgid.
+			return __( $source, 'cosypaw' ); // phpcs:ignore WordPress.WP.I18n
+		}
+
+		return $source;
 	}
 
 	/**
@@ -366,9 +411,9 @@ final class WooCommerce {
 	 */
 	public function translate_cart_item_name( $name, $cart_item ): string {
 		$product = isset( $cart_item['data'] ) ? $cart_item['data'] : null;
-		if ( $product && in_array( (int) $product->get_id(), $this->our_product_ids(), true ) ) {
-			$original = $product->get_name();
-			$name     = str_replace( $original, __( $original, 'cosypaw' ), (string) $name ); // phpcs:ignore WordPress.WP.I18n
+		if ( $product ) {
+			$original = (string) $product->get_name();
+			$name     = str_replace( $original, $this->product_name( (int) $product->get_id(), $original ), (string) $name );
 		}
 
 		return (string) $name;
@@ -383,9 +428,8 @@ final class WooCommerce {
 	 */
 	public function translate_order_item_name( $name, $item ): string {
 		$pid = is_callable( array( $item, 'get_product_id' ) ) ? (int) $item->get_product_id() : 0;
-		if ( $pid && in_array( $pid, $this->our_product_ids(), true ) ) {
-			// translators: dynamic product title, already present as a msgid.
-			return __( (string) $name, 'cosypaw' ); // phpcs:ignore WordPress.WP.I18n
+		if ( $pid ) {
+			return $this->product_name( $pid, (string) $name );
 		}
 
 		return (string) $name;
@@ -425,6 +469,14 @@ final class WooCommerce {
 				$pid                    = (int) $map[ $key ];
 				$row['product_id']      = $pid;
 				$row['add_to_cart_url'] = esc_url_raw( add_query_arg( 'add-to-cart', $pid ) );
+
+				// A manual name from the product editor beats the .po translation
+				// everywhere the Catalog is rendered: motif grid, hero carousel,
+				// bundle picker, cart thumbnails and the order's motif list.
+				$override = $this->names->get( $pid );
+				if ( '' !== $override ) {
+					$row['name'] = $override;
+				}
 			}
 		}
 		unset( $row );

@@ -32,6 +32,7 @@ require_once dirname( __DIR__ ) . '/inc/Setup.php';
 require_once dirname( __DIR__ ) . '/inc/Assets.php';
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 require_once dirname( __DIR__ ) . '/inc/ProductSeeder.php';
+require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';
 
@@ -57,6 +58,10 @@ final class WooCommerceTest extends TestCase {
 				// i18n stubs return the original string.
 				'__'                 => static fn( $text ) => $text,
 				'esc_html__'         => static fn( $text ) => $text,
+				// Per-product name overrides: default to the source language,
+				// where no override is ever consulted.
+				'determine_locale'   => 'sr_RS',
+				'get_post_meta'      => '',
 			)
 		);
 	}
@@ -110,6 +115,43 @@ final class WooCommerceTest extends TestCase {
 		$this->assertArrayHasKey( 'add_to_cart_url', $out[0] );
 		// Unmapped row is untouched.
 		$this->assertArrayNotHasKey( 'product_id', $out[1] );
+	}
+
+	/**
+	 * A manual per-locale name set on the product overrides the Catalog's
+	 * gettext name everywhere the catalog is rendered.
+	 */
+	public function test_inject_product_ids_applies_manual_name_override(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( $post_id, $key ) => ( 42 === $post_id && '_cosypaw_name_en_US' === $key ) ? 'Gentle Giraffe' : ''
+		);
+
+		$wc   = new WooCommerce( 'cosypaw', new Catalog() );
+		$rows = array(
+			array( 'id' => 'zirafa', 'name' => 'Giraffe' ),
+			array( 'id' => 'koala', 'name' => 'Koala' ),
+		);
+		$out = $wc->inject_product_ids( $rows );
+
+		$this->assertSame( 'Gentle Giraffe', $out[0]['name'] );
+		// Unmapped row keeps its translated name.
+		$this->assertSame( 'Koala', $out[1]['name'] );
+	}
+
+	/**
+	 * With no override stored, the Catalog's own (gettext) name survives.
+	 */
+	public function test_inject_product_ids_keeps_gettext_name_without_override(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_product_ids( array( array( 'id' => 'zirafa', 'name' => 'Giraffe' ) ) );
+
+		$this->assertSame( 'Giraffe', $out[0]['name'] );
 	}
 
 	/**

@@ -2,26 +2,37 @@
  * CosyPaw global styles.
  *
  * Design system mapped from claude/design source (CosyPaw.dc.html).
- * Brand: soft, playful, LIGHT pastel — cream/pink/rose/mint on warm ink text.
- * (Not dark mode — the architecture boilerplate's dark placeholder was replaced
- * with the real CosyPaw palette.)
+ * Brand: soft, playful, LIGHT and warm-neutral — linen/sand/clay on warm ink
+ * text. (Not dark mode — the architecture boilerplate's dark placeholder was
+ * replaced with the real CosyPaw palette.)
+ *
+ * The palette is sampled from the product photography: all 20 backdrops in the
+ * shoot sit at hue 23-32 degrees (warm linen, mean #B3957A), so the accents are
+ * drawn from that same arc instead of the earlier cool-magenta rose. Every
+ * pairing is verified at >= 4.5:1 (WCAG 2.1 AA); the ratios are noted per token.
+ * The rose it replaces failed AA outright — white on #ec7e99 was 2.62:1.
  *
  * Fonts: "Baloo 2" (headings), "Nunito" (body) — enqueued via inc/Assets.php.
  */
 
 :root {
-	/* --- Raw brand tokens (match the design source 1:1 for direct markup reuse). --- */
-	--cream: #fff7f2;
-	--cream2: #fdefe8;
-	--pink: #fbe3e9;
-	--pinkmid: #f6bacb;
-	--rose: #ec7e99;
-	--rosedk: #e06a88;
-	--mint: #bfe2d6;
-	--mintdk: #79c3af;
-	--ink: #4b3a38;
-	--muted: #9c857f;
-	--line: rgba(75, 58, 56, 0.1);
+	/* --- Raw brand tokens. ---
+	   These intentionally no longer match CosyPaw.dc.html, which still carries
+	   the original pink. That file is kept as the historical design source; this
+	   block is the live palette. Ratios below are against --cream unless noted. */
+	--cream: #fbf6ef;   /* page linen                                       */
+	--cream2: #f3e9dc;  /* sunken linen                                     */
+	--sand: #efe3d2;    /* soft accent fill                                 */
+	--sandmid: #dcc3a5; /* accent fill, stronger                            */
+	--clay: #a15e37;    /* primary accent — 4.68:1 as text, 5.03:1 as fill  */
+	                    /* under a white label; it is used both ways        */
+	--claydk: #8c5230;  /* accent hover + inline links — 5.80:1             */
+	--sagelt: #c3cdb4;  /* success fill                                     */
+	--sage: #474f36;    /* success — white label 8.61:1, on sagelt 5.21:1   */
+	--ochre: #d9a441;   /* badges/stars — INK label only (white is 2.25:1)  */
+	--ink: #3e332a;     /* body text — 11.41:1                              */
+	--muted: #6f6155;   /* secondary text — 5.55:1                          */
+	--line: rgba(62, 51, 42, 0.1);
 
 	/* --- Semantic aliases (architecture naming → brand tokens). --- */
 	--color-surface: var(--cream);
@@ -29,14 +40,14 @@
 	--color-surface-sunken: var(--cream2);
 	--color-text-primary: var(--ink);
 	--color-text-secondary: var(--muted);
-	--color-accent: var(--rose);
-	--color-accent-strong: var(--rosedk);
-	--color-accent-soft: var(--pink);
-	--color-success: var(--mintdk);
+	--color-accent: var(--clay);
+	--color-accent-strong: var(--claydk);
+	--color-accent-soft: var(--sand);
+	--color-success: var(--sage);
 	--color-border: var(--line);
 
 	/* Glass surfaces (light, used by sticky nav + floating hero pill). */
-	--glass-bg: rgba(255, 247, 242, 0.82);
+	--glass-bg: rgba(251, 246, 239, 0.82);
 	--glass-bg-strong: rgba(255, 255, 255, 0.92);
 	--glass-border: var(--line);
 
@@ -62,10 +73,10 @@
 	--radius-pill: 999px;
 
 	/* Shadows (soft, warm). */
-	--shadow-sm: 0 14px 30px rgba(75, 58, 56, 0.06);
-	--shadow-md: 0 16px 36px rgba(75, 58, 56, 0.08);
-	--shadow-lg: 0 30px 60px rgba(75, 58, 56, 0.16);
-	--shadow-accent: 0 10px 24px rgba(236, 126, 153, 0.4);
+	--shadow-sm: 0 14px 30px rgba(62, 51, 42, 0.06);
+	--shadow-md: 0 16px 36px rgba(62, 51, 42, 0.08);
+	--shadow-lg: 0 30px 60px rgba(62, 51, 42, 0.16);
+	--shadow-accent: 0 10px 24px rgba(161, 94, 55, 0.4);
 
 	--maxw-content: 1160px;
 }
@@ -96,15 +107,16 @@ h1, h2, h3, h4 {
 }
 
 ::selection {
-	background: var(--pinkmid);
-	color: #fff;
+	background: var(--sandmid);
+	color: var(--ink);
 }
 
 /**
  * Glassmorphism surface (light variant).
  *
  * NOTE: keep text on this surface at >= 4.5:1 contrast (WCAG 2.1 AA). Default
- * ink (#4B3A38) on the cream glass meets AA. Re-check if --glass-bg is changed.
+ * ink (#3E332A) on the cream glass meets AA at 10.93:1. Re-check if --glass-bg
+ * is changed.
  */
 .glass-card {
 	background: var(--glass-bg);
@@ -164,7 +176,7 @@ h1, h2, h3, h4 {
 
 .btn--primary:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 14px 30px rgba(236, 126, 153, 0.5);
+	box-shadow: 0 14px 30px rgba(161, 94, 55, 0.5);
 }
 
 .btn--ghost {
@@ -244,7 +256,7 @@ h1, h2, h3, h4 {
 
 /* ---------- Announcement marquee ---------- */
 .announce {
-	background: var(--rose);
+	background: var(--clay);
 	color: #fff;
 	font-weight: 700;
 	font-size: 13.5px;
@@ -324,11 +336,11 @@ h1, h2, h3, h4 {
 	width: 38px;
 	height: 38px;
 	border-radius: 50%;
-	background: var(--rose);
+	background: var(--clay);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 4px 12px rgba(236, 126, 153, 0.35);
+	box-shadow: 0 4px 12px rgba(161, 94, 55, 0.35);
 	flex: none;
 }
 
@@ -375,14 +387,14 @@ h1, h2, h3, h4 {
 	height: 20px;
 	padding: 0 5px;
 	border-radius: 10px;
-	background: var(--rose);
+	background: var(--clay);
 	color: #fff;
 	font-size: 12px;
 	font-weight: 800;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 2px 6px rgba(236, 126, 153, 0.5);
+	box-shadow: 0 2px 6px rgba(161, 94, 55, 0.5);
 }
 
 /* ---------- Language switcher ---------- */
@@ -415,7 +427,7 @@ h1, h2, h3, h4 {
 
 .lang-switch__btn.is-active {
 	opacity: 1;
-	box-shadow: 0 0 0 2px var(--rose);
+	box-shadow: 0 0 0 2px var(--clay);
 }
 
 .lang-flag {
@@ -423,7 +435,7 @@ h1, h2, h3, h4 {
 	width: 24px;
 	height: 16px;
 	border-radius: 3px;
-	box-shadow: 0 1px 2px rgba(75, 58, 56, 0.25);
+	box-shadow: 0 1px 2px rgba(62, 51, 42, 0.25);
 }
 
 /* Accessible hidden text. */

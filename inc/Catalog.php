@@ -31,30 +31,60 @@ final class Catalog {
 	public const UNIT_PRICE = 790;
 
 	/**
-	 * Towel motifs. Each maps to an image in the theme's /assets directory.
+	 * Directory (under the theme root) holding the motif photography.
 	 *
-	 * @return array<int,array{id:string,name:string,image:string}>
+	 * @var string
+	 */
+	private const IMAGE_DIR = 'assets/motifs/';
+
+	/**
+	 * Towel motifs.
+	 *
+	 * Each id resolves to three AVIFs in assets/motifs/ — `<id>.avif` (1086x1448,
+	 * the untouched camera original and the seeder's sideload source),
+	 * `<id>-md.avif` (600x800, hero + motif cards) and `<id>-sm.avif` (360x360
+	 * square, the bundle-builder picker). Serving the pre-cropped variants keeps
+	 * the motif grid off the full-size originals.
+	 *
+	 * AVIF is safe for the front end (the images are referenced by URL, and
+	 * browser support is universal), but see ProductSeeder::avif_supported() for
+	 * the WordPress-side caveat when sideloading these into the media library.
+	 *
+	 * @return array<int,array{id:string,name:string,image:string,image_md:string,image_sm:string}>
 	 */
 	public function products(): array {
 		$motifs = array(
-			array( 'id' => 'zirafa',  'name' => __( 'Žirafa', 'cosypaw' ),         'file' => 'zirafa.png' ),
-			array( 'id' => 'koala',   'name' => __( 'Koala', 'cosypaw' ),          'file' => 'koala.png' ),
-			array( 'id' => 'pingvin', 'name' => __( 'Pingvin', 'cosypaw' ),        'file' => 'pingvin.png' ),
-			array( 'id' => 'sova',    'name' => __( 'Sova', 'cosypaw' ),           'file' => 'sova.png' ),
-			array( 'id' => 'avokado', 'name' => __( 'Avokado', 'cosypaw' ),        'file' => 'avokado.png' ),
-			array( 'id' => 'ananas',  'name' => __( 'Ananas', 'cosypaw' ),         'file' => 'ananas.png' ),
-			array( 'id' => 'biskvit', 'name' => __( 'Biskvit', 'cosypaw' ),        'file' => 'biskvit.png' ),
-			array( 'id' => 'keks',    'name' => __( 'Čokoladni keks', 'cosypaw' ), 'file' => 'keks.png' ),
-			array( 'id' => 'tost',    'name' => __( 'Tost', 'cosypaw' ),           'file' => 'tost.png' ),
+			array( 'id' => 'zirafa',   'name' => __( 'Žirafa', 'cosypaw' ) ),
+			array( 'id' => 'koala',    'name' => __( 'Koala', 'cosypaw' ) ),
+			array( 'id' => 'pingvin',  'name' => __( 'Pingvin', 'cosypaw' ) ),
+			array( 'id' => 'sova',     'name' => __( 'Sova', 'cosypaw' ) ),
+			array( 'id' => 'panda',    'name' => __( 'Panda', 'cosypaw' ) ),
+			array( 'id' => 'meda',     'name' => __( 'Meda', 'cosypaw' ) ),
+			array( 'id' => 'kapibara', 'name' => __( 'Kapibara', 'cosypaw' ) ),
+			array( 'id' => 'maca',     'name' => __( 'Maca', 'cosypaw' ) ),
+			array( 'id' => 'kucence',  'name' => __( 'Kucence', 'cosypaw' ) ),
+			array( 'id' => 'zeka',     'name' => __( 'Zeka', 'cosypaw' ) ),
+			array( 'id' => 'avokado',  'name' => __( 'Avokado', 'cosypaw' ) ),
+			array( 'id' => 'ananas',   'name' => __( 'Ananas', 'cosypaw' ) ),
+			array( 'id' => 'tresnja',  'name' => __( 'Trešnja', 'cosypaw' ) ),
+			array( 'id' => 'sir',      'name' => __( 'Sir', 'cosypaw' ) ),
+			array( 'id' => 'krofna',   'name' => __( 'Krofna', 'cosypaw' ) ),
+			array( 'id' => 'biskvit',  'name' => __( 'Biskvit', 'cosypaw' ) ),
+			array( 'id' => 'keks',     'name' => __( 'Čokoladni keks', 'cosypaw' ) ),
+			array( 'id' => 'tost',     'name' => __( 'Tost', 'cosypaw' ) ),
+			array( 'id' => 'lala',     'name' => __( 'Lala', 'cosypaw' ) ),
+			array( 'id' => 'list',     'name' => __( 'Javorov list', 'cosypaw' ) ),
 		);
 
-		$base = get_template_directory_uri() . '/assets/';
+		$base = get_template_directory_uri() . '/' . self::IMAGE_DIR;
 		$out  = array();
 		foreach ( $motifs as $m ) {
 			$out[] = array(
-				'id'    => $m['id'],
-				'name'  => $m['name'],
-				'image' => $base . $m['file'],
+				'id'       => $m['id'],
+				'name'     => $m['name'],
+				'image'    => $base . $m['id'] . '.avif',
+				'image_md' => $base . $m['id'] . '-md.avif',
+				'image_sm' => $base . $m['id'] . '-sm.avif',
 			);
 		}
 
@@ -142,7 +172,7 @@ final class Catalog {
 	 * Map of motif id => { name, image } for fast lookups (cart thumbnails etc.).
 	 * Names are translated for the current locale (from products()).
 	 *
-	 * @return array<string,array{id:string,name:string,image:string}>
+	 * @return array<string,array{id:string,name:string,image:string,image_md:string,image_sm:string}>
 	 */
 	public function motif_map(): array {
 		$map = array();
@@ -159,13 +189,13 @@ final class Catalog {
 	 * @return string[]
 	 */
 	public function featured_ids(): array {
-		return array( 'zirafa', 'koala', 'pingvin', 'ananas', 'tost' );
+		return array( 'zirafa', 'kapibara', 'panda', 'tresnja', 'list', 'pingvin' );
 	}
 
 	/**
 	 * Featured products for the hero carousel, in order.
 	 *
-	 * @return array<int,array{id:string,name:string,image:string}>
+	 * @return array<int,array{id:string,name:string,image:string,image_md:string,image_sm:string}>
 	 */
 	public function featured(): array {
 		$by_id = array();

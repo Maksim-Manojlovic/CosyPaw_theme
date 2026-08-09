@@ -28,7 +28,7 @@
 
 .page-hero__eyebrow {
 	font-weight: 800;
-	color: var(--rose);
+	color: var(--clay);
 	font-size: 14px;
 	letter-spacing: 1.5px;
 	text-transform: uppercase;
@@ -92,7 +92,7 @@
 }
 
 .entry-card__title a:hover {
-	color: var(--rose);
+	color: var(--clay);
 }
 
 .entry-card__excerpt {
@@ -149,7 +149,7 @@
 .entry__content h2 { font-size: 28px; margin: 32px 0 12px; }
 .entry__content h3 { font-size: 22px; margin: 28px 0 10px; }
 .entry__content p { margin: 0 0 18px; }
-.entry__content a { color: var(--rosedk); }
+.entry__content a { color: var(--claydk); }
 
 .entry__content img {
 	max-width: 100%;
@@ -160,7 +160,7 @@
 .entry__content blockquote {
 	margin: 24px 0;
 	padding: 16px 24px;
-	border-left: 4px solid var(--pinkmid);
+	border-left: 4px solid var(--sandmid);
 	background: var(--cream2);
 	border-radius: var(--radius-sm);
 	color: var(--ink);
@@ -191,8 +191,8 @@
 
 .pagination .page-numbers.current,
 .pagination .page-numbers:hover {
-	background: var(--rose);
-	border-color: var(--rose);
+	background: var(--clay);
+	border-color: var(--clay);
 	color: #fff;
 }
 
@@ -213,14 +213,14 @@
 }
 
 .search-form .search-field:focus-visible {
-	outline: 2px solid var(--rose);
+	outline: 2px solid var(--clay);
 	outline-offset: 2px;
 }
 
 .search-form .search-submit {
 	border: none;
 	cursor: pointer;
-	background: var(--rose);
+	background: var(--clay);
 	color: #fff;
 	font-weight: 800;
 	font-family: var(--font-heading);
@@ -264,7 +264,7 @@
 }
 
 .widget a:hover {
-	color: var(--rose);
+	color: var(--clay);
 }
 
 /* Comments. */
@@ -340,7 +340,7 @@
 
 .comment-form input:focus-visible,
 .comment-form textarea:focus-visible {
-	outline: 2px solid var(--rose);
+	outline: 2px solid var(--clay);
 	outline-offset: 1px;
 }
 

@@ -344,8 +344,8 @@ msgstr "By the sink, on a hook or a shelf — the towels fit into any home and a
 msgid "Spremni za jutarnju rutinu"
 msgstr "Ready for the morning routine"
 
-msgid "Cela družina na okupu"
-msgstr "The whole crew together"
+msgid "Na kuki, uvek pri ruci"
+msgstr "On the hook, always at hand"
 
 msgid "Stiže spremno za poklon"
 msgstr "Arrives gift-ready"
@@ -382,18 +382,6 @@ msgstr "Happy customers"
 
 msgid "Mali peškirići, veliki osmesi"
 msgstr "Little towels, big smiles"
-
-msgid "Hiljade ručica već se suše uz CosyPaw — evo šta kažu njihovi vlasnici."
-msgstr "Thousands of little hands already dry with CosyPaw — here is what their owners say."
-
-msgid "Prosečna ocena"
-msgstr "Average rating"
-
-msgid "Prodatih peškiriča"
-msgstr "Towels sold"
-
-msgid "Preporučuje prijateljima"
-msgstr "Recommend to friends"
 
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
 msgstr "They arrived faster than I expected and are softer than in the photos. My daughter picks which one to use every day."

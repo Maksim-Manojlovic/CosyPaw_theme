@@ -48,6 +48,9 @@ final class ProductSeeder {
 			\WP_CLI::add_command(
 				'cosypaw seed',
 				function (): void {
+					if ( ! $this->avif_supported() ) {
+						\WP_CLI::warning( 'AVIF is not supported here — product images will be missing or thumbnail-less. Needs WP 6.5+ and GD/Imagick with AVIF.' );
+					}
 					$created = $this->seed();
 					\WP_CLI::success( sprintf( 'CosyPaw: %d product(s) created.', $created ) );
 				}
@@ -91,6 +94,19 @@ final class ProductSeeder {
 							/* translators: %d: number of products created. */
 							esc_html__( 'Done — %d new product(s) created.', 'cosypaw' ),
 							(int) $seeded
+						);
+						?>
+					</p>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( ! $this->avif_supported() ) : ?>
+				<div class="notice notice-warning">
+					<p>
+						<?php
+						esc_html_e(
+							'This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again.',
+							'cosypaw'
 						);
 						?>
 					</p>
@@ -270,7 +286,63 @@ final class ProductSeeder {
 	}
 
 	/**
-	 * Sideload an image that lives in the theme's /assets directory.
+	 * Whether this install can actually ingest the AVIF motif images.
+	 *
+	 * The motif photography ships as AVIF. WordPress only allows AVIF uploads
+	 * from 6.5 on, and only generates the intermediate thumbnail sizes when the
+	 * image editor (GD or Imagick) was compiled with AVIF support — which many
+	 * shared hosts still lack. Without it a sideload either fails outright or
+	 * lands a full-size original with no thumbnails, which reads as "the shop
+	 * images are broken". Checked up front so the seeder can say so plainly
+	 * instead of silently producing image-less products.
+	 *
+	 * @return bool
+	 */
+	public function avif_supported(): bool {
+		if ( ! function_exists( 'wp_image_editor_supports' ) ) {
+			return false;
+		}
+
+		$allowed = wp_get_mime_types();
+
+		return in_array( 'image/avif', (array) $allowed, true )
+			&& wp_image_editor_supports( array( 'mime_type' => 'image/avif' ) );
+	}
+
+	/**
+	 * Resolve a theme-hosted image URL to its path on disk.
+	 *
+	 * Motif images live in subdirectories (assets/motifs/), so the URL's path
+	 * relative to the theme root is preserved rather than flattened. Because the
+	 * URL can originate from the `cosypaw_catalog_products` filter, the resolved
+	 * path is confirmed to stay inside the theme directory before it is used.
+	 *
+	 * @param string $image_url Image URL under the theme directory.
+	 * @return string Absolute readable path, or '' if it does not resolve.
+	 */
+	private function resolve_theme_path( string $image_url ): string {
+		$theme_uri = get_template_directory_uri();
+		$theme_dir = get_template_directory();
+
+		if ( 0 === strpos( $image_url, $theme_uri ) ) {
+			$relative = ltrim( substr( $image_url, strlen( $theme_uri ) ), '/' );
+		} else {
+			// Not a theme URL — fall back to a bare filename under /assets.
+			$relative = 'assets/' . wp_basename( $image_url );
+		}
+
+		$path = realpath( $theme_dir . '/' . $relative );
+		$root = realpath( $theme_dir );
+
+		if ( false === $path || false === $root || 0 !== strpos( $path, $root . DIRECTORY_SEPARATOR ) ) {
+			return '';
+		}
+
+		return is_readable( $path ) ? $path : '';
+	}
+
+	/**
+	 * Sideload an image that lives in the theme directory.
 	 *
 	 * @param string $image_url Image URL under the theme directory.
 	 * @param int    $parent_id Product post ID to attach to.
@@ -278,8 +350,8 @@ final class ProductSeeder {
 	 * @return int Attachment ID, or 0 on failure.
 	 */
 	private function sideload_local_image( string $image_url, int $parent_id, string $alt = '' ): int {
-		$path = get_template_directory() . '/assets/' . wp_basename( $image_url );
-		if ( ! is_readable( $path ) ) {
+		$path = $this->resolve_theme_path( $image_url );
+		if ( '' === $path ) {
 			return 0;
 		}
 

@@ -344,8 +344,8 @@ msgstr "У раковины, на крючке или на полке — пол
 msgid "Spremni za jutarnju rutinu"
 msgstr "Готовы к утренним делам"
 
-msgid "Cela družina na okupu"
-msgstr "Вся компания в сборе"
+msgid "Na kuki, uvek pri ruci"
+msgstr "На крючке, всегда под рукой"
 
 msgid "Stiže spremno za poklon"
 msgstr "Приходит готовым к подарку"
@@ -382,18 +382,6 @@ msgstr "Довольные покупатели"
 
 msgid "Mali peškirići, veliki osmesi"
 msgstr "Маленькие полотенца, большие улыбки"
-
-msgid "Hiljade ručica već se suše uz CosyPaw — evo šta kažu njihovi vlasnici."
-msgstr "Тысячи ручек уже сохнут с CosyPaw — вот что говорят их владельцы."
-
-msgid "Prosečna ocena"
-msgstr "Средняя оценка"
-
-msgid "Prodatih peškiriča"
-msgstr "Продано полотенец"
-
-msgid "Preporučuje prijateljima"
-msgstr "Рекомендуют друзьям"
 
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
 msgstr "Пришли быстрее, чем я ожидала, и мягче, чем на фото. Дочка сама выбирает, какое использовать каждый день."
@@ -502,6 +490,9 @@ msgstr "У вас нет прав для этого действия."
 
 msgid "WooCommerce is not active."
 msgstr "WooCommerce не активен."
+
+msgid "This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again."
+msgstr "Этот сайт не может обрабатывать изображения AVIF, а фотографии мотивов CosyPaw поставляются именно в этом формате. Seeder создаст товары, но их изображения будут отсутствовать или остаться без миниатюр. Для AVIF нужен WordPress 6.5 или новее и GD/Imagick с поддержкой AVIF — попроси хостинг включить её и запусти seeder снова."
 
 msgid "Cart"
 msgstr "Корзина"

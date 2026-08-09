@@ -44,6 +44,9 @@ msgstr "Nije vam dozvoljeno da ovo uradite."
 msgid "WooCommerce is not active."
 msgstr "WooCommerce nije aktivan."
 
+msgid "This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again."
+msgstr "Ovaj sajt ne može da obradi AVIF slike, a CosyPaw fotografije motiva su u tom formatu. Seeder će kreirati proizvode, ali će njihove slike nedostajati ili biti bez sličica. AVIF zahteva WordPress 6.5 ili noviji i GD/Imagick sa AVIF podrškom — zatraži od hostinga da je uključi, pa ponovo pokreni seeder."
+
 msgid "Cart"
 msgstr "Korpa"
 

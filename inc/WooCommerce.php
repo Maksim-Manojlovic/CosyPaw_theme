@@ -227,7 +227,7 @@ final class WooCommerce {
 			$tiles .= sprintf(
 				'<span class="cosypaw-bundle-thumb__tile" role="img" aria-label="%1$s" style="background-image:url(%2$s)"></span>',
 				esc_attr( $map[ $id ]['name'] ),
-				esc_url( $map[ $id ]['image'] )
+				esc_url( $map[ $id ]['image_sm'] )
 			);
 		}
 

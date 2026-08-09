@@ -3,18 +3,22 @@ Theme Name:        CosyPaw
 Theme URI:         https://example.com/cosypaw
 Author:            CosyPaw
 Author URI:        https://example.com
-Description:       Playful, light pastel WooCommerce theme for CosyPaw (handmade towel-pets). OOP, hook-driven, glassmorphism accents on a cream/pink/mint palette. Classic/hybrid theme (no Full Site Editing).
-Version:           1.0.0
-Requires at least: 6.4
-Tested up to:      6.4
+Description:       Playful, light warm-neutral WooCommerce theme for CosyPaw (handmade towel-pets). OOP, hook-driven, glassmorphism accents on a linen/sand/clay palette sampled from the product photography. Classic/hybrid theme (no Full Site Editing).
+Version:           1.1.0
+Requires at least: 6.5
+Tested up to:      7.0
 Requires PHP:      8.2
 License:           GNU General Public License v2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:       cosypaw
 Domain Path:       /languages
-Tags:              woocommerce, dark-mode, glassmorphism, e-commerce
+Tags:              woocommerce, glassmorphism, e-commerce
 WC requires at least: 8.0
-WC tested up to:   8.0
+WC tested up to:   11.0
+
+NOTE: "Requires at least: 6.5" is a hard floor, not a courtesy. The motif
+photography ships as AVIF, and WordPress only accepts AVIF uploads from 6.5 on;
+on anything older the product images cannot enter the media library at all.
 
 This stylesheet is intentionally minimal. All real styles are built through Vite
 and live in assets/css/main.css. WordPress only requires this header to register

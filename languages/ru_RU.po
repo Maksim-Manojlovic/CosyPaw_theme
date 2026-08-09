@@ -230,11 +230,38 @@ msgstr "Пингвин"
 msgid "Sova"
 msgstr "Сова"
 
+msgid "Panda"
+msgstr "Панда"
+
+msgid "Meda"
+msgstr "Мишка"
+
+msgid "Kapibara"
+msgstr "Капибара"
+
+msgid "Maca"
+msgstr "Кошечка"
+
+msgid "Kucence"
+msgstr "Щенок"
+
+msgid "Zeka"
+msgstr "Зайчик"
+
 msgid "Avokado"
 msgstr "Авокадо"
 
 msgid "Ananas"
 msgstr "Ананас"
+
+msgid "Trešnja"
+msgstr "Вишня"
+
+msgid "Sir"
+msgstr "Сыр"
+
+msgid "Krofna"
+msgstr "Пончик"
 
 msgid "Biskvit"
 msgstr "Бисквит"
@@ -244,6 +271,12 @@ msgstr "Шоколадное печенье"
 
 msgid "Tost"
 msgstr "Тост"
+
+msgid "Lala"
+msgstr "Тюльпан"
+
+msgid "Javorov list"
+msgstr "Кленовый лист"
 
 msgid "Pojedinačno"
 msgstr "Поштучно"

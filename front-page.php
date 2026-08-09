@@ -77,14 +77,14 @@ foreach ( $packages as $pkg ) {
 
 		<div class="hero__art">
 			<div class="hero__blob" aria-hidden="true"></div>
-			<div class="hero__blob hero__blob--mint" aria-hidden="true"></div>
+			<div class="hero__blob hero__blob--sage" aria-hidden="true"></div>
 
 			<div class="hero__card">
 				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni motivi', 'cosypaw' ); ?>">
 					<div class="vertical-carousel__track">
 						<?php foreach ( $featured as $f ) : ?>
 							<div class="vertical-carousel__slide">
-								<div class="hero__slide" role="img" aria-label="<?php echo esc_attr( $f['name'] ); ?>" style="background-image:url('<?php echo esc_url( $f['image'] ); ?>');"></div>
+								<div class="hero__slide" role="img" aria-label="<?php echo esc_attr( $f['name'] ); ?>" style="background-image:url('<?php echo esc_url( $f['image_md'] ); ?>');"></div>
 							</div>
 						<?php endforeach; ?>
 					</div>
@@ -108,25 +108,25 @@ foreach ( $packages as $pkg ) {
 			<?php
 			$benefits = array(
 				array(
-					'tone'  => 'pink',
+					'tone'  => 'sand',
 					'icon'  => '<path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.6A4 4 0 0 1 17 18z"/>',
 					'title' => __( 'Mekano kao oblak', 'cosypaw' ),
 					'text'  => __( 'Plišana mikrofibra prijatna i nežnoj dečjoj koži.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'mint',
+					'tone'  => 'sage',
 					'icon'  => '<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z"/>',
 					'title' => __( 'Upija u trenu', 'cosypaw' ),
 					'text'  => __( 'Brzo suši ručice i ostaje suv i svež tokom dana.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'pink',
+					'tone'  => 'sand',
 					'icon'  => '<path d="M12 4v6"/><circle cx="12" cy="15" r="5"/>',
 					'title' => __( 'Alka za kačenje', 'cosypaw' ),
 					'text'  => __( 'Okačiš ga na kuku ili ručku — uvek na svom mestu.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'mint',
+					'tone'  => 'sage',
 					'icon'  => '<path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5zM12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5z"/>',
 					'title' => __( 'Savršen poklon', 'cosypaw' ),
 					'text'  => __( 'Slatka sitnica koja uvek izmami osmeh i „awww”.', 'cosypaw' ),
@@ -156,8 +156,8 @@ foreach ( $packages as $pkg ) {
 		<div class="lifestyle">
 			<?php
 			$lifestyle = array(
-				array( 'file' => 'lifestyle1.jpg', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
-				array( 'file' => 'lifestyle2.jpg', 'cap' => __( 'Cela družina na okupu', 'cosypaw' ) ),
+				array( 'file' => 'lifestyle1.avif', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
+				array( 'file' => 'lifestyle2.avif', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
 			);
 			$assets_uri = get_template_directory_uri() . '/assets/';
 			foreach ( $lifestyle as $shot ) :
@@ -180,7 +180,7 @@ foreach ( $packages as $pkg ) {
 			</div>
 
 			<div class="pkg-banner">
-				<div class="pkg-banner__img" role="img" aria-label="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.jpg' ); ?>');"></div>
+				<div class="pkg-banner__img" role="img" aria-label="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>');"></div>
 				<div class="pkg-banner__body">
 					<span class="eyebrow"><?php esc_html_e( 'Stiže spremno za poklon', 'cosypaw' ); ?></span>
 					<h3 class="pkg-banner__title"><?php esc_html_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?></h3>
@@ -274,9 +274,9 @@ foreach ( $packages as $pkg ) {
 								class="motif-pick"
 								data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
 								data-name="<?php echo esc_attr( $p['name'] ); ?>"
-								data-image="<?php echo esc_url( $p['image'] ); ?>"
+								data-image="<?php echo esc_url( $p['image_sm'] ); ?>"
 							>
-								<span class="motif-pick__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image'] ); ?>');"></span>
+								<span class="motif-pick__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_sm'] ); ?>');"></span>
 								<span class="motif-pick__row">
 									<span class="motif-pick__name"><?php echo esc_html( $p['name'] ); ?></span>
 									<span class="motif-pick__used" data-used hidden>0</span>
@@ -324,7 +324,7 @@ foreach ( $packages as $pkg ) {
 				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
 				?>
 				<div class="motif-card">
-					<div class="motif-card__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image'] ); ?>');"></div>
+					<div class="motif-card__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_md'] ); ?>');"></div>
 					<div class="motif-card__row">
 						<div>
 							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>
@@ -364,23 +364,6 @@ foreach ( $packages as $pkg ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Zadovoljne mušterije', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Mali peškirići, veliki osmesi', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Hiljade ručica već se suše uz CosyPaw — evo šta kažu njihovi vlasnici.', 'cosypaw' ); ?></p>
-		</div>
-
-		<div class="proof-stats">
-			<?php
-			$stats = array(
-				array( 'num' => __( '4.9/5', 'cosypaw' ), 'label' => __( 'Prosečna ocena', 'cosypaw' ) ),
-				array( 'num' => __( '12.000+', 'cosypaw' ), 'label' => __( 'Prodatih peškiriča', 'cosypaw' ) ),
-				array( 'num' => __( '98%', 'cosypaw' ), 'label' => __( 'Preporučuje prijateljima', 'cosypaw' ) ),
-			);
-			foreach ( $stats as $s ) :
-				?>
-				<div class="proof-stat">
-					<div class="proof-stat__num"><?php echo esc_html( $s['num'] ); ?></div>
-					<div class="proof-stat__label"><?php echo esc_html( $s['label'] ); ?></div>
-				</div>
-			<?php endforeach; ?>
 		</div>
 
 		<div class="testimonials">

@@ -28,7 +28,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
-	background: var(--rose);
+	background: var(--clay);
 	color: #fff;
 	font-family: var(--font-heading);
 	font-weight: 800;
@@ -47,10 +47,10 @@
 .woocommerce a.button.alt:hover,
 .woocommerce button.button.alt:hover,
 .woocommerce .added_to_cart:hover {
-	background: var(--rosedk);
+	background: var(--claydk);
 	color: #fff;
 	transform: translateY(-2px);
-	box-shadow: 0 14px 30px rgba(236, 126, 153, 0.5);
+	box-shadow: 0 14px 30px rgba(161, 94, 55, 0.5);
 }
 
 .woocommerce a.button.added::after {
@@ -81,12 +81,12 @@
 .woocommerce-message::before,
 .woocommerce-info::before,
 .woocommerce-error::before {
-	color: var(--rose);
+	color: var(--clay);
 	left: 1.2em;
 }
 
 .woocommerce-message {
-	border-left: 4px solid var(--mintdk);
+	border-left: 4px solid var(--sage);
 }
 
 /* Links inside notices (e.g. the "Undo?" restore-item link). */
@@ -94,7 +94,7 @@
 .woocommerce-info a,
 .woocommerce-error a,
 .woocommerce a.restore-item {
-	color: var(--rosedk);
+	color: var(--claydk);
 	font-weight: 800;
 	text-decoration: none;
 }
@@ -103,16 +103,16 @@
 .woocommerce-info a:hover,
 .woocommerce-error a:hover,
 .woocommerce a.restore-item:hover {
-	color: var(--rose);
+	color: var(--clay);
 	text-decoration: underline;
 }
 
 .woocommerce-info {
-	border-left: 4px solid var(--pinkmid);
+	border-left: 4px solid var(--sandmid);
 }
 
 .woocommerce-error {
-	border-left: 4px solid var(--rosedk);
+	border-left: 4px solid var(--claydk);
 }
 
 /* ---------- Shop / archive loop ---------- */
@@ -161,7 +161,7 @@
 }
 
 .woocommerce ul.products li.product .price {
-	color: var(--rose);
+	color: var(--clay);
 	font-weight: 800;
 	font-size: 16px;
 }
@@ -172,8 +172,8 @@
 }
 
 .woocommerce span.onsale {
-	background: var(--mint);
-	color: #3c6e60;
+	background: var(--sagelt);
+	color: var(--sage);
 	font-family: var(--font-heading);
 	font-weight: 800;
 	border-radius: var(--radius-pill);
@@ -192,12 +192,12 @@
 }
 
 .woocommerce .woocommerce-breadcrumb a {
-	color: var(--rose);
+	color: var(--clay);
 	text-decoration: none;
 }
 
 .woocommerce .woocommerce-breadcrumb a:hover {
-	color: var(--rosedk);
+	color: var(--claydk);
 }
 
 /* ---------- Related / up-sell blocks ---------- */
@@ -225,7 +225,7 @@
 
 .woocommerce div.product p.price,
 .woocommerce div.product span.price {
-	color: var(--rose);
+	color: var(--clay);
 	font-weight: 800;
 	font-size: 26px;
 }
@@ -254,7 +254,7 @@
 }
 
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
-	background: var(--rose);
+	background: var(--clay);
 }
 
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
@@ -287,7 +287,7 @@
 }
 
 .woocommerce table.cart .product-name a:hover {
-	color: var(--rose);
+	color: var(--clay);
 }
 
 .woocommerce table.cart .product-name .variation,
@@ -321,7 +321,7 @@
 }
 
 .woocommerce .cart .coupon .input-text:focus-visible {
-	outline: 2px solid var(--rose);
+	outline: 2px solid var(--clay);
 	outline-offset: 1px;
 }
 
@@ -350,7 +350,7 @@
 }
 
 .woocommerce .quantity .qty:focus-visible {
-	outline: 2px solid var(--rose);
+	outline: 2px solid var(--clay);
 	outline-offset: 1px;
 }
 
@@ -401,7 +401,7 @@
 
 .woocommerce form .form-row input.input-text:focus-visible,
 .woocommerce form .form-row textarea:focus-visible {
-	outline: 2px solid var(--rose);
+	outline: 2px solid var(--clay);
 	outline-offset: 1px;
 }
 
@@ -454,7 +454,7 @@
 }
 
 .woocommerce-account .woocommerce-MyAccount-navigation li.is-active {
-	background: var(--rose);
+	background: var(--clay);
 }
 
 .woocommerce-account .woocommerce-MyAccount-navigation li.is-active a {

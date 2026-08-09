@@ -48,12 +48,21 @@ foreach ($d in 'inc','template-parts','dist','languages') {
 }
 
 # Image assets only. The css/js source is compiled into dist/ and not shipped.
+# Recursive: the motif photography lives in assets/motifs/, and its relative
+# subdirectory must survive into the zip because Catalog.php builds URLs from it.
+$assetsIn  = Join-Path $root 'assets'
 $assetsOut = Join-Path $stage 'assets'
 New-Item -ItemType Directory -Force -Path $assetsOut | Out-Null
-$imgExt = '.png','.jpg','.jpeg','.gif','.svg','.webp'
-Get-ChildItem (Join-Path $root 'assets') -File |
+$imgExt = '.png','.jpg','.jpeg','.gif','.svg','.webp','.avif'
+Get-ChildItem $assetsIn -File -Recurse |
 	Where-Object { $imgExt -contains $_.Extension.ToLower() } |
-	ForEach-Object { Copy-Item $_.FullName (Join-Path $assetsOut $_.Name) -Force }
+	ForEach-Object {
+		$rel = $_.FullName.Substring($assetsIn.Length).TrimStart('\','/')
+		$dst = Join-Path $assetsOut $rel
+		$dir = Split-Path -Parent $dst
+		if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+		Copy-Item $_.FullName $dst -Force
+	}
 
 # Zip it.
 if (Test-Path $zip) { Remove-Item $zip -Force }

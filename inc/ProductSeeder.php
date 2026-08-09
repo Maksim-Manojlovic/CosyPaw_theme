@@ -179,39 +179,73 @@ final class ProductSeeder {
 			return 0;
 		}
 
-		$created = 0;
+		$passthrough = $this->suppress_theme_translations();
 
-		// Motifs.
-		$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
-		foreach ( $this->catalog->products() as $motif ) {
-			if ( isset( $product_map[ $motif['id'] ] ) && get_post( (int) $product_map[ $motif['id'] ] ) ) {
-				// Already created — ensure its image has alt/caption/description.
-				$this->backfill_image_meta( (int) $product_map[ $motif['id'] ], $motif['name'] );
-				continue;
-			}
-			$pid = $this->create_product( $motif['name'], Catalog::UNIT_PRICE, $motif['image'] );
-			if ( $pid ) {
-				$product_map[ $motif['id'] ] = $pid;
-				++$created;
-			}
-		}
-		update_option( WooCommerce::PRODUCT_MAP_OPTION, $product_map );
+		try {
+			$created = 0;
 
-		// Packages.
-		$package_map = (array) get_option( WooCommerce::PACKAGE_MAP_OPTION, array() );
-		foreach ( $this->catalog->packages() as $pkg ) {
-			if ( isset( $package_map[ $pkg['id'] ] ) && get_post( (int) $package_map[ $pkg['id'] ] ) ) {
-				continue;
+			// Motifs.
+			$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
+			foreach ( $this->catalog->products() as $motif ) {
+				if ( isset( $product_map[ $motif['id'] ] ) && get_post( (int) $product_map[ $motif['id'] ] ) ) {
+					// Already created — ensure its image has alt/caption/description.
+					$this->backfill_image_meta( (int) $product_map[ $motif['id'] ], $motif['name'] );
+					continue;
+				}
+				$pid = $this->create_product( $motif['name'], Catalog::UNIT_PRICE, $motif['image'] );
+				if ( $pid ) {
+					$product_map[ $motif['id'] ] = $pid;
+					++$created;
+				}
 			}
-			$pid = $this->create_product( $pkg['name'], (int) $pkg['price'], '' );
-			if ( $pid ) {
-				$package_map[ $pkg['id'] ] = $pid;
-				++$created;
+			update_option( WooCommerce::PRODUCT_MAP_OPTION, $product_map );
+
+			// Packages.
+			$package_map = (array) get_option( WooCommerce::PACKAGE_MAP_OPTION, array() );
+			foreach ( $this->catalog->packages() as $pkg ) {
+				if ( isset( $package_map[ $pkg['id'] ] ) && get_post( (int) $package_map[ $pkg['id'] ] ) ) {
+					continue;
+				}
+				$pid = $this->create_product( $pkg['name'], (int) $pkg['price'], '' );
+				if ( $pid ) {
+					$package_map[ $pkg['id'] ] = $pid;
+					++$created;
+				}
 			}
+			update_option( WooCommerce::PACKAGE_MAP_OPTION, $package_map );
+		} finally {
+			remove_filter( 'gettext', $passthrough, 99 );
 		}
-		update_option( WooCommerce::PACKAGE_MAP_OPTION, $package_map );
 
 		return $created;
+	}
+
+	/**
+	 * Make Catalog strings resolve to their untranslated msgid for the duration
+	 * of a seed run.
+	 *
+	 * A seeded product's post_title doubles as the msgid that
+	 * WooCommerce::translate_product_title() feeds back through __() on every
+	 * request, so the title must be stored in the source (Serbian) language. The
+	 * Catalog names are already gettext output, which means seeding from an
+	 * English or Russian admin would otherwise freeze the *translation* into the
+	 * database — where it matches no msgid, and the product then shows that one
+	 * language to every visitor. Suppressing the theme's own translations while
+	 * the names are read makes the stored title locale-independent.
+	 *
+	 * Only the theme text domain is affected, and only until the filter is
+	 * removed in seed()'s finally block.
+	 *
+	 * @return callable The registered filter, for removal.
+	 */
+	private function suppress_theme_translations(): callable {
+		$passthrough = static function ( $translation, $text, $domain ) {
+			return COSYPAW_TEXT_DOMAIN === $domain ? $text : $translation;
+		};
+
+		add_filter( 'gettext', $passthrough, 99, 3 );
+
+		return $passthrough;
 	}
 
 	/**

@@ -52,6 +52,13 @@ final class WooCommerce {
 	public const PACKAGE_MAP_OPTION = 'cosypaw_package_map';
 
 	/**
+	 * Order line-item meta key holding the raw motif ids of a bundle.
+	 *
+	 * @var string
+	 */
+	private const ORDER_MOTIFS_META = 'cosypaw_motifs';
+
+	/**
 	 * Theme text domain.
 	 *
 	 * @var string
@@ -116,6 +123,8 @@ final class WooCommerce {
 		add_filter( 'woocommerce_get_item_data', array( $this, 'display_motifs_cart_item_data' ), 10, 2 );
 		add_filter( 'woocommerce_cart_item_thumbnail', array( $this, 'motifs_cart_item_thumbnail' ), 10, 2 );
 		add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'save_motifs_order_item' ), 10, 3 );
+		add_filter( 'woocommerce_order_item_display_meta_key', array( $this, 'display_motifs_order_meta_key' ), 10, 3 );
+		add_filter( 'woocommerce_order_item_display_meta_value', array( $this, 'display_motifs_order_meta_value' ), 10, 3 );
 
 		// Translate seeded product titles via gettext (their names are already
 		// msgids in /languages). Scoped to our product/package IDs only.
@@ -239,7 +248,14 @@ final class WooCommerce {
 	}
 
 	/**
-	 * Persist the chosen motifs (as names) onto the order line item.
+	 * Persist the chosen motifs onto the order line item — as raw motif ids.
+	 *
+	 * Storing the display names instead would freeze the buyer's language into
+	 * the order: a Russian checkout would leave "Мотивы: Жираф, Панда" on the
+	 * line item, unreadable to the shop owner and unchanged by any later locale.
+	 * Ids are language-neutral, so the label and the names are resolved at render
+	 * time by display_motifs_order_meta_key()/_value() — the order then reads in
+	 * whatever language the viewer is using, admin included.
 	 *
 	 * @param object $item   Order line item (\WC_Order_Item_Product at runtime).
 	 * @param string $key    Cart item key.
@@ -249,8 +265,44 @@ final class WooCommerce {
 	public function save_motifs_order_item( $item, $key, $values ): void {
 		unset( $key );
 		if ( ! empty( $values['cosypaw_motifs'] ) ) {
-			$item->add_meta_data( __( 'Motivi', 'cosypaw' ), $this->motif_names( (string) $values['cosypaw_motifs'] ), true );
+			$item->add_meta_data( self::ORDER_MOTIFS_META, (string) $values['cosypaw_motifs'], true );
 		}
+	}
+
+	/**
+	 * Label the raw motif meta row in the current language.
+	 *
+	 * @param string $display_key Default display key.
+	 * @param object $meta        Meta row (\WC_Meta_Data at runtime).
+	 * @param object $item        Order item (\WC_Order_Item at runtime).
+	 * @return string
+	 */
+	public function display_motifs_order_meta_key( $display_key, $meta, $item ): string {
+		unset( $item );
+
+		if ( $meta && self::ORDER_MOTIFS_META === $meta->key ) {
+			return __( 'Motivi', 'cosypaw' );
+		}
+
+		return (string) $display_key;
+	}
+
+	/**
+	 * Resolve the raw motif ids to translated names for display.
+	 *
+	 * @param string $display_value Default display value.
+	 * @param object $meta          Meta row (\WC_Meta_Data at runtime).
+	 * @param object $item          Order item (\WC_Order_Item at runtime).
+	 * @return string
+	 */
+	public function display_motifs_order_meta_value( $display_value, $meta, $item ): string {
+		unset( $item );
+
+		if ( $meta && self::ORDER_MOTIFS_META === $meta->key ) {
+			return esc_html( $this->motif_names( (string) $meta->value ) );
+		}
+
+		return (string) $display_value;
 	}
 
 	/**

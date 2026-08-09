@@ -230,11 +230,38 @@ msgstr "Penguin"
 msgid "Sova"
 msgstr "Owl"
 
+msgid "Panda"
+msgstr "Panda"
+
+msgid "Meda"
+msgstr "Teddy bear"
+
+msgid "Kapibara"
+msgstr "Capybara"
+
+msgid "Maca"
+msgstr "Kitty"
+
+msgid "Kucence"
+msgstr "Puppy"
+
+msgid "Zeka"
+msgstr "Bunny"
+
 msgid "Avokado"
 msgstr "Avocado"
 
 msgid "Ananas"
 msgstr "Pineapple"
+
+msgid "Trešnja"
+msgstr "Cherry"
+
+msgid "Sir"
+msgstr "Cheese"
+
+msgid "Krofna"
+msgstr "Donut"
 
 msgid "Biskvit"
 msgstr "Biscuit"
@@ -244,6 +271,12 @@ msgstr "Chocolate cookie"
 
 msgid "Tost"
 msgstr "Toast"
+
+msgid "Lala"
+msgstr "Tulip"
+
+msgid "Javorov list"
+msgstr "Maple leaf"
 
 msgid "Pojedinačno"
 msgstr "Single"

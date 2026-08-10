@@ -168,17 +168,39 @@ final class WooCommerceTest extends TestCase {
 	}
 
 	/**
-	 * With no override stored, the Catalog's own (gettext) name survives.
+	 * With no override stored, the name and price come from the WooCommerce
+	 * product — editing either in wp-admin has to reach the landing page.
 	 */
-	public function test_inject_product_ids_keeps_gettext_name_without_override(): void {
+	public function test_inject_product_ids_takes_name_and_price_from_the_product(): void {
 		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
 		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
 		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Zirafica', '990' ) );
 
 		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
-		$out = $wc->inject_product_ids( array( array( 'id' => 'zirafa', 'name' => 'Giraffe' ) ) );
+		$out = $wc->inject_product_ids(
+			array( array( 'id' => 'zirafa', 'name' => 'Žirafa', 'price' => 790 ) )
+		);
 
-		$this->assertSame( 'Giraffe', $out[0]['name'] );
+		$this->assertSame( 'Zirafica', $out[0]['name'] );
+		$this->assertSame( 990, $out[0]['price'] );
+	}
+
+	/**
+	 * A package's advertised per-towel price is recomputed from the price
+	 * WooCommerce actually charges, so the two can never drift apart.
+	 */
+	public function test_inject_package_ids_recomputes_per_unit_price(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'trio' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '1800' ) );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_package_ids(
+			array( array( 'id' => 'trio', 'name' => 'Trio paket', 'qty' => 3, 'price' => 1600, 'per' => 534 ) )
+		);
+
+		$this->assertSame( 1800, $out[0]['price'] );
+		$this->assertSame( 600, $out[0]['per'] );
 	}
 
 	/**

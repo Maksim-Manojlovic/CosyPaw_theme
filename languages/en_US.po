@@ -122,8 +122,8 @@ msgstr "The whole crew"
 msgid "Upoznaj sve motive"
 msgstr "Meet all the designs"
 
-msgid "Svaki po %s pojedinačno — ili ih spoji u paket i uštedi."
-msgstr "Each one %s individually — or bundle them and save."
+msgid "Od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "From %s each — or bundle them and save."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 pc"

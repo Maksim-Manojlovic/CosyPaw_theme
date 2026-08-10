@@ -122,8 +122,8 @@ msgstr "Вся компания"
 msgid "Upoznaj sve motive"
 msgstr "Познакомься со всеми мотивами"
 
-msgid "Svaki po %s pojedinačno — ili ih spoji u paket i uštedi."
-msgstr "Каждый по %s по отдельности — или собери в набор и сэкономь."
+msgid "Od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "От %s за штуку — или собери в набор и сэкономь."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 шт"

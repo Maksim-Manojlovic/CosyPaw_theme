@@ -20,6 +20,20 @@ if ( ! class_exists( 'WC_Product' ) ) {
 	class WC_Product {
 
 		/**
+		 * Product name.
+		 *
+		 * @var string
+		 */
+		private string $name;
+
+		/**
+		 * Selling price.
+		 *
+		 * @var string
+		 */
+		private string $price;
+
+		/**
 		 * Whether the product can be bought.
 		 *
 		 * @var bool
@@ -29,10 +43,32 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		/**
 		 * Constructor.
 		 *
-		 * @param bool $purchasable Purchasable flag.
+		 * @param string $name        Product name.
+		 * @param string $price       Selling price.
+		 * @param bool   $purchasable Purchasable flag.
 		 */
-		public function __construct( bool $purchasable = true ) {
+		public function __construct( string $name = 'Žirafa', string $price = '790', bool $purchasable = true ) {
+			$this->name        = $name;
+			$this->price       = $price;
 			$this->purchasable = $purchasable;
+		}
+
+		/**
+		 * Product name.
+		 *
+		 * @return string
+		 */
+		public function get_name(): string {
+			return $this->name;
+		}
+
+		/**
+		 * Selling price.
+		 *
+		 * @return string
+		 */
+		public function get_price(): string {
+			return $this->price;
 		}
 
 		/**

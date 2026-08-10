@@ -470,12 +470,11 @@ final class WooCommerce {
 				$row['product_id']      = $pid;
 				$row['add_to_cart_url'] = esc_url_raw( add_query_arg( 'add-to-cart', $pid ) );
 
-				// A manual name from the product editor beats the .po translation
-				// everywhere the Catalog is rendered: motif grid, hero carousel,
-				// bundle picker, cart thumbnails and the order's motif list.
-				$override = $this->names->get( $pid );
-				if ( '' !== $override ) {
-					$row['name'] = $override;
+				$product = wc_get_product( $pid );
+
+				if ( ! $product instanceof \WC_Product ) {
+					$row['available'] = false;
+					continue;
 				}
 
 				// Trashing or unpublishing a product is how the shop retires a
@@ -484,10 +483,25 @@ final class WooCommerce {
 				// longer be bought. Flag it so the front page can leave it out.
 				// The row itself stays in the catalog: motif_map() still has to
 				// resolve the name for orders placed while it was on sale.
-				$product           = wc_get_product( $pid );
-				$row['available']  = $product instanceof \WC_Product
-					&& 'publish' === get_post_status( $pid )
-					&& $product->is_purchasable();
+				$row['available'] = 'publish' === get_post_status( $pid ) && $product->is_purchasable();
+
+				// Once a product exists, WooCommerce owns the name and the price.
+				// The Catalog values are only the seed: editing either in wp-admin
+				// has to move the landing page too, and a price shown there that
+				// differs from the one WooCommerce charges at checkout is worse
+				// than no price at all. product_name() keeps the manual EN/RU
+				// override and the .po translation in front of the stored title.
+				$row['name'] = $this->product_name( $pid, (string) $product->get_name() );
+
+				$price = $product->get_price();
+				if ( '' !== $price && is_numeric( $price ) ) {
+					$row['price'] = (int) round( (float) $price );
+
+					// Packages advertise a per-towel price derived from the total.
+					if ( ! empty( $row['qty'] ) ) {
+						$row['per'] = (int) round( $row['price'] / (int) $row['qty'] );
+					}
+				}
 			}
 		}
 		unset( $row );

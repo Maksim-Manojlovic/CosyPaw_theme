@@ -31,10 +31,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					// The targets are homepage sections, so off the front page a
 					// bare "#paketi" resolves against the current URL and goes
 					// nowhere. Same home_url() prefix the header nav uses.
+					// Scroll order, matching the header nav.
 					$cosypaw_footer_links = array(
+						'#galerija' => __( 'Svi motivi', 'cosypaw' ),
 						'#paketi'   => __( 'Paketi', 'cosypaw' ),
 						'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
-						'#galerija' => __( 'Svi motivi', 'cosypaw' ),
 					);
 					$cosypaw_home_base = is_front_page() ? '' : home_url( '/' );
 					foreach ( $cosypaw_footer_links as $cosypaw_anchor => $cosypaw_label ) {

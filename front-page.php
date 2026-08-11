@@ -48,7 +48,7 @@ foreach ( $packages as $pkg ) {
 }
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" tabindex="-1">
 
 	<!-- HERO -->
 	<section id="top" class="hero">

@@ -504,6 +504,42 @@ h1, h2, h3, h4 {
 	box-shadow: 0 1px 2px rgba(62, 51, 42, 0.25);
 }
 
+/**
+ * Skip link (WCAG 2.4.1).
+ *
+ * Without it a keyboard user crosses the marquee, brand, every nav item, the
+ * cart and three language flags before reaching content — on every page. Hidden
+ * until focused, then pinned over the header.
+ *
+ * The <main id="primary"> targets carry tabindex="-1" so the jump actually moves
+ * focus; without it browsers scroll but leave focus on the link.
+ */
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: var(--space-4);
+	z-index: 100;
+	background: var(--color-surface-elevated);
+	color: var(--color-accent-strong);
+	font-family: var(--font-heading);
+	font-weight: 800;
+	padding: 12px 22px;
+	border-radius: var(--radius-pill);
+	box-shadow: var(--shadow-md), inset 0 0 0 2px var(--color-accent);
+	text-decoration: none;
+	transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+	top: var(--space-3);
+}
+
+/* The landmark is only focusable to receive the skip jump; it should not draw a
+   focus ring around the entire page when it does. */
+.site-main:focus {
+	outline: none;
+}
+
 /* Accessible hidden text. */
 .screen-reader-text {
 	border: 0;

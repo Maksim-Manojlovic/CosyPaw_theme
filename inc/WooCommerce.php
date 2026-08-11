@@ -581,7 +581,7 @@ final class WooCommerce {
 	 * @return void
 	 */
 	public function open_content_wrapper(): void {
-		echo '<main id="primary" class="site-main shop-main">';
+		echo '<main id="primary" class="site-main shop-main" tabindex="-1">';
 	}
 
 	/**

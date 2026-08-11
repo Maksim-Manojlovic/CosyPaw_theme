@@ -21,6 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<a class="skip-link" href="#primary"><?php esc_html_e( 'Pređi na sadržaj', 'cosypaw' ); ?></a>
+
 <!-- Announcement marquee -->
 <div class="announce" aria-hidden="true">
 	<?php

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="primary" class="site-main glass-card">
+<main id="primary" class="site-main glass-card" tabindex="-1">
 	<?php
 	if ( have_posts() ) :
 		while ( have_posts() ) :

@@ -460,7 +460,65 @@ final class WooCommerce {
 	 * @return array<int,array<string,mixed>>
 	 */
 	public function inject_package_ids( array $packages ): array {
-		return $this->inject_ids( $packages, (array) get_option( self::PACKAGE_MAP_OPTION, array() ) );
+		$packages = $this->inject_ids( $packages, (array) get_option( self::PACKAGE_MAP_OPTION, array() ) );
+
+		return $this->derive_package_savings( $packages );
+	}
+
+	/**
+	 * Recompute the crossed-out price and the saving badge from the live prices.
+	 *
+	 * inject_ids() already replaces a package's price with what WooCommerce
+	 * actually charges, but the comparison alongside it — "1.580 RSD" struck
+	 * through, "Ušteda 380 RSD" on the ribbon — stayed at the Catalog seed. Once
+	 * the shop repriced, the card advertised a discount off a price nobody has
+	 * charged in months, next to the real one. Both numbers are derived from the
+	 * single-towel package here so the card can only ever compare the live
+	 * prices against each other.
+	 *
+	 * Skipped whole if the single-towel package is unmapped: the Catalog seed is
+	 * at least internally consistent, which a half-derived card would not be.
+	 *
+	 * @param array<int,array<string,mixed>> $packages Packages, ids already injected.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private function derive_package_savings( array $packages ): array {
+		$unit = 0;
+		foreach ( $packages as $row ) {
+			if ( 1 === (int) ( $row['qty'] ?? 0 ) && ! empty( $row['product_id'] ) && ! empty( $row['price'] ) ) {
+				$unit = (int) $row['price'];
+				break;
+			}
+		}
+
+		if ( $unit < 1 ) {
+			return $packages;
+		}
+
+		foreach ( $packages as &$row ) {
+			$qty = (int) ( $row['qty'] ?? 0 );
+			if ( $qty < 2 || empty( $row['product_id'] ) ) {
+				continue;
+			}
+
+			$full    = $unit * $qty;
+			$price   = (int) $row['price'];
+			$saving  = $full - $price;
+			$is_deal = $saving > 0;
+
+			// A bundle priced at or above the loose towels is not a saving, and
+			// a struck-through price under the one being charged reads as a
+			// price rise. Drop both rather than print a negative discount.
+			$row['old'] = $is_deal ? $full : null;
+
+			if ( ! empty( $row['badge_saving'] ) ) {
+				/* translators: %s: formatted amount saved, e.g. "490 RSD". */
+				$row['badge'] = $is_deal ? sprintf( __( 'Ušteda %s', 'cosypaw' ), Catalog::format_price( $saving ) ) : null;
+			}
+		}
+		unset( $row );
+
+		return $packages;
 	}
 
 	/**

@@ -15,9 +15,11 @@
 # Vite dev server marker (written by vite.config.js while `npm run dev` runs)
 /hot
 
-# Lock files for dev tooling (optional to commit; ignored here by default)
-composer.lock
-package-lock.json
+# Lock files are committed on purpose. CI installs with `npm ci` and caches on
+# the lockfile, both of which require it to be in the repo, and pinning the
+# resolved versions keeps a deployed build byte-identical to the one tested
+# here — a Vite patch release must not quietly change the asset hashes that
+# ship to production.
 
 # OS / editor cruft
 .DS_Store

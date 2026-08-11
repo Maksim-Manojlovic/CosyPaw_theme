@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="footer-col">
 				<div class="footer-col__title"><?php esc_html_e( 'Poručivanje', 'cosypaw' ); ?></div>
-				<a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-ig">
+				<a href="https://www.instagram.com/cosypaw_?igsh=MTQzZmgwenVhNWN3Zg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-ig">
 					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
 					@cosypaw
 				</a>

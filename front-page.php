@@ -238,10 +238,11 @@ foreach ( $packages as $pkg ) {
 			<div class="pkg-banner">
 				<img
 					class="pkg-banner__img"
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/motifs/pingvin.avif' ); ?>"
+					srcset="<?php echo esc_attr( get_template_directory_uri() . '/assets/motifs/pingvin-md.avif 600w, ' . get_template_directory_uri() . '/assets/motifs/pingvin.avif 1086w' ); ?>"
 					sizes="(max-width: 880px) calc(100vw - 44px), 547px"
 					width="1086"
-					height="1086"
+					height="1448"
 					alt="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>"
 					loading="lazy"
 					decoding="async"

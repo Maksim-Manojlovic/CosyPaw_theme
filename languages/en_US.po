@@ -515,9 +515,3 @@ msgstr "How can I pay?"
 msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
 msgstr "Payment is cash on delivery — you pay the courier when you receive the package."
 
-msgid "Mogu li da vratim proizvod?"
-msgstr "Can I return a product?"
-
-msgid "Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca."
-msgstr "Of course. You have 14 days to return an unused towel for a refund."
-

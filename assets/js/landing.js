@@ -20,10 +20,12 @@ const boot = () => {
 		new VerticalCarousel(el);
 		const label = el.querySelector('[data-carousel-label]');
 		if (label) {
-			const slides = el.querySelectorAll('.vertical-carousel__slide [role="img"]');
+			// Slides are <img> since the responsive-image conversion, so the
+			// motif name is the alt text, not a role="img" aria-label.
+			const slides = el.querySelectorAll('.vertical-carousel__slide img');
 			el.addEventListener('carousel:change', (e) => {
 				const slide = slides[e.detail.index];
-				if (slide) label.textContent = slide.getAttribute('aria-label') || '';
+				if (slide) label.textContent = slide.getAttribute('alt') || '';
 			});
 		}
 	});

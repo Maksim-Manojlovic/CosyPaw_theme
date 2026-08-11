@@ -153,6 +153,8 @@ export class VerticalCarousel {
 	_render(animate = true) {
 		if (!this.track) return;
 
+		this._syncSlideVisibility();
+
 		if (this.rafId !== null) {
 			cancelAnimationFrame(this.rafId);
 		}
@@ -169,6 +171,18 @@ export class VerticalCarousel {
 			} else {
 				this.track.style.transform = `translateY(-${offset}%)`;
 			}
+		});
+	}
+
+	/**
+	 * Expose only the slide on screen. All slides stay in the DOM and are moved
+	 * by a transform, so without this a screen reader reads every motif in the
+	 * carousel as if all of them were visible.
+	 * @private
+	 */
+	_syncSlideVisibility() {
+		this.slides.forEach((slide, i) => {
+			slide.toggleAttribute('aria-hidden', i !== this.index);
 		});
 	}
 
@@ -314,8 +328,12 @@ export class VerticalCarousel {
 		);
 
 		if (announce && this.status) {
-			const slide = this.slides[this.index].querySelector('[aria-label]');
-			this.status.textContent = slide ? slide.getAttribute('aria-label') : '';
+			// The slide's accessible name: alt on an <img>, aria-label on any
+			// other labelled element a consumer of this component might use.
+			const slide = this.slides[this.index].querySelector('img, [aria-label]');
+			this.status.textContent = slide
+				? slide.getAttribute('alt') || slide.getAttribute('aria-label') || ''
+				: '';
 		}
 
 		// Reset the autoplay interval so a manual move gets a full dwell.

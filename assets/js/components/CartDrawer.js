@@ -331,9 +331,11 @@ export class CartDrawer {
 		this.toastEl.classList.toggle('toast--warn', kind === 'warn');
 		this.toastEl.hidden = false;
 		if (this._toastTimer) clearTimeout(this._toastTimer);
+		// 3.5s: the previous 2.6s sat under the 3-5s window a transient message
+		// needs to be readable in, especially the longer warn strings.
 		this._toastTimer = setTimeout(() => {
 			this.toastEl.hidden = true;
-		}, 2600);
+		}, 3500);
 	}
 }
 

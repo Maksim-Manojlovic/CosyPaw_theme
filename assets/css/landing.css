@@ -817,9 +817,9 @@
 	background: var(--sagelt);
 	color: var(--sage);
 	font-weight: 800;
-	font-size: 11px;
-	min-width: 18px;
-	height: 18px;
+	font-size: 12px;
+	min-width: 20px;
+	height: 20px;
 	padding: 0 5px;
 	border-radius: 9px;
 	display: flex;
@@ -1145,7 +1145,6 @@
 	}
 	.motifs { grid-template-columns: 1fr 1fr; }
 	.testimonials { grid-template-columns: 1fr; }
-	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
 	.lifestyle { grid-template-columns: 1fr; }
 	.pkg-banner { grid-template-columns: 1fr; }
 	.pkg-banner__img { min-height: 220px; }

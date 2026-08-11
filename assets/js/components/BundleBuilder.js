@@ -180,12 +180,30 @@ export class BundleBuilder {
 		this._render();
 	}
 
+	/**
+	 * Fill the remaining slots at random.
+	 *
+	 * Draws without replacement while distinct motifs remain, so "Iznenadi me"
+	 * cannot hand back a Trio of three identical towels — the surprise is meant
+	 * to be a variety pack. Falls back to repeats only if the catalogue is
+	 * smaller than the package.
+	 */
 	randomFill() {
 		const qty = this._qty();
+		const pool = this.motifs
+			.map((m) => m.dataset.motifId)
+			.filter((id) => !this.picks.includes(id));
+
 		while (this.picks.length < qty && this.motifs.length) {
-			const m = this.motifs[Math.floor(Math.random() * this.motifs.length)];
-			this.picks.push(m.dataset.motifId);
+			if (pool.length) {
+				const i = Math.floor(Math.random() * pool.length);
+				this.picks.push(pool.splice(i, 1)[0]);
+			} else {
+				const m = this.motifs[Math.floor(Math.random() * this.motifs.length)];
+				this.picks.push(m.dataset.motifId);
+			}
 		}
+
 		this._render();
 		this._scrollTo(this.ctaBtn);
 	}

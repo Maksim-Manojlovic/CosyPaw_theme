@@ -22,7 +22,7 @@ get_header();
 
 		<?php get_search_form(); ?>
 
-		<p style="margin-top:24px;">
+		<p class="notfound__action">
 			<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Nazad na početnu', 'cosypaw' ); ?></a>
 		</p>
 	</div>

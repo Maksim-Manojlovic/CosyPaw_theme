@@ -361,6 +361,10 @@
 	margin: 12px 0 0;
 }
 
+.notfound__action {
+	margin-top: 24px;
+}
+
 .notfound__text {
 	color: var(--muted);
 	font-size: 17px;

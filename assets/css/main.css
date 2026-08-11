@@ -436,6 +436,11 @@ h1, h2, h3, h4 {
 	letter-spacing: 0.2px;
 }
 
+/* Footer lockup, which sits larger than the header one. */
+.brand-name--lg {
+	font-size: 24px;
+}
+
 .nav__links {
 	display: flex;
 	align-items: center;
@@ -926,6 +931,17 @@ h1, h2, h3, h4 {
 .cart-empty__emoji {
 	font-size: 46px;
 	margin-bottom: 8px;
+}
+
+.cart-empty__title {
+	font-weight: 700;
+	font-size: 16px;
+	margin: 0;
+}
+
+.cart-empty__hint {
+	font-size: 14px;
+	margin: 6px 0 0;
 }
 
 .cart-item {

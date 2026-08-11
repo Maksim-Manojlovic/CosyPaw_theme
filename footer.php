@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span class="brand-mark">
 						<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
 					</span>
-					<span class="brand-name" style="font-size:24px;"><?php bloginfo( 'name' ); ?></span>
+					<span class="brand-name brand-name--lg"><?php bloginfo( 'name' ); ?></span>
 				</div>
 				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
 			</div>
@@ -91,9 +91,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="cart-drawer__body" data-cart-body>
 			<div class="cart-empty" data-cart-empty>
-				<div class="cart-empty__emoji">🧺</div>
-				<p style="font-weight:700;font-size:16px;margin:0;"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
-				<p style="font-size:14px;margin:6px 0 0;"><?php esc_html_e( 'Izaberi paket ili omiljeni motiv.', 'cosypaw' ); ?></p>
+				<div class="cart-empty__emoji" aria-hidden="true">🧺</div>
+				<p class="cart-empty__title"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
+				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni motiv.', 'cosypaw' ); ?></p>
 			</div>
 			<div data-cart-items></div>
 		</div>

@@ -96,8 +96,9 @@
 
 .hero__blob {
 	position: absolute;
-	width: 360px;
-	height: 360px;
+	width: min(360px, 90%);
+	aspect-ratio: 1;
+	height: auto;
 	border-radius: 46% 54% 60% 40% / 52% 44% 56% 48%;
 	background: var(--sand);
 	top: 40px;
@@ -107,7 +108,8 @@
 
 .hero__blob--sage {
 	width: 150px;
-	height: 150px;
+	aspect-ratio: 1;
+	height: auto;
 	border-radius: 50%;
 	background: var(--sagelt);
 	bottom: 30px;
@@ -119,10 +121,15 @@
 	animation: floaty2 6s ease-in-out infinite;
 }
 
+/* Fluid, not a fixed 380px. At 375px the available width inside .hero is 331px,
+   so the fixed card overflowed by ~24px on each side and only looked contained
+   because body carries overflow-x: hidden — the rotated corners were being
+   clipped. aspect-ratio keeps the 380x480 proportion as it narrows. */
 .hero__card {
 	position: relative;
-	width: 380px;
-	height: 480px;
+	width: min(380px, 100%);
+	aspect-ratio: 380 / 480;
+	height: auto;
 	border-radius: 34px;
 	background: #fff;
 	padding: 16px;
@@ -1131,6 +1138,12 @@
 
 @media (max-width: 560px) {
 	.hero__title { font-size: 38px; }
+	/* Below this width the card is narrower than 380px and sets its own height
+	   from the aspect ratio, so a fixed min-height only adds dead space. */
+	.hero__art {
+		min-height: 0;
+		padding-block: var(--space-5);
+	}
 	.benefits, .motifs { grid-template-columns: 1fr; }
 	.section__title { font-size: 30px; }
 }

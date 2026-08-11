@@ -32,14 +32,14 @@ msgstr "Поиск…"
 msgid "Traži"
 msgstr "Найти"
 
-msgid "Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim."
-msgstr "Сшитые вручную полотенца-зверушки, которые делают ванную мягкой, аккуратной и — очаровательной."
+msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo."
+msgstr "Декоративные полотенца-зверушки из мягкой микрофибры, с петелькой для подвешивания. Более 20 мотивов — выбери свои и побалуй ванную."
 
-msgid "Mekani svet peškiriča"
+msgid "Mekani svet peškirića"
 msgstr "Мягкий мир полотенчиков"
 
-msgid "Slatki peškirići koji grle %s"
-msgstr "Милые полотенца, что обнимают %s"
+msgid "Ručno šiveni peškirići koji grle %s"
+msgstr "Сшитые вручную полотенца, что обнимают %s"
 
 msgid "tvoje kupatilo"
 msgstr "твою ванную"
@@ -98,8 +98,8 @@ msgstr "Идеальный подарок"
 msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
 msgstr "Милая мелочь, что всегда вызывает улыбку и «ня»."
 
-msgid "Što više grlića, veća ušteda"
-msgstr "Чем больше обнимашек, тем больше выгода"
+msgid "Što više peškirića, veća ušteda"
+msgstr "Чем больше полотенец, тем больше выгода"
 
 msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Сочетай мотивы как хочешь — цена за штуку падает с каждым следующим."
@@ -122,8 +122,8 @@ msgstr "Вся компания"
 msgid "Upoznaj sve motive"
 msgstr "Познакомься со всеми мотивами"
 
-msgid "Od %s po komadu — ili ih spoji u paket i uštedi."
-msgstr "От %s за штуку — или собери в набор и сэкономь."
+msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "Декоративные полотенца для ванной, от %s за штуку — или собери в набор и сэкономь."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 шт"
@@ -143,7 +143,7 @@ msgstr "Добавлено"
 msgid "Rezultati za „%s”"
 msgstr "Результаты по запросу «%s»"
 
-msgid "Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgid "Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
 msgstr "Мягкий мир полотенчиков. Сшитые вручную зверушки, что делают любую ванную теплее."
 
 msgid "Brzi linkovi"
@@ -161,7 +161,7 @@ msgstr "Заказ"
 msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
 msgstr "Заказывай через DM или корзину.<br>Оплата при получении."
 
-msgid "© %d CosyPaw — Mekani svet peškiriča"
+msgid "© %d CosyPaw — Mekani svet peškirića"
 msgstr "© %d CosyPaw — Мягкий мир полотенчиков"
 
 msgid "Ručni rad • Made with love"
@@ -193,6 +193,18 @@ msgstr "Ручная работа с большой любовью"
 
 msgid "Besplatna dostava na Trio paket"
 msgstr "Бесплатная доставка для набора Trio"
+
+msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgstr "Сшитые вручную декоративные полотенца для ванной — мягкая микрофибра, петелька для подвешивания и более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии."
+
+msgid "Rezultati pretrage za „%s“."
+msgstr "Результаты поиска по запросу «%s»."
+
+msgid "CosyPaw ukrasni peškirići"
+msgstr "Декоративные полотенца CosyPaw"
+
+msgid "Ručno šiveni ukrasni peškirići od plišane mikrofibre, sa alkom za kačenje."
+msgstr "Сшитые вручную декоративные полотенца из плюшевой микрофибры, с петелькой для подвешивания."
 
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
@@ -395,7 +407,7 @@ msgstr "У тебя дома"
 msgid "Tvoj kutak, malo mekši"
 msgstr "Твой уголок, чуть мягче"
 
-msgid "Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgid "Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
 msgstr "У раковины, на крючке или на полке — полотенца впишутся в любой дом и добавят капельку тепла."
 
 msgid "Spremni za jutarnju rutinu"

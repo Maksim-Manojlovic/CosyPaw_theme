@@ -42,7 +42,7 @@ $from_price = $products
 	: \Theme\Catalog::UNIT_PRICE;
 $packages      = $catalog->packages();
 $default_pkg   = $catalog->default_package();
-$tagline       = __( 'Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim.', 'cosypaw' );
+$tagline       = __( 'Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo.', 'cosypaw' );
 
 // Resolve the initially-selected package for the CTA label.
 $selected = $packages[0];
@@ -61,13 +61,13 @@ foreach ( $packages as $pkg ) {
 		<div class="hero__copy">
 			<span class="badge">
 				<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1.2 9 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.4 0 4.8 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
-				<?php esc_html_e( 'Mekani svet peškiriča', 'cosypaw' ); ?>
+				<?php esc_html_e( 'Mekani svet peškirića', 'cosypaw' ); ?>
 			</span>
 			<h1 class="hero__title">
 				<?php
 				printf(
 					/* translators: %s: highlighted phrase "tvoje kupatilo". */
-					esc_html__( 'Slatki peškirići koji grle %s', 'cosypaw' ),
+					esc_html__( 'Ručno šiveni peškirići koji grle %s', 'cosypaw' ),
 					'<em>' . esc_html__( 'tvoje kupatilo', 'cosypaw' ) . '</em>'
 				);
 				?>
@@ -164,7 +164,7 @@ foreach ( $packages as $pkg ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve motive', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
+			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
 		<div class="motifs">
@@ -231,7 +231,7 @@ foreach ( $packages as $pkg ) {
 		<div class="packages__inner">
 			<div class="section__head">
 				<span class="eyebrow"><?php esc_html_e( 'Napravi svoj paket', 'cosypaw' ); ?></span>
-				<h2 class="section__title"><?php esc_html_e( 'Što više grlića, veća ušteda', 'cosypaw' ); ?></h2>
+				<h2 class="section__title"><?php esc_html_e( 'Što više peškirića, veća ušteda', 'cosypaw' ); ?></h2>
 				<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
 			</div>
 
@@ -396,7 +396,7 @@ foreach ( $packages as $pkg ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'U tvom domu', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Tvoj kutak, malo mekši', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
+			<p class="section__lead"><?php esc_html_e( 'Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
 		</div>
 
 		<div class="lifestyle">
@@ -531,29 +531,10 @@ foreach ( $packages as $pkg ) {
 
 		<div class="faq">
 			<?php
-			$faqs = array(
-				array(
-					'q' => __( 'Od čega su peškirići napravljeni?', 'cosypaw' ),
-					'a' => __( 'Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Kako se peru?', 'cosypaw' ),
-					'a' => __( 'Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Koliko traje dostava?', 'cosypaw' ),
-					'a' => __( 'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Kako mogu da platim?', 'cosypaw' ),
-					'a' => __( 'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Mogu li da vratim proizvod?', 'cosypaw' ),
-					'a' => __( 'Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca.', 'cosypaw' ),
-				),
-			);
-			foreach ( $faqs as $faq ) :
+			// Shared with the FAQPage structured data in Theme\Seo so the two
+			// cannot drift — Google penalises markup that does not match what
+			// the page actually shows.
+			foreach ( \Theme\Seo::faqs() as $faq ) :
 				?>
 				<details class="faq-item">
 					<summary class="faq-item__q">

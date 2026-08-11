@@ -120,6 +120,35 @@ final class Language {
 	 *
 	 * @return string
 	 */
+	/**
+	 * Supported language codes, in menu order.
+	 *
+	 * @return string[]
+	 */
+	public function codes(): array {
+		return array_keys( self::LOCALES );
+	}
+
+	/**
+	 * The WordPress locale a language code maps to. Used for hreflang, which
+	 * wants a BCP-47 tag (sr-RS) rather than a WordPress locale (sr_RS).
+	 *
+	 * @param string $code Language code.
+	 * @return string Locale, or the default language's locale when unknown.
+	 */
+	public function locale_for( string $code ): string {
+		return self::LOCALES[ $code ] ?? self::LOCALES[ self::DEFAULT_LANG ];
+	}
+
+	/**
+	 * The default language code — the one served on an unparameterised URL.
+	 *
+	 * @return string
+	 */
+	public function default_code(): string {
+		return self::DEFAULT_LANG;
+	}
+
 	public function current(): string {
 		return $this->lang;
 	}

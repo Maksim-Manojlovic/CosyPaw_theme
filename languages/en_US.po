@@ -32,14 +32,14 @@ msgstr "Search…"
 msgid "Traži"
 msgstr "Search"
 
-msgid "Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim."
-msgstr "Hand-sewn towel pets that make your bathroom soft, tidy and — adorable."
+msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo."
+msgstr "Decorative towel pets in soft microfiber, with a hanging loop. Over 20 designs — pick yours and spoil your bathroom."
 
-msgid "Mekani svet peškiriča"
+msgid "Mekani svet peškirića"
 msgstr "A soft world of little towels"
 
-msgid "Slatki peškirići koji grle %s"
-msgstr "Cute towels that hug %s"
+msgid "Ručno šiveni peškirići koji grle %s"
+msgstr "Hand-sewn towels that hug %s"
 
 msgid "tvoje kupatilo"
 msgstr "your bathroom"
@@ -98,8 +98,8 @@ msgstr "Perfect gift"
 msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
 msgstr "A sweet little thing that always brings a smile and an “awww”."
 
-msgid "Što više grlića, veća ušteda"
-msgstr "The more cuties, the bigger the saving"
+msgid "Što više peškirića, veća ušteda"
+msgstr "The more towels, the bigger the saving"
 
 msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Mix the designs however you like — the price per piece drops with each one."
@@ -122,8 +122,8 @@ msgstr "The whole crew"
 msgid "Upoznaj sve motive"
 msgstr "Meet all the designs"
 
-msgid "Od %s po komadu — ili ih spoji u paket i uštedi."
-msgstr "From %s each — or bundle them and save."
+msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "Decorative bathroom towels, from %s each — or bundle them and save."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 pc"
@@ -143,7 +143,7 @@ msgstr "Added"
 msgid "Rezultati za „%s”"
 msgstr "Results for “%s”"
 
-msgid "Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgid "Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
 msgstr "A soft world of little towels. Hand-sewn pets that make every bathroom warmer."
 
 msgid "Brzi linkovi"
@@ -161,7 +161,7 @@ msgstr "Ordering"
 msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
 msgstr "Order via DM or the cart.<br>Cash on delivery."
 
-msgid "© %d CosyPaw — Mekani svet peškiriča"
+msgid "© %d CosyPaw — Mekani svet peškirića"
 msgstr "© %d CosyPaw — A soft world of little towels"
 
 msgid "Ručni rad • Made with love"
@@ -193,6 +193,18 @@ msgstr "Handmade with lots of love"
 
 msgid "Besplatna dostava na Trio paket"
 msgstr "Free shipping on the Trio package"
+
+msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgstr "Hand-sewn decorative bathroom towels — soft microfiber, a hanging loop and over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
+
+msgid "Rezultati pretrage za „%s“."
+msgstr "Search results for “%s”."
+
+msgid "CosyPaw ukrasni peškirići"
+msgstr "CosyPaw decorative towels"
+
+msgid "Ručno šiveni ukrasni peškirići od plišane mikrofibre, sa alkom za kačenje."
+msgstr "Hand-sewn decorative towels in plush microfiber, with a hanging loop."
 
 msgid "Glavna navigacija"
 msgstr "Main navigation"
@@ -395,7 +407,7 @@ msgstr "In your home"
 msgid "Tvoj kutak, malo mekši"
 msgstr "Your corner, a little softer"
 
-msgid "Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgid "Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
 msgstr "By the sink, on a hook or a shelf — the towels fit into any home and add a touch of warmth."
 
 msgid "Spremni za jutarnju rutinu"

@@ -140,11 +140,14 @@
 	background: var(--cream2);
 }
 
+/* <img> rather than a background: backgrounds cannot carry srcset or
+   loading="lazy", so every motif on the page was fetched at one size, eagerly. */
 .hero__slide {
+	display: block;
 	width: 100%;
 	height: 100%;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .hero__name-pill {
@@ -319,8 +322,10 @@
 .lifestyle-card__img {
 	position: absolute;
 	inset: 0;
-	background-size: cover;
-	background-position: center;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
 }
 
 .lifestyle-card__cap {
@@ -357,9 +362,12 @@
 }
 
 .pkg-banner__img {
+	display: block;
+	width: 100%;
+	height: 100%;
 	min-height: 300px;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .pkg-banner__body {
@@ -672,6 +680,10 @@
 	width: 118px;
 }
 
+/* The one background-image left on the page, deliberately: slots are built by
+   BundleBuilder only after a user picks a motif, at 104px, from the same
+   image_sm URL the gallery already has cached. There is nothing for srcset or
+   lazy loading to save here. */
 .builder-slot__img {
 	position: relative;
 	width: 104px;
@@ -751,12 +763,14 @@
 }
 
 .motif-pick__img {
+	display: block;
 	width: 100%;
+	height: auto;
 	aspect-ratio: 1 / 1;
 	border-radius: 14px;
 	background-color: #fff;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .motif-pick__row {
@@ -874,11 +888,14 @@
 
 .motif-card__img {
 	position: relative;
+	display: block;
+	width: 100%;
+	height: auto;
 	border-radius: 18px;
 	aspect-ratio: 1 / 1.18;
 	background-color: var(--cream2);
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .motif-card__row {

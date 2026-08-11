@@ -97,9 +97,23 @@ foreach ( $packages as $pkg ) {
 			<div class="hero__card">
 				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni motivi', 'cosypaw' ); ?>">
 					<div class="vertical-carousel__track">
-						<?php foreach ( $featured as $f ) : ?>
+						<?php foreach ( $featured as $cosypaw_i => $f ) : ?>
 							<div class="vertical-carousel__slide">
-								<div class="hero__slide" role="img" aria-label="<?php echo esc_attr( $f['name'] ); ?>" style="background-image:url('<?php echo esc_url( $f['image_md'] ); ?>');"></div>
+								<img
+									class="hero__slide"
+									src="<?php echo esc_url( $f['image_md'] ); ?>"
+									srcset="<?php echo esc_attr( $f['image_md'] . ' 600w, ' . $f['image'] . ' 1086w' ); ?>"
+									sizes="(max-width: 440px) calc(100vw - 44px), 348px"
+									width="600"
+									height="800"
+									alt="<?php echo esc_attr( $f['name'] ); ?>"
+									decoding="async"
+									<?php
+									// The first slide is the hero image; the rest sit
+									// outside the card's visible area and can wait.
+									echo 0 === $cosypaw_i ? 'fetchpriority="high"' : 'loading="lazy"';
+									?>
+								>
 							</div>
 						<?php endforeach; ?>
 					</div>
@@ -206,7 +220,16 @@ foreach ( $packages as $pkg ) {
 			foreach ( $lifestyle as $shot ) :
 				?>
 				<figure class="lifestyle-card">
-					<div class="lifestyle-card__img" role="img" aria-label="<?php echo esc_attr( $shot['cap'] ); ?>" style="background-image:url('<?php echo esc_url( $assets_uri . $shot['file'] ); ?>');"></div>
+					<img
+						class="lifestyle-card__img"
+						src="<?php echo esc_url( $assets_uri . $shot['file'] ); ?>"
+						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
+						width="1086"
+						height="1358"
+						alt="<?php echo esc_attr( $shot['cap'] ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
 					<figcaption class="lifestyle-card__cap"><?php echo esc_html( $shot['cap'] ); ?></figcaption>
 				</figure>
 			<?php endforeach; ?>
@@ -223,7 +246,16 @@ foreach ( $packages as $pkg ) {
 			</div>
 
 			<div class="pkg-banner">
-				<div class="pkg-banner__img" role="img" aria-label="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>');"></div>
+				<img
+					class="pkg-banner__img"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>"
+					sizes="(max-width: 880px) calc(100vw - 44px), 547px"
+					width="1086"
+					height="1086"
+					alt="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>"
+					loading="lazy"
+					decoding="async"
+				>
 				<div class="pkg-banner__body">
 					<span class="eyebrow"><?php esc_html_e( 'Stiže spremno za poklon', 'cosypaw' ); ?></span>
 					<h3 class="pkg-banner__title"><?php esc_html_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?></h3>
@@ -319,7 +351,19 @@ foreach ( $packages as $pkg ) {
 								data-name="<?php echo esc_attr( $p['name'] ); ?>"
 								data-image="<?php echo esc_url( $p['image_sm'] ); ?>"
 							>
-								<span class="motif-pick__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_sm'] ); ?>');"></span>
+								<?php
+								// alt="" — the tile's name is already the button's
+								// accessible text, right below the image.
+								?>
+								<img
+									class="motif-pick__img"
+									src="<?php echo esc_url( $p['image_sm'] ); ?>"
+									width="360"
+									height="360"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								>
 								<span class="motif-pick__row">
 									<span class="motif-pick__name"><?php echo esc_html( $p['name'] ); ?></span>
 									<span class="motif-pick__used" data-used hidden>0</span>
@@ -367,7 +411,24 @@ foreach ( $packages as $pkg ) {
 				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
 				?>
 				<div class="motif-card">
-					<div class="motif-card__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_md'] ); ?>');"></div>
+					<?php
+					// alt="" — the motif name is printed as text directly below.
+					// srcset omits image_sm on purpose: it is a 1:1 crop while
+					// image_md and image are 3:4, and srcset candidates have to be
+					// the same picture at different sizes or the crop shifts with
+					// the viewport.
+					?>
+					<img
+						class="motif-card__img"
+						src="<?php echo esc_url( $p['image_md'] ); ?>"
+						srcset="<?php echo esc_attr( $p['image_md'] . ' 600w, ' . $p['image'] . ' 1086w' ); ?>"
+						sizes="(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px"
+						width="600"
+						height="800"
+						alt=""
+						loading="lazy"
+						decoding="async"
+					>
 					<div class="motif-card__row">
 						<div>
 							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>

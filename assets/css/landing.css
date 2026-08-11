@@ -1006,10 +1006,12 @@
 	gap: 14px;
 }
 
+/* --ochre-ink, not --ochre: as a foreground graphic the rating needs 3:1, and
+   --ochre is 2.25:1 on the white testimonial card. */
 .testimonial__stars {
 	display: inline-flex;
 	gap: 3px;
-	color: var(--ochre);
+	color: var(--ochre-ink);
 }
 
 .testimonial__quote {

@@ -27,9 +27,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="footer-col">
 				<div class="footer-col__title"><?php esc_html_e( 'Brzi linkovi', 'cosypaw' ); ?></div>
 				<div class="footer-links">
-					<a href="#paketi"><?php esc_html_e( 'Paketi', 'cosypaw' ); ?></a>
-					<a href="#zasto"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></a>
-					<a href="#galerija"><?php esc_html_e( 'Svi motivi', 'cosypaw' ); ?></a>
+					<?php
+					// The targets are homepage sections, so off the front page a
+					// bare "#paketi" resolves against the current URL and goes
+					// nowhere. Same home_url() prefix the header nav uses.
+					$cosypaw_footer_links = array(
+						'#paketi'   => __( 'Paketi', 'cosypaw' ),
+						'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
+						'#galerija' => __( 'Svi motivi', 'cosypaw' ),
+					);
+					$cosypaw_home_base = is_front_page() ? '' : home_url( '/' );
+					foreach ( $cosypaw_footer_links as $cosypaw_anchor => $cosypaw_label ) {
+						printf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( $cosypaw_home_base . $cosypaw_anchor ),
+							esc_html( $cosypaw_label )
+						);
+					}
+					?>
 				</div>
 			</div>
 

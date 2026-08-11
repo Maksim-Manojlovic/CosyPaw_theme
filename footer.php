@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</span>
 					<span class="brand-name brand-name--lg"><?php bloginfo( 'name' ); ?></span>
 				</div>
-				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
+				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
 			</div>
 
 			<div class="footer-col">
@@ -60,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="footer-bottom">
-			<span><?php printf( /* translators: %d: current year. */ esc_html__( '© %d CosyPaw — Mekani svet peškiriča', 'cosypaw' ), (int) gmdate( 'Y' ) ); ?></span>
+			<span><?php printf( /* translators: %d: current year. */ esc_html__( '© %d CosyPaw — Mekani svet peškirića', 'cosypaw' ), (int) gmdate( 'Y' ) ); ?></span>
 			<span><?php esc_html_e( 'Ručni rad • Made with love', 'cosypaw' ); ?></span>
 		</div>
 	</div>

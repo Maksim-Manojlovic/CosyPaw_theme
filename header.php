@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$announcements = array(
 		__( 'Ručni rad sa puno ljubavi', 'cosypaw' ),
 		__( 'Besplatna dostava na Trio paket', 'cosypaw' ),
-		__( 'Mekani svet peškiriča', 'cosypaw' ),
+		__( 'Mekani svet peškirića', 'cosypaw' ),
 	);
 	// One group is rendered twice; the track animates -50% (one full group),
 	// so the second group is in place exactly when the first scrolls out =

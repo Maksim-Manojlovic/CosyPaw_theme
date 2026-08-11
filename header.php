@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </div>
 
-<header class="site-header">
+<header class="site-header" data-site-nav>
 	<nav class="nav" aria-label="<?php esc_attr_e( 'Glavna navigacija', 'cosypaw' ); ?>">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav__brand">
 			<span class="brand-mark">
@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="brand-name"><?php bloginfo( 'name' ); ?></span>
 		</a>
 
-		<div class="nav__links">
+		<div class="nav__links" id="cosypaw-nav-menu" data-nav-panel>
 			<?php
 			if ( has_nav_menu( 'primary' ) ) {
 				wp_nav_menu(
@@ -85,7 +85,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			}
 			?>
+		</div>
 
+		<?php
+		// Cart, language and the nav toggle sit outside the collapsing panel so
+		// they stay reachable at every width.
+		?>
+		<div class="nav__actions">
 			<?php
 			$cosypaw_wc    = function_exists( 'WC' ) && function_exists( 'wc_get_cart_url' );
 			$cosypaw_count = ( $cosypaw_wc && WC()->cart ) ? (int) WC()->cart->get_cart_contents_count() : 0;
@@ -113,6 +119,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 
 			<?php if ( function_exists( 'cosypaw_language' ) ) { cosypaw_language()->switcher(); } ?>
+
+			<?php
+			// Ships hidden; SiteNav.js unhides it once the panel is collapsible,
+			// so a failed script leaves a plain visible nav instead of a dead
+			// button.
+			?>
+			<button
+				type="button"
+				class="nav__toggle"
+				data-nav-toggle
+				aria-controls="cosypaw-nav-menu"
+				aria-expanded="false"
+				aria-label="<?php esc_attr_e( 'Meni', 'cosypaw' ); ?>"
+				hidden
+			>
+				<svg class="nav__toggle-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+				<svg class="nav__toggle-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+			</button>
 		</div>
 	</nav>
 </header>

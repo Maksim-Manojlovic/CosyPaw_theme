@@ -1237,7 +1237,6 @@
 }
 
 @media (max-width: 560px) {
-	.nav__links .nav__link { display: none; }
 	.hero__title { font-size: 38px; }
 	.benefits, .motifs { grid-template-columns: 1fr; }
 	.section__title { font-size: 30px; }

@@ -33,6 +33,10 @@
 	--ink: #3e332a;     /* body text — 11.41:1                              */
 	--muted: #6f6155;   /* secondary text — 5.55:1                          */
 	--line: rgba(62, 51, 42, 0.1);
+	/* Control boundaries (inputs, ghost buttons, pills) need 3:1 against their
+	   own fill per WCAG 2.1 1.4.11 — --line is 1.19:1 on white and is only
+	   legitimate for decorative dividers. This lands at 3.13:1 on white. */
+	--line-control: rgba(62, 51, 42, 0.42);
 
 	/* --- Semantic aliases (architecture naming → brand tokens). --- */
 	--color-surface: var(--cream);
@@ -45,6 +49,7 @@
 	--color-accent-soft: var(--sand);
 	--color-success: var(--sage);
 	--color-border: var(--line);
+	--color-border-control: var(--line-control);
 
 	/* Glass surfaces (light, used by sticky nav + floating hero pill). */
 	--glass-bg: rgba(251, 246, 239, 0.82);
@@ -357,11 +362,67 @@ h1, h2, h3, h4 {
 	gap: 28px;
 }
 
+/* wp_nav_menu() prints a <ul class="nav__menu">; without this reset an assigned
+   menu renders as a bulleted vertical list in the header. The fallback anchors
+   in header.php are bare <a>, so both shapes have to lay out identically. */
+.nav__menu {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav__menu li {
+	margin: 0;
+}
+
+.nav__menu a {
+	text-decoration: none;
+}
+
 .nav__link {
+	display: inline-flex;
+	align-items: center;
 	text-decoration: none;
 	color: var(--ink);
 	font-weight: 600;
 	font-size: 15px;
+}
+
+.nav__actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Nav toggle — unhidden by SiteNav.js only once the panel can collapse. */
+.nav__toggle {
+	border: none;
+	cursor: pointer;
+	background: var(--cream2);
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
+	color: var(--ink);
+}
+
+.nav__toggle[hidden] {
+	display: none;
+}
+
+.nav__toggle .nav__toggle-close,
+.nav__toggle[aria-expanded="true"] .nav__toggle-open {
+	display: none;
+}
+
+.nav__toggle[aria-expanded="true"] .nav__toggle-close {
+	display: block;
 }
 
 .cart-btn {
@@ -535,8 +596,57 @@ h1, h2, h3, h4 {
 /* ---------- Chrome responsive ---------- */
 @media (max-width: 880px) {
 	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
-}
 
-@media (max-width: 560px) {
-	.nav__links .nav__link { display: none; }
+	/* The nav collapses into a toggle-driven panel. Scoped to
+	   [data-nav-enhanced] so the links stay visible if SiteNav.js never runs —
+	   previously they were hidden unconditionally with nothing to open. */
+	[data-nav-enhanced] .nav__toggle {
+		display: inline-flex;
+	}
+
+	[data-nav-enhanced] .nav__links {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		display: none;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		padding: var(--space-2) var(--space-4) var(--space-4);
+		background: var(--color-surface);
+		border-bottom: 1px solid var(--line);
+		box-shadow: var(--shadow-md);
+	}
+
+	[data-nav-enhanced][data-nav-open] .nav__links {
+		display: flex;
+	}
+
+	[data-nav-enhanced] .nav__menu {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		width: 100%;
+	}
+
+	/* 48px rows keep every item past the 44px minimum touch target. The two
+	   selectors cover both nav shapes: the fallback anchors are themselves
+	   .nav__link, while wp_nav_menu wraps a .nav__link span inside an <a>. */
+	[data-nav-enhanced] .nav__links > .nav__link,
+	[data-nav-enhanced] .nav__menu a {
+		display: flex;
+		align-items: center;
+		min-height: 48px;
+		padding: var(--space-2) 0;
+		font-size: 17px;
+		font-weight: 600;
+		color: var(--ink);
+		border-bottom: 1px solid var(--line);
+	}
+
+	[data-nav-enhanced] .nav__menu li:last-child a,
+	[data-nav-enhanced] .nav__links > .nav__link:last-child {
+		border-bottom: none;
+	}
 }

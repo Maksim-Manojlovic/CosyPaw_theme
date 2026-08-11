@@ -94,6 +94,52 @@ final class Setup {
 	}
 
 	/**
+	 * Echo the brand lockup image used by the header and the footer.
+	 *
+	 * The logo is a circular badge with the wordmark drawn inside it, so it
+	 * replaces the whole lockup rather than sitting beside a text wordmark —
+	 * the word would otherwise appear twice. It also means the image carries
+	 * the site name on its own, which is why the alt text is the name and not
+	 * an empty decorative string.
+	 *
+	 * A logo set in the Customizer wins. It is emitted as a bare <img> rather
+	 * than through the_custom_logo(): that helper wraps its own anchor around
+	 * the image, and both call sites already sit inside one.
+	 *
+	 * @param string $class Extra class for the <img>.
+	 * @param bool   $lazy  Whether the image may load lazily.
+	 * @return void
+	 */
+	public static function brand_logo( string $class = '', bool $lazy = false ): void {
+		$classes = trim( 'brand-logo ' . $class );
+		$alt     = get_bloginfo( 'name' );
+		$loading = $lazy ? ' loading="lazy"' : '';
+		$custom  = (int) get_theme_mod( 'custom_logo' );
+		$url     = $custom > 0 ? wp_get_attachment_image_url( $custom, 'full' ) : '';
+
+		if ( $url ) {
+			printf(
+				'<img class="%1$s" src="%2$s" width="76" height="76" alt="%3$s" decoding="async"%4$s>',
+				esc_attr( $classes ),
+				esc_url( $url ),
+				esc_attr( $alt ),
+				$loading // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- literal.
+			);
+
+			return;
+		}
+
+		$base = get_template_directory_uri() . '/assets/';
+		printf(
+			'<img class="%1$s" src="%2$slogo-76.avif" srcset="%2$slogo-152.avif 2x, %2$slogo-228.avif 3x" width="76" height="76" alt="%3$s" decoding="async"%4$s>',
+			esc_attr( $classes ),
+			esc_url( $base ),
+			esc_attr( $alt ),
+			$loading // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- literal.
+		);
+	}
+
+	/**
 	 * Register navigation menu locations.
 	 *
 	 * @return void

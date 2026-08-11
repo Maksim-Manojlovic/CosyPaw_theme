@@ -1,0 +1,96 @@
+# Build the theme and publish it to cosypaw.rs over FTPS.
+#
+# Only the theme directory is ever touched. The FTP account used here is scoped
+# in cPanel to wp-content/themes/cosypaw, so the credential itself is the blast
+# radius: even a wrong path in this file cannot reach wp-config.php or the
+# uploads folder.
+#
+# dist/ is gitignored and built here, so the repo never carries build output.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   FTP_HOST      e.g. ftp.cosypaw.rs
+#   FTP_USER      the scoped FTP account, e.g. deploy@cosypaw.rs
+#   FTP_PASSWORD  that account's password
+
+name: Deploy theme
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys write to the server at once.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build, test and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the theme
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run the test suite
+        run: vendor/bin/phpunit
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      # Reuses tools/package-theme.ps1 so the allowlist has exactly one
+      # definition, shared with local packaging. pwsh ships on the runner.
+      - name: Package the theme
+        shell: pwsh
+        run: ./tools/package-theme.ps1
+
+      # A failure here means the allowlist changed shape. Better to stop than to
+      # publish a theme with no stylesheet, or with the test suite attached.
+      - name: Verify what is about to be published
+        run: |
+          set -euo pipefail
+          test -f build/cosypaw/style.css
+          test -f build/cosypaw/functions.php
+          test -f build/cosypaw/dist/.vite/manifest.json
+          test -d build/cosypaw/languages
+          test -f build/cosypaw/languages/sr_RS.mo
+          for unwanted in tests tools node_modules vendor phpunit.xml composer.json package.json assets/css assets/js; do
+            if [ -e "build/cosypaw/$unwanted" ]; then
+              echo "::error::$unwanted must not be published"
+              exit 1
+            fi
+          done
+          echo "publishing $(find build/cosypaw -type f | wc -l) files"
+
+      - name: Publish over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          # The FTP account is already scoped to the theme directory, so the
+          # sync root is simply its home. Do not turn this into a site-wide
+          # path: this action deletes remote files that are absent locally.
+          server-dir: ./
+          local-dir: ./build/cosypaw/
+          dangerous-clean-slate: false

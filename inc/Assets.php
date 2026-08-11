@@ -231,6 +231,8 @@ final class Assets {
 				'bundleFull'     => __( 'Paket je pun — ukloni motiv da dodaš drugi', 'cosypaw' ),
 				'notFull'        => __( 'Izaberi još %d — paket nije popunjen', 'cosypaw' ),
 				'removeMotif'    => __( 'Ukloni motiv', 'cosypaw' ),
+				'adding'         => __( 'Dodajem…', 'cosypaw' ),
+				'addFailed'      => __( 'Dodavanje nije uspelo — pokušaj ponovo', 'cosypaw' ),
 			)
 		);
 	}

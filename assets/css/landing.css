@@ -614,6 +614,12 @@
 	font-size: 21px;
 }
 
+/* Only focusable to receive focus when step 2 is revealed; it is not a control
+   and should not carry a ring when clicked. */
+.builder__step-title:focus:not(:focus-visible) {
+	outline: none;
+}
+
 .builder__tools {
 	display: flex;
 	align-items: center;
@@ -880,6 +886,13 @@
  * unreadable part. This fill is 4.71:1, still visibly subordinate to the clay
  * primary.
  */
+/* Pending add-to-cart. Genuinely disabled here, unlike .is-incomplete. */
+.pkg-cta[disabled] {
+	opacity: 0.75;
+	cursor: progress;
+	transform: none;
+}
+
 .pkg-cta.is-incomplete {
 	background: #7d7264;
 	box-shadow: none;

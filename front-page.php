@@ -327,10 +327,15 @@ foreach ( $packages as $pkg ) {
 				<div class="builder__step builder__step--row">
 					<div class="builder__step-head">
 						<span class="builder__num">2</span>
-						<span class="builder__step-title"><?php esc_html_e( 'Ubaci svoje motive', 'cosypaw' ); ?></span>
+						<?php // tabindex=-1: focus lands here when the step is revealed. ?>
+						<span class="builder__step-title" data-builder-step2-heading tabindex="-1"><?php esc_html_e( 'Ubaci svoje motive', 'cosypaw' ); ?></span>
 					</div>
 					<div class="builder__tools">
-						<span class="builder__count"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label>3</b></span>
+						<?php
+						// Live region: the count is the only feedback that a motif
+						// was added or removed, and it was changing silently.
+						?>
+						<span class="builder__count" role="status" aria-live="polite"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label>3</b></span>
 						<button type="button" class="builder__tool" data-random>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/></svg>
 							<?php esc_html_e( 'Iznenadi me', 'cosypaw' ); ?>

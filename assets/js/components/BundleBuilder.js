@@ -35,6 +35,8 @@ export class BundleBuilder {
 				bundleFull: 'Paket je pun — ukloni motiv da dodaš drugi',
 				notFull: 'Izaberi još %d — paket nije popunjen',
 				removeMotif: 'Ukloni motiv',
+				adding: 'Dodajem…',
+				addFailed: 'Dodavanje nije uspelo — pokušaj ponovo',
 				currency: 'RSD',
 				locale: 'de-DE',
 			},
@@ -59,6 +61,8 @@ export class BundleBuilder {
 		this.picks = [];
 		// No tier is pre-selected: Step 2 stays hidden until the user picks one.
 		this.selected = this.tiers.find((t) => t.getAttribute('aria-pressed') === 'true') || null;
+		// True while an add-to-cart request is in flight.
+		this.busy = false;
 
 		this._onClick = this._onClick.bind(this);
 		root.addEventListener('click', this._onClick);
@@ -125,8 +129,15 @@ export class BundleBuilder {
 		this.picks = this.picks.slice(0, this._qty());
 		this._render();
 		// Guide the eye to the now-revealed motif step (only on first reveal).
+		// Focus follows the scroll: a sighted user sees the new section arrive,
+		// and without this a screen reader or keyboard user gets no signal that
+		// anything appeared.
 		if (wasHidden) {
 			this._scrollTo(this.step2El);
+			const heading = this.step2El
+				? this.step2El.querySelector('[data-builder-step2-heading]')
+				: null;
+			if (heading) heading.focus({ preventScroll: true });
 		}
 	}
 
@@ -145,9 +156,22 @@ export class BundleBuilder {
 	}
 
 	removeSlot(index) {
-		if (index >= 0 && index < this.picks.length) {
-			this.picks.splice(index, 1);
-			this._render();
+		if (index < 0 || index >= this.picks.length) return;
+
+		this.picks.splice(index, 1);
+		this._render();
+
+		// _render rebuilds the slot row, destroying the button that was focused
+		// and dropping focus to <body>. Put it back on the nearest remaining
+		// remove button, or on the gallery if the row is now empty.
+		const removes = this.slotsEl
+			? Array.from(this.slotsEl.querySelectorAll('[data-slot-remove]'))
+			: [];
+		const next = removes[Math.min(index, removes.length - 1)];
+		if (next) {
+			next.focus();
+		} else if (this.motifs.length) {
+			this.motifs[0].focus();
 		}
 	}
 
@@ -185,6 +209,8 @@ export class BundleBuilder {
 	}
 
 	addBundle() {
+		if (this.busy) return;
+
 		const qty = this._qty();
 		const remaining = qty - this.picks.length;
 		if (remaining > 0) {
@@ -197,17 +223,20 @@ export class BundleBuilder {
 		const productId = this.selected.dataset.productId;
 
 		if (productId) {
+			// The picks are cleared by _wcAdd once the server confirms, so a
+			// failed request leaves the user's selection intact to retry.
 			this._wcAdd(productId, ids);
-		} else {
-			// Demo cart: one line per bundle, motifs in the name.
-			const label = `${this.selected.dataset.name} (${names.join(', ')})`;
-			this.root.dispatchEvent(
-				new CustomEvent('cosypaw:add', {
-					bubbles: true,
-					detail: { name: label, price: parseInt(this.selected.dataset.price || '0', 10) || 0 },
-				})
-			);
+			return;
 		}
+
+		// Demo cart: one line per bundle, motifs in the name.
+		const label = `${this.selected.dataset.name} (${names.join(', ')})`;
+		this.root.dispatchEvent(
+			new CustomEvent('cosypaw:add', {
+				bubbles: true,
+				detail: { name: label, price: parseInt(this.selected.dataset.price || '0', 10) || 0 },
+			})
+		);
 
 		this.picks = [];
 		this._render();
@@ -222,6 +251,7 @@ export class BundleBuilder {
 		const params = window.wc_add_to_cart_params;
 		const $ = window.jQuery;
 		if (!params || !$) {
+			this._toast(this.l10n.addFailed, 'warn');
 			return;
 		}
 
@@ -231,11 +261,16 @@ export class BundleBuilder {
 		body.append('quantity', '1');
 		body.append('cosypaw_motifs', ids.join(','));
 
+		this._setBusy(true);
+
 		fetch(url, { method: 'POST', body, credentials: 'same-origin' })
-			.then((r) => r.json())
+			.then((r) => {
+				if (!r.ok) throw new Error(`HTTP ${r.status}`);
+				return r.json();
+			})
 			.then((res) => {
 				if (!res || res.error) {
-					return;
+					throw new Error('cart rejected the request');
 				}
 				// Let WooCommerce update fragments (badge) + our listener show the toast.
 				$(document.body).trigger('added_to_cart', [
@@ -243,8 +278,33 @@ export class BundleBuilder {
 					res.cart_hash,
 					$(this.ctaBtn),
 				]);
+				this.picks = [];
+				this._setBusy(false);
+				this._render();
 			})
-			.catch(() => {});
+			.catch(() => {
+				// Previously swallowed: a failed add left the button unchanged
+				// and the user with no indication that nothing had happened.
+				this._setBusy(false);
+				this._render();
+				this._toast(this.l10n.addFailed, 'warn');
+			});
+	}
+
+	/**
+	 * Pending state for the CTA. Without it the button stayed idle for the whole
+	 * round trip, inviting a second click that would add the bundle twice.
+	 * @private
+	 */
+	_setBusy(busy) {
+		this.busy = busy;
+		if (!this.ctaBtn) return;
+
+		this.ctaBtn.disabled = busy;
+		this.ctaBtn.setAttribute('aria-busy', busy ? 'true' : 'false');
+		if (busy && this.ctaLabelEl) {
+			this.ctaLabelEl.textContent = this.l10n.adding;
+		}
 	}
 
 	/* ---------- rendering ---------- */

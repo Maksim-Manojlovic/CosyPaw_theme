@@ -87,6 +87,13 @@ final class WooCommerce {
 	private ProductNames $names;
 
 	/**
+	 * Payment/shipping configuration and its runtime label filters.
+	 *
+	 * @var CheckoutSetup
+	 */
+	private CheckoutSetup $checkout;
+
+	/**
 	 * Cached list of our product IDs (motifs + packages).
 	 *
 	 * @var int[]|null
@@ -104,6 +111,7 @@ final class WooCommerce {
 		$this->catalog     = $catalog;
 		$this->seeder      = new ProductSeeder( $catalog );
 		$this->names       = new ProductNames();
+		$this->checkout    = new CheckoutSetup();
 
 		$this->register_layout_hooks();
 		$this->register_cache_invalidation();

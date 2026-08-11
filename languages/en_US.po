@@ -515,3 +515,18 @@ msgstr "How can I pay?"
 msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
 msgstr "Payment is cash on delivery — you pay the courier when you receive the package."
 
+msgid "Plaćanje pouzećem"
+msgstr "Cash on delivery"
+
+msgid "Plaćaš gotovinom pri preuzimanju — kuriru na vratima ili nama lično."
+msgstr "You pay in cash on receipt — to the courier at your door, or to us in person."
+
+msgid "Pripremi iznos u gotovini za trenutak preuzimanja."
+msgstr "Have the amount ready in cash for the moment of handover."
+
+msgid "Lično preuzimanje"
+msgstr "Local pickup"
+
+msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
+msgstr "Courier delivery (postage paid to the courier)"
+

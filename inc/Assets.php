@@ -217,6 +217,9 @@ final class Assets {
 				'addedShort'  => __( 'Dodato', 'cosypaw' ),
 				'demoMsg'     => __( 'Demo prodavnice — porudžbina nije aktivna', 'cosypaw' ),
 				'removeLabel' => __( 'Ukloni', 'cosypaw' ),
+				// Announcement bar pause control (WCAG 2.2.2).
+				'marqueePause' => __( 'Pauziraj najave', 'cosypaw' ),
+				'marqueePlay'  => __( 'Pusti najave', 'cosypaw' ),
 				'currency'    => __( 'RSD', 'cosypaw' ),
 				'locale'      => 'de-DE',
 				// Bundle builder.

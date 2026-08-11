@@ -12,6 +12,7 @@
  */
 import '../css/main.css';
 import { SiteNav } from './components/SiteNav.js';
+import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
 
 const boot = () => {
@@ -19,6 +20,9 @@ const boot = () => {
 
 	const header = document.querySelector('[data-site-nav]');
 	if (header) new SiteNav(header);
+
+	const marquee = document.querySelector('[data-marquee]');
+	if (marquee) new Marquee(marquee, l10n);
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

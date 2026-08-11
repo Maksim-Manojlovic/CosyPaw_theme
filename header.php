@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <a class="skip-link" href="#primary"><?php esc_html_e( 'Pređi na sadržaj', 'cosypaw' ); ?></a>
 
 <!-- Announcement marquee -->
-<div class="announce" aria-hidden="true">
+<div class="announce" data-marquee>
 	<?php
 	$announcements = array(
 		__( 'Ručni rad sa puno ljubavi', 'cosypaw' ),
@@ -35,8 +35,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// so the second group is in place exactly when the first scrolls out =
 	// seamless, gap-free loop. Phrases are repeated inside each group so a
 	// single group is wider than the viewport.
+	//
+	// The track is aria-hidden because it repeats every phrase four times; the
+	// list below carries the same announcements once, so assistive tech gets
+	// the free-shipping offer instead of the whole bar being hidden from it.
 	?>
-	<div class="announce__track">
+	<div class="announce__track" aria-hidden="true">
 		<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
 			<div class="announce__group">
 				<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
@@ -45,6 +49,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		<?php endfor; ?>
 	</div>
+
+	<ul class="screen-reader-text">
+		<?php foreach ( $announcements as $line ) : ?>
+			<li><?php echo esc_html( $line ); ?></li>
+		<?php endforeach; ?>
+	</ul>
+
+	<?php
+	// WCAG 2.2.2 — the bar loops indefinitely, so it needs a pause control.
+	// Ships hidden; Marquee.js unhides it, so no-JS never shows a dead button.
+	?>
+	<button
+		type="button"
+		class="announce__pause"
+		data-marquee-toggle
+		aria-pressed="false"
+		aria-label="<?php esc_attr_e( 'Pauziraj najave', 'cosypaw' ); ?>"
+		hidden
+	>
+		<svg class="announce__pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+		<svg class="announce__play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+	</button>
 </div>
 
 <header class="site-header" data-site-nav>

@@ -266,6 +266,7 @@ h1, h2, h3, h4 {
 
 /* ---------- Announcement marquee ---------- */
 .announce {
+	position: relative;
 	background: var(--clay);
 	color: #fff;
 	font-weight: 700;
@@ -280,6 +281,73 @@ h1, h2, h3, h4 {
 	display: flex;
 	width: max-content;
 	animation: marquee 40s linear infinite;
+}
+
+/* WCAG 2.2.2 pause. */
+.announce[data-marquee-paused] .announce__track {
+	animation-play-state: paused;
+}
+
+.announce__pause {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.18);
+	color: #fff;
+}
+
+.announce__pause[hidden] {
+	display: none;
+}
+
+/* The bar is only ~30px tall, so the 44px touch target is met by extending the
+   hit area past the visual bounds rather than by growing the button — nothing
+   sits adjacent to it, so there is no risk of overlapping targets. */
+.announce__pause::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	transform: translate(-50%, -50%);
+}
+
+.announce__pause:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.announce__pause .announce__play-icon,
+.announce__pause[aria-pressed="true"] .announce__pause-icon {
+	display: none;
+}
+
+.announce__pause[aria-pressed="true"] .announce__play-icon {
+	display: block;
+}
+
+/* Fade the scrolling text out behind the control. Padding on the track would
+   also work but changes the group width the -50% loop depends on. */
+.announce::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 80px;
+	background: linear-gradient(90deg, rgba(161, 94, 55, 0), var(--clay) 60%);
+	pointer-events: none;
 }
 
 .announce__group {

@@ -103,7 +103,35 @@ foreach ( $packages as $pkg ) {
 							</div>
 						<?php endforeach; ?>
 					</div>
-					<span class="hero__name-pill" data-carousel-label><?php echo esc_html( $featured ? $featured[0]['name'] : '' ); ?></span>
+					<?php
+					// aria-hidden: the pill mirrors the active slide's own
+					// aria-label, so exposing it would read every motif twice.
+					?>
+					<span class="hero__name-pill" data-carousel-label aria-hidden="true"><?php echo esc_html( $featured ? $featured[0]['name'] : '' ); ?></span>
+
+					<?php
+					// WCAG 2.2.2 — autoplay needs a pause control. Ships hidden;
+					// VerticalCarousel.js unhides it once it takes over.
+					?>
+					<button
+						type="button"
+						class="carousel-toggle"
+						data-carousel-toggle
+						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
+						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje motiva', 'cosypaw' ); ?>"
+						aria-pressed="false"
+						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
+						hidden
+					>
+						<svg class="carousel-toggle__pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+						<svg class="carousel-toggle__play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+					</button>
+
+					<?php
+					// Announces only user-driven slide changes; autoplay stays
+					// silent so the page does not talk over the reader.
+					?>
+					<span class="screen-reader-text" data-carousel-status role="status" aria-live="polite"></span>
 				</div>
 			</div>
 

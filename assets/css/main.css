@@ -503,8 +503,8 @@ h1, h2, h3, h4 {
 	border: none;
 	cursor: pointer;
 	background: var(--cream2);
-	width: 42px;
-	height: 42px;
+	width: 44px;
+	height: 44px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -542,12 +542,16 @@ h1, h2, h3, h4 {
 	box-shadow: inset 0 0 0 1px var(--color-border-control);
 }
 
+/* 40x44: the flag stays 24x16, but the target it sits in clears the 44px
+   minimum height and comes close on width, with three of them in a row. */
 .lang-switch__btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 40px;
+	min-height: 44px;
 	padding: 4px;
-	border-radius: 7px;
+	border-radius: 10px;
 	line-height: 0;
 	text-decoration: none;
 	opacity: 0.5;
@@ -758,6 +762,13 @@ h1, h2, h3, h4 {
 	[data-nav-enhanced] .nav__links > .nav__link:last-child {
 		border-bottom: none;
 	}
+
+	/* The switcher gets its own row in the panel, where three 44px targets fit
+	   without competing with the brand, cart and toggle in the bar. */
+	[data-nav-enhanced] .lang-switch {
+		align-self: flex-start;
+		margin-top: var(--space-3);
+	}
 }
 
 /* ==========================================================================
@@ -860,8 +871,8 @@ h1, h2, h3, h4 {
 	cursor: pointer;
 	border: none;
 	background: var(--cream2);
-	width: 38px;
-	height: 38px;
+	width: 44px;
+	height: 44px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -914,8 +925,8 @@ h1, h2, h3, h4 {
 	cursor: pointer;
 	border: none;
 	background: var(--cream2);
-	width: 32px;
-	height: 32px;
+	width: 44px;
+	height: 44px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;

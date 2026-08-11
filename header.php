@@ -113,11 +113,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			}
 			?>
+
+			<?php
+			// Inside the panel rather than the action bar: three 44px flag
+			// targets do not fit alongside the brand, cart and toggle at 375px,
+			// and the panel gives them the room. On desktop the panel is inline,
+			// so the switcher sits beside the menu exactly as before.
+			if ( function_exists( 'cosypaw_language' ) ) {
+				cosypaw_language()->switcher();
+			}
+			?>
 		</div>
 
 		<?php
-		// Cart, language and the nav toggle sit outside the collapsing panel so
-		// they stay reachable at every width.
+		// Cart and the nav toggle stay outside the collapsing panel so they are
+		// reachable at every width.
 		?>
 		<div class="nav__actions">
 			<?php
@@ -145,8 +155,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php echo wp_kses( $cosypaw_cart_svg . $cosypaw_badge, $cosypaw_svg_allowed ); ?>
 				</button>
 			<?php endif; ?>
-
-			<?php if ( function_exists( 'cosypaw_language' ) ) { cosypaw_language()->switcher(); } ?>
 
 			<?php
 			// Ships hidden; SiteNav.js unhides it once the panel is collapsible,

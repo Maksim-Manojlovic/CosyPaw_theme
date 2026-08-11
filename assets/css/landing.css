@@ -627,6 +627,7 @@
 .builder__tool {
 	display: inline-flex;
 	align-items: center;
+	min-height: 44px;
 	gap: 7px;
 	cursor: pointer;
 	border: none;
@@ -696,6 +697,8 @@
 	animation: pop 0.3s ease;
 }
 
+/* Kept visually small so it does not cover the motif it sits on; the hit area
+   is extended to 44px via ::after instead. */
 .builder-slot__remove {
 	position: absolute;
 	top: -8px;
@@ -711,6 +714,16 @@
 	align-items: center;
 	justify-content: center;
 	box-shadow: 0 4px 10px rgba(161, 94, 55, 0.45);
+}
+
+.builder-slot__remove::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	transform: translate(-50%, -50%);
 }
 
 .builder-slot__placeholder {
@@ -925,6 +938,7 @@
 	color: var(--claydk);
 	font-weight: 800;
 	font-size: 14px;
+	min-height: 44px;
 	padding: 10px 16px;
 	border-radius: var(--radius-pill);
 	display: flex;

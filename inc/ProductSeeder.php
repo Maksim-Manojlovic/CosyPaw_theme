@@ -25,6 +25,8 @@ final class ProductSeeder {
 
 	private const NONCE_ACTION = 'cosypaw_seed_products';
 
+	private const REPAIR_ACTION = 'cosypaw_repair_images';
+
 	/**
 	 * Catalog data source.
 	 *
@@ -42,6 +44,7 @@ final class ProductSeeder {
 
 		add_action( 'admin_menu', array( $this, 'register_page' ) );
 		add_action( 'admin_post_' . self::NONCE_ACTION, array( $this, 'handle' ) );
+		add_action( 'admin_post_' . self::REPAIR_ACTION, array( $this, 'handle_repair' ) );
 
 		// Headless: `wp cosypaw seed`.
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -53,6 +56,15 @@ final class ProductSeeder {
 					}
 					$created = $this->seed();
 					\WP_CLI::success( sprintf( 'CosyPaw: %d product(s) created.', $created ) );
+				}
+			);
+
+			// Headless: `wp cosypaw repair-images`.
+			\WP_CLI::add_command(
+				'cosypaw repair-images',
+				function (): void {
+					$repaired = $this->repair_images();
+					\WP_CLI::success( sprintf( 'CosyPaw: %d product image(s) restored.', $repaired ) );
 				}
 			);
 		}
@@ -82,6 +94,7 @@ final class ProductSeeder {
 		$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
 		$package_map = (array) get_option( WooCommerce::PACKAGE_MAP_OPTION, array() );
 		$seeded      = isset( $_GET['seeded'] ) ? absint( wp_unslash( $_GET['seeded'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$repaired    = isset( $_GET['repaired'] ) ? absint( wp_unslash( $_GET['repaired'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'CosyPaw Seeder', 'cosypaw' ); ?></h1>
@@ -94,6 +107,20 @@ final class ProductSeeder {
 							/* translators: %d: number of products created. */
 							esc_html__( 'Done — %d new product(s) created.', 'cosypaw' ),
 							(int) $seeded
+						);
+						?>
+					</p>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( null !== $repaired ) : ?>
+				<div class="notice notice-success is-dismissible">
+					<p>
+						<?php
+						printf(
+							/* translators: %d: number of product images restored. */
+							esc_html__( 'Done — %d product image(s) restored.', 'cosypaw' ),
+							(int) $repaired
 						);
 						?>
 					</p>
@@ -142,16 +169,35 @@ final class ProductSeeder {
 				?>
 			</p>
 
+			<hr>
+
+			<h2><?php esc_html_e( 'Restore missing product images', 'cosypaw' ); ?></h2>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="<?php echo esc_attr( self::REPAIR_ACTION ); ?>" />
+				<?php wp_nonce_field( self::REPAIR_ACTION ); ?>
+				<p>
+					<button type="submit" class="button button-primary">
+						<?php esc_html_e( 'Restore missing product images', 'cosypaw' ); ?>
+					</button>
+				</p>
+				<p class="description">
+					<?php esc_html_e( 'Re-uploads the photo of any existing motif product whose image was deleted, and fills in image title, alt text, caption and description wherever they are still empty. Text you have written yourself is never overwritten. This creates no products and changes no settings — use it if the shop grid is showing grey placeholders.', 'cosypaw' ); ?>
+				</p>
+			</form>
+
+			<hr>
+
+			<h2><?php esc_html_e( 'Create products from the catalogue', 'cosypaw' ); ?></h2>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="<?php echo esc_attr( self::NONCE_ACTION ); ?>" />
 				<?php wp_nonce_field( self::NONCE_ACTION ); ?>
 				<p>
-					<button type="submit" class="button button-primary">
+					<button type="submit" class="button">
 						<?php esc_html_e( 'Create / update CosyPaw products', 'cosypaw' ); ?>
 					</button>
 				</p>
 				<p class="description">
-					<?php esc_html_e( 'Safe to run repeatedly — existing products are skipped.', 'cosypaw' ); ?>
+					<?php esc_html_e( 'Safe to run repeatedly — existing products are skipped. Note that it also recreates any catalogue motif that is no longer a product, sets up cash on delivery and the Serbia shipping zone if they are missing, and sets the site logo. On a shop that has been running for a while, prefer the button above.', 'cosypaw' ); ?>
 				</p>
 			</form>
 		</div>
@@ -188,6 +234,72 @@ final class ProductSeeder {
 	}
 
 	/**
+	 * Restore the featured image of every motif product that lost one, and fill
+	 * any image meta still blank. Creates nothing and configures nothing.
+	 *
+	 * This is the narrow half of seed(). seed() also creates the products a
+	 * live shop may have retired on purpose, adds a shipping zone, and touches
+	 * the site logo — none of which a shop that only wants its pictures back
+	 * has asked for. Products that are not already mapped are skipped entirely.
+	 *
+	 * @return int Number of images restored this run.
+	 */
+	public function repair_images(): int {
+		if ( ! function_exists( 'wc_get_product' ) ) {
+			return 0;
+		}
+
+		$passthrough = $this->suppress_theme_translations();
+
+		try {
+			$repaired    = 0;
+			$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
+
+			foreach ( $this->catalog->products() as $motif ) {
+				$product_id = isset( $product_map[ $motif['id'] ] ) ? (int) $product_map[ $motif['id'] ] : 0;
+				if ( $product_id < 1 || ! get_post( $product_id ) ) {
+					continue;
+				}
+
+				if ( $this->repair_product_image( $product_id, $motif ) ) {
+					++$repaired;
+				}
+			}
+		} finally {
+			remove_filter( 'gettext', $passthrough, 99 );
+		}
+
+		return $repaired;
+	}
+
+	/**
+	 * Handle the image-repair form submission.
+	 *
+	 * @return void
+	 */
+	public function handle_repair(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'cosypaw' ) );
+		}
+		check_admin_referer( self::REPAIR_ACTION );
+
+		if ( ! class_exists( '\WC_Product_Simple' ) ) {
+			wp_die( esc_html__( 'WooCommerce is not active.', 'cosypaw' ) );
+		}
+
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'page'     => 'cosypaw-seeder',
+					'repaired' => $this->repair_images(),
+				),
+				admin_url( 'tools.php' )
+			)
+		);
+		exit;
+	}
+
+	/**
 	 * Create every missing motif + package product. Idempotent.
 	 *
 	 * @return int Number of products created this run.
@@ -207,11 +319,11 @@ final class ProductSeeder {
 			foreach ( $this->catalog->products() as $motif ) {
 				if ( isset( $product_map[ $motif['id'] ] ) && get_post( (int) $product_map[ $motif['id'] ] ) ) {
 					// Already created — re-attach the image if it went missing,
-					// and make sure it carries its alt text either way.
-					$this->backfill_image_meta( (int) $product_map[ $motif['id'] ], $motif['name'], $motif['image'] );
+					// and fill any image meta still blank either way.
+					$this->repair_product_image( (int) $product_map[ $motif['id'] ], $motif );
 					continue;
 				}
-				$pid = $this->create_product( $motif['name'], Catalog::UNIT_PRICE, $motif['image'] );
+				$pid = $this->create_product( $motif['name'], Catalog::UNIT_PRICE, $motif['image'], $motif );
 				if ( $pid ) {
 					$product_map[ $motif['id'] ] = $pid;
 					++$created;
@@ -277,12 +389,13 @@ final class ProductSeeder {
 	/**
 	 * Create a simple, published WooCommerce product.
 	 *
-	 * @param string $name      Product name.
-	 * @param int    $price     Regular price (RSD).
-	 * @param string $image_url Source image URL (mapped to a local /assets path).
+	 * @param string               $name      Product name.
+	 * @param int                  $price     Regular price (RSD).
+	 * @param string               $image_url Source image URL (mapped to a local /assets path).
+	 * @param array<string,string> $motif     Catalog row, for the image's alt and caption.
 	 * @return int Product ID, or 0 on failure.
 	 */
-	private function create_product( string $name, int $price, string $image_url ): int {
+	private function create_product( string $name, int $price, string $image_url, array $motif = array() ): int {
 		$product = new \WC_Product_Simple();
 		$product->set_name( $name );
 		$product->set_status( 'publish' );
@@ -296,7 +409,7 @@ final class ProductSeeder {
 		}
 
 		if ( '' !== $image_url ) {
-			$attachment_id = $this->sideload_local_image( $image_url, $product_id, $name );
+			$attachment_id = $this->sideload_local_image( $image_url, $product_id, $name, $motif );
 			if ( $attachment_id ) {
 				$product->set_image_id( $attachment_id );
 				$product->save();
@@ -307,24 +420,59 @@ final class ProductSeeder {
 	}
 
 	/**
-	 * Set the image's alt text (accessibility) and admin title.
+	 * Fill in an image's title, alt text, caption and description.
 	 *
-	 * Caption (post_excerpt) and description (post_content) are intentionally
-	 * left blank — caption can render visibly on the front end, and duplicating
-	 * the product name there adds nothing.
+	 * Only empty fields are written. The shop has curated this copy by hand in
+	 * wp-admin, and a seeder that is safe to re-run is worthless if re-running
+	 * it flattens that work back to the product name — so anything already
+	 * filled in is left exactly as it is, whoever wrote it.
+	 *
+	 * The description repeats the alt text on purpose. It is the only one of the
+	 * four that has no separate job: alt is read aloud, caption can render under
+	 * the image, title names the file in the library, and the description is
+	 * what is left for a search engine reading the attachment on its own.
+	 *
+	 * `$fresh` marks an attachment this seeder has just uploaded. WordPress
+	 * titles a sideloaded file after its filename, so a new image arrives called
+	 * "sova" rather than "Sova" — a value that is not empty and not a human
+	 * decision either, and the empty-only rule alone would preserve it forever.
 	 *
 	 * @param int    $attachment_id Attachment ID.
-	 * @param string $text          Descriptive text (the product name).
+	 * @param string $title         Product name.
+	 * @param string $alt           Sentence describing the photograph.
+	 * @param string $caption       Display line shown under the image.
+	 * @param bool   $fresh         Whether this attachment was just uploaded.
 	 * @return void
 	 */
-	private function set_image_meta( int $attachment_id, string $text ): void {
-		update_post_meta( $attachment_id, '_wp_attachment_image_alt', $text );
-		wp_update_post(
-			array(
-				'ID'         => $attachment_id,
-				'post_title' => $text,
-			)
-		);
+	private function set_image_meta( int $attachment_id, string $title, string $alt = '', string $caption = '', bool $fresh = false ): void {
+		// An alt text was not always part of the seed, so fall back to the name
+		// rather than leaving a screen reader with nothing at all.
+		$alt = '' !== $alt ? $alt : $title;
+
+		if ( '' === (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) {
+			update_post_meta( $attachment_id, '_wp_attachment_image_alt', $alt );
+		}
+
+		$post = get_post( $attachment_id );
+		if ( ! $post ) {
+			return;
+		}
+
+		$update = array();
+		if ( '' !== $title && ( $fresh || '' === trim( (string) $post->post_title ) ) ) {
+			$update['post_title'] = $title;
+		}
+		if ( '' === trim( (string) $post->post_excerpt ) && '' !== $caption ) {
+			$update['post_excerpt'] = $caption;
+		}
+		if ( '' === trim( (string) $post->post_content ) ) {
+			$update['post_content'] = $alt;
+		}
+
+		if ( $update ) {
+			$update['ID'] = $attachment_id;
+			wp_update_post( $update );
+		}
 	}
 
 	/**
@@ -345,29 +493,35 @@ final class ProductSeeder {
 	 * @param string $image_url  Source image under the theme directory.
 	 * @return void
 	 */
-	private function backfill_image_meta( int $product_id, string $name, string $image_url = '' ): void {
+	private function repair_product_image( int $product_id, array $motif ): bool {
 		$product = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
 		if ( ! $product ) {
-			return;
+			return false;
 		}
 
+		$name     = isset( $motif['name'] ) ? (string) $motif['name'] : '';
 		$image_id = (int) $product->get_image_id();
 
 		if ( $this->attachment_is_intact( $image_id ) ) {
-			$this->set_image_meta( $image_id, $name );
+			$this->set_image_meta( $image_id, $name, (string) ( $motif['alt'] ?? '' ), (string) ( $motif['caption'] ?? '' ) );
 
-			return;
+			return false;
 		}
 
+		$image_url = isset( $motif['image'] ) ? (string) $motif['image'] : '';
 		if ( '' === $image_url ) {
-			return;
+			return false;
 		}
 
-		$attachment_id = $this->sideload_local_image( $image_url, $product_id, $name );
-		if ( $attachment_id ) {
-			$product->set_image_id( $attachment_id );
-			$product->save();
+		$attachment_id = $this->sideload_local_image( $image_url, $product_id, $name, $motif );
+		if ( ! $attachment_id ) {
+			return false;
 		}
+
+		$product->set_image_id( $attachment_id );
+		$product->save();
+
+		return true;
 	}
 
 	/**
@@ -514,12 +668,13 @@ final class ProductSeeder {
 	/**
 	 * Sideload an image that lives in the theme directory.
 	 *
-	 * @param string $image_url Image URL under the theme directory.
-	 * @param int    $parent_id Product post ID to attach to.
-	 * @param string $alt       Alt/title/caption/description text.
+	 * @param string               $image_url Image URL under the theme directory.
+	 * @param int                  $parent_id Product post ID to attach to.
+	 * @param string               $name      Product name, used as the image title.
+	 * @param array<string,string> $motif     Catalog row, for the image's alt and caption.
 	 * @return int Attachment ID, or 0 on failure.
 	 */
-	private function sideload_local_image( string $image_url, int $parent_id, string $alt = '' ): int {
+	private function sideload_local_image( string $image_url, int $parent_id, string $name = '', array $motif = array() ): int {
 		$path = $this->resolve_theme_path( $image_url );
 		if ( '' === $path ) {
 			return 0;
@@ -548,8 +703,14 @@ final class ProductSeeder {
 			return 0;
 		}
 
-		if ( '' !== $alt ) {
-			$this->set_image_meta( (int) $attachment_id, $alt );
+		if ( '' !== $name ) {
+			$this->set_image_meta(
+				(int) $attachment_id,
+				$name,
+				(string) ( $motif['alt'] ?? '' ),
+				(string) ( $motif['caption'] ?? '' ),
+				true
+			);
 		}
 
 		return (int) $attachment_id;

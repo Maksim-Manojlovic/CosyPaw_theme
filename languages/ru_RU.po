@@ -560,8 +560,23 @@ msgstr "Сейчас сопоставлено: %1$d товаров-мотиво�
 msgid "Create / update CosyPaw products"
 msgstr "Создать / обновить товары CosyPaw"
 
+msgid "Restore missing product images"
+msgstr "Восстановить отсутствующие изображения товаров"
+
+msgid "Done — %d product image(s) restored."
+msgstr "Готово — восстановлено %d изображений товаров."
+
+msgid "Re-uploads the photo of any existing motif product whose image was deleted, and fills in image title, alt text, caption and description wherever they are still empty. Text you have written yourself is never overwritten. This creates no products and changes no settings — use it if the shop grid is showing grey placeholders."
+msgstr "Заново загружает фотографию любого существующего товара, у которого изображение было удалено, и заполняет заголовок, alt-текст, подпись и описание там, где они ещё пусты. Написанный вами текст никогда не перезаписывается. Не создаёт товаров и не меняет настроек — используйте, если в сетке магазина серые заглушки."
+
+msgid "Create products from the catalogue"
+msgstr "Создать товары из каталога"
+
 msgid "Safe to run repeatedly — existing products are skipped."
 msgstr "Можно запускать повторно — существующие товары пропускаются."
+
+msgid "Safe to run repeatedly — existing products are skipped. Note that it also recreates any catalogue motif that is no longer a product, sets up cash on delivery and the Serbia shipping zone if they are missing, and sets the site logo. On a shop that has been running for a while, prefer the button above."
+msgstr "Можно запускать повторно — существующие товары пропускаются. Учтите, что он также заново создаёт любой мотив из каталога, который больше не является товаром, настраивает оплату при получении и зону доставки по Сербии, если их нет, и задаёт логотип сайта. Для магазина, который уже работает, лучше использовать кнопку выше."
 
 msgid "You are not allowed to do this."
 msgstr "У вас нет прав для этого действия."

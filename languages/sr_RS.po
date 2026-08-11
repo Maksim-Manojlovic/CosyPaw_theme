@@ -35,8 +35,23 @@ msgstr "Trenutno mapirano: %1$d proizvoda motiva, %2$d proizvoda paketa."
 msgid "Create / update CosyPaw products"
 msgstr "Kreiraj / ažuriraj CosyPaw proizvode"
 
+msgid "Restore missing product images"
+msgstr "Vrati slike proizvoda koje nedostaju"
+
+msgid "Done — %d product image(s) restored."
+msgstr "Gotovo — vraćeno %d slika proizvoda."
+
+msgid "Re-uploads the photo of any existing motif product whose image was deleted, and fills in image title, alt text, caption and description wherever they are still empty. Text you have written yourself is never overwritten. This creates no products and changes no settings — use it if the shop grid is showing grey placeholders."
+msgstr "Ponovo postavlja fotografiju svakog postojećeg proizvoda kome je slika obrisana i popunjava naslov, alt tekst, opis ispod slike i opis slike svuda gde su još prazni. Tekst koji si sam napisao nikada se ne prepisuje. Ne kreira proizvode i ne menja podešavanja — koristi ovo ako mreža prodavnice prikazuje sive praznine."
+
+msgid "Create products from the catalogue"
+msgstr "Kreiraj proizvode iz kataloga"
+
 msgid "Safe to run repeatedly — existing products are skipped."
 msgstr "Bezbedno za ponovno pokretanje — postojeći proizvodi se preskaču."
+
+msgid "Safe to run repeatedly — existing products are skipped. Note that it also recreates any catalogue motif that is no longer a product, sets up cash on delivery and the Serbia shipping zone if they are missing, and sets the site logo. On a shop that has been running for a while, prefer the button above."
+msgstr "Bezbedno za ponovno pokretanje — postojeći proizvodi se preskaču. Imaj u vidu da ponovo kreira i svaki motiv iz kataloga koji više nije proizvod, postavlja plaćanje pouzećem i zonu dostave za Srbiju ako ih nema, i postavlja logo sajta. Na prodavnici koja već radi, koristi radije dugme iznad."
 
 msgid "You are not allowed to do this."
 msgstr "Nije vam dozvoljeno da ovo uradite."

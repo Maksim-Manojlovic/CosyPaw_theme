@@ -515,12 +515,6 @@ msgstr "Как я могу оплатить?"
 msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
 msgstr "Оплата при получении — вы платите курьеру при получении посылки."
 
-msgid "Mogu li da vratim proizvod?"
-msgstr "Могу ли я вернуть товар?"
-
-msgid "Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca."
-msgstr "Конечно. У вас есть 14 дней, чтобы вернуть неиспользованное полотенце с возвратом денег."
-
 msgid "Nothing found."
 msgstr "Ничего не найдено."
 

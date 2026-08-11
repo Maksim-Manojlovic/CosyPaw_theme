@@ -193,8 +193,6 @@ $sr_source = array(
 	'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.' => array( 'Delivery is 2–4 business days across Serbia. The Trio package comes with free shipping.', 'Доставка 2–4 рабочих дня по всей Сербии. Набор Trio — с бесплатной доставкой.' ),
 	'Kako mogu da platim?'                                                                    => array( 'How can I pay?', 'Как я могу оплатить?' ),
 	'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.'                            => array( 'Payment is cash on delivery — you pay the courier when you receive the package.', 'Оплата при получении — вы платите курьеру при получении посылки.' ),
-	'Mogu li da vratim proizvod?'                                                             => array( 'Can I return a product?', 'Могу ли я вернуть товар?' ),
-	'Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca.'                  => array( 'Of course. You have 14 days to return an unused towel for a refund.', 'Конечно. У вас есть 14 дней, чтобы вернуть неиспользованное полотенце с возвратом денег.' ),
 );
 
 // English-source msgid => [ serbian, russian ].

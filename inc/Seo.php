@@ -302,7 +302,7 @@ final class Seo {
 			'@id'    => home_url( '/#organization' ),
 			'name'   => get_bloginfo( 'name' ),
 			'url'    => home_url( '/' ),
-			'sameAs' => array( 'https://instagram.com/cosypaw' ),
+			'sameAs' => array( 'https://www.instagram.com/cosypaw_' ),
 		);
 
 		$logo_id = (int) get_theme_mod( 'custom_logo' );
@@ -433,10 +433,6 @@ final class Seo {
 			array(
 				'q' => __( 'Kako mogu da platim?', 'cosypaw' ),
 				'a' => __( 'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.', 'cosypaw' ),
-			),
-			array(
-				'q' => __( 'Mogu li da vratim proizvod?', 'cosypaw' ),
-				'a' => __( 'Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca.', 'cosypaw' ),
 			),
 		);
 	}

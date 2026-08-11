@@ -35,6 +35,7 @@ require_once dirname( __DIR__ ) . '/inc/Assets.php';
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 require_once dirname( __DIR__ ) . '/inc/ProductSeeder.php';
 require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
+require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';

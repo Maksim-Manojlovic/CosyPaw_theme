@@ -193,6 +193,15 @@ $sr_source = array(
 	'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.' => array( 'Delivery is 2–4 business days across Serbia. The Trio package comes with free shipping.', 'Доставка 2–4 рабочих дня по всей Сербии. Набор Trio — с бесплатной доставкой.' ),
 	'Kako mogu da platim?'                                                                    => array( 'How can I pay?', 'Как я могу оплатить?' ),
 	'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.'                            => array( 'Payment is cash on delivery — you pay the courier when you receive the package.', 'Оплата при получении — вы платите курьеру при получении посылки.' ),
+
+	// Checkout labels. CheckoutSetup writes these into the WooCommerce gateway
+	// and shipping-zone settings in the source language; they are resolved back
+	// through gettext per request, so every msgid has to live here.
+	'Plaćanje pouzećem'                                                                       => array( 'Cash on delivery', 'Оплата при получении' ),
+	'Plaćaš gotovinom pri preuzimanju — kuriru na vratima ili nama lično.'                    => array( 'You pay in cash on receipt — to the courier at your door, or to us in person.', 'Оплата наличными при получении — курьеру у двери или нам лично.' ),
+	'Pripremi iznos u gotovini za trenutak preuzimanja.'                                      => array( 'Have the amount ready in cash for the moment of handover.', 'Приготовьте сумму наличными к моменту получения.' ),
+	'Lično preuzimanje'                                                                       => array( 'Local pickup', 'Самовывоз' ),
+	'Dostava kurirskom službom (poštarina se plaća kuriru)'                                   => array( 'Courier delivery (postage paid to the courier)', 'Доставка курьером (почтовые расходы оплачиваются курьеру)' ),
 );
 
 // English-source msgid => [ serbian, russian ].

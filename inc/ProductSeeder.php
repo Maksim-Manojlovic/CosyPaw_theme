@@ -124,6 +124,24 @@ final class ProductSeeder {
 				?>
 			</p>
 
+			<p>
+				<?php
+				$cod  = (array) get_option( 'woocommerce_cod_settings', array() );
+				$zone = (int) get_option( CheckoutSetup::ZONE_OPTION, 0 );
+
+				esc_html_e( 'Checkout:', 'cosypaw' );
+				echo ' ';
+				echo empty( $cod['enabled'] ) || 'yes' !== $cod['enabled']
+					? esc_html__( 'cash on delivery is OFF', 'cosypaw' )
+					: esc_html__( 'cash on delivery is on', 'cosypaw' );
+				echo ', ';
+				echo $zone > 0
+					? esc_html__( 'the Serbia shipping zone exists', 'cosypaw' )
+					: esc_html__( 'there is NO shipping zone', 'cosypaw' );
+				echo '.';
+				?>
+			</p>
+
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="<?php echo esc_attr( self::NONCE_ACTION ); ?>" />
 				<?php wp_nonce_field( self::NONCE_ACTION ); ?>
@@ -213,6 +231,11 @@ final class ProductSeeder {
 				}
 			}
 			update_option( WooCommerce::PACKAGE_MAP_OPTION, $package_map );
+
+			// Products nobody can pay for are not a live shop. WooCommerce
+			// starts with every gateway off and no shipping zone, so going
+			// live means configuring both — see CheckoutSetup. Idempotent.
+			CheckoutSetup::configure();
 		} finally {
 			remove_filter( 'gettext', $passthrough, 99 );
 		}

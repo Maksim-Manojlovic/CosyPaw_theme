@@ -515,6 +515,21 @@ msgstr "Как я могу оплатить?"
 msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
 msgstr "Оплата при получении — вы платите курьеру при получении посылки."
 
+msgid "Plaćanje pouzećem"
+msgstr "Оплата при получении"
+
+msgid "Plaćaš gotovinom pri preuzimanju — kuriru na vratima ili nama lično."
+msgstr "Оплата наличными при получении — курьеру у двери или нам лично."
+
+msgid "Pripremi iznos u gotovini za trenutak preuzimanja."
+msgstr "Приготовьте сумму наличными к моменту получения."
+
+msgid "Lično preuzimanje"
+msgstr "Самовывоз"
+
+msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
+msgstr "Доставка курьером (почтовые расходы оплачиваются курьеру)"
+
 msgid "Nothing found."
 msgstr "Ничего не найдено."
 

@@ -34,9 +34,12 @@
 	--muted: #6f6155;   /* secondary text — 5.55:1                          */
 	--line: rgba(62, 51, 42, 0.1);
 	/* Control boundaries (inputs, ghost buttons, pills) need 3:1 against their
-	   own fill per WCAG 2.1 1.4.11 — --line is 1.19:1 on white and is only
-	   legitimate for decorative dividers. This lands at 3.13:1 on white. */
-	--line-control: rgba(62, 51, 42, 0.42);
+	   own fill per WCAG 2.1 1.4.11. --line is 1.19:1 on white and is only
+	   legitimate for decorative dividers and separators. Measured against every
+	   surface a control sits on, worst case is sand at 3.51:1 (white 3.86,
+	   cream 3.75, cream2 3.59). Do not lighten past 0.58, where sand drops
+	   under 3:1. */
+	--line-control: rgba(62, 51, 42, 0.62);
 
 	/* --- Semantic aliases (architecture naming → brand tokens). --- */
 	--color-surface: var(--cream);
@@ -184,10 +187,12 @@ h1, h2, h3, h4 {
 	box-shadow: 0 14px 30px rgba(161, 94, 55, 0.5);
 }
 
+/* White fill on the cream page is a 1.05:1 difference, so this border is the
+   only thing identifying the control — it takes the 3:1 token, not --line. */
 .btn--ghost {
 	background: #fff;
 	color: var(--color-text-primary);
-	box-shadow: inset 0 0 0 1.5px var(--color-border);
+	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
 }
 
 /* --- Vertical carousel (hero featured motifs). Transforms applied by JS. --- */
@@ -436,7 +441,7 @@ h1, h2, h3, h4 {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 	color: var(--ink);
 }
 
@@ -466,7 +471,7 @@ h1, h2, h3, h4 {
 	background: var(--cream2);
 	border-radius: var(--radius-pill);
 	padding: 3px;
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 }
 
 .lang-switch__btn {

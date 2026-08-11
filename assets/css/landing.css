@@ -30,8 +30,10 @@
 	letter-spacing: 0.3px;
 }
 
+/* Fluid rather than two breakpoint steps: at 390px the old 38px step ran the
+   headline to four lines and ate the space the CTAs needed. */
 .hero__title {
-	font-size: 50px;
+	font-size: clamp(32px, 7.2vw, 50px);
 	line-height: 1.1;
 	margin: 18px 0 0;
 	letter-spacing: -0.5px;
@@ -1129,12 +1131,29 @@
 	.hero {
 		grid-template-columns: 1fr;
 		text-align: center;
+		padding-top: 30px;
+		gap: 28px;
 	}
+
+	/* Two changes here, both about the card.
+	   1. The art no longer carries order: -1. It used to come first, so the
+	      card was the entire opening screen on a phone — roughly 480px of
+	      image beneath a 36px announcement bar and a 70px sticky header — and
+	      the headline, the lead and both CTAs all sat below the fold. The page
+	      opened on a photograph with no statement of what was being sold.
+	      Copy first puts the pitch on screen and still shows the top of the
+	      card.
+	   2. The container is capped to the card's own width. The price tag and
+	      the blobs are positioned against .hero__art, not .hero__card, so
+	      while the container ran full-width and the card stayed at 380px they
+	      drifted off into the empty space beside it — most visibly between
+	      about 560px and 880px. */
 	.hero__art {
-		order: -1;
-		min-height: 440px;
+		min-height: 0;
+		max-width: 380px;
+		margin-inline: auto;
 	}
-	.hero__title { font-size: 46px; }
+
 	.hero__cta, .trust { justify-content: center; }
 	.hero__lead { margin-left: auto; margin-right: auto; }
 	.benefits { grid-template-columns: 1fr 1fr; }
@@ -1151,12 +1170,28 @@
 }
 
 @media (max-width: 560px) {
-	.hero__title { font-size: 38px; }
-	/* Below this width the card is narrower than 380px and sets its own height
-	   from the aspect ratio, so a fixed min-height only adds dead space. */
+	/* The card is narrower than 380px here and sets its own height from the
+	   aspect ratio, so the container only needs breathing room. */
 	.hero__art {
-		min-height: 0;
-		padding-block: var(--space-5);
+		padding-block: var(--space-4);
+	}
+
+	/* Desktop vertical rhythm costs about 40px between the headline and the
+	   card on a phone. Tightening it brings the top of the card back to the
+	   fold, so the opening screen carries the pitch and a glimpse of the
+	   product rather than one or the other. */
+	.hero__lead {
+		font-size: 16.5px;
+		margin-top: 16px;
+	}
+
+	.hero__cta {
+		margin-top: 22px;
+	}
+
+	.trust {
+		margin-top: 22px;
+		gap: 14px;
 	}
 	.benefits, .motifs { grid-template-columns: 1fr; }
 	.section__title { font-size: 30px; }

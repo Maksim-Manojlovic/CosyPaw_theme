@@ -279,9 +279,16 @@ h1, h2, h3, h4 {
 	font-weight: 700;
 	font-size: 13.5px;
 	letter-spacing: 0.3px;
-	overflow: hidden;
 	white-space: nowrap;
 	padding: 8px 0;
+}
+
+/* The clip lives here, not on .announce. The bar is ~36px tall and the pause
+   control reaches its 44px target with an oversized ::after, which overflow
+   on the bar itself would clip away — and a clipped region is not
+   hit-testable, so the larger target would exist only on paper. */
+.announce__viewport {
+	overflow: hidden;
 }
 
 .announce__track {

@@ -40,14 +40,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// list below carries the same announcements once, so assistive tech gets
 	// the free-shipping offer instead of the whole bar being hidden from it.
 	?>
-	<div class="announce__track" aria-hidden="true">
-		<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
-			<div class="announce__group">
-				<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
-					<span><?php echo esc_html( $line ); ?></span><span class="announce__dot">•</span>
-				<?php endforeach; ?>
-			</div>
-		<?php endfor; ?>
+	<div class="announce__viewport" aria-hidden="true">
+		<div class="announce__track">
+			<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
+				<div class="announce__group">
+					<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
+						<span><?php echo esc_html( $line ); ?></span><span class="announce__dot">•</span>
+					<?php endforeach; ?>
+				</div>
+			<?php endfor; ?>
+		</div>
 	</div>
 
 	<ul class="screen-reader-text">

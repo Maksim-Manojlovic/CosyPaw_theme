@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span class="brand-mark">
 						<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
 					</span>
-					<span class="brand-name" style="font-size:24px;"><?php bloginfo( 'name' ); ?></span>
+					<span class="brand-name brand-name--lg"><?php bloginfo( 'name' ); ?></span>
 				</div>
 				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškiriča. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
 			</div>
@@ -27,9 +27,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="footer-col">
 				<div class="footer-col__title"><?php esc_html_e( 'Brzi linkovi', 'cosypaw' ); ?></div>
 				<div class="footer-links">
-					<a href="#paketi"><?php esc_html_e( 'Paketi', 'cosypaw' ); ?></a>
-					<a href="#zasto"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></a>
-					<a href="#galerija"><?php esc_html_e( 'Svi motivi', 'cosypaw' ); ?></a>
+					<?php
+					// The targets are homepage sections, so off the front page a
+					// bare "#paketi" resolves against the current URL and goes
+					// nowhere. Same home_url() prefix the header nav uses.
+					$cosypaw_footer_links = array(
+						'#paketi'   => __( 'Paketi', 'cosypaw' ),
+						'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
+						'#galerija' => __( 'Svi motivi', 'cosypaw' ),
+					);
+					$cosypaw_home_base = is_front_page() ? '' : home_url( '/' );
+					foreach ( $cosypaw_footer_links as $cosypaw_anchor => $cosypaw_label ) {
+						printf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( $cosypaw_home_base . $cosypaw_anchor ),
+							esc_html( $cosypaw_label )
+						);
+					}
+					?>
 				</div>
 			</div>
 
@@ -60,8 +75,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Cart drawer -->
 <div class="cart-drawer" data-cart-drawer hidden>
-	<button type="button" class="cart-drawer__overlay" data-cart-close aria-label="<?php esc_attr_e( 'Zatvori korpu', 'cosypaw' ); ?>"></button>
-	<aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Tvoja korpa', 'cosypaw' ); ?>">
+	<?php
+	// A plain div, not a button: the panel traps focus, and a focusable overlay
+	// would put a second "close" stop in the tab cycle. Pointer users get the
+	// click-to-dismiss, keyboard users get Escape and the close button.
+	?>
+	<div class="cart-drawer__overlay" data-cart-close aria-hidden="true"></div>
+	<aside class="cart-drawer__panel" data-cart-panel tabindex="-1" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Tvoja korpa', 'cosypaw' ); ?>">
 		<div class="cart-drawer__head">
 			<span class="cart-drawer__title"><?php esc_html_e( 'Tvoja korpa', 'cosypaw' ); ?></span>
 			<button type="button" class="cart-drawer__close" data-cart-close aria-label="<?php esc_attr_e( 'Zatvori', 'cosypaw' ); ?>">
@@ -71,9 +91,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="cart-drawer__body" data-cart-body>
 			<div class="cart-empty" data-cart-empty>
-				<div class="cart-empty__emoji">🧺</div>
-				<p style="font-weight:700;font-size:16px;margin:0;"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
-				<p style="font-size:14px;margin:6px 0 0;"><?php esc_html_e( 'Izaberi paket ili omiljeni motiv.', 'cosypaw' ); ?></p>
+				<div class="cart-empty__emoji" aria-hidden="true">🧺</div>
+				<p class="cart-empty__title"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
+				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni motiv.', 'cosypaw' ); ?></p>
 			</div>
 			<div data-cart-items></div>
 		</div>

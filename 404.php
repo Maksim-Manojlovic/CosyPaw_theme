@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" tabindex="-1">
 	<div class="notfound">
 		<div class="notfound__emoji" aria-hidden="true">🧺</div>
 		<h1 class="notfound__title"><?php esc_html_e( 'Ova stranica se sakrila', 'cosypaw' ); ?></h1>
@@ -22,7 +22,7 @@ get_header();
 
 		<?php get_search_form(); ?>
 
-		<p style="margin-top:24px;">
+		<p class="notfound__action">
 			<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Nazad na početnu', 'cosypaw' ); ?></a>
 		</p>
 	</div>

@@ -177,13 +177,13 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 42px;
-	height: 42px;
+	min-width: 44px;
+	height: 44px;
 	padding: 0 10px;
 	margin: 0 4px;
 	border-radius: var(--radius-pill);
 	background: #fff;
-	border: 1px solid var(--line);
+	border: 1px solid var(--color-border-control);
 	color: var(--ink);
 	font-weight: 800;
 	text-decoration: none;
@@ -204,7 +204,7 @@
 
 .search-form .search-field {
 	flex: 1;
-	border: 1px solid var(--line);
+	border: 1px solid var(--color-border-control);
 	border-radius: var(--radius-pill);
 	padding: 12px 18px;
 	font: inherit;
@@ -330,7 +330,7 @@
 .comment-form input[type="url"],
 .comment-form textarea {
 	width: 100%;
-	border: 1px solid var(--line);
+	border: 1px solid var(--color-border-control);
 	border-radius: var(--radius-sm);
 	padding: 12px 14px;
 	font: inherit;
@@ -359,6 +359,10 @@
 .notfound__title {
 	font-size: 40px;
 	margin: 12px 0 0;
+}
+
+.notfound__action {
+	margin-top: 24px;
 }
 
 .notfound__text {

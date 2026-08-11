@@ -197,6 +197,24 @@ msgstr "Бесплатная доставка для набора Trio"
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 
+msgid "Pređi na sadržaj"
+msgstr "Перейти к содержимому"
+
+msgid "Meni"
+msgstr "Меню"
+
+msgid "Pauziraj najave"
+msgstr "Приостановить объявления"
+
+msgid "Pusti najave"
+msgstr "Возобновить объявления"
+
+msgid "Pauziraj smenjivanje motiva"
+msgstr "Приостановить смену мотивов"
+
+msgid "Pusti smenjivanje motiva"
+msgstr "Возобновить смену мотивов"
+
 msgid "Motivi"
 msgstr "Мотивы"
 
@@ -364,6 +382,12 @@ msgstr "Выбери ещё %d — набор не заполнен"
 
 msgid "Ukloni motiv"
 msgstr "Удалить мотив"
+
+msgid "Dodajem…"
+msgstr "Добавляем…"
+
+msgid "Dodavanje nije uspelo — pokušaj ponovo"
+msgstr "Не удалось добавить в корзину — попробуйте ещё раз"
 
 msgid "U tvom domu"
 msgstr "У тебя дома"

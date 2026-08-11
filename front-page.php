@@ -48,7 +48,7 @@ foreach ( $packages as $pkg ) {
 }
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" tabindex="-1">
 
 	<!-- HERO -->
 	<section id="top" class="hero">
@@ -97,13 +97,55 @@ foreach ( $packages as $pkg ) {
 			<div class="hero__card">
 				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni motivi', 'cosypaw' ); ?>">
 					<div class="vertical-carousel__track">
-						<?php foreach ( $featured as $f ) : ?>
+						<?php foreach ( $featured as $cosypaw_i => $f ) : ?>
 							<div class="vertical-carousel__slide">
-								<div class="hero__slide" role="img" aria-label="<?php echo esc_attr( $f['name'] ); ?>" style="background-image:url('<?php echo esc_url( $f['image_md'] ); ?>');"></div>
+								<img
+									class="hero__slide"
+									src="<?php echo esc_url( $f['image_md'] ); ?>"
+									srcset="<?php echo esc_attr( $f['image_md'] . ' 600w, ' . $f['image'] . ' 1086w' ); ?>"
+									sizes="(max-width: 440px) calc(100vw - 44px), 348px"
+									width="600"
+									height="800"
+									alt="<?php echo esc_attr( $f['name'] ); ?>"
+									decoding="async"
+									<?php
+									// The first slide is the hero image; the rest sit
+									// outside the card's visible area and can wait.
+									echo 0 === $cosypaw_i ? 'fetchpriority="high"' : 'loading="lazy"';
+									?>
+								>
 							</div>
 						<?php endforeach; ?>
 					</div>
-					<span class="hero__name-pill" data-carousel-label><?php echo esc_html( $featured ? $featured[0]['name'] : '' ); ?></span>
+					<?php
+					// aria-hidden: the pill mirrors the active slide's own
+					// aria-label, so exposing it would read every motif twice.
+					?>
+					<span class="hero__name-pill" data-carousel-label aria-hidden="true"><?php echo esc_html( $featured ? $featured[0]['name'] : '' ); ?></span>
+
+					<?php
+					// WCAG 2.2.2 — autoplay needs a pause control. Ships hidden;
+					// VerticalCarousel.js unhides it once it takes over.
+					?>
+					<button
+						type="button"
+						class="carousel-toggle"
+						data-carousel-toggle
+						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
+						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje motiva', 'cosypaw' ); ?>"
+						aria-pressed="false"
+						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
+						hidden
+					>
+						<svg class="carousel-toggle__pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+						<svg class="carousel-toggle__play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+					</button>
+
+					<?php
+					// Announces only user-driven slide changes; autoplay stays
+					// silent so the page does not talk over the reader.
+					?>
+					<span class="screen-reader-text" data-carousel-status role="status" aria-live="polite"></span>
 				</div>
 			</div>
 
@@ -178,7 +220,16 @@ foreach ( $packages as $pkg ) {
 			foreach ( $lifestyle as $shot ) :
 				?>
 				<figure class="lifestyle-card">
-					<div class="lifestyle-card__img" role="img" aria-label="<?php echo esc_attr( $shot['cap'] ); ?>" style="background-image:url('<?php echo esc_url( $assets_uri . $shot['file'] ); ?>');"></div>
+					<img
+						class="lifestyle-card__img"
+						src="<?php echo esc_url( $assets_uri . $shot['file'] ); ?>"
+						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
+						width="1086"
+						height="1358"
+						alt="<?php echo esc_attr( $shot['cap'] ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
 					<figcaption class="lifestyle-card__cap"><?php echo esc_html( $shot['cap'] ); ?></figcaption>
 				</figure>
 			<?php endforeach; ?>
@@ -195,7 +246,16 @@ foreach ( $packages as $pkg ) {
 			</div>
 
 			<div class="pkg-banner">
-				<div class="pkg-banner__img" role="img" aria-label="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>');"></div>
+				<img
+					class="pkg-banner__img"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/lifestyle3.avif' ); ?>"
+					sizes="(max-width: 880px) calc(100vw - 44px), 547px"
+					width="1086"
+					height="1086"
+					alt="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>"
+					loading="lazy"
+					decoding="async"
+				>
 				<div class="pkg-banner__body">
 					<span class="eyebrow"><?php esc_html_e( 'Stiže spremno za poklon', 'cosypaw' ); ?></span>
 					<h3 class="pkg-banner__title"><?php esc_html_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?></h3>
@@ -267,10 +327,15 @@ foreach ( $packages as $pkg ) {
 				<div class="builder__step builder__step--row">
 					<div class="builder__step-head">
 						<span class="builder__num">2</span>
-						<span class="builder__step-title"><?php esc_html_e( 'Ubaci svoje motive', 'cosypaw' ); ?></span>
+						<?php // tabindex=-1: focus lands here when the step is revealed. ?>
+						<span class="builder__step-title" data-builder-step2-heading tabindex="-1"><?php esc_html_e( 'Ubaci svoje motive', 'cosypaw' ); ?></span>
 					</div>
 					<div class="builder__tools">
-						<span class="builder__count"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label>3</b></span>
+						<?php
+						// Live region: the count is the only feedback that a motif
+						// was added or removed, and it was changing silently.
+						?>
+						<span class="builder__count" role="status" aria-live="polite"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label>3</b></span>
 						<button type="button" class="builder__tool" data-random>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/></svg>
 							<?php esc_html_e( 'Iznenadi me', 'cosypaw' ); ?>
@@ -291,7 +356,19 @@ foreach ( $packages as $pkg ) {
 								data-name="<?php echo esc_attr( $p['name'] ); ?>"
 								data-image="<?php echo esc_url( $p['image_sm'] ); ?>"
 							>
-								<span class="motif-pick__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_sm'] ); ?>');"></span>
+								<?php
+								// alt="" — the tile's name is already the button's
+								// accessible text, right below the image.
+								?>
+								<img
+									class="motif-pick__img"
+									src="<?php echo esc_url( $p['image_sm'] ); ?>"
+									width="360"
+									height="360"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								>
 								<span class="motif-pick__row">
 									<span class="motif-pick__name"><?php echo esc_html( $p['name'] ); ?></span>
 									<span class="motif-pick__used" data-used hidden>0</span>
@@ -339,7 +416,24 @@ foreach ( $packages as $pkg ) {
 				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
 				?>
 				<div class="motif-card">
-					<div class="motif-card__img" role="img" aria-label="<?php echo esc_attr( $p['name'] ); ?>" style="background-image:url('<?php echo esc_url( $p['image_md'] ); ?>');"></div>
+					<?php
+					// alt="" — the motif name is printed as text directly below.
+					// srcset omits image_sm on purpose: it is a 1:1 crop while
+					// image_md and image are 3:4, and srcset candidates have to be
+					// the same picture at different sizes or the crop shifts with
+					// the viewport.
+					?>
+					<img
+						class="motif-card__img"
+						src="<?php echo esc_url( $p['image_md'] ); ?>"
+						srcset="<?php echo esc_attr( $p['image_md'] . ' 600w, ' . $p['image'] . ' 1086w' ); ?>"
+						sizes="(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px"
+						width="600"
+						height="800"
+						alt=""
+						loading="lazy"
+						decoding="async"
+					>
 					<div class="motif-card__row">
 						<div>
 							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>

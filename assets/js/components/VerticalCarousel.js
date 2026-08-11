@@ -16,9 +16,20 @@
  * applies transform: translateY() to avoid layout shifts. Honors prefers-reduced-motion.
  *
  * Accessibility: the root container is a single focus target (tabindex="0",
- * role="group", aria-live="polite"). ArrowUp/ArrowDown move prev/next while focused.
+ * role="group"). ArrowUp/ArrowDown move prev/next while focused.
  *
- * Public API: next(), prev(), goTo(index), destroy().
+ * Autoplay carries a pause control ([data-carousel-toggle]) because WCAG 2.2.2
+ * requires one for motion that starts on its own and runs past five seconds.
+ * Autoplay also stops while the pointer is over the carousel or focus is inside
+ * it, so a user reading a slide is not moved off it.
+ *
+ * The root is deliberately NOT a live region. It used to carry
+ * aria-live="polite", and the hero name pill it contains is rewritten on every
+ * slide change, so screen readers announced a motif name every few seconds for
+ * as long as the hero stayed on screen. The pill is aria-hidden and the label is
+ * announced only for user-driven navigation, via a separate polite region.
+ *
+ * Public API: next(), prev(), goTo(index), pause(), play(), destroy().
  */
 export class VerticalCarousel {
 	/**
@@ -47,6 +58,14 @@ export class VerticalCarousel {
 		this.timerId = null;
 		this.rafId = null;
 		this.isVisible = false;
+		// Autoplay is suppressed while any of these hold. Kept separate so
+		// resuming one (pointer leaves) cannot override another (user paused).
+		this.userPaused = false;
+		this.hovered = false;
+		this.focusWithin = false;
+
+		this.toggle = element.querySelector('[data-carousel-toggle]');
+		this.status = element.querySelector('[data-carousel-status]');
 
 		this.reducedMotion =
 			window.matchMedia &&
@@ -55,12 +74,16 @@ export class VerticalCarousel {
 		// Bound handlers (kept as fields so destroy() can remove them).
 		this._onKeydown = this._onKeydown.bind(this);
 		this._onIntersect = this._onIntersect.bind(this);
+		this._onToggle = this._onToggle.bind(this);
+		this._onPointerEnter = this._onPointerEnter.bind(this);
+		this._onPointerLeave = this._onPointerLeave.bind(this);
+		this._onFocusIn = this._onFocusIn.bind(this);
+		this._onFocusOut = this._onFocusOut.bind(this);
 
 		// Snapshot original inline state to restore on destroy().
 		this._original = {
 			tabindex: this.root.getAttribute('tabindex'),
 			role: this.root.getAttribute('role'),
-			ariaLive: this.root.getAttribute('aria-live'),
 			trackTransform: this.track ? this.track.style.transform : '',
 			trackTransition: this.track ? this.track.style.transition : '',
 		};
@@ -74,11 +97,23 @@ export class VerticalCarousel {
 			return;
 		}
 
-		// A11y: one focus target for the whole component.
+		// A11y: one focus target for the whole component. No aria-live here —
+		// see the note at the top of the file.
 		this.root.setAttribute('tabindex', '0');
 		this.root.setAttribute('role', 'group');
-		this.root.setAttribute('aria-live', 'polite');
 		this.root.addEventListener('keydown', this._onKeydown);
+
+		// Autoplay yields to anyone reading a slide.
+		this.root.addEventListener('pointerenter', this._onPointerEnter);
+		this.root.addEventListener('pointerleave', this._onPointerLeave);
+		this.root.addEventListener('focusin', this._onFocusIn);
+		this.root.addEventListener('focusout', this._onFocusOut);
+
+		if (this.toggle) {
+			this.toggle.hidden = false;
+			this.toggle.addEventListener('click', this._onToggle);
+			this._syncToggle();
+		}
 
 		this._applyTransition();
 		this._render(false);
@@ -118,6 +153,8 @@ export class VerticalCarousel {
 	_render(animate = true) {
 		if (!this.track) return;
 
+		this._syncSlideVisibility();
+
 		if (this.rafId !== null) {
 			cancelAnimationFrame(this.rafId);
 		}
@@ -134,6 +171,18 @@ export class VerticalCarousel {
 			} else {
 				this.track.style.transform = `translateY(-${offset}%)`;
 			}
+		});
+	}
+
+	/**
+	 * Expose only the slide on screen. All slides stay in the DOM and are moved
+	 * by a transform, so without this a screen reader reads every motif in the
+	 * carousel as if all of them were visible.
+	 * @private
+	 */
+	_syncSlideVisibility() {
+		this.slides.forEach((slide, i) => {
+			slide.toggleAttribute('aria-hidden', i !== this.index);
 		});
 	}
 
@@ -155,7 +204,58 @@ export class VerticalCarousel {
 		if (this.reducedMotion || this.autoplayDelay <= 0 || this.slides.length < 2) {
 			return;
 		}
+		// Every suppressor is checked here, so no single resume path can
+		// restart autoplay while another still holds it.
+		if (this.userPaused || this.hovered || this.focusWithin || !this.isVisible) {
+			return;
+		}
 		this.timerId = window.setInterval(() => this.next(), this.autoplayDelay);
+	}
+
+	/** @private */
+	_syncToggle() {
+		if (!this.toggle) return;
+		this.toggle.setAttribute('aria-pressed', this.userPaused ? 'true' : 'false');
+		const label = this.userPaused
+			? this.toggle.dataset.labelPlay
+			: this.toggle.dataset.labelPause;
+		if (label) this.toggle.setAttribute('aria-label', label);
+	}
+
+	/** @private */
+	_onToggle(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		if (this.userPaused) {
+			this.play();
+		} else {
+			this.pause();
+		}
+	}
+
+	/** @private */
+	_onPointerEnter() {
+		this.hovered = true;
+		this._stopAutoplay();
+	}
+
+	/** @private */
+	_onPointerLeave() {
+		this.hovered = false;
+		this._startAutoplay();
+	}
+
+	/** @private */
+	_onFocusIn() {
+		this.focusWithin = true;
+		this._stopAutoplay();
+	}
+
+	/** @private */
+	_onFocusOut(e) {
+		if (this.root.contains(e.relatedTarget)) return;
+		this.focusWithin = false;
+		this._startAutoplay();
 	}
 
 	/** @private */
@@ -170,30 +270,53 @@ export class VerticalCarousel {
 	_onKeydown(event) {
 		if (event.key === 'ArrowDown') {
 			event.preventDefault();
-			this.next();
+			this.next(true);
 		} else if (event.key === 'ArrowUp') {
 			event.preventDefault();
-			this.prev();
+			this.prev(true);
 		}
 	}
 
 	/* ---------- Public API ---------- */
 
-	/** Advance to the next slide (wraps). */
-	next() {
-		this.goTo((this.index + 1) % this.slides.length);
+	/**
+	 * Advance to the next slide (wraps).
+	 * @param {boolean} [announce=false] Announce the new slide to screen
+	 *        readers. Only true for user-driven moves — announcing autoplay
+	 *        would talk over the user every few seconds.
+	 */
+	next(announce = false) {
+		this.goTo((this.index + 1) % this.slides.length, announce);
 	}
 
-	/** Go to the previous slide (wraps). */
-	prev() {
-		this.goTo((this.index - 1 + this.slides.length) % this.slides.length);
+	/**
+	 * Go to the previous slide (wraps).
+	 * @param {boolean} [announce=false]
+	 */
+	prev(announce = false) {
+		this.goTo((this.index - 1 + this.slides.length) % this.slides.length, announce);
+	}
+
+	/** Stop autoplay until the user resumes it. */
+	pause() {
+		this.userPaused = true;
+		this._stopAutoplay();
+		this._syncToggle();
+	}
+
+	/** Resume autoplay (subject to hover/focus/visibility). */
+	play() {
+		this.userPaused = false;
+		this._startAutoplay();
+		this._syncToggle();
 	}
 
 	/**
 	 * Jump to a specific slide.
 	 * @param {number} index
+	 * @param {boolean} [announce=false]
 	 */
-	goTo(index) {
+	goTo(index, announce = false) {
 		if (this.slides.length === 0) return;
 		const clamped = ((index % this.slides.length) + this.slides.length) % this.slides.length;
 		this.index = clamped;
@@ -201,13 +324,20 @@ export class VerticalCarousel {
 
 		// Notify listeners (e.g. the hero name pill) of the active slide.
 		this.root.dispatchEvent(
-			new CustomEvent('carousel:change', { detail: { index: this.index } })
+			new CustomEvent('carousel:change', { detail: { index: this.index, announce } })
 		);
 
-		// Reset autoplay timer after manual navigation.
-		if (this.isVisible) {
-			this._startAutoplay();
+		if (announce && this.status) {
+			// The slide's accessible name: alt on an <img>, aria-label on any
+			// other labelled element a consumer of this component might use.
+			const slide = this.slides[this.index].querySelector('img, [aria-label]');
+			this.status.textContent = slide
+				? slide.getAttribute('alt') || slide.getAttribute('aria-label') || ''
+				: '';
 		}
+
+		// Reset the autoplay interval so a manual move gets a full dwell.
+		this._startAutoplay();
 	}
 
 	/** Tear down: remove listeners/observers/timers and restore the DOM. */
@@ -225,11 +355,18 @@ export class VerticalCarousel {
 		}
 
 		this.root.removeEventListener('keydown', this._onKeydown);
+		this.root.removeEventListener('pointerenter', this._onPointerEnter);
+		this.root.removeEventListener('pointerleave', this._onPointerLeave);
+		this.root.removeEventListener('focusin', this._onFocusIn);
+		this.root.removeEventListener('focusout', this._onFocusOut);
+		if (this.toggle) {
+			this.toggle.removeEventListener('click', this._onToggle);
+			this.toggle.hidden = true;
+		}
 
 		// Restore original attributes.
 		this._restoreAttr('tabindex', this._original.tabindex);
 		this._restoreAttr('role', this._original.role);
-		this._restoreAttr('aria-live', this._original.ariaLive);
 
 		if (this.track) {
 			this.track.style.transform = this._original.trackTransform;

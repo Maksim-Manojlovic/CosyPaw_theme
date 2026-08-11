@@ -96,8 +96,9 @@
 
 .hero__blob {
 	position: absolute;
-	width: 360px;
-	height: 360px;
+	width: min(360px, 90%);
+	aspect-ratio: 1;
+	height: auto;
 	border-radius: 46% 54% 60% 40% / 52% 44% 56% 48%;
 	background: var(--sand);
 	top: 40px;
@@ -107,7 +108,8 @@
 
 .hero__blob--sage {
 	width: 150px;
-	height: 150px;
+	aspect-ratio: 1;
+	height: auto;
 	border-radius: 50%;
 	background: var(--sagelt);
 	bottom: 30px;
@@ -119,10 +121,15 @@
 	animation: floaty2 6s ease-in-out infinite;
 }
 
+/* Fluid, not a fixed 380px. At 375px the available width inside .hero is 331px,
+   so the fixed card overflowed by ~24px on each side and only looked contained
+   because body carries overflow-x: hidden — the rotated corners were being
+   clipped. aspect-ratio keeps the 380x480 proportion as it narrows. */
 .hero__card {
 	position: relative;
-	width: 380px;
-	height: 480px;
+	width: min(380px, 100%);
+	aspect-ratio: 380 / 480;
+	height: auto;
 	border-radius: 34px;
 	background: #fff;
 	padding: 16px;
@@ -140,11 +147,14 @@
 	background: var(--cream2);
 }
 
+/* <img> rather than a background: backgrounds cannot carry srcset or
+   loading="lazy", so every motif on the page was fetched at one size, eagerly. */
 .hero__slide {
+	display: block;
 	width: 100%;
 	height: 100%;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .hero__name-pill {
@@ -162,6 +172,50 @@
 	font-size: 16px;
 	color: var(--ink);
 	box-shadow: 0 6px 16px rgba(62, 51, 42, 0.12);
+}
+
+/* Autoplay pause control (WCAG 2.2.2). Sits opposite the name pill. */
+.carousel-toggle {
+	position: absolute;
+	right: 14px;
+	bottom: 14px;
+	z-index: 5;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: var(--glass-bg-strong);
+	color: var(--ink);
+	box-shadow: 0 6px 16px rgba(62, 51, 42, 0.18);
+}
+
+.carousel-toggle[hidden] {
+	display: none;
+}
+
+/* Hit area to 44px without growing the visual button over the photo. */
+.carousel-toggle::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	transform: translate(-50%, -50%);
+}
+
+.carousel-toggle .carousel-toggle__play,
+.carousel-toggle[aria-pressed="true"] .carousel-toggle__pause {
+	display: none;
+}
+
+.carousel-toggle[aria-pressed="true"] .carousel-toggle__play {
+	display: block;
 }
 
 .hero__price-tag {
@@ -275,8 +329,10 @@
 .lifestyle-card__img {
 	position: absolute;
 	inset: 0;
-	background-size: cover;
-	background-position: center;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
 }
 
 .lifestyle-card__cap {
@@ -313,9 +369,12 @@
 }
 
 .pkg-banner__img {
+	display: block;
+	width: 100%;
+	height: 100%;
 	min-height: 300px;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .pkg-banner__body {
@@ -555,6 +614,12 @@
 	font-size: 21px;
 }
 
+/* Only focusable to receive focus when step 2 is revealed; it is not a control
+   and should not carry a ring when clicked. */
+.builder__step-title:focus:not(:focus-visible) {
+	outline: none;
+}
+
 .builder__tools {
 	display: flex;
 	align-items: center;
@@ -575,6 +640,7 @@
 .builder__tool {
 	display: inline-flex;
 	align-items: center;
+	min-height: 44px;
 	gap: 7px;
 	cursor: pointer;
 	border: none;
@@ -584,7 +650,7 @@
 	font-size: 14px;
 	padding: 8px 16px;
 	border-radius: var(--radius-pill);
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 	transition: background 0.15s ease;
 }
 
@@ -628,6 +694,10 @@
 	width: 118px;
 }
 
+/* The one background-image left on the page, deliberately: slots are built by
+   BundleBuilder only after a user picks a motif, at 104px, from the same
+   image_sm URL the gallery already has cached. There is nothing for srcset or
+   lazy loading to save here. */
 .builder-slot__img {
 	position: relative;
 	width: 104px;
@@ -640,6 +710,8 @@
 	animation: pop 0.3s ease;
 }
 
+/* Kept visually small so it does not cover the motif it sits on; the hit area
+   is extended to 44px via ::after instead. */
 .builder-slot__remove {
 	position: absolute;
 	top: -8px;
@@ -655,6 +727,16 @@
 	align-items: center;
 	justify-content: center;
 	box-shadow: 0 4px 10px rgba(161, 94, 55, 0.45);
+}
+
+.builder-slot__remove::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	transform: translate(-50%, -50%);
 }
 
 .builder-slot__placeholder {
@@ -697,7 +779,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 	transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -707,12 +789,14 @@
 }
 
 .motif-pick__img {
+	display: block;
 	width: 100%;
+	height: auto;
 	aspect-ratio: 1 / 1;
 	border-radius: 14px;
 	background-color: #fff;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .motif-pick__row {
@@ -733,9 +817,9 @@
 	background: var(--sagelt);
 	color: var(--sage);
 	font-weight: 800;
-	font-size: 11px;
-	min-width: 18px;
-	height: 18px;
+	font-size: 12px;
+	min-width: 20px;
+	height: 20px;
 	padding: 0 5px;
 	border-radius: 9px;
 	display: flex;
@@ -792,13 +876,30 @@
 	gap: 10px;
 }
 
-.pkg-cta.is-disabled {
-	background: #c6bbae;
-	box-shadow: none;
-	cursor: default;
+/**
+ * Bundle CTA before the slots are full.
+ *
+ * Deliberately NOT a disabled control: it stays clickable so the click can
+ * explain what is missing ("Izaberi još 2 motiva"), which means the WCAG
+ * exemption for disabled controls does not apply and its label has to clear
+ * 4.5:1. The old #c6bbae fill put white at 1.89:1 — the instruction was the
+ * unreadable part. This fill is 4.71:1, still visibly subordinate to the clay
+ * primary.
+ */
+/* Pending add-to-cart. Genuinely disabled here, unlike .is-incomplete. */
+.pkg-cta[disabled] {
+	opacity: 0.75;
+	cursor: progress;
+	transform: none;
 }
 
-.pkg-cta.is-disabled:hover {
+.pkg-cta.is-incomplete {
+	background: #7d7264;
+	box-shadow: none;
+}
+
+.pkg-cta.is-incomplete:hover {
+	background: #6d6357;
 	transform: none;
 	box-shadow: none;
 }
@@ -820,11 +921,14 @@
 
 .motif-card__img {
 	position: relative;
+	display: block;
+	width: 100%;
+	height: auto;
 	border-radius: 18px;
 	aspect-ratio: 1 / 1.18;
 	background-color: var(--cream2);
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	object-position: center;
 }
 
 .motif-card__row {
@@ -854,6 +958,7 @@
 	color: var(--claydk);
 	font-weight: 800;
 	font-size: 14px;
+	min-height: 44px;
 	padding: 10px 16px;
 	border-radius: var(--radius-pill);
 	display: flex;
@@ -901,10 +1006,12 @@
 	gap: 14px;
 }
 
+/* --ochre-ink, not --ochre: as a foreground graphic the rating needs 3:1, and
+   --ochre is 2.25:1 on the white testimonial card. */
 .testimonial__stars {
 	display: inline-flex;
 	gap: 3px;
-	color: var(--ochre);
+	color: var(--ochre-ink);
 }
 
 .testimonial__quote {
@@ -962,7 +1069,7 @@
 .faq-item {
 	background: #fff;
 	border-radius: var(--radius-lg);
-	border: 1px solid var(--line);
+	border: 1px solid var(--color-border-control);
 	box-shadow: var(--shadow-sm);
 }
 
@@ -1017,198 +1124,6 @@
 	animation: pop 0.25s ease;
 }
 
-/* ---------- Toast ---------- */
-.toast {
-	position: fixed;
-	left: 50%;
-	bottom: 28px;
-	transform: translateX(-50%);
-	z-index: 80;
-	background: var(--ink);
-	color: #fff;
-	font-weight: 700;
-	font-size: 15px;
-	padding: 14px 22px;
-	border-radius: var(--radius-pill);
-	box-shadow: 0 16px 40px rgba(62, 51, 42, 0.35);
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	animation: pop 0.25s ease;
-}
-
-.toast__check {
-	width: 22px;
-	height: 22px;
-	border-radius: 50%;
-	background: var(--sagelt);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: none;
-}
-
-.toast--warn .toast__check {
-	background: var(--ochre);
-}
-
-.toast[hidden] {
-	display: none;
-}
-
-/* ---------- Cart drawer ---------- */
-.cart-drawer[hidden] {
-	display: none;
-}
-
-.cart-drawer__overlay {
-	position: fixed;
-	inset: 0;
-	z-index: 90;
-	background: rgba(62, 51, 42, 0.4);
-	backdrop-filter: blur(2px);
-	-webkit-backdrop-filter: blur(2px);
-	border: none;
-	cursor: pointer;
-}
-
-.cart-drawer__panel {
-	position: fixed;
-	top: 0;
-	right: 0;
-	z-index: 91;
-	width: 380px;
-	max-width: 92vw;
-	height: 100%;
-	background: var(--cream);
-	box-shadow: -20px 0 50px rgba(62, 51, 42, 0.2);
-	display: flex;
-	flex-direction: column;
-	animation: pop 0.25s ease;
-}
-
-.cart-drawer__head {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 22px 24px;
-	border-bottom: 1px solid var(--line);
-}
-
-.cart-drawer__title {
-	font-family: var(--font-heading);
-	font-weight: 800;
-	font-size: 22px;
-}
-
-.cart-drawer__close {
-	cursor: pointer;
-	border: none;
-	background: var(--cream2);
-	width: 38px;
-	height: 38px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--ink);
-}
-
-.cart-drawer__body {
-	flex: 1;
-	overflow-y: auto;
-	padding: 18px 24px;
-}
-
-.cart-empty {
-	text-align: center;
-	padding: 60px 10px;
-	color: var(--muted);
-}
-
-.cart-empty__emoji {
-	font-size: 46px;
-	margin-bottom: 8px;
-}
-
-.cart-item {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	background: #fff;
-	border: 1px solid var(--line);
-	border-radius: 16px;
-	padding: 14px 16px;
-	margin-bottom: 12px;
-}
-
-.cart-item__name {
-	font-weight: 800;
-	font-size: 15px;
-	color: var(--ink);
-}
-
-.cart-item__price {
-	font-size: 13.5px;
-	color: var(--clay);
-	font-weight: 800;
-}
-
-.cart-item__remove {
-	cursor: pointer;
-	border: none;
-	background: var(--cream2);
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--muted);
-	flex: none;
-}
-
-.cart-foot {
-	padding: 20px 24px;
-	border-top: 1px solid var(--line);
-	background: #fff;
-}
-
-.cart-total-row {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	margin-bottom: 14px;
-}
-
-.cart-total-label {
-	font-weight: 700;
-	font-size: 15px;
-	color: var(--muted);
-}
-
-.cart-total {
-	font-family: var(--font-heading);
-	font-weight: 800;
-	font-size: 26px;
-	color: var(--ink);
-}
-
-.cart-checkout {
-	width: 100%;
-	cursor: pointer;
-	border: none;
-	font-family: var(--font-heading);
-	background: var(--clay);
-	color: #fff;
-	font-weight: 800;
-	font-size: 17px;
-	padding: 15px;
-	border-radius: var(--radius-pill);
-	box-shadow: 0 12px 26px rgba(161, 94, 55, 0.4);
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	.hero {
@@ -1230,15 +1145,19 @@
 	}
 	.motifs { grid-template-columns: 1fr 1fr; }
 	.testimonials { grid-template-columns: 1fr; }
-	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
 	.lifestyle { grid-template-columns: 1fr; }
 	.pkg-banner { grid-template-columns: 1fr; }
 	.pkg-banner__img { min-height: 220px; }
 }
 
 @media (max-width: 560px) {
-	.nav__links .nav__link { display: none; }
 	.hero__title { font-size: 38px; }
+	/* Below this width the card is narrower than 380px and sets its own height
+	   from the aspect ratio, so a fixed min-height only adds dead space. */
+	.hero__art {
+		min-height: 0;
+		padding-block: var(--space-5);
+	}
 	.benefits, .motifs { grid-template-columns: 1fr; }
 	.section__title { font-size: 30px; }
 }

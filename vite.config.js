@@ -46,7 +46,7 @@ export default defineConfig({
 		rollupOptions: {
 			// Per-context entries — Assets.php enqueues only what each view needs.
 			input: {
-				app: resolve(__dirname, 'assets/css/main.css'),
+				app: resolve(__dirname, 'assets/js/app.js'),
 				landing: resolve(__dirname, 'assets/js/landing.js'),
 				content: resolve(__dirname, 'assets/css/content.css'),
 				woocommerce: resolve(__dirname, 'assets/css/woocommerce.css'),

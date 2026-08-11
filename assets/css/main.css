@@ -29,10 +29,20 @@
 	--claydk: #8c5230;  /* accent hover + inline links — 5.80:1             */
 	--sagelt: #c3cdb4;  /* success fill                                     */
 	--sage: #474f36;    /* success — white label 8.61:1, on sagelt 5.21:1   */
-	--ochre: #d9a441;   /* badges/stars — INK label only (white is 2.25:1)  */
+	--ochre: #d9a441;   /* badge/warn FILL under an ink label (white is     */
+	                    /* 2.25:1, so never a white label on this)          */
+	--ochre-ink: #b08017; /* same gold as a foreground graphic — 3.53:1 on  */
+	                    /* white, meeting 1.4.11 for the rating stars       */
 	--ink: #3e332a;     /* body text — 11.41:1                              */
 	--muted: #6f6155;   /* secondary text — 5.55:1                          */
 	--line: rgba(62, 51, 42, 0.1);
+	/* Control boundaries (inputs, ghost buttons, pills) need 3:1 against their
+	   own fill per WCAG 2.1 1.4.11. --line is 1.19:1 on white and is only
+	   legitimate for decorative dividers and separators. Measured against every
+	   surface a control sits on, worst case is sand at 3.51:1 (white 3.86,
+	   cream 3.75, cream2 3.59). Do not lighten past 0.58, where sand drops
+	   under 3:1. */
+	--line-control: rgba(62, 51, 42, 0.62);
 
 	/* --- Semantic aliases (architecture naming → brand tokens). --- */
 	--color-surface: var(--cream);
@@ -45,6 +55,7 @@
 	--color-accent-soft: var(--sand);
 	--color-success: var(--sage);
 	--color-border: var(--line);
+	--color-border-control: var(--line-control);
 
 	/* Glass surfaces (light, used by sticky nav + floating hero pill). */
 	--glass-bg: rgba(251, 246, 239, 0.82);
@@ -87,8 +98,12 @@
 	box-sizing: border-box;
 }
 
-html {
-	scroll-behavior: smooth;
+/* Gated: the reduced-motion block below only resets animation-*, so smooth
+   scrolling would otherwise survive the preference. */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 body {
@@ -179,10 +194,12 @@ h1, h2, h3, h4 {
 	box-shadow: 0 14px 30px rgba(161, 94, 55, 0.5);
 }
 
+/* White fill on the cream page is a 1.05:1 difference, so this border is the
+   only thing identifying the control — it takes the 3:1 token, not --line. */
 .btn--ghost {
 	background: #fff;
 	color: var(--color-text-primary);
-	box-shadow: inset 0 0 0 1.5px var(--color-border);
+	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
 }
 
 /* --- Vertical carousel (hero featured motifs). Transforms applied by JS. --- */
@@ -256,20 +273,95 @@ h1, h2, h3, h4 {
 
 /* ---------- Announcement marquee ---------- */
 .announce {
+	position: relative;
 	background: var(--clay);
 	color: #fff;
 	font-weight: 700;
 	font-size: 13.5px;
 	letter-spacing: 0.3px;
-	overflow: hidden;
 	white-space: nowrap;
 	padding: 8px 0;
+}
+
+/* The clip lives here, not on .announce. The bar is ~36px tall and the pause
+   control reaches its 44px target with an oversized ::after, which overflow
+   on the bar itself would clip away — and a clipped region is not
+   hit-testable, so the larger target would exist only on paper. */
+.announce__viewport {
+	overflow: hidden;
 }
 
 .announce__track {
 	display: flex;
 	width: max-content;
 	animation: marquee 40s linear infinite;
+}
+
+/* WCAG 2.2.2 pause. */
+.announce[data-marquee-paused] .announce__track {
+	animation-play-state: paused;
+}
+
+.announce__pause {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.18);
+	color: #fff;
+}
+
+.announce__pause[hidden] {
+	display: none;
+}
+
+/* The bar is only ~30px tall, so the 44px touch target is met by extending the
+   hit area past the visual bounds rather than by growing the button — nothing
+   sits adjacent to it, so there is no risk of overlapping targets. */
+.announce__pause::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	transform: translate(-50%, -50%);
+}
+
+.announce__pause:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.announce__pause .announce__play-icon,
+.announce__pause[aria-pressed="true"] .announce__pause-icon {
+	display: none;
+}
+
+.announce__pause[aria-pressed="true"] .announce__play-icon {
+	display: block;
+}
+
+/* Fade the scrolling text out behind the control. Padding on the track would
+   also work but changes the group width the -50% loop depends on. */
+.announce::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 80px;
+	background: linear-gradient(90deg, rgba(161, 94, 55, 0), var(--clay) 60%);
+	pointer-events: none;
 }
 
 .announce__group {
@@ -351,17 +443,78 @@ h1, h2, h3, h4 {
 	letter-spacing: 0.2px;
 }
 
+/* Footer lockup, which sits larger than the header one. */
+.brand-name--lg {
+	font-size: 24px;
+}
+
 .nav__links {
 	display: flex;
 	align-items: center;
 	gap: 28px;
 }
 
+/* wp_nav_menu() prints a <ul class="nav__menu">; without this reset an assigned
+   menu renders as a bulleted vertical list in the header. The fallback anchors
+   in header.php are bare <a>, so both shapes have to lay out identically. */
+.nav__menu {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav__menu li {
+	margin: 0;
+}
+
+.nav__menu a {
+	text-decoration: none;
+}
+
 .nav__link {
+	display: inline-flex;
+	align-items: center;
 	text-decoration: none;
 	color: var(--ink);
 	font-weight: 600;
 	font-size: 15px;
+}
+
+.nav__actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Nav toggle — unhidden by SiteNav.js only once the panel can collapse. */
+.nav__toggle {
+	border: none;
+	cursor: pointer;
+	background: var(--cream2);
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
+	color: var(--ink);
+}
+
+.nav__toggle[hidden] {
+	display: none;
+}
+
+.nav__toggle .nav__toggle-close,
+.nav__toggle[aria-expanded="true"] .nav__toggle-open {
+	display: none;
+}
+
+.nav__toggle[aria-expanded="true"] .nav__toggle-close {
+	display: block;
 }
 
 .cart-btn {
@@ -369,13 +522,13 @@ h1, h2, h3, h4 {
 	border: none;
 	cursor: pointer;
 	background: var(--cream2);
-	width: 42px;
-	height: 42px;
+	width: 44px;
+	height: 44px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 	color: var(--ink);
 }
 
@@ -405,15 +558,19 @@ h1, h2, h3, h4 {
 	background: var(--cream2);
 	border-radius: var(--radius-pill);
 	padding: 3px;
-	box-shadow: inset 0 0 0 1px var(--line);
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
 }
 
+/* 40x44: the flag stays 24x16, but the target it sits in clears the 44px
+   minimum height and comes close on width, with three of them in a row. */
 .lang-switch__btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 40px;
+	min-height: 44px;
 	padding: 4px;
-	border-radius: 7px;
+	border-radius: 10px;
 	line-height: 0;
 	text-decoration: none;
 	opacity: 0.5;
@@ -436,6 +593,64 @@ h1, h2, h3, h4 {
 	height: 16px;
 	border-radius: 3px;
 	box-shadow: 0 1px 2px rgba(62, 51, 42, 0.25);
+}
+
+/**
+ * Skip link (WCAG 2.4.1).
+ *
+ * Without it a keyboard user crosses the marquee, brand, every nav item, the
+ * cart and three language flags before reaching content — on every page. Hidden
+ * until focused, then pinned over the header.
+ *
+ * The <main id="primary"> targets carry tabindex="-1" so the jump actually moves
+ * focus; without it browsers scroll but leave focus on the link.
+ */
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: var(--space-4);
+	z-index: 100;
+	background: var(--color-surface-elevated);
+	color: var(--color-accent-strong);
+	font-family: var(--font-heading);
+	font-weight: 800;
+	padding: 12px 22px;
+	border-radius: var(--radius-pill);
+	box-shadow: var(--shadow-md), inset 0 0 0 2px var(--color-accent);
+	text-decoration: none;
+	transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+	top: var(--space-3);
+}
+
+/* The landmark is only focusable to receive the skip jump; it should not draw a
+   focus ring around the entire page when it does. */
+.site-main:focus {
+	outline: none;
+}
+
+/**
+ * Shared focus ring.
+ *
+ * Only inputs carried focus-visible styles; every custom button in the theme
+ * sets border:none and fell back to the UA ring, which is inconsistent across
+ * browsers and low-contrast over the clay and sand fills.
+ *
+ * :where() keeps specificity at zero so the per-component rules still win.
+ * outline-offset places the ring outside the control, on the page surface, so
+ * it is measured against cream or white (11.4:1) rather than the button fill.
+ */
+:where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+	outline: 3px solid var(--ink);
+	outline-offset: 3px;
+}
+
+/* On the ink footer and the clay announcement bar an ink ring is invisible. */
+.site-footer :where(a, button):focus-visible,
+.announce :where(a, button):focus-visible {
+	outline-color: #fff;
 }
 
 /* Accessible hidden text. */
@@ -527,7 +742,9 @@ h1, h2, h3, h4 {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 10px;
-	color: rgba(255, 255, 255, 0.5);
+	/* 0.5 was 4.35:1 at 13.5px; this matches the 5.79:1 used elsewhere in
+	   the footer. */
+	color: rgba(255, 255, 255, 0.62);
 	font-size: 13.5px;
 	font-weight: 600;
 }
@@ -535,8 +752,280 @@ h1, h2, h3, h4 {
 /* ---------- Chrome responsive ---------- */
 @media (max-width: 880px) {
 	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
+
+	/* The nav collapses into a toggle-driven panel. Scoped to
+	   [data-nav-enhanced] so the links stay visible if SiteNav.js never runs —
+	   previously they were hidden unconditionally with nothing to open. */
+	[data-nav-enhanced] .nav__toggle {
+		display: inline-flex;
+	}
+
+	[data-nav-enhanced] .nav__links {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		display: none;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		padding: var(--space-2) var(--space-4) var(--space-4);
+		background: var(--color-surface);
+		border-bottom: 1px solid var(--line);
+		box-shadow: var(--shadow-md);
+	}
+
+	[data-nav-enhanced][data-nav-open] .nav__links {
+		display: flex;
+	}
+
+	[data-nav-enhanced] .nav__menu {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		width: 100%;
+	}
+
+	/* 48px rows keep every item past the 44px minimum touch target. The two
+	   selectors cover both nav shapes: the fallback anchors are themselves
+	   .nav__link, while wp_nav_menu wraps a .nav__link span inside an <a>. */
+	[data-nav-enhanced] .nav__links > .nav__link,
+	[data-nav-enhanced] .nav__menu a {
+		display: flex;
+		align-items: center;
+		min-height: 48px;
+		padding: var(--space-2) 0;
+		font-size: 17px;
+		font-weight: 600;
+		color: var(--ink);
+		border-bottom: 1px solid var(--line);
+	}
+
+	[data-nav-enhanced] .nav__menu li:last-child a,
+	[data-nav-enhanced] .nav__links > .nav__link:last-child {
+		border-bottom: none;
+	}
+
+	/* The switcher gets its own row in the panel, where three 44px targets fit
+	   without competing with the brand, cart and toggle in the bar. */
+	[data-nav-enhanced] .lang-switch {
+		align-self: flex-start;
+		margin-top: var(--space-3);
+	}
 }
 
-@media (max-width: 560px) {
-	.nav__links .nav__link { display: none; }
+/* ==========================================================================
+   CART DRAWER + TOAST
+   Moved here from landing.css: the markup lives in footer.php on every page
+   and app.js boots the behaviour site-wide, so front-page-only styles left
+   the drawer unstyled everywhere else.
+   ========================================================================== */
+
+/* ---------- Toast ---------- */
+.toast {
+	position: fixed;
+	left: 50%;
+	bottom: 28px;
+	transform: translateX(-50%);
+	z-index: 80;
+	background: var(--ink);
+	color: #fff;
+	font-weight: 700;
+	font-size: 15px;
+	padding: 14px 22px;
+	border-radius: var(--radius-pill);
+	box-shadow: 0 16px 40px rgba(62, 51, 42, 0.35);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	animation: pop 0.25s ease;
 }
+
+.toast__check {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: var(--sagelt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+}
+
+.toast--warn .toast__check {
+	background: var(--ochre);
+}
+
+.toast[hidden] {
+	display: none;
+}
+
+/* ---------- Cart drawer ---------- */
+.cart-drawer[hidden] {
+	display: none;
+}
+
+.cart-drawer__overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 90;
+	background: rgba(62, 51, 42, 0.4);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	cursor: pointer;
+}
+
+/* The panel only takes focus as the fallback landing spot when it holds no
+   focusable control; it should not draw a ring around the whole drawer. */
+.cart-drawer__panel:focus {
+	outline: none;
+}
+
+.cart-drawer__panel {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 91;
+	width: 380px;
+	max-width: 92vw;
+	height: 100%;
+	background: var(--cream);
+	box-shadow: -20px 0 50px rgba(62, 51, 42, 0.2);
+	display: flex;
+	flex-direction: column;
+	animation: pop 0.25s ease;
+}
+
+.cart-drawer__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 22px 24px;
+	border-bottom: 1px solid var(--line);
+}
+
+.cart-drawer__title {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 22px;
+}
+
+.cart-drawer__close {
+	cursor: pointer;
+	border: none;
+	background: var(--cream2);
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--ink);
+}
+
+.cart-drawer__body {
+	flex: 1;
+	overflow-y: auto;
+	padding: 18px 24px;
+}
+
+.cart-empty {
+	text-align: center;
+	padding: 60px 10px;
+	color: var(--muted);
+}
+
+.cart-empty__emoji {
+	font-size: 46px;
+	margin-bottom: 8px;
+}
+
+.cart-empty__title {
+	font-weight: 700;
+	font-size: 16px;
+	margin: 0;
+}
+
+.cart-empty__hint {
+	font-size: 14px;
+	margin: 6px 0 0;
+}
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	padding: 14px 16px;
+	margin-bottom: 12px;
+}
+
+.cart-item__name {
+	font-weight: 800;
+	font-size: 15px;
+	color: var(--ink);
+}
+
+.cart-item__price {
+	font-size: 13.5px;
+	color: var(--clay);
+	font-weight: 800;
+}
+
+.cart-item__remove {
+	cursor: pointer;
+	border: none;
+	background: var(--cream2);
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--muted);
+	flex: none;
+}
+
+.cart-foot {
+	padding: 20px 24px;
+	border-top: 1px solid var(--line);
+	background: #fff;
+}
+
+.cart-total-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 14px;
+}
+
+.cart-total-label {
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--muted);
+}
+
+.cart-total {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 26px;
+	color: var(--ink);
+}
+
+.cart-checkout {
+	width: 100%;
+	cursor: pointer;
+	border: none;
+	font-family: var(--font-heading);
+	background: var(--clay);
+	color: #fff;
+	font-weight: 800;
+	font-size: 17px;
+	padding: 15px;
+	border-radius: var(--radius-pill);
+	box-shadow: 0 12px 26px rgba(161, 94, 55, 0.4);
+}
+

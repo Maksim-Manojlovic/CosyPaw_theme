@@ -21,8 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<a class="skip-link" href="#primary"><?php esc_html_e( 'Pređi na sadržaj', 'cosypaw' ); ?></a>
+
 <!-- Announcement marquee -->
-<div class="announce" aria-hidden="true">
+<div class="announce" data-marquee>
 	<?php
 	$announcements = array(
 		__( 'Ručni rad sa puno ljubavi', 'cosypaw' ),
@@ -33,19 +35,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// so the second group is in place exactly when the first scrolls out =
 	// seamless, gap-free loop. Phrases are repeated inside each group so a
 	// single group is wider than the viewport.
+	//
+	// The track is aria-hidden because it repeats every phrase four times; the
+	// list below carries the same announcements once, so assistive tech gets
+	// the free-shipping offer instead of the whole bar being hidden from it.
 	?>
-	<div class="announce__track">
-		<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
-			<div class="announce__group">
-				<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
-					<span><?php echo esc_html( $line ); ?></span><span class="announce__dot">•</span>
-				<?php endforeach; ?>
-			</div>
-		<?php endfor; ?>
+	<div class="announce__viewport" aria-hidden="true">
+		<div class="announce__track">
+			<?php for ( $cosypaw_g = 0; $cosypaw_g < 2; $cosypaw_g++ ) : ?>
+				<div class="announce__group">
+					<?php foreach ( array_merge( $announcements, $announcements ) as $line ) : ?>
+						<span><?php echo esc_html( $line ); ?></span><span class="announce__dot">•</span>
+					<?php endforeach; ?>
+				</div>
+			<?php endfor; ?>
+		</div>
 	</div>
+
+	<ul class="screen-reader-text">
+		<?php foreach ( $announcements as $line ) : ?>
+			<li><?php echo esc_html( $line ); ?></li>
+		<?php endforeach; ?>
+	</ul>
+
+	<?php
+	// WCAG 2.2.2 — the bar loops indefinitely, so it needs a pause control.
+	// Ships hidden; Marquee.js unhides it, so no-JS never shows a dead button.
+	?>
+	<button
+		type="button"
+		class="announce__pause"
+		data-marquee-toggle
+		aria-pressed="false"
+		aria-label="<?php esc_attr_e( 'Pauziraj najave', 'cosypaw' ); ?>"
+		hidden
+	>
+		<svg class="announce__pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+		<svg class="announce__play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+	</button>
 </div>
 
-<header class="site-header">
+<header class="site-header" data-site-nav>
 	<nav class="nav" aria-label="<?php esc_attr_e( 'Glavna navigacija', 'cosypaw' ); ?>">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav__brand">
 			<span class="brand-mark">
@@ -54,7 +84,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="brand-name"><?php bloginfo( 'name' ); ?></span>
 		</a>
 
-		<div class="nav__links">
+		<div class="nav__links" id="cosypaw-nav-menu" data-nav-panel>
 			<?php
 			if ( has_nav_menu( 'primary' ) ) {
 				wp_nav_menu(
@@ -87,6 +117,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?>
 
 			<?php
+			// Inside the panel rather than the action bar: three 44px flag
+			// targets do not fit alongside the brand, cart and toggle at 375px,
+			// and the panel gives them the room. On desktop the panel is inline,
+			// so the switcher sits beside the menu exactly as before.
+			if ( function_exists( 'cosypaw_language' ) ) {
+				cosypaw_language()->switcher();
+			}
+			?>
+		</div>
+
+		<?php
+		// Cart and the nav toggle stay outside the collapsing panel so they are
+		// reachable at every width.
+		?>
+		<div class="nav__actions">
+			<?php
 			$cosypaw_wc    = function_exists( 'WC' ) && function_exists( 'wc_get_cart_url' );
 			$cosypaw_count = ( $cosypaw_wc && WC()->cart ) ? (int) WC()->cart->get_cart_contents_count() : 0;
 			$cosypaw_cart_svg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>';
@@ -112,7 +158,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</button>
 			<?php endif; ?>
 
-			<?php if ( function_exists( 'cosypaw_language' ) ) { cosypaw_language()->switcher(); } ?>
+			<?php
+			// Ships hidden; SiteNav.js unhides it once the panel is collapsible,
+			// so a failed script leaves a plain visible nav instead of a dead
+			// button.
+			?>
+			<button
+				type="button"
+				class="nav__toggle"
+				data-nav-toggle
+				aria-controls="cosypaw-nav-menu"
+				aria-expanded="false"
+				aria-label="<?php esc_attr_e( 'Meni', 'cosypaw' ); ?>"
+				hidden
+			>
+				<svg class="nav__toggle-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+				<svg class="nav__toggle-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+			</button>
 		</div>
 	</nav>
 </header>

@@ -197,6 +197,24 @@ msgstr "Free shipping on the Trio package"
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 
+msgid "Pređi na sadržaj"
+msgstr "Skip to content"
+
+msgid "Meni"
+msgstr "Menu"
+
+msgid "Pauziraj najave"
+msgstr "Pause the announcements"
+
+msgid "Pusti najave"
+msgstr "Play the announcements"
+
+msgid "Pauziraj smenjivanje motiva"
+msgstr "Pause the design slideshow"
+
+msgid "Pusti smenjivanje motiva"
+msgstr "Play the design slideshow"
+
 msgid "Motivi"
 msgstr "Designs"
 
@@ -364,6 +382,12 @@ msgstr "Choose %d more — the package isn't full"
 
 msgid "Ukloni motiv"
 msgstr "Remove design"
+
+msgid "Dodajem…"
+msgstr "Adding…"
+
+msgid "Dodavanje nije uspelo — pokušaj ponovo"
+msgstr "Couldn't add to the cart — please try again"
 
 msgid "U tvom domu"
 msgstr "In your home"

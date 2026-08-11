@@ -4,8 +4,9 @@
  * with per-context code splitting.
  *
  * Entries (see vite.config.js):
- *   - assets/css/main.css        global tokens/base/glass — loaded everywhere
- *   - assets/js/landing.js       hero carousel + cart + packages — front page only
+ *   - assets/js/app.js           global tokens/base/glass + site chrome (nav,
+ *                                cart drawer) — loaded everywhere
+ *   - assets/js/landing.js       hero carousel + package builder — front page only
  *   - assets/css/content.css     blog/single/archive/404 — content pages only
  *   - assets/css/woocommerce.css shop/cart/checkout/account — WC pages only
  *   - assets/js/dev.js           dev-only aggregate (imports all of the above)
@@ -31,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class Assets {
 
-	private const ENTRY_APP     = 'assets/css/main.css';
+	private const ENTRY_APP     = 'assets/js/app.js';
 	private const ENTRY_LANDING = 'assets/js/landing.js';
 	private const ENTRY_CONTENT = 'assets/css/content.css';
 	private const ENTRY_WC      = 'assets/css/woocommerce.css';
@@ -127,16 +128,17 @@ final class Assets {
 			return;
 		}
 
-		// Global styles everywhere.
-		$this->enqueue_entry( 'cosypaw-app', self::ENTRY_APP );
+		// Global styles + site chrome everywhere. The strings go on this handle
+		// rather than the landing one because the cart drawer is site-wide.
+		$app_styles = $this->enqueue_entry( 'cosypaw-app', self::ENTRY_APP );
+		$this->localize( 'cosypaw-app' );
 
 		if ( is_front_page() ) {
-			$this->enqueue_entry( 'cosypaw-landing', self::ENTRY_LANDING, array( 'cosypaw-app' ) );
-			$this->localize( 'cosypaw-landing' );
+			$this->enqueue_entry( 'cosypaw-landing', self::ENTRY_LANDING, $app_styles, array( 'cosypaw-app' ) );
 		} elseif ( $this->is_wc_page() ) {
-			$this->enqueue_entry( 'cosypaw-wc', self::ENTRY_WC, array( 'cosypaw-app' ) );
+			$this->enqueue_entry( 'cosypaw-wc', self::ENTRY_WC, $app_styles );
 		} else {
-			$this->enqueue_entry( 'cosypaw-content', self::ENTRY_CONTENT, array( 'cosypaw-app' ) );
+			$this->enqueue_entry( 'cosypaw-content', self::ENTRY_CONTENT, $app_styles );
 		}
 	}
 
@@ -156,15 +158,17 @@ final class Assets {
 	 * CSS-only entries (input is a .css file) enqueue a stylesheet; JS entries
 	 * enqueue a module script plus any CSS Vite extracted for it.
 	 *
-	 * @param string   $handle Base handle.
-	 * @param string   $key    Manifest key (entry source path).
-	 * @param string[] $deps   Style/script dependencies.
-	 * @return void
+	 * @param string   $handle      Base handle.
+	 * @param string   $key         Manifest key (entry source path).
+	 * @param string[] $style_deps  Stylesheet dependencies (cascade order).
+	 * @param string[] $script_deps Script dependencies (execution order).
+	 * @return string[] Handles of the stylesheets this entry enqueued, so a
+	 *                  dependent entry can order its own CSS after them.
 	 */
-	private function enqueue_entry( string $handle, string $key, array $deps = array() ): void {
+	private function enqueue_entry( string $handle, string $key, array $style_deps = array(), array $script_deps = array() ): array {
 		$manifest = $this->read_manifest();
 		if ( null === $manifest || empty( $manifest[ $key ]['file'] ) ) {
-			return;
+			return array();
 		}
 
 		$entry    = $manifest[ $key ];
@@ -173,19 +177,24 @@ final class Assets {
 		$file     = ltrim( (string) $entry['file'], '/' );
 
 		if ( str_ends_with( $file, '.css' ) ) {
-			wp_enqueue_style( $handle, $dist . $file, $deps, $version );
-			return;
+			wp_enqueue_style( $handle, $dist . $file, $style_deps, $version );
+			return array( $handle );
 		}
 
 		// JS entry: module script + extracted CSS.
-		wp_enqueue_script( $handle, $dist . $file, array(), $version, true );
+		wp_enqueue_script( $handle, $dist . $file, $script_deps, $version, true );
 		$this->module_handles[] = $handle;
 
+		$style_handles = array();
 		if ( ! empty( $entry['css'] ) && is_array( $entry['css'] ) ) {
 			foreach ( $entry['css'] as $i => $css_file ) {
-				wp_enqueue_style( $handle . '-' . $i, $dist . ltrim( (string) $css_file, '/' ), $deps, $version );
+				$style_handle = $handle . '-' . $i;
+				wp_enqueue_style( $style_handle, $dist . ltrim( (string) $css_file, '/' ), $style_deps, $version );
+				$style_handles[] = $style_handle;
 			}
 		}
+
+		return $style_handles;
 	}
 
 	/**
@@ -208,6 +217,9 @@ final class Assets {
 				'addedShort'  => __( 'Dodato', 'cosypaw' ),
 				'demoMsg'     => __( 'Demo prodavnice — porudžbina nije aktivna', 'cosypaw' ),
 				'removeLabel' => __( 'Ukloni', 'cosypaw' ),
+				// Announcement bar pause control (WCAG 2.2.2).
+				'marqueePause' => __( 'Pauziraj najave', 'cosypaw' ),
+				'marqueePlay'  => __( 'Pusti najave', 'cosypaw' ),
 				'currency'    => __( 'RSD', 'cosypaw' ),
 				'locale'      => 'de-DE',
 				// Bundle builder.
@@ -219,6 +231,8 @@ final class Assets {
 				'bundleFull'     => __( 'Paket je pun — ukloni motiv da dodaš drugi', 'cosypaw' ),
 				'notFull'        => __( 'Izaberi još %d — paket nije popunjen', 'cosypaw' ),
 				'removeMotif'    => __( 'Ukloni motiv', 'cosypaw' ),
+				'adding'         => __( 'Dodajem…', 'cosypaw' ),
+				'addFailed'      => __( 'Dodavanje nije uspelo — pokušaj ponovo', 'cosypaw' ),
 			)
 		);
 	}

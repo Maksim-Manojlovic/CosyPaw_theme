@@ -19,7 +19,7 @@ $cosypaw_is_wc_page = function_exists( 'is_cart' )
 	&& ( is_cart() || is_checkout() || is_account_page() );
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" tabindex="-1">
 	<?php if ( $cosypaw_is_wc_page ) : ?>
 		<div class="shop-main">
 			<?php

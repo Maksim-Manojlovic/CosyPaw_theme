@@ -2,11 +2,14 @@
  * CosyPaw landing entry (Vite).
  *
  * Loaded on the front page only. Pulls in landing styles and boots the
- * interactive components (hero carousel, cart drawer, package selector).
+ * front-page-only components (hero carousel, package builder).
+ *
+ * The cart drawer is site-wide chrome and boots from app.js; this entry reads
+ * the instance off `window.CosyPawCart` rather than importing the component, so
+ * CartDrawer stays in a single bundle.
  */
 import '../css/landing.css';
 import { VerticalCarousel } from './components/VerticalCarousel.js';
-import { CartDrawer } from './components/CartDrawer.js';
 import { BundleBuilder } from './components/BundleBuilder.js';
 
 const boot = () => {
@@ -17,19 +20,18 @@ const boot = () => {
 		new VerticalCarousel(el);
 		const label = el.querySelector('[data-carousel-label]');
 		if (label) {
-			const slides = el.querySelectorAll('.vertical-carousel__slide [role="img"]');
+			// Slides are <img> since the responsive-image conversion, so the
+			// motif name is the alt text, not a role="img" aria-label.
+			const slides = el.querySelectorAll('.vertical-carousel__slide img');
 			el.addEventListener('carousel:change', (e) => {
 				const slide = slides[e.detail.index];
-				if (slide) label.textContent = slide.getAttribute('aria-label') || '';
+				if (slide) label.textContent = slide.getAttribute('alt') || '';
 			});
 		}
 	});
 
-	// Cart drawer (one per document).
-	let cart = null;
-	if (document.querySelector('[data-cart-drawer]')) {
-		cart = new CartDrawer(document, l10n);
-	}
+	// Cart drawer — booted site-wide by app.js.
+	const cart = window.CosyPawCart || null;
 
 	// Bundle builder ("Napravi svoj paket").
 	const builder = document.querySelector('[data-bundle-builder]');

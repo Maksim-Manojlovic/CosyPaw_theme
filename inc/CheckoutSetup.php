@@ -53,6 +53,18 @@ final class CheckoutSetup {
 		add_filter( 'woocommerce_gateway_description', array( $this, 'translate_gateway_description' ), 10, 2 );
 		add_filter( 'woocommerce_shipping_rate_label', array( $this, 'translate_shipping_label' ), 20 );
 
+		// The thank-you page and the order emails print the gateway's
+		// "instructions" setting, which is stored text like the rest.
+		add_filter( 'woocommerce_thankyou_order_received_text', array( $this, 'translate_stored_text' ) );
+		add_filter( 'woocommerce_get_privacy_policy_text', array( $this, 'translate_stored_text' ) );
+		// Front end only. The payment settings screen reads this same option and
+		// writes back whatever it read, so filtering it in wp-admin would let an
+		// administrator save the translation over the stored source string —
+		// freezing one language into the setting for every visitor.
+		if ( ! is_admin() ) {
+			add_filter( 'option_woocommerce_cod_settings', array( $this, 'translate_cod_settings' ) );
+		}
+
 		// Over the free-shipping threshold both the courier rate and the free
 		// rate are zero, and offering the same price twice reads as a bug.
 		add_filter( 'woocommerce_package_rates', array( $this, 'hide_paid_delivery_when_free' ), 10 );
@@ -94,6 +106,34 @@ final class CheckoutSetup {
 	 */
 	public function translate_shipping_label( $label ): string {
 		return $this->translate( (string) $label );
+	}
+
+	/**
+	 * Translate a stored setting that WooCommerce prints verbatim.
+	 *
+	 * @param string $text Stored text.
+	 * @return string
+	 */
+	public function translate_stored_text( $text ): string {
+		return $this->translate( (string) $text );
+	}
+
+	/**
+	 * Translate the cash-on-delivery instructions as the settings are read.
+	 *
+	 * The instructions reach the thank-you page and the customer email through
+	 * the gateway object rather than a filter of their own, so the only seam
+	 * before that is the option itself.
+	 *
+	 * @param mixed $settings Stored gateway settings.
+	 * @return mixed
+	 */
+	public function translate_cod_settings( $settings ) {
+		if ( is_array( $settings ) && ! empty( $settings['instructions'] ) ) {
+			$settings['instructions'] = $this->translate( (string) $settings['instructions'] );
+		}
+
+		return $settings;
 	}
 
 	/**

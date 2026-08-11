@@ -228,6 +228,15 @@ $en_source = array(
 	'Checkout'                                                                                                 => array( 'Plaćanje', 'Оформление заказа' ),
 	'Shop'                                                                                                     => array( 'Prodavnica', 'Магазин' ),
 	'My account'                                                                                               => array( 'Moj nalog', 'Мой аккаунт' ),
+
+	// WooCommerce settings that were saved in wp-admin before CheckoutSetup
+	// existed, so they hold WooCommerce's English defaults rather than the
+	// Serbian strings configure() writes. Settings text is DB content and no
+	// locale reaches it, which is why these are msgids here — see
+	// Theme\CheckoutSetup for where they are resolved.
+	'Cash on delivery'                                                                                         => array( 'Plaćanje pouzećem', 'Оплата при получении' ),
+	'Pay with cash upon delivery.'                                                                             => array( 'Plaćaš gotovinom pri preuzimanju — kuriru na vratima ili nama lično.', 'Оплата наличными при получении — курьеру у двери или нам лично.' ),
+	'Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our [privacy_policy].' => array( 'Tvoji lični podaci koriste se za obradu porudžbine, za bolje iskustvo na ovom sajtu i za druge svrhe opisane u dokumentu [privacy_policy].', 'Ваши персональные данные используются для обработки заказа, для улучшения работы с сайтом и в других целях, описанных в документе [privacy_policy].' ),
 );
 
 // Assemble per-locale maps.

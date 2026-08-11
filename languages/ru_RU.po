@@ -593,3 +593,12 @@ msgstr "Магазин"
 msgid "My account"
 msgstr "Мой аккаунт"
 
+msgid "Cash on delivery"
+msgstr "Оплата при получении"
+
+msgid "Pay with cash upon delivery."
+msgstr "Оплата наличными при получении — курьеру у двери или нам лично."
+
+msgid "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our [privacy_policy]."
+msgstr "Ваши персональные данные используются для обработки заказа, для улучшения работы с сайтом и в других целях, описанных в документе [privacy_policy]."
+

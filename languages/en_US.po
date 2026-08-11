@@ -110,6 +110,9 @@ msgstr "pc"
 msgid "Besplatna dostava"
 msgstr "Free shipping"
 
+msgid "Ušteda %s"
+msgstr "Save %s"
+
 msgid "Dodaj u korpu"
 msgstr "Add to cart"
 
@@ -316,9 +319,6 @@ msgstr "One favorite design"
 
 msgid "Duo paket"
 msgstr "Duo package"
-
-msgid "Ušteda 380 RSD"
-msgstr "Save 380 RSD"
 
 msgid "Dva motiva po izboru"
 msgstr "Two designs of your choice"

@@ -104,45 +104,55 @@ final class Catalog {
 	/**
 	 * Purchase packages (bundle pricing).
 	 *
-	 * @return array<int,array{id:string,name:string,qty:int,price:int,old:?int,per:int,badge:?string,best:bool,free_ship:bool,desc:string}>
+	 * The crossed-out `old` price is what the same number of towels costs bought
+	 * one at a time, so it is always UNIT_PRICE * qty, and `badge_saving` marks
+	 * the badge as the difference between the two rather than free text. Both
+	 * are recomputed from the live WooCommerce prices in
+	 * WooCommerce::inject_package_ids() — the values below are only the seed.
+	 *
+	 * @return array<int,array{id:string,name:string,qty:int,price:int,old:?int,per:int,badge:?string,badge_saving:bool,best:bool,free_ship:bool,desc:string}>
 	 */
 	public function packages(): array {
 		$packages = array(
 			array(
-				'id'        => 'solo',
-				'name'      => __( 'Pojedinačno', 'cosypaw' ),
-				'qty'       => 1,
-				'price'     => 790,
-				'old'       => null,
-				'per'       => 790,
-				'badge'     => null,
-				'best'      => false,
-				'free_ship' => false,
-				'desc'      => __( 'Jedan omiljeni motiv', 'cosypaw' ),
+				'id'           => 'solo',
+				'name'         => __( 'Pojedinačno', 'cosypaw' ),
+				'qty'          => 1,
+				'price'        => self::UNIT_PRICE,
+				'old'          => null,
+				'per'          => self::UNIT_PRICE,
+				'badge'        => null,
+				'badge_saving' => false,
+				'best'         => false,
+				'free_ship'    => false,
+				'desc'         => __( 'Jedan omiljeni motiv', 'cosypaw' ),
 			),
 			array(
-				'id'        => 'duo',
-				'name'      => __( 'Duo paket', 'cosypaw' ),
-				'qty'       => 2,
-				'price'     => 1200,
-				'old'       => 1580,
-				'per'       => 600,
-				'badge'     => __( 'Ušteda 380 RSD', 'cosypaw' ),
-				'best'      => false,
-				'free_ship' => false,
-				'desc'      => __( 'Dva motiva po izboru', 'cosypaw' ),
+				'id'           => 'duo',
+				'name'         => __( 'Duo paket', 'cosypaw' ),
+				'qty'          => 2,
+				'price'        => 1200,
+				'old'          => self::UNIT_PRICE * 2,
+				'per'          => 600,
+				/* translators: %s: formatted amount saved, e.g. "380 RSD". */
+				'badge'        => sprintf( __( 'Ušteda %s', 'cosypaw' ), self::format_price( self::UNIT_PRICE * 2 - 1200 ) ),
+				'badge_saving' => true,
+				'best'         => false,
+				'free_ship'    => false,
+				'desc'         => __( 'Dva motiva po izboru', 'cosypaw' ),
 			),
 			array(
-				'id'        => 'trio',
-				'name'      => __( 'Trio paket', 'cosypaw' ),
-				'qty'       => 3,
-				'price'     => 1600,
-				'old'       => 2370,
-				'per'       => 534,
-				'badge'     => __( 'Najpopularnije', 'cosypaw' ),
-				'best'      => true,
-				'free_ship' => true,
-				'desc'      => __( 'Tri motiva po izboru', 'cosypaw' ),
+				'id'           => 'trio',
+				'name'         => __( 'Trio paket', 'cosypaw' ),
+				'qty'          => 3,
+				'price'        => 1600,
+				'old'          => self::UNIT_PRICE * 3,
+				'per'          => 534,
+				'badge'        => __( 'Najpopularnije', 'cosypaw' ),
+				'badge_saving' => false,
+				'best'         => true,
+				'free_ship'    => true,
+				'desc'         => __( 'Tri motiva po izboru', 'cosypaw' ),
 			),
 		);
 

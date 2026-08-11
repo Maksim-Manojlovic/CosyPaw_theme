@@ -110,6 +110,9 @@ msgstr "шт"
 msgid "Besplatna dostava"
 msgstr "Бесплатная доставка"
 
+msgid "Ušteda %s"
+msgstr "Экономия %s"
+
 msgid "Dodaj u korpu"
 msgstr "В корзину"
 
@@ -316,9 +319,6 @@ msgstr "Один любимый мотив"
 
 msgid "Duo paket"
 msgstr "Набор Duo"
-
-msgid "Ušteda 380 RSD"
-msgstr "Экономия 380 RSD"
 
 msgid "Dva motiva po izboru"
 msgstr "Два мотива на выбор"

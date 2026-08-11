@@ -55,6 +55,8 @@ final class WooCommerceTest extends TestCase {
 				'add_theme_support'  => true,
 				'register_nav_menus' => true,
 				'load_theme_textdomain' => true,
+				// CheckoutSetup registers one filter only outside wp-admin.
+				'is_admin'           => false,
 				'untrailingslashit'  => static fn( $s ) => rtrim( (string) $s, '/' ),
 				'add_query_arg'      => static fn( $key, $value = '' ) => 'http://example.test/?' . $key . '=' . $value,
 				'esc_url_raw'        => static fn( $url ) => $url,

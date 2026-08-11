@@ -206,8 +206,9 @@ final class ProductSeeder {
 			$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
 			foreach ( $this->catalog->products() as $motif ) {
 				if ( isset( $product_map[ $motif['id'] ] ) && get_post( (int) $product_map[ $motif['id'] ] ) ) {
-					// Already created — ensure its image has alt/caption/description.
-					$this->backfill_image_meta( (int) $product_map[ $motif['id'] ], $motif['name'] );
+					// Already created — re-attach the image if it went missing,
+					// and make sure it carries its alt text either way.
+					$this->backfill_image_meta( (int) $product_map[ $motif['id'] ], $motif['name'], $motif['image'] );
 					continue;
 				}
 				$pid = $this->create_product( $motif['name'], Catalog::UNIT_PRICE, $motif['image'] );
@@ -327,21 +328,66 @@ final class ProductSeeder {
 	}
 
 	/**
-	 * Ensure an already-created product's featured image carries image meta.
+	 * Ensure an already-created product still has its featured image, and that
+	 * the image carries its meta.
+	 *
+	 * A product whose image went missing — deleted from the media library, or
+	 * lost in a migration — used to fall straight through this method, because
+	 * it only had a branch for the case where an image was already there. The
+	 * product itself is in the map, so seed() skips creating it, which left the
+	 * shop grid showing WooCommerce's grey placeholder with no way to repair it
+	 * short of re-attaching every image by hand. Re-sideloading here is what
+	 * makes the seeder able to fix that, and it is still idempotent: an intact
+	 * image is left exactly where it is.
 	 *
 	 * @param int    $product_id Product ID.
 	 * @param string $name       Product name.
+	 * @param string $image_url  Source image under the theme directory.
 	 * @return void
 	 */
-	private function backfill_image_meta( int $product_id, string $name ): void {
+	private function backfill_image_meta( int $product_id, string $name, string $image_url = '' ): void {
 		$product = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
 		if ( ! $product ) {
 			return;
 		}
+
 		$image_id = (int) $product->get_image_id();
-		if ( $image_id ) {
+
+		if ( $this->attachment_is_intact( $image_id ) ) {
 			$this->set_image_meta( $image_id, $name );
+
+			return;
 		}
+
+		if ( '' === $image_url ) {
+			return;
+		}
+
+		$attachment_id = $this->sideload_local_image( $image_url, $product_id, $name );
+		if ( $attachment_id ) {
+			$product->set_image_id( $attachment_id );
+			$product->save();
+		}
+	}
+
+	/**
+	 * Whether an attachment id still resolves to a file on disk.
+	 *
+	 * The id alone is not enough: WooCommerce keeps _thumbnail_id whether or not
+	 * the attachment behind it survived, so a deleted image leaves a product
+	 * pointing at a post that is gone, or at a post whose file is.
+	 *
+	 * @param int $attachment_id Attachment ID.
+	 * @return bool
+	 */
+	private function attachment_is_intact( int $attachment_id ): bool {
+		if ( $attachment_id < 1 || 'attachment' !== get_post_type( $attachment_id ) ) {
+			return false;
+		}
+
+		$file = get_attached_file( $attachment_id );
+
+		return is_string( $file ) && '' !== $file && file_exists( $file );
 	}
 
 	/**

@@ -68,3 +68,12 @@ msgstr "Prodavnica"
 msgid "My account"
 msgstr "Moj nalog"
 
+msgid "Cash on delivery"
+msgstr "Plaćanje pouzećem"
+
+msgid "Pay with cash upon delivery."
+msgstr "Plaćaš gotovinom pri preuzimanju — kuriru na vratima ili nama lično."
+
+msgid "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our [privacy_policy]."
+msgstr "Tvoji lični podaci koriste se za obradu porudžbine, za bolje iskustvo na ovom sajtu i za druge svrhe opisane u dokumentu [privacy_policy]."
+

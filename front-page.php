@@ -2,7 +2,13 @@
 /**
  * Front page — the CosyPaw landing experience.
  *
- * Sections: hero (with vertical motif carousel), benefits, packages, motif grid.
+ * Section order (hero, motif grid, packages, lifestyle, benefits, testimonials,
+ * FAQ) is deliberate: the catalogue has to precede the bundle builder, because
+ * step 2 of the builder asks the visitor to choose motifs and the gallery is
+ * where they meet them. It used to run the other way round — "Upoznaj sve
+ * motive" sat after the section that made you pick three. Everything from
+ * lifestyle down is objection handling, ordered softest first.
+ *
  * Data comes from the plain \Theme\Catalog data object.
  *
  * @package CosyPaw
@@ -153,85 +159,69 @@ foreach ( $packages as $pkg ) {
 		</div>
 	</section>
 
-	<!-- ZAŠTO -->
-	<section id="zasto" class="section">
+	<!-- GALERIJA -->
+	<section id="galerija" class="section">
 		<div class="section__head">
-			<span class="eyebrow"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Mali zagrljaj pored sudopere', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.', 'cosypaw' ); ?></p>
+			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
+			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve motive', 'cosypaw' ); ?></h2>
+			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
-		<div class="benefits">
+		<div class="motifs">
 			<?php
-			$benefits = array(
-				array(
-					'tone'  => 'sand',
-					'icon'  => '<path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.6A4 4 0 0 1 17 18z"/>',
-					'title' => __( 'Mekano kao oblak', 'cosypaw' ),
-					'text'  => __( 'Plišana mikrofibra prijatna i nežnoj dečjoj koži.', 'cosypaw' ),
-				),
-				array(
-					'tone'  => 'sage',
-					'icon'  => '<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z"/>',
-					'title' => __( 'Upija u trenu', 'cosypaw' ),
-					'text'  => __( 'Brzo suši ručice i ostaje suv i svež tokom dana.', 'cosypaw' ),
-				),
-				array(
-					'tone'  => 'sand',
-					'icon'  => '<path d="M12 4v6"/><circle cx="12" cy="15" r="5"/>',
-					'title' => __( 'Alka za kačenje', 'cosypaw' ),
-					'text'  => __( 'Okačiš ga na kuku ili ručku — uvek na svom mestu.', 'cosypaw' ),
-				),
-				array(
-					'tone'  => 'sage',
-					'icon'  => '<path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5zM12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5z"/>',
-					'title' => __( 'Savršen poklon', 'cosypaw' ),
-					'text'  => __( 'Slatka sitnica koja uvek izmami osmeh i „awww”.', 'cosypaw' ),
-				),
-			);
-			foreach ( $benefits as $b ) :
+			foreach ( $products as $p ) :
+				/* translators: %s: motif name. */
+				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
 				?>
-				<div class="benefit">
-					<span class="benefit__icon benefit__icon--<?php echo esc_attr( $b['tone'] ); ?>">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?php echo wp_kses( $b['icon'], array( 'path' => array( 'd' => array() ), 'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ) ) ); ?></svg>
-					</span>
-					<h3 class="benefit__title"><?php echo esc_html( $b['title'] ); ?></h3>
-					<p class="benefit__text"><?php echo esc_html( $b['text'] ); ?></p>
-				</div>
-			<?php endforeach; ?>
-		</div>
-	</section>
-
-	<!-- U TVOM DOMU (lifestyle) -->
-	<section id="dom" class="section">
-		<div class="section__head">
-			<span class="eyebrow"><?php esc_html_e( 'U tvom domu', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Tvoj kutak, malo mekši', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
-		</div>
-
-		<div class="lifestyle">
-			<?php
-			$lifestyle = array(
-				array( 'file' => 'lifestyle1.avif', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
-				array( 'file' => 'lifestyle2.avif', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
-			);
-			$assets_uri = get_template_directory_uri() . '/assets/';
-			foreach ( $lifestyle as $shot ) :
-				?>
-				<figure class="lifestyle-card">
+				<div class="motif-card">
+					<?php
+					// alt="" — the motif name is printed as text directly below.
+					// srcset omits image_sm on purpose: it is a 1:1 crop while
+					// image_md and image are 3:4, and srcset candidates have to be
+					// the same picture at different sizes or the crop shifts with
+					// the viewport.
+					?>
 					<img
-						class="lifestyle-card__img"
-						src="<?php echo esc_url( $assets_uri . $shot['file'] ); ?>"
-						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
-						width="1086"
-						height="1358"
-						alt="<?php echo esc_attr( $shot['cap'] ); ?>"
+						class="motif-card__img"
+						src="<?php echo esc_url( $p['image_md'] ); ?>"
+						srcset="<?php echo esc_attr( $p['image_md'] . ' 600w, ' . $p['image'] . ' 1086w' ); ?>"
+						sizes="(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px"
+						width="600"
+						height="800"
+						alt=""
 						loading="lazy"
 						decoding="async"
 					>
-					<figcaption class="lifestyle-card__cap"><?php echo esc_html( $shot['cap'] ); ?></figcaption>
-				</figure>
+					<div class="motif-card__row">
+						<div>
+							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>
+							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
+						</div>
+						<?php if ( ! empty( $p['product_id'] ) ) : ?>
+							<a
+								href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
+								class="motif-add add_to_cart_button ajax_add_to_cart"
+								data-product_id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
+								data-quantity="1"
+								rel="nofollow"
+							>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
+							</a>
+						<?php else : ?>
+							<button
+								type="button"
+								class="motif-add"
+								data-cart-add
+								data-name="<?php echo esc_attr( $item_label ); ?>"
+								data-price="<?php echo esc_attr( (string) (int) $p['price'] ); ?>"
+							>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
+							</button>
+						<?php endif; ?>
+					</div>
+				</div>
 			<?php endforeach; ?>
 		</div>
 	</section>
@@ -401,68 +391,84 @@ foreach ( $packages as $pkg ) {
 		</div>
 	</section>
 
-	<!-- GALERIJA -->
-	<section id="galerija" class="section">
+	<!-- U TVOM DOMU (lifestyle) -->
+	<section id="dom" class="section">
 		<div class="section__head">
-			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve motive', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
+			<span class="eyebrow"><?php esc_html_e( 'U tvom domu', 'cosypaw' ); ?></span>
+			<h2 class="section__title"><?php esc_html_e( 'Tvoj kutak, malo mekši', 'cosypaw' ); ?></h2>
+			<p class="section__lead"><?php esc_html_e( 'Pored lavabo, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
 		</div>
 
-		<div class="motifs">
+		<div class="lifestyle">
 			<?php
-			foreach ( $products as $p ) :
-				/* translators: %s: motif name. */
-				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
+			$lifestyle = array(
+				array( 'file' => 'lifestyle1.avif', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
+				array( 'file' => 'lifestyle2.avif', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
+			);
+			$assets_uri = get_template_directory_uri() . '/assets/';
+			foreach ( $lifestyle as $shot ) :
 				?>
-				<div class="motif-card">
-					<?php
-					// alt="" — the motif name is printed as text directly below.
-					// srcset omits image_sm on purpose: it is a 1:1 crop while
-					// image_md and image are 3:4, and srcset candidates have to be
-					// the same picture at different sizes or the crop shifts with
-					// the viewport.
-					?>
+				<figure class="lifestyle-card">
 					<img
-						class="motif-card__img"
-						src="<?php echo esc_url( $p['image_md'] ); ?>"
-						srcset="<?php echo esc_attr( $p['image_md'] . ' 600w, ' . $p['image'] . ' 1086w' ); ?>"
-						sizes="(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px"
-						width="600"
-						height="800"
-						alt=""
+						class="lifestyle-card__img"
+						src="<?php echo esc_url( $assets_uri . $shot['file'] ); ?>"
+						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
+						width="1086"
+						height="1358"
+						alt="<?php echo esc_attr( $shot['cap'] ); ?>"
 						loading="lazy"
 						decoding="async"
 					>
-					<div class="motif-card__row">
-						<div>
-							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>
-							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
-						</div>
-						<?php if ( ! empty( $p['product_id'] ) ) : ?>
-							<a
-								href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
-								class="motif-add add_to_cart_button ajax_add_to_cart"
-								data-product_id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
-								data-quantity="1"
-								rel="nofollow"
-							>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
-							</a>
-						<?php else : ?>
-							<button
-								type="button"
-								class="motif-add"
-								data-cart-add
-								data-name="<?php echo esc_attr( $item_label ); ?>"
-								data-price="<?php echo esc_attr( (string) (int) $p['price'] ); ?>"
-							>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
-							</button>
-						<?php endif; ?>
-					</div>
+					<figcaption class="lifestyle-card__cap"><?php echo esc_html( $shot['cap'] ); ?></figcaption>
+				</figure>
+			<?php endforeach; ?>
+		</div>
+	</section>
+
+	<!-- ZAŠTO -->
+	<section id="zasto" class="section">
+		<div class="section__head">
+			<span class="eyebrow"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></span>
+			<h2 class="section__title"><?php esc_html_e( 'Mali zagrljaj pored sudopere', 'cosypaw' ); ?></h2>
+			<p class="section__lead"><?php esc_html_e( 'Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.', 'cosypaw' ); ?></p>
+		</div>
+
+		<div class="benefits">
+			<?php
+			$benefits = array(
+				array(
+					'tone'  => 'sand',
+					'icon'  => '<path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.6A4 4 0 0 1 17 18z"/>',
+					'title' => __( 'Mekano kao oblak', 'cosypaw' ),
+					'text'  => __( 'Plišana mikrofibra prijatna i nežnoj dečjoj koži.', 'cosypaw' ),
+				),
+				array(
+					'tone'  => 'sage',
+					'icon'  => '<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z"/>',
+					'title' => __( 'Upija u trenu', 'cosypaw' ),
+					'text'  => __( 'Brzo suši ručice i ostaje suv i svež tokom dana.', 'cosypaw' ),
+				),
+				array(
+					'tone'  => 'sand',
+					'icon'  => '<path d="M12 4v6"/><circle cx="12" cy="15" r="5"/>',
+					'title' => __( 'Alka za kačenje', 'cosypaw' ),
+					'text'  => __( 'Okačiš ga na kuku ili ručku — uvek na svom mestu.', 'cosypaw' ),
+				),
+				array(
+					'tone'  => 'sage',
+					'icon'  => '<path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5zM12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5z"/>',
+					'title' => __( 'Savršen poklon', 'cosypaw' ),
+					'text'  => __( 'Slatka sitnica koja uvek izmami osmeh i „awww”.', 'cosypaw' ),
+				),
+			);
+			foreach ( $benefits as $b ) :
+				?>
+				<div class="benefit">
+					<span class="benefit__icon benefit__icon--<?php echo esc_attr( $b['tone'] ); ?>">
+						<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?php echo wp_kses( $b['icon'], array( 'path' => array( 'd' => array() ), 'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ) ) ); ?></svg>
+					</span>
+					<h3 class="benefit__title"><?php echo esc_html( $b['title'] ); ?></h3>
+					<p class="benefit__text"><?php echo esc_html( $b['text'] ); ?></p>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -561,7 +567,6 @@ foreach ( $packages as $pkg ) {
 			<?php endforeach; ?>
 		</div>
 	</section>
-
 </main>
 
 <?php

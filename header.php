@@ -101,10 +101,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 			} else {
 				// Default in-page anchors (resolve from any page back to the homepage sections).
 				$cosypaw_home = home_url( '/' );
+				// Listed in scroll order — nav that disagrees with the page it
+				// links into makes the anchors feel arbitrary.
 				$cosypaw_anchors = array(
+					'#galerija' => __( 'Motivi', 'cosypaw' ),
 					'#paketi'   => __( 'Paketi', 'cosypaw' ),
 					'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
-					'#galerija' => __( 'Motivi', 'cosypaw' ),
 				);
 				foreach ( $cosypaw_anchors as $anchor => $label ) {
 					printf(

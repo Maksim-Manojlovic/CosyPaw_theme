@@ -60,8 +60,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Cart drawer -->
 <div class="cart-drawer" data-cart-drawer hidden>
-	<button type="button" class="cart-drawer__overlay" data-cart-close aria-label="<?php esc_attr_e( 'Zatvori korpu', 'cosypaw' ); ?>"></button>
-	<aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Tvoja korpa', 'cosypaw' ); ?>">
+	<?php
+	// A plain div, not a button: the panel traps focus, and a focusable overlay
+	// would put a second "close" stop in the tab cycle. Pointer users get the
+	// click-to-dismiss, keyboard users get Escape and the close button.
+	?>
+	<div class="cart-drawer__overlay" data-cart-close aria-hidden="true"></div>
+	<aside class="cart-drawer__panel" data-cart-panel tabindex="-1" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Tvoja korpa', 'cosypaw' ); ?>">
 		<div class="cart-drawer__head">
 			<span class="cart-drawer__title"><?php esc_html_e( 'Tvoja korpa', 'cosypaw' ); ?></span>
 			<button type="button" class="cart-drawer__close" data-cart-close aria-label="<?php esc_attr_e( 'Zatvori', 'cosypaw' ); ?>">

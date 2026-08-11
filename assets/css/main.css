@@ -759,3 +759,208 @@ h1, h2, h3, h4 {
 		border-bottom: none;
 	}
 }
+
+/* ==========================================================================
+   CART DRAWER + TOAST
+   Moved here from landing.css: the markup lives in footer.php on every page
+   and app.js boots the behaviour site-wide, so front-page-only styles left
+   the drawer unstyled everywhere else.
+   ========================================================================== */
+
+/* ---------- Toast ---------- */
+.toast {
+	position: fixed;
+	left: 50%;
+	bottom: 28px;
+	transform: translateX(-50%);
+	z-index: 80;
+	background: var(--ink);
+	color: #fff;
+	font-weight: 700;
+	font-size: 15px;
+	padding: 14px 22px;
+	border-radius: var(--radius-pill);
+	box-shadow: 0 16px 40px rgba(62, 51, 42, 0.35);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	animation: pop 0.25s ease;
+}
+
+.toast__check {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: var(--sagelt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+}
+
+.toast--warn .toast__check {
+	background: var(--ochre);
+}
+
+.toast[hidden] {
+	display: none;
+}
+
+/* ---------- Cart drawer ---------- */
+.cart-drawer[hidden] {
+	display: none;
+}
+
+.cart-drawer__overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 90;
+	background: rgba(62, 51, 42, 0.4);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	cursor: pointer;
+}
+
+/* The panel only takes focus as the fallback landing spot when it holds no
+   focusable control; it should not draw a ring around the whole drawer. */
+.cart-drawer__panel:focus {
+	outline: none;
+}
+
+.cart-drawer__panel {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 91;
+	width: 380px;
+	max-width: 92vw;
+	height: 100%;
+	background: var(--cream);
+	box-shadow: -20px 0 50px rgba(62, 51, 42, 0.2);
+	display: flex;
+	flex-direction: column;
+	animation: pop 0.25s ease;
+}
+
+.cart-drawer__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 22px 24px;
+	border-bottom: 1px solid var(--line);
+}
+
+.cart-drawer__title {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 22px;
+}
+
+.cart-drawer__close {
+	cursor: pointer;
+	border: none;
+	background: var(--cream2);
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--ink);
+}
+
+.cart-drawer__body {
+	flex: 1;
+	overflow-y: auto;
+	padding: 18px 24px;
+}
+
+.cart-empty {
+	text-align: center;
+	padding: 60px 10px;
+	color: var(--muted);
+}
+
+.cart-empty__emoji {
+	font-size: 46px;
+	margin-bottom: 8px;
+}
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	padding: 14px 16px;
+	margin-bottom: 12px;
+}
+
+.cart-item__name {
+	font-weight: 800;
+	font-size: 15px;
+	color: var(--ink);
+}
+
+.cart-item__price {
+	font-size: 13.5px;
+	color: var(--clay);
+	font-weight: 800;
+}
+
+.cart-item__remove {
+	cursor: pointer;
+	border: none;
+	background: var(--cream2);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--muted);
+	flex: none;
+}
+
+.cart-foot {
+	padding: 20px 24px;
+	border-top: 1px solid var(--line);
+	background: #fff;
+}
+
+.cart-total-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 14px;
+}
+
+.cart-total-label {
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--muted);
+}
+
+.cart-total {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 26px;
+	color: var(--ink);
+}
+
+.cart-checkout {
+	width: 100%;
+	cursor: pointer;
+	border: none;
+	font-family: var(--font-heading);
+	background: var(--clay);
+	color: #fff;
+	font-weight: 800;
+	font-size: 17px;
+	padding: 15px;
+	border-radius: var(--radius-pill);
+	box-shadow: 0 12px 26px rgba(161, 94, 55, 0.4);
+}
+

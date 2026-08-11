@@ -32,6 +32,7 @@ export class CartDrawer {
 		);
 
 		this.drawer = root.querySelector('[data-cart-drawer]');
+		this.panel = root.querySelector('[data-cart-panel]');
 		this.itemsEl = root.querySelector('[data-cart-items]');
 		this.emptyEl = root.querySelector('[data-cart-empty]');
 		this.footEl = root.querySelector('[data-cart-foot]');
@@ -42,6 +43,10 @@ export class CartDrawer {
 
 		this.items = this._load();
 		this._toastTimer = null;
+		// Element focus returns to when the drawer closes.
+		this._lastFocused = null;
+		// Elements outside the drawer that were made inert while it is open.
+		this._inerted = [];
 
 		// Bound handlers for clean teardown.
 		this._onClick = this._onClick.bind(this);
@@ -125,9 +130,80 @@ export class CartDrawer {
 	}
 
 	_onKeydown(e) {
-		if (e.key === 'Escape' && this.drawer && !this.drawer.hidden) {
+		if (!this.drawer || this.drawer.hidden) return;
+
+		if (e.key === 'Escape') {
 			this.close();
+			return;
 		}
+
+		if (e.key === 'Tab') {
+			this._trapTab(e);
+		}
+	}
+
+	/* ---------- focus management ---------- */
+
+	/**
+	 * Focusable elements inside the panel, in tab order.
+	 * @private
+	 * @return {HTMLElement[]}
+	 */
+	_focusable() {
+		if (!this.panel) return [];
+		const sel =
+			'a[href], button:not([disabled]), input:not([disabled]), ' +
+			'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+		return Array.from(this.panel.querySelectorAll(sel)).filter(
+			(el) => !el.hidden && el.offsetParent !== null
+		);
+	}
+
+	/**
+	 * Keep Tab inside the dialog. aria-modal alone does not constrain the
+	 * browser's tab order, so without this the next Tab from the last control
+	 * lands on the page behind the overlay.
+	 * @private
+	 */
+	_trapTab(e) {
+		const items = this._focusable();
+		if (items.length === 0) {
+			e.preventDefault();
+			return;
+		}
+
+		const first = items[0];
+		const last = items[items.length - 1];
+		const active = document.activeElement;
+
+		if (e.shiftKey && (active === first || !this.panel.contains(active))) {
+			e.preventDefault();
+			last.focus();
+		} else if (!e.shiftKey && active === last) {
+			e.preventDefault();
+			first.focus();
+		}
+	}
+
+	/**
+	 * Hide the rest of the document from assistive tech and the tab order while
+	 * the drawer is open.
+	 * @private
+	 */
+	_setBackgroundInert(on) {
+		if (on) {
+			// The toast is a body-level sibling too; inerting it would suppress
+			// its live-region announcements while the drawer is open.
+			this._inerted = Array.from(document.body.children).filter(
+				(el) => el !== this.drawer && el !== this.toastEl && !el.hasAttribute('inert')
+			);
+			this._inerted.forEach((el) => el.setAttribute('inert', ''));
+		} else {
+			this._inerted.forEach((el) => el.removeAttribute('inert'));
+			this._inerted = [];
+		}
+		// Stop the page behind the overlay from scrolling with the drawer.
+		document.body.style.overflow = on ? 'hidden' : '';
 	}
 
 	/* ---------- public API ---------- */
@@ -148,15 +224,41 @@ export class CartDrawer {
 	}
 
 	open() {
-		if (this.drawer) this.drawer.hidden = false;
+		if (!this.drawer || !this.drawer.hidden) return;
+
+		this._lastFocused = document.activeElement;
+		this.drawer.hidden = false;
+		this._setBackgroundInert(true);
+
+		// Move focus into the dialog; without this the drawer opens behind the
+		// keyboard user, who stays parked on the trigger outside the overlay.
+		const target = this._focusable()[0] || this.panel;
+		if (target) target.focus();
 	}
 
 	close() {
-		if (this.drawer) this.drawer.hidden = true;
+		if (!this.drawer || this.drawer.hidden) return;
+
+		this.drawer.hidden = true;
+		this._setBackgroundInert(false);
+
+		// Return focus where it came from. The trigger can be gone (e.g. a cart
+		// row that was removed), so fall back to the header cart button.
+		const restore =
+			this._lastFocused && this._lastFocused.isConnected
+				? this._lastFocused
+				: this.root.querySelector('[data-cart-toggle]');
+		if (restore && typeof restore.focus === 'function') restore.focus();
+		this._lastFocused = null;
 	}
 
 	toggle() {
-		if (this.drawer) this.drawer.hidden = !this.drawer.hidden;
+		if (!this.drawer) return;
+		if (this.drawer.hidden) {
+			this.open();
+		} else {
+			this.close();
+		}
 	}
 
 	/** Public: show a transient toast. kind = 'ok' | 'warn'. */
@@ -169,6 +271,8 @@ export class CartDrawer {
 		this.root.removeEventListener('cosypaw:add', this._onAddEvent);
 		document.removeEventListener('keydown', this._onKeydown);
 		if (this._toastTimer) clearTimeout(this._toastTimer);
+		// Never leave the rest of the page inert or the body scroll-locked.
+		this._setBackgroundInert(false);
 	}
 
 	/* ---------- rendering ---------- */

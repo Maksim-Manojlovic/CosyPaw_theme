@@ -53,6 +53,13 @@ final class Bootstrap {
 	private ?WooCommerce $woocommerce = null;
 
 	/**
+	 * SEO meta / structured data module.
+	 *
+	 * @var Seo
+	 */
+	private Seo $seo;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -63,6 +70,7 @@ final class Bootstrap {
 		// Core modules (always present).
 		$this->setup  = new Setup( $this->text_domain );
 		$this->assets = new Assets( $this->text_domain, get_template_directory(), get_template_directory_uri() );
+		$this->seo    = new Seo( new Catalog() );
 
 		// Conditional WooCommerce module.
 		if ( class_exists( 'WooCommerce' ) ) {

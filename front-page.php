@@ -531,29 +531,10 @@ foreach ( $packages as $pkg ) {
 
 		<div class="faq">
 			<?php
-			$faqs = array(
-				array(
-					'q' => __( 'Od čega su peškirići napravljeni?', 'cosypaw' ),
-					'a' => __( 'Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Kako se peru?', 'cosypaw' ),
-					'a' => __( 'Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Koliko traje dostava?', 'cosypaw' ),
-					'a' => __( 'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Kako mogu da platim?', 'cosypaw' ),
-					'a' => __( 'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.', 'cosypaw' ),
-				),
-				array(
-					'q' => __( 'Mogu li da vratim proizvod?', 'cosypaw' ),
-					'a' => __( 'Naravno. Imaš 14 dana da vratiš nekorišćen peškirić uz povraćaj novca.', 'cosypaw' ),
-				),
-			);
-			foreach ( $faqs as $faq ) :
+			// Shared with the FAQPage structured data in Theme\Seo so the two
+			// cannot drift — Google penalises markup that does not match what
+			// the page actually shows.
+			foreach ( \Theme\Seo::faqs() as $faq ) :
 				?>
 				<details class="faq-item">
 					<summary class="faq-item__q">

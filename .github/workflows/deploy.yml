@@ -45,10 +45,12 @@ jobs:
       - name: Run the test suite
         run: vendor/bin/phpunit
 
+      # 22 matches the local toolchain and is current LTS; the runner warns that
+      # Node 20 is being retired.
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - name: Install JS dependencies

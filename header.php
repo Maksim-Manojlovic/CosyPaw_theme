@@ -78,10 +78,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <header class="site-header" data-site-nav>
 	<nav class="nav" aria-label="<?php esc_attr_e( 'Glavna navigacija', 'cosypaw' ); ?>">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav__brand">
-			<span class="brand-mark">
-				<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.6" r="2.1"/><circle cx="17" cy="9" r="2.1"/><path d="M12 11.5c-3 0-5.2 2.3-5.2 4.6 0 1.7 1.5 2.4 3 2.4 1 0 1.6-.4 2.2-.4s1.2.4 2.2.4c1.5 0 3-.7 3-2.4 0-2.3-2.2-4.6-5.2-4.6z"/></svg>
-			</span>
-			<span class="brand-name"><?php bloginfo( 'name' ); ?></span>
+			<?php \Theme\Setup::brand_logo(); ?>
 		</a>
 
 		<div class="nav__links" id="cosypaw-nav-menu" data-nav-panel>

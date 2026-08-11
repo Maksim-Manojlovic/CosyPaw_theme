@@ -424,28 +424,20 @@ h1, h2, h3, h4 {
 	color: var(--ink);
 }
 
-.brand-mark {
-	width: 38px;
-	height: 38px;
-	border-radius: 50%;
-	background: var(--clay);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 4px 12px rgba(161, 94, 55, 0.35);
+/* The badge carries the wordmark inside it, so it is the whole lockup. Its own
+   lettering only resolves from about 56px up — below that the logo reads as a
+   coloured blob, which is why this does not shrink to the old 38px mark. */
+.brand-logo {
+	width: 64px;
+	height: 64px;
+	display: block;
 	flex: none;
 }
 
-.brand-name {
-	font-family: var(--font-heading);
-	font-weight: 800;
-	font-size: 22px;
-	letter-spacing: 0.2px;
-}
-
 /* Footer lockup, which sits larger than the header one. */
-.brand-name--lg {
-	font-size: 24px;
+.brand-logo--lg {
+	width: 76px;
+	height: 76px;
 }
 
 .nav__links {
@@ -674,13 +666,6 @@ h1, h2, h3, h4 {
 	padding: 56px 0 30px;
 }
 
-/* The footer reuses .nav__brand, which sets color: var(--ink) for the header.
-   Against the footer's own var(--ink) background that is the same colour —
-   the wordmark was rendering at 1:1 and reading as a bare paw icon. */
-.site-footer .nav__brand {
-	color: #fff;
-}
-
 .footer-inner {
 	max-width: var(--maxw-content);
 	margin: 0 auto;
@@ -774,6 +759,19 @@ h1, h2, h3, h4 {
 /* ---------- Chrome responsive ---------- */
 @media (max-width: 880px) {
 	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
+
+	/* The header is sticky, so every pixel it takes is a pixel of phone screen
+	   the shop never gets back. 56px is the floor at which the badge's own
+	   lettering still resolves. */
+	.brand-logo {
+		width: 56px;
+		height: 56px;
+	}
+
+	.brand-logo--lg {
+		width: 64px;
+		height: 64px;
+	}
 
 	/* 56px of top padding is a desktop rhythm; on a phone it just pushes the
 	   footer's own content further down an already long scroll. */

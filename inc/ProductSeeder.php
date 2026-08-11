@@ -236,6 +236,8 @@ final class ProductSeeder {
 			// starts with every gateway off and no shipping zone, so going
 			// live means configuring both — see CheckoutSetup. Idempotent.
 			CheckoutSetup::configure();
+
+			$this->seed_site_logo();
 		} finally {
 			remove_filter( 'gettext', $passthrough, 99 );
 		}
@@ -396,6 +398,71 @@ final class ProductSeeder {
 		}
 
 		return is_readable( $path ) ? $path : '';
+	}
+
+	/**
+	 * Put the brand badge into the media library and point the Customizer's
+	 * logo and the site icon at it. Idempotent.
+	 *
+	 * The header renders the badge straight from /assets, so this is not what
+	 * makes the logo appear on the page. It is what gives the rest of
+	 * WordPress a logo to use: the browser-tab icon, the Organization schema in
+	 * Theme\Seo, and anything else reading get_theme_mod('custom_logo').
+	 *
+	 * The PNG is sideloaded rather than the AVIF the header uses — the site
+	 * icon is resized by WordPress into favicon dimensions, and an install
+	 * without AVIF support would silently produce no icon at all.
+	 *
+	 * @return void
+	 */
+	private function seed_site_logo(): void {
+		if ( (int) get_theme_mod( 'custom_logo' ) > 0 || (int) get_option( 'site_icon' ) > 0 ) {
+			return;
+		}
+
+		$id = $this->sideload_local_image(
+			get_template_directory_uri() . '/assets/logo-512.png',
+			0,
+			get_bloginfo( 'name' )
+		);
+
+		if ( $id < 1 ) {
+			return;
+		}
+
+		set_theme_mod( 'custom_logo', $id );
+		update_option( 'site_icon', $id );
+		$this->generate_site_icon_sizes( $id );
+	}
+
+	/**
+	 * Add the favicon-sized crops to an attachment being used as the site icon.
+	 *
+	 * WordPress only produces the 32/180/192/270/512 site_icon-* sizes inside
+	 * the Customizer's icon control, which is a cropper this seeder never goes
+	 * through. Without them get_site_icon_url() falls back to the source image,
+	 * so a browser tab would pull the full 512px PNG for a 32px favicon.
+	 *
+	 * @param int $attachment_id Attachment used as the site icon.
+	 * @return void
+	 */
+	private function generate_site_icon_sizes( int $attachment_id ): void {
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		require_once ABSPATH . 'wp-admin/includes/class-wp-site-icon.php';
+
+		$file = get_attached_file( $attachment_id );
+		if ( ! $file || ! class_exists( '\WP_Site_Icon' ) ) {
+			return;
+		}
+
+		$site_icon = new \WP_Site_Icon();
+		add_filter( 'intermediate_image_sizes_advanced', array( $site_icon, 'additional_sizes' ) );
+
+		try {
+			wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file ) );
+		} finally {
+			remove_filter( 'intermediate_image_sizes_advanced', array( $site_icon, 'additional_sizes' ) );
+		}
 	}
 
 	/**

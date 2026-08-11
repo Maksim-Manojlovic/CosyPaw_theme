@@ -792,13 +792,23 @@
 	gap: 10px;
 }
 
-.pkg-cta.is-disabled {
-	background: #c6bbae;
+/**
+ * Bundle CTA before the slots are full.
+ *
+ * Deliberately NOT a disabled control: it stays clickable so the click can
+ * explain what is missing ("Izaberi još 2 motiva"), which means the WCAG
+ * exemption for disabled controls does not apply and its label has to clear
+ * 4.5:1. The old #c6bbae fill put white at 1.89:1 — the instruction was the
+ * unreadable part. This fill is 4.71:1, still visibly subordinate to the clay
+ * primary.
+ */
+.pkg-cta.is-incomplete {
+	background: #7d7264;
 	box-shadow: none;
-	cursor: default;
 }
 
-.pkg-cta.is-disabled:hover {
+.pkg-cta.is-incomplete:hover {
+	background: #6d6357;
 	transform: none;
 	box-shadow: none;
 }

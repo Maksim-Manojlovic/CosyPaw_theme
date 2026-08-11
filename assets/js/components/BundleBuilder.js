@@ -333,7 +333,9 @@ export class BundleBuilder {
 		const priceFmt = this.selected ? this.selected.dataset.priceFmt || this._fmt(this.selected.dataset.price) : '';
 
 		// Stays clickable when incomplete so the click yields a "not full" toast.
-		this.ctaBtn.classList.toggle('is-disabled', !full);
+		// Named for what it is rather than "disabled": it is an active control,
+		// so it carries neither the disabled styling nor the contrast exemption.
+		this.ctaBtn.classList.toggle('is-incomplete', !full);
 		this.ctaLabelEl.textContent = full
 			? this.l10n.addToCartPrice.replace('%s', priceFmt)
 			: this.l10n.chooseMore.replace('%d', String(remaining)) +

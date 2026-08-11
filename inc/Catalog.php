@@ -50,7 +50,11 @@ final class Catalog {
 	 * browser support is universal), but see ProductSeeder::avif_supported() for
 	 * the WordPress-side caveat when sideloading these into the media library.
 	 *
-	 * @return array<int,array{id:string,name:string,image:string,image_md:string,image_sm:string}>
+	 * The price is the seed value only: once a motif is mapped to a real
+	 * WooCommerce product, WooCommerce::inject_product_ids() replaces it with
+	 * whatever the shop charges.
+	 *
+	 * @return array<int,array{id:string,name:string,price:int,image:string,image_md:string,image_sm:string}>
 	 */
 	public function products(): array {
 		$motifs = array(
@@ -82,6 +86,7 @@ final class Catalog {
 			$out[] = array(
 				'id'       => $m['id'],
 				'name'     => $m['name'],
+				'price'    => self::UNIT_PRICE,
 				'image'    => $base . $m['id'] . '.avif',
 				'image_md' => $base . $m['id'] . '-md.avif',
 				'image_sm' => $base . $m['id'] . '-sm.avif',

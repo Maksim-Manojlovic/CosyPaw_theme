@@ -23,7 +23,12 @@ $build = Join-Path $root 'build'
 $stage = Join-Path $build 'cosypaw'
 $zip   = Join-Path $build 'cosypaw.zip'
 
-if (-not (Test-Path (Join-Path $root 'dist\.vite\manifest.json'))) {
+# Join the segments rather than embedding separators: this script also runs on
+# the Linux CI runner under pwsh, where a backslash is a filename character and
+# 'dist\.vite\manifest.json' would never match. Nested calls rather than
+# Join-Path's multi-segment form, which Windows PowerShell 5.1 does not accept.
+$manifest = Join-Path (Join-Path (Join-Path $root 'dist') '.vite') 'manifest.json'
+if (-not (Test-Path $manifest)) {
 	throw "dist/.vite/manifest.json missing. Run 'npm run build' before packaging."
 }
 

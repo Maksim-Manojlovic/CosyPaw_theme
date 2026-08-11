@@ -17,8 +17,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 $catalog       = new \Theme\Catalog();
-$products      = $catalog->products();
-$featured      = $catalog->featured();
+
+/**
+ * Motifs whose product has been retired (trashed or unpublished) keep their row
+ * in the Catalog so past orders can still resolve their name, but they must not
+ * be offered for sale. Rows carry no 'available' key at all when WooCommerce is
+ * inactive or the motif is unmapped — the demo catalog stays fully browsable.
+ */
+$in_stock = static fn( array $row ): bool => (bool) ( $row['available'] ?? true );
+
+$products      = array_values( array_filter( $catalog->products(), $in_stock ) );
+$featured      = array_values( array_filter( $catalog->featured(), $in_stock ) );
+
+// Motifs can be priced individually in wp-admin, so the headline price is the
+// cheapest one actually on sale rather than a single catalog-wide figure.
+$from_price = $products
+	? (int) min( array_column( $products, 'price' ) )
+	: \Theme\Catalog::UNIT_PRICE;
 $packages      = $catalog->packages();
 $default_pkg   = $catalog->default_package();
 $tagline       = __( 'Ručno šiveni peškirići-ljubimci koji čine kupatilo mekanim, urednim i — preslatkim.', 'cosypaw' );
@@ -92,7 +107,7 @@ foreach ( $packages as $pkg ) {
 				</div>
 			</div>
 
-			<div class="hero__price-tag"><?php echo esc_html( sprintf( /* translators: %s: formatted price. */ __( 'od %s', 'cosypaw' ), \Theme\Catalog::format_price( \Theme\Catalog::UNIT_PRICE ) ) ); ?></div>
+			<div class="hero__price-tag"><?php echo esc_html( sprintf( /* translators: %s: formatted price. */ __( 'od %s', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></div>
 		</div>
 	</section>
 
@@ -314,7 +329,7 @@ foreach ( $packages as $pkg ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve motive', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted unit price. */ __( 'Svaki po %s pojedinačno — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( \Theme\Catalog::UNIT_PRICE ) ) ); ?></p>
+			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
 		<div class="motifs">
@@ -328,7 +343,7 @@ foreach ( $packages as $pkg ) {
 					<div class="motif-card__row">
 						<div>
 							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>
-							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( \Theme\Catalog::UNIT_PRICE ) ); ?></div>
+							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
 						</div>
 						<?php if ( ! empty( $p['product_id'] ) ) : ?>
 							<a
@@ -347,7 +362,7 @@ foreach ( $packages as $pkg ) {
 								class="motif-add"
 								data-cart-add
 								data-name="<?php echo esc_attr( $item_label ); ?>"
-								data-price="<?php echo esc_attr( (string) \Theme\Catalog::UNIT_PRICE ); ?>"
+								data-price="<?php echo esc_attr( (string) (int) $p['price'] ); ?>"
 							>
 								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
 								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>

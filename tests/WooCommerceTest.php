@@ -26,12 +26,15 @@ if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
 	define( 'HOUR_IN_SECONDS', 3600 );
 }
 
+require_once __DIR__ . '/stubs.php';
+
 // The runtime theme is NOT Composer-autoloaded (it uses spl_autoload_register in
 // functions.php). For tests we require the classes under test directly.
 require_once dirname( __DIR__ ) . '/inc/Setup.php';
 require_once dirname( __DIR__ ) . '/inc/Assets.php';
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 require_once dirname( __DIR__ ) . '/inc/ProductSeeder.php';
+require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';
 
@@ -57,6 +60,13 @@ final class WooCommerceTest extends TestCase {
 				// i18n stubs return the original string.
 				'__'                 => static fn( $text ) => $text,
 				'esc_html__'         => static fn( $text ) => $text,
+				// Per-product name overrides: default to the source language,
+				// where no override is ever consulted.
+				'determine_locale'   => 'sr_RS',
+				'get_post_meta'      => '',
+				// Mapped products default to on-sale and purchasable.
+				'get_post_status'    => 'publish',
+				'wc_get_product'     => static fn() => new \WC_Product(),
 			)
 		);
 	}
@@ -110,6 +120,87 @@ final class WooCommerceTest extends TestCase {
 		$this->assertArrayHasKey( 'add_to_cart_url', $out[0] );
 		// Unmapped row is untouched.
 		$this->assertArrayNotHasKey( 'product_id', $out[1] );
+	}
+
+	/**
+	 * A manual per-locale name set on the product overrides the Catalog's
+	 * gettext name everywhere the catalog is rendered.
+	 */
+	public function test_inject_product_ids_applies_manual_name_override(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( $post_id, $key ) => ( 42 === $post_id && '_cosypaw_name_en_US' === $key ) ? 'Gentle Giraffe' : ''
+		);
+
+		$wc   = new WooCommerce( 'cosypaw', new Catalog() );
+		$rows = array(
+			array( 'id' => 'zirafa', 'name' => 'Giraffe' ),
+			array( 'id' => 'koala', 'name' => 'Koala' ),
+		);
+		$out = $wc->inject_product_ids( $rows );
+
+		$this->assertSame( 'Gentle Giraffe', $out[0]['name'] );
+		// Unmapped row keeps its translated name.
+		$this->assertSame( 'Koala', $out[1]['name'] );
+	}
+
+	/**
+	 * A retired (trashed) product is flagged unavailable so the front page can
+	 * drop its tile, while the row itself stays in the catalog for order history.
+	 */
+	public function test_inject_product_ids_flags_retired_products_unavailable(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42, 'koala' => 43 ) );
+		Functions\when( 'get_post_status' )->alias( static fn( $id ) => 42 === $id ? 'trash' : 'publish' );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_product_ids(
+			array(
+				array( 'id' => 'zirafa', 'name' => 'Žirafa' ),
+				array( 'id' => 'koala', 'name' => 'Koala' ),
+			)
+		);
+
+		$this->assertFalse( $out[0]['available'] );
+		$this->assertTrue( $out[1]['available'] );
+		// The retired row is still present, name intact.
+		$this->assertSame( 'Žirafa', $out[0]['name'] );
+	}
+
+	/**
+	 * With no override stored, the name and price come from the WooCommerce
+	 * product — editing either in wp-admin has to reach the landing page.
+	 */
+	public function test_inject_product_ids_takes_name_and_price_from_the_product(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Zirafica', '990' ) );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_product_ids(
+			array( array( 'id' => 'zirafa', 'name' => 'Žirafa', 'price' => 790 ) )
+		);
+
+		$this->assertSame( 'Zirafica', $out[0]['name'] );
+		$this->assertSame( 990, $out[0]['price'] );
+	}
+
+	/**
+	 * A package's advertised per-towel price is recomputed from the price
+	 * WooCommerce actually charges, so the two can never drift apart.
+	 */
+	public function test_inject_package_ids_recomputes_per_unit_price(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'trio' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '1800' ) );
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->inject_package_ids(
+			array( array( 'id' => 'trio', 'name' => 'Trio paket', 'qty' => 3, 'price' => 1600, 'per' => 534 ) )
+		);
+
+		$this->assertSame( 1800, $out[0]['price'] );
+		$this->assertSame( 600, $out[0]['per'] );
 	}
 
 	/**

@@ -674,6 +674,13 @@ h1, h2, h3, h4 {
 	padding: 56px 0 30px;
 }
 
+/* The footer reuses .nav__brand, which sets color: var(--ink) for the header.
+   Against the footer's own var(--ink) background that is the same colour —
+   the wordmark was rendering at 1:1 and reading as a bare paw icon. */
+.site-footer .nav__brand {
+	color: #fff;
+}
+
 .footer-inner {
 	max-width: var(--maxw-content);
 	margin: 0 auto;
@@ -705,15 +712,30 @@ h1, h2, h3, h4 {
 .footer-links {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
 }
 
+/* Stacked links are the footer's main navigation on a phone, so they carry the
+   same 44px minimum as every other target. inline-flex keeps the hit area to
+   the text width rather than the whole column. */
 .footer-links a,
 .footer-col a.footer-ig {
 	color: rgba(255, 255, 255, 0.7);
 	text-decoration: none;
 	font-size: 15px;
 	font-weight: 600;
+}
+
+.footer-links a {
+	display: inline-flex;
+	align-items: center;
+	align-self: flex-start;
+	min-height: 44px;
+	transition: color 0.15s ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+	color: #fff;
 }
 
 .footer-ig {
@@ -752,6 +774,21 @@ h1, h2, h3, h4 {
 /* ---------- Chrome responsive ---------- */
 @media (max-width: 880px) {
 	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
+
+	/* 56px of top padding is a desktop rhythm; on a phone it just pushes the
+	   footer's own content further down an already long scroll. */
+	.site-footer {
+		padding-top: 36px;
+	}
+
+	/* space-between across a wrapped flex row leaves the two lines hugging
+	   opposite edges. Stack them explicitly instead. */
+	.footer-bottom {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		margin-top: 28px;
+	}
 
 	/* The nav collapses into a toggle-driven panel. Scoped to
 	   [data-nav-enhanced] so the links stay visible if SiteNav.js never runs —

@@ -974,6 +974,17 @@
 	color: #fff;
 }
 
+/* WooCommerce's add-to-cart script marks the button `.loading` for the length
+   of the AJAX call, and woocommerce.css is what used to dim it. That stylesheet
+   no longer loads on the front page (see Assets::trim_woocommerce_assets), so
+   the in-flight state is styled here instead — without it the button looks
+   inert for the whole round trip and invites a second click. */
+.motif-add.loading {
+	opacity: 0.55;
+	cursor: progress;
+	pointer-events: none;
+}
+
 /* Brief confirmation state after a successful WC add-to-cart. */
 .motif-add.is-added,
 .pkg-cta.is-added {

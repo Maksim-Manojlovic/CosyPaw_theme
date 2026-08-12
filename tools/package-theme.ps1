@@ -35,11 +35,13 @@ if (-not (Test-Path $manifest)) {
 if (Test-Path $build) { Remove-Item $build -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $stage | Out-Null
 
-# Top-level template + config files that ship.
+# Top-level template + config files that ship. '.htaccess' sets the cache
+# policy for the theme's own static assets, so it has to travel with them.
 $files = @(
 	'style.css','index.php','functions.php','theme.json','comments.php',
 	'header.php','footer.php','front-page.php','page.php','single.php',
-	'archive.php','home.php','search.php','404.php','searchform.php','sidebar.php'
+	'archive.php','home.php','search.php','404.php','searchform.php','sidebar.php',
+	'.htaccess'
 )
 foreach ($f in $files) {
 	$src = Join-Path $root $f

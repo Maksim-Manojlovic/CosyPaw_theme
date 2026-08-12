@@ -1,0 +1,44 @@
+# Cache policy for the theme's own static assets.
+#
+# The host sets a 7-day Expires for images and CSS and nothing at all for
+# JavaScript, so every theme script was being revalidated on each repeat visit.
+# Everything below is either content-hashed by Vite (dist/) or versioned by the
+# ?ver= query the enqueue adds, so a year is safe: a changed file changes its
+# URL, and the browser never has to ask.
+#
+# This file lives in the theme root so it ships with the automated theme deploy
+# and covers wp-content/themes/cosypaw/** only. Core and plugin assets — jQuery
+# and the WooCommerce front-end scripts, which are the other "no cache header"
+# offenders — need the same block in the document-root .htaccess, which is
+# edited by hand in cPanel.
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+
+	ExpiresByType text/css                  "access plus 1 year"
+	ExpiresByType text/javascript           "access plus 1 year"
+	ExpiresByType application/javascript    "access plus 1 year"
+
+	ExpiresByType image/avif                "access plus 1 year"
+	ExpiresByType image/webp                "access plus 1 year"
+	ExpiresByType image/png                 "access plus 1 year"
+	ExpiresByType image/jpeg                "access plus 1 year"
+	ExpiresByType image/svg+xml             "access plus 1 year"
+
+	ExpiresByType font/woff2                "access plus 1 year"
+	ExpiresByType application/font-woff2    "access plus 1 year"
+</IfModule>
+
+# mod_expires emits its own Cache-Control, but not `immutable` — which is what
+# tells the browser to skip revalidation even on an explicit reload.
+<IfModule mod_headers.c>
+	<FilesMatch "\.(css|js|mjs|avif|webp|png|jpe?g|gif|svg|woff2?)$">
+		Header set Cache-Control "public, max-age=31536000, immutable"
+	</FilesMatch>
+</IfModule>
+
+# Some hosts leave woff2 off the compressible list; it is already compressed,
+# but AVIF and the rest of the text types above genuinely benefit.
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/css text/javascript application/javascript image/svg+xml
+</IfModule>

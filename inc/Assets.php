@@ -11,6 +11,13 @@
  *   - assets/css/woocommerce.css shop/cart/checkout/account — WC pages only
  *   - assets/js/dev.js           dev-only aggregate (imports all of the above)
  *
+ * The brand webfonts are no longer enqueued here — they are self-hosted and
+ * declared in assets/css/fonts.css, which main.css imports, so they ride along
+ * with the app entry instead of costing a cross-origin request of their own.
+ *
+ * This class also owns the front page's critical path: it preloads the LCP
+ * image and pulls WooCommerce's stylesheets and jQuery out of the way.
+ *
  * @package CosyPaw
  */
 
@@ -37,6 +44,67 @@ final class Assets {
 	private const ENTRY_CONTENT = 'assets/css/content.css';
 	private const ENTRY_WC      = 'assets/css/woocommerce.css';
 	private const ENTRY_DEV     = 'assets/js/dev.js';
+
+	/**
+	 * `sizes` for the hero carousel slides, shared with front-page.php.
+	 *
+	 * @var string
+	 */
+	public const HERO_SIZES = '(max-width: 440px) calc(100vw - 44px), 348px';
+
+	/**
+	 * `sizes` for the motif grid cards, shared with front-page.php.
+	 *
+	 * @var string
+	 */
+	public const GRID_SIZES = '(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px';
+
+	/**
+	 * WooCommerce stylesheets that do nothing on the front page.
+	 *
+	 * The landing page's "Kupi" buttons are AJAX add-to-cart links, so the
+	 * WooCommerce *scripts* stay; it is only these four stylesheets that are
+	 * dead weight, and they cost four render-blocking requests before first
+	 * paint. The theme styles every WooCommerce-flavoured element the landing
+	 * page shows, down to `.added_to_cart` in landing.css.
+	 *
+	 * @var string[]
+	 */
+	private const WC_STYLE_HANDLES = array(
+		'woocommerce-general',
+		'woocommerce-layout',
+		'woocommerce-smallscreen',
+		'wc-blocks-style',
+	);
+
+	/**
+	 * Script handles to push out of the critical path with `defer`.
+	 *
+	 * jQuery is printed in the head and blocks the parser for ~1s on a throttled
+	 * mobile connection; nothing on the front end needs it before DOM ready.
+	 * WordPress only honours a defer strategy when every dependent script is
+	 * also deferrable, so jQuery's WooCommerce dependents are listed too — miss
+	 * one and core silently keeps the whole chain blocking. Handles that are not
+	 * registered on the current view are skipped.
+	 *
+	 * @var string[]
+	 */
+	private const DEFER_HANDLES = array(
+		'jquery-core',
+		'jquery-migrate',
+		'jquery',
+		'wc-blockui',
+		'wc-jquery-blockui',
+		'wc-js-cookie',
+		'woocommerce',
+		'wc-add-to-cart',
+		'wc-cart-fragments',
+		'sourcebuster-js',
+		'wc-order-attribution',
+		// Site Kit hangs its WooCommerce event provider off the same chain; left
+		// blocking it would drag every handle above it back to blocking too.
+		'googlesitekit-events-provider-woocommerce',
+	);
 
 	/**
 	 * Theme text domain.
@@ -78,43 +146,56 @@ final class Assets {
 		$this->theme_dir   = untrailingslashit( $theme_dir );
 		$this->theme_uri   = untrailingslashit( $theme_uri );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_fonts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
+		// Priority 99: WooCommerce registers its own front-end assets on the
+		// default priority, so its handles only exist to trim once it has run.
+		add_action( 'wp_enqueue_scripts', array( $this, 'trim_woocommerce_assets' ), 99 );
+		add_action( 'wp_head', array( $this, 'preload_lcp_image' ), 2 );
 		add_filter( 'script_loader_tag', array( $this, 'maybe_module_type' ), 10, 3 );
 	}
 
 	/**
-	 * Enqueue the brand web fonts (Baloo 2 + Nunito) from Google Fonts.
+	 * Preload the first hero slide — the front page's LCP element.
+	 *
+	 * Without this the browser cannot start the fetch until it has parsed the
+	 * stylesheets ahead of the markup, which on mobile costs most of a second.
+	 * The three attributes below have to stay character-identical to the `<img>`
+	 * in front-page.php, or the preload picks a different candidate and the
+	 * page downloads the motif twice.
 	 *
 	 * @return void
 	 */
-	public function enqueue_fonts(): void {
-		wp_enqueue_style(
-			'cosypaw-fonts',
-			'https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap&subset=latin-ext',
-			array(),
-			null
+	public function preload_lcp_image(): void {
+		if ( ! is_front_page() ) {
+			return;
+		}
+
+		$featured = ( new Catalog() )->featured();
+		if ( empty( $featured[0] ) ) {
+			return;
+		}
+
+		printf(
+			'<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s" imagesizes="%3$s" fetchpriority="high">' . "\n",
+			esc_url( $featured[0]['image_md'] ),
+			esc_attr( self::motif_srcset( $featured[0] ) ),
+			esc_attr( self::HERO_SIZES )
 		);
 	}
 
 	/**
-	 * Preconnect to the Google Fonts hosts.
+	 * The responsive candidate list shared by the hero and the motif grid.
 	 *
-	 * @param string[] $urls          URLs to resource-hint.
-	 * @param string   $relation_type The relation type.
-	 * @return string[]
+	 * Stops at 900w on purpose. Neither placement is ever wider than ~370 CSS
+	 * px, so the 1086w original could only ever be picked by a 3x phone, where
+	 * it bought nothing and cost 90 KB — that single mis-pick was the front
+	 * page's largest transfer.
+	 *
+	 * @param array{image_md:string,image_lg:string} $motif Motif record from Catalog.
+	 * @return string
 	 */
-	public function resource_hints( array $urls, string $relation_type ): array {
-		if ( 'preconnect' === $relation_type ) {
-			$urls[] = 'https://fonts.googleapis.com';
-			$urls[] = array(
-				'href'        => 'https://fonts.gstatic.com',
-				'crossorigin' => 'anonymous',
-			);
-		}
-
-		return $urls;
+	public static function motif_srcset( array $motif ): string {
+		return $motif['image_md'] . ' 600w, ' . $motif['image_lg'] . ' 900w';
 	}
 
 	/**
@@ -139,6 +220,41 @@ final class Assets {
 			$this->enqueue_entry( 'cosypaw-wc', self::ENTRY_WC, $app_styles );
 		} else {
 			$this->enqueue_entry( 'cosypaw-content', self::ENTRY_CONTENT, $app_styles );
+		}
+	}
+
+	/**
+	 * Take WooCommerce's front-end assets off the critical path.
+	 *
+	 * Two separate moves, both aimed at the ~2s of render-blocking requests the
+	 * plugin adds to a page that only wants an add-to-cart button:
+	 *
+	 * 1. Drop the four plugin stylesheets on the front page. Deliberately not
+	 *    every non-shop view: `is_wc_page()` cannot see a `[products]`
+	 *    shortcode or a WooCommerce block dropped into an ordinary page, and
+	 *    those would lose their styling. The front page is a hand-built
+	 *    template, so there is nothing there to break.
+	 * 2. Defer jQuery and the WooCommerce scripts everywhere. They are all
+	 *    `jQuery(function(){…})` consumers, so running after parse is not a
+	 *    behaviour change — but it does mean nothing in the head waits on them.
+	 *
+	 * @return void
+	 */
+	public function trim_woocommerce_assets(): void {
+		if ( is_admin() || $this->is_dev_server() ) {
+			return;
+		}
+
+		if ( is_front_page() ) {
+			foreach ( self::WC_STYLE_HANDLES as $handle ) {
+				wp_dequeue_style( $handle );
+			}
+		}
+
+		foreach ( self::DEFER_HANDLES as $handle ) {
+			if ( wp_script_is( $handle, 'registered' ) ) {
+				wp_script_add_data( $handle, 'strategy', 'defer' );
+			}
 		}
 	}
 

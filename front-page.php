@@ -108,8 +108,8 @@ foreach ( $packages as $pkg ) {
 								<img
 									class="hero__slide"
 									src="<?php echo esc_url( $f['image_md'] ); ?>"
-									srcset="<?php echo esc_attr( $f['image_md'] . ' 600w, ' . $f['image'] . ' 1086w' ); ?>"
-									sizes="(max-width: 440px) calc(100vw - 44px), 348px"
+									srcset="<?php echo esc_attr( \Theme\Assets::motif_srcset( $f ) ); ?>"
+									sizes="<?php echo esc_attr( \Theme\Assets::HERO_SIZES ); ?>"
 									width="600"
 									height="800"
 									alt="<?php echo esc_attr( $f['name'] ); ?>"
@@ -176,16 +176,16 @@ foreach ( $packages as $pkg ) {
 				<div class="motif-card">
 					<?php
 					// alt="" — the motif name is printed as text directly below.
-					// srcset omits image_sm on purpose: it is a 1:1 crop while
-					// image_md and image are 3:4, and srcset candidates have to be
-					// the same picture at different sizes or the crop shifts with
-					// the viewport.
+					// The srcset omits image_sm on purpose: it is a 1:1 crop while
+					// the others are 3:4, and srcset candidates have to be the same
+					// picture at different sizes or the crop shifts with the
+					// viewport.
 					?>
 					<img
 						class="motif-card__img"
 						src="<?php echo esc_url( $p['image_md'] ); ?>"
-						srcset="<?php echo esc_attr( $p['image_md'] . ' 600w, ' . $p['image'] . ' 1086w' ); ?>"
-						sizes="(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px"
+						srcset="<?php echo esc_attr( \Theme\Assets::motif_srcset( $p ) ); ?>"
+						sizes="<?php echo esc_attr( \Theme\Assets::GRID_SIZES ); ?>"
 						width="600"
 						height="800"
 						alt=""
@@ -235,11 +235,16 @@ foreach ( $packages as $pkg ) {
 				<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
 			</div>
 
+			<?php
+			// Unlike the hero and the grid, this one really is shown wide
+			// (547 CSS px), so the 1086w original stays a candidate.
+			$pkg_banner = get_template_directory_uri() . '/assets/motifs/pingvin';
+			?>
 			<div class="pkg-banner">
 				<img
 					class="pkg-banner__img"
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/motifs/pingvin.avif' ); ?>"
-					srcset="<?php echo esc_attr( get_template_directory_uri() . '/assets/motifs/pingvin-md.avif 600w, ' . get_template_directory_uri() . '/assets/motifs/pingvin.avif 1086w' ); ?>"
+					src="<?php echo esc_url( $pkg_banner . '-md.avif' ); ?>"
+					srcset="<?php echo esc_attr( "{$pkg_banner}-md.avif 600w, {$pkg_banner}-lg.avif 900w, {$pkg_banner}.avif 1086w" ); ?>"
 					sizes="(max-width: 880px) calc(100vw - 44px), 547px"
 					width="1086"
 					height="1448"
@@ -403,16 +408,20 @@ foreach ( $packages as $pkg ) {
 		<div class="lifestyle">
 			<?php
 			$lifestyle = array(
-				array( 'file' => 'lifestyle1.avif', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
-				array( 'file' => 'lifestyle2.avif', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
+				array( 'file' => 'lifestyle1', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
+				array( 'file' => 'lifestyle2', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
 			);
 			$assets_uri = get_template_directory_uri() . '/assets/';
 			foreach ( $lifestyle as $shot ) :
+				// These carried a `sizes` but no `srcset`, so every visitor got
+				// the 1086w original for a slot at most 547 CSS px wide.
+				$shot_uri = $assets_uri . $shot['file'];
 				?>
 				<figure class="lifestyle-card">
 					<img
 						class="lifestyle-card__img"
-						src="<?php echo esc_url( $assets_uri . $shot['file'] ); ?>"
+						src="<?php echo esc_url( $shot_uri . '-md.avif' ); ?>"
+						srcset="<?php echo esc_attr( "{$shot_uri}-md.avif 600w, {$shot_uri}-lg.avif 900w, {$shot_uri}.avif 1086w" ); ?>"
 						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
 						width="1086"
 						height="1358"

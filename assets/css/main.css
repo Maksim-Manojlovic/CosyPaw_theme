@@ -12,8 +12,13 @@
  * pairing is verified at >= 4.5:1 (WCAG 2.1 AA); the ratios are noted per token.
  * The rose it replaces failed AA outright — white on #ec7e99 was 2.62:1.
  *
- * Fonts: "Baloo 2" (headings), "Nunito" (body) — enqueued via inc/Assets.php.
+ * Fonts: "Baloo 2" (headings), "Nunito" (body), self-hosted. They used to come
+ * from fonts.googleapis.com, which put a render-blocking cross-origin
+ * stylesheet plus a second TLS handshake in front of first paint; regenerate
+ * assets/css/fonts.css with `node tools/build-fonts.mjs`.
  */
+
+@import "./fonts.css";
 
 :root {
 	/* --- Raw brand tokens. ---
@@ -657,6 +662,12 @@ h1, h2, h3, h4 {
 	overflow: hidden;
 	position: absolute !important;
 	word-wrap: normal !important;
+	/* Clipped, not display:none, so the browser still lays this text out and
+	   still downloads whatever font subset it needs. The language switcher's
+	   hidden "Русский" label was pulling Nunito's 20 KB Cyrillic cut onto every
+	   Serbian and English page for six characters nobody can see. Nothing here
+	   is ever looked at, so the system stack is free. */
+	font-family: system-ui, sans-serif;
 }
 
 /* ---------- Footer ---------- */

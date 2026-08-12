@@ -11,6 +11,7 @@
 		"package": "vite build && powershell -ExecutionPolicy Bypass -File tools/package-theme.ps1"
 	},
 	"devDependencies": {
+		"sharp": "^0.35.3",
 		"vite": "^5.4.0"
 	}
 }

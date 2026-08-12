@@ -150,11 +150,7 @@ final class Assets {
 		// Priority 99: WooCommerce registers its own front-end assets on the
 		// default priority, so its handles only exist to trim once it has run.
 		add_action( 'wp_enqueue_scripts', array( $this, 'trim_woocommerce_assets' ), 99 );
-		// The stylesheets get their own, later pass: WooCommerce Blocks enqueues
-		// wc-blocks-style after priority 99, so dequeuing it alongside the rest
-		// silently missed it. `wp_print_styles` fires immediately before the
-		// queue is written out, which is the last point that still works.
-		add_action( 'wp_print_styles', array( $this, 'trim_woocommerce_styles' ) );
+		add_filter( 'style_loader_tag', array( $this, 'suppress_woocommerce_styles' ), 10, 2 );
 		add_action( 'wp_head', array( $this, 'preload_lcp_image' ), 2 );
 		add_filter( 'script_loader_tag', array( $this, 'maybe_module_type' ), 10, 3 );
 	}
@@ -251,23 +247,30 @@ final class Assets {
 	}
 
 	/**
-	 * Drop WooCommerce's stylesheets from the front page.
+	 * Drop WooCommerce's stylesheet tags from the front page.
+	 *
+	 * Suppressing the tag rather than dequeuing the handle, because dequeuing
+	 * does not reliably hold: `wc-blocks-style` survived it at every hook from
+	 * `wp_enqueue_scripts` priority 99 through `wp_print_styles`. WooCommerce
+	 * re-enqueues that handle from `wp_head` and hangs `wp_add_inline_style` and
+	 * several block dependencies off it, so it keeps finding its way back into
+	 * the queue. Filtering the printed tag is downstream of all of that.
 	 *
 	 * Deliberately the front page and nowhere else: `is_wc_page()` cannot see a
 	 * `[products]` shortcode or a WooCommerce block dropped into an ordinary
 	 * page, and those would lose their styling. The front page is a hand-built
 	 * template, so there is nothing there to break.
 	 *
-	 * @return void
+	 * @param string $tag    The full `<link>` tag.
+	 * @param string $handle The stylesheet handle.
+	 * @return string The tag, or an empty string to drop it.
 	 */
-	public function trim_woocommerce_styles(): void {
+	public function suppress_woocommerce_styles( string $tag, string $handle ): string {
 		if ( is_admin() || $this->is_dev_server() || ! is_front_page() ) {
-			return;
+			return $tag;
 		}
 
-		foreach ( self::WC_STYLE_HANDLES as $handle ) {
-			wp_dequeue_style( $handle );
-		}
+		return in_array( $handle, self::WC_STYLE_HANDLES, true ) ? '' : $tag;
 	}
 
 	/**

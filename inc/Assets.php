@@ -150,6 +150,11 @@ final class Assets {
 		// Priority 99: WooCommerce registers its own front-end assets on the
 		// default priority, so its handles only exist to trim once it has run.
 		add_action( 'wp_enqueue_scripts', array( $this, 'trim_woocommerce_assets' ), 99 );
+		// The stylesheets get their own, later pass: WooCommerce Blocks enqueues
+		// wc-blocks-style after priority 99, so dequeuing it alongside the rest
+		// silently missed it. `wp_print_styles` fires immediately before the
+		// queue is written out, which is the last point that still works.
+		add_action( 'wp_print_styles', array( $this, 'trim_woocommerce_styles' ) );
 		add_action( 'wp_head', array( $this, 'preload_lcp_image' ), 2 );
 		add_filter( 'script_loader_tag', array( $this, 'maybe_module_type' ), 10, 3 );
 	}
@@ -226,17 +231,10 @@ final class Assets {
 	/**
 	 * Take WooCommerce's front-end assets off the critical path.
 	 *
-	 * Two separate moves, both aimed at the ~2s of render-blocking requests the
-	 * plugin adds to a page that only wants an add-to-cart button:
-	 *
-	 * 1. Drop the four plugin stylesheets on the front page. Deliberately not
-	 *    every non-shop view: `is_wc_page()` cannot see a `[products]`
-	 *    shortcode or a WooCommerce block dropped into an ordinary page, and
-	 *    those would lose their styling. The front page is a hand-built
-	 *    template, so there is nothing there to break.
-	 * 2. Defer jQuery and the WooCommerce scripts everywhere. They are all
-	 *    `jQuery(function(){…})` consumers, so running after parse is not a
-	 *    behaviour change — but it does mean nothing in the head waits on them.
+	 * Defers jQuery and the WooCommerce scripts everywhere. They are all
+	 * `jQuery(function(){…})` consumers, so running after parse is not a
+	 * behaviour change — but it does mean nothing in the head waits on them.
+	 * The stylesheets are handled separately in trim_woocommerce_styles().
 	 *
 	 * @return void
 	 */
@@ -245,16 +243,30 @@ final class Assets {
 			return;
 		}
 
-		if ( is_front_page() ) {
-			foreach ( self::WC_STYLE_HANDLES as $handle ) {
-				wp_dequeue_style( $handle );
-			}
-		}
-
 		foreach ( self::DEFER_HANDLES as $handle ) {
 			if ( wp_script_is( $handle, 'registered' ) ) {
 				wp_script_add_data( $handle, 'strategy', 'defer' );
 			}
+		}
+	}
+
+	/**
+	 * Drop WooCommerce's stylesheets from the front page.
+	 *
+	 * Deliberately the front page and nowhere else: `is_wc_page()` cannot see a
+	 * `[products]` shortcode or a WooCommerce block dropped into an ordinary
+	 * page, and those would lose their styling. The front page is a hand-built
+	 * template, so there is nothing there to break.
+	 *
+	 * @return void
+	 */
+	public function trim_woocommerce_styles(): void {
+		if ( is_admin() || $this->is_dev_server() || ! is_front_page() ) {
+			return;
+		}
+
+		foreach ( self::WC_STYLE_HANDLES as $handle ) {
+			wp_dequeue_style( $handle );
 		}
 	}
 

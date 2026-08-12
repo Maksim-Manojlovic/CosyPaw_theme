@@ -138,6 +138,13 @@
 	box-shadow: var(--shadow-lg);
 	transform: rotate(-2deg);
 	animation: floaty 7s ease-in-out infinite;
+	/* floaty both translates and rotates, so it changes this card's bounding
+	   box continuously. Promoting it to its own compositor layer keeps that
+	   movement off the main thread, where Chrome would otherwise be free to
+	   count it toward CLS — the same reason .vertical-carousel__track carries
+	   this. The card is the largest element in the hero, so a false positive
+	   here is expensive. */
+	will-change: transform;
 }
 
 .hero__card-inner {

@@ -160,6 +160,8 @@ final class Assets {
 		add_action( 'wp_enqueue_scripts', array( $this, 'trim_woocommerce_assets' ), 99 );
 		add_filter( 'style_loader_tag', array( $this, 'suppress_woocommerce_styles' ), 10, 2 );
 		add_action( 'wp_head', array( $this, 'preload_lcp_image' ), 2 );
+		// After the image on purpose: the LCP element should win the connection.
+		add_action( 'wp_head', array( $this, 'preload_fonts' ), 3 );
 		add_filter( 'script_loader_tag', array( $this, 'maybe_module_type' ), 10, 3 );
 	}
 
@@ -190,6 +192,52 @@ final class Assets {
 			esc_attr( self::motif_srcset( $featured[0] ) ),
 			esc_attr( self::HERO_SIZES )
 		);
+	}
+
+	/**
+	 * Preload the Latin webfont cuts.
+	 *
+	 * The faces are declared `font-display: optional`, which gives the browser
+	 * roughly 100ms to produce them before it commits to the fallback for the
+	 * rest of the page load. Discovered the normal way — by parsing the app
+	 * stylesheet — they miss that window on a slow connection and the brand face
+	 * never appears on a first visit. Preloading starts them with the document
+	 * instead, which is what makes `optional` a reasonable default rather than a
+	 * coin flip.
+	 *
+	 * Only the Latin and Latin-Extended cuts: those cover Serbian and English.
+	 * Cyrillic loads on demand for the Russian locale, where the block is a
+	 * paragraph of body text rather than the first thing painted.
+	 *
+	 * @return void
+	 */
+	public function preload_fonts(): void {
+		if ( $this->is_dev_server() ) {
+			return;
+		}
+
+		$cuts = array(
+			'assets/fonts/nunito-latin.woff2',
+			'assets/fonts/nunito-latin-ext.woff2',
+			'assets/fonts/baloo2-latin.woff2',
+			'assets/fonts/baloo2-latin-ext.woff2',
+		);
+
+		$manifest = $this->read_manifest();
+		if ( null === $manifest ) {
+			return;
+		}
+
+		foreach ( $cuts as $cut ) {
+			if ( empty( $manifest[ $cut ]['file'] ) ) {
+				continue;
+			}
+
+			printf(
+				'<link rel="preload" as="font" type="font/woff2" href="%s" crossorigin>' . "\n",
+				esc_url( $this->theme_uri . '/dist/' . ltrim( (string) $manifest[ $cut ]['file'], '/' ) )
+			);
+		}
 	}
 
 	/**

@@ -131,20 +131,28 @@ for ( const f of FAMILIES ) {
 			`\tfont-family: "${ f.family }";\n` +
 			`\tfont-style: normal;\n` +
 			`\tfont-weight: ${ f.weights };\n` +
-			`\tfont-display: swap;\n` +
+			`\tfont-display: optional;\n` +
 			`\tsrc: url("../fonts/${ name }") format("woff2");\n` +
 			`\tunicode-range: ${ face.unicodeRange };\n` +
 			`}`
 		);
 	}
 
-	// Metric-matched fallback. `font-display: swap` means text paints in the
-	// fallback first and reflows when the real face lands, and these two
-	// families are far taller than Arial per em — Nunito's line box is 136% of
-	// the font size against Arial's 115%, Baloo 2's is 160%. Every paragraph
-	// and heading therefore grew on swap, which is a layout shift on a page
-	// made almost entirely of text. Overriding the fallback's metrics to match
-	// makes the swap invisible: same line box before and after.
+	// Metric-matched fallback, paired with `font-display: optional` above.
+	//
+	// These families are far taller than Arial per em — Nunito's line box is
+	// 136% of the font size against Arial's 115%, Baloo 2's is 160% — so under
+	// `swap` every paragraph and heading grew when the real face landed, moving
+	// everything below it. Matching the metrics shrinks that, but cannot remove
+	// it: the overrides match *average* advance width, and a few pixels of
+	// per-glyph difference is still enough to change where a heading wraps,
+	// which moves a whole line's worth of content.
+	//
+	// `optional` closes the gap. The browser gives the font ~100ms and, if it
+	// has not arrived, keeps the fallback for the rest of that page load rather
+	// than swapping mid-view. Assets.php preloads the latin cuts so that window
+	// is usually met; when it is not, the metric-matched fallback means the
+	// page is correctly proportioned anyway, just in the system face.
 	const ref = metrics( FALLBACK_REF );
 	const own = metrics( join( OUT_FONTS, `${ f.slug }-latin.woff2` ) );
 	const sizeAdjust = own.avgWidth / ref.avgWidth;

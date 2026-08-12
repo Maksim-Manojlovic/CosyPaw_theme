@@ -48,9 +48,17 @@ final class Assets {
 	/**
 	 * `sizes` for the hero carousel slides, shared with front-page.php.
 	 *
+	 * The slide is `min(380px, 100vw - 44px) - 32px`: .hero contributes 22px of
+	 * side padding, .hero__card another 16px, and the card caps at 380px. The
+	 * breakpoint is where those meet — 100vw - 44px = 380px, so 424px.
+	 *
+	 * This used to claim `calc(100vw - 44px)`, which forgot the card padding and
+	 * overstated the slide by 32px. That was enough to push a 412px phone over
+	 * the 600w candidate and onto the 900w one for the LCP image.
+	 *
 	 * @var string
 	 */
-	public const HERO_SIZES = '(max-width: 440px) calc(100vw - 44px), 348px';
+	public const HERO_SIZES = '(max-width: 424px) calc(100vw - 76px), 348px';
 
 	/**
 	 * `sizes` for the motif grid cards, shared with front-page.php.

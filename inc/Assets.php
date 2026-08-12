@@ -249,12 +249,13 @@ final class Assets {
 	/**
 	 * Drop WooCommerce's stylesheet tags from the front page.
 	 *
-	 * Suppressing the tag rather than dequeuing the handle, because dequeuing
-	 * does not reliably hold: `wc-blocks-style` survived it at every hook from
-	 * `wp_enqueue_scripts` priority 99 through `wp_print_styles`. WooCommerce
-	 * re-enqueues that handle from `wp_head` and hangs `wp_add_inline_style` and
-	 * several block dependencies off it, so it keeps finding its way back into
-	 * the queue. Filtering the printed tag is downstream of all of that.
+	 * Suppressing the printed tag rather than dequeuing the handle. A dequeue
+	 * does work, but only from a late enough hook: `wc-blocks-style` is
+	 * re-enqueued from `wp_head` by WooCommerce's notices service, carries
+	 * `wp_add_inline_style` content, and is declared a dependency by several
+	 * block types, so anything at `wp_enqueue_scripts` priority 99 misses it and
+	 * only `wp_print_styles` catches it. Filtering the tag is downstream of all
+	 * of that and does not depend on winning an ordering race.
 	 *
 	 * Deliberately the front page and nowhere else: `is_wc_page()` cannot see a
 	 * `[products]` shortcode or a WooCommerce block dropped into an ordinary

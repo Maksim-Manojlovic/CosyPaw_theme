@@ -30,6 +30,37 @@ const boot = () => {
 		}
 	});
 
+	// Motif grid "show all" gate. The grid ships collapsed and the CSS only
+	// acts on the attribute below 880px, so this is a no-op on desktop — the
+	// button is display:none there and never receives a click.
+	const motifGrid = document.querySelector('[data-motif-grid]');
+	const motifToggle = document.querySelector('[data-motifs-toggle]');
+	if (motifGrid && motifToggle) {
+		const motifLabel =
+			motifToggle.querySelector('[data-motifs-toggle-label]') || motifToggle;
+
+		motifToggle.addEventListener('click', () => {
+			const wasCollapsed = motifGrid.hasAttribute('data-collapsed');
+
+			if (wasCollapsed) {
+				motifGrid.removeAttribute('data-collapsed');
+			} else {
+				motifGrid.setAttribute('data-collapsed', '');
+			}
+
+			motifToggle.setAttribute('aria-expanded', String(wasCollapsed));
+			motifLabel.textContent = wasCollapsed
+				? motifToggle.dataset.labelLess
+				: motifToggle.dataset.labelMore;
+
+			// Collapsing removes fourteen cards from above the button, which
+			// otherwise leaves the viewport parked in the packages section.
+			if (!wasCollapsed) {
+				motifToggle.scrollIntoView({ block: 'center' });
+			}
+		});
+	}
+
 	// Cart drawer — booted site-wide by app.js.
 	const cart = window.CosyPawCart || null;
 

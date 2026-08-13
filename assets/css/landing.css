@@ -948,6 +948,43 @@
 	gap: 10px;
 }
 
+/* Shown only where the grid collapses (see the responsive block). Full width
+   of the section so it reads as the end of the grid rather than as one more
+   card's worth of chrome. */
+.motifs-toggle {
+	display: none;
+	width: 100%;
+	margin-top: 18px;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	padding: 12px 20px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-pill);
+	background: #fff;
+	color: var(--claydk);
+	font-family: inherit;
+	font-weight: 800;
+	font-size: 15px;
+	box-shadow: var(--shadow-sm);
+}
+
+.motifs-toggle__chevron {
+	transition: transform 0.2s ease;
+}
+
+.motifs-toggle[aria-expanded="true"] .motifs-toggle__chevron {
+	transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.motifs-toggle__chevron {
+		transition: none;
+	}
+}
+
 .motif-name {
 	font-family: var(--font-heading);
 	font-weight: 700;
@@ -1182,6 +1219,20 @@
 		margin-inline: auto;
 	}
 	.motifs { grid-template-columns: 1fr 1fr; }
+
+	/* Twenty cards is about ten screens of scrolling on a phone, and the
+	   packages, the reviews and the FAQ all sit behind them. Six is three
+	   rows — enough to show what the range looks like — and the rest are one
+	   tap away. They stay in the markup, so search engines still see the
+	   catalogue and the lazy images below the cut are never fetched. */
+	.motifs[data-collapsed] .motif-card:nth-child(n+7) {
+		display: none;
+	}
+
+	.motifs-toggle {
+		display: flex;
+	}
+
 	.testimonials { grid-template-columns: 1fr; }
 	.lifestyle { grid-template-columns: 1fr; }
 	.pkg-banner { grid-template-columns: 1fr; }
@@ -1204,6 +1255,45 @@
 		margin-top: 22px;
 		gap: 14px;
 	}
-	.benefits, .motifs { grid-template-columns: 1fr; }
+	.benefits { grid-template-columns: 1fr; }
+
+	/* The grid used to drop to a single column here, which put one ~470px card
+	   on screen at a time. Two columns of a compact card is four motifs per
+	   screen instead of one, and at ~150px a motif still reads — they are all
+	   one centred subject on a plain towel. */
+	.motifs {
+		gap: 14px;
+	}
+
+	.motif-card {
+		padding: 10px;
+	}
+
+	/* Square rather than 1:1.18. The catalogue ships a 1:1 crop for exactly
+	   this, and the taller ratio only earns its height at desktop width. */
+	.motif-card__img {
+		aspect-ratio: 1;
+		border-radius: 14px;
+	}
+
+	/* Name and button side by side leaves each about 70px at this width, and
+	   "Čokoladni keks" does not fit in 70px. Stacked, the button also gets the
+	   full card width as a tap target. */
+	.motif-card__row {
+		flex-direction: column;
+		align-items: stretch;
+		padding: 10px 4px 2px;
+		gap: 8px;
+	}
+
+	.motif-name { font-size: 15px; }
+	.motif-price { font-size: 13px; }
+
+	.motif-add {
+		justify-content: center;
+		font-size: 14px;
+		padding: 10px 12px;
+	}
+
 	.section__title { font-size: 30px; }
 }

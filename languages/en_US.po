@@ -137,6 +137,12 @@ msgstr "Cart"
 msgid "Kupi"
 msgstr "Buy"
 
+msgid "Prikaži sve motive (%d)"
+msgstr "Show all designs (%d)"
+
+msgid "Prikaži manje"
+msgstr "Show less"
+
 msgid "Dodato u korpu"
 msgstr "Added to cart"
 

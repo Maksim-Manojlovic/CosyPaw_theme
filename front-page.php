@@ -167,7 +167,14 @@ foreach ( $packages as $pkg ) {
 			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
-		<div class="motifs">
+		<?php
+		// data-collapsed is set here rather than by script so the grid never
+		// paints its full height and then jumps. Below 880px the CSS hides
+		// everything past the sixth card; above it the attribute matches
+		// nothing. The <noscript> block after the grid undoes the collapse
+		// where the toggle cannot run.
+		?>
+		<div class="motifs" id="motifs-grid" data-motif-grid data-collapsed>
 			<?php
 			foreach ( $products as $p ) :
 				/* translators: %s: motif name. */
@@ -224,6 +231,36 @@ foreach ( $packages as $pkg ) {
 				</div>
 			<?php endforeach; ?>
 		</div>
+
+		<?php
+		/* translators: %d: total number of motifs. */
+		$cosypaw_more_label = sprintf( __( 'Prikaži sve motive (%d)', 'cosypaw' ), count( $products ) );
+		$cosypaw_less_label = __( 'Prikaži manje', 'cosypaw' );
+		?>
+		<button
+			type="button"
+			class="motifs-toggle"
+			data-motifs-toggle
+			aria-controls="motifs-grid"
+			aria-expanded="false"
+			data-label-more="<?php echo esc_attr( $cosypaw_more_label ); ?>"
+			data-label-less="<?php echo esc_attr( $cosypaw_less_label ); ?>"
+		>
+			<span data-motifs-toggle-label><?php echo esc_html( $cosypaw_more_label ); ?></span>
+			<svg class="motifs-toggle__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+		</button>
+
+		<?php
+		// Without script the button cannot expand anything, so the collapse has
+		// to lift and the control has to go. Specificity matches the rule in
+		// landing.css and this sits later in the document, so it wins.
+		?>
+		<noscript>
+			<style>
+				.motifs[data-collapsed] .motif-card:nth-child(n+7) { display: block; }
+				.motifs-toggle { display: none; }
+			</style>
+		</noscript>
 	</section>
 
 	<!-- PAKETI -->

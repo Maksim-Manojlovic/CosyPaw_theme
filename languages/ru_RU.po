@@ -137,6 +137,12 @@ msgstr "Корзина"
 msgid "Kupi"
 msgstr "Купить"
 
+msgid "Prikaži sve motive (%d)"
+msgstr "Показать все мотивы (%d)"
+
+msgid "Prikaži manje"
+msgstr "Свернуть"
+
 msgid "Dodato u korpu"
 msgstr "Добавлено в корзину"
 

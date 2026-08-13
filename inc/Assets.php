@@ -63,9 +63,14 @@ final class Assets {
 	/**
 	 * `sizes` for the motif grid cards, shared with front-page.php.
 	 *
+	 * The grid is two columns from 880px down — it no longer drops to one at
+	 * 560px — so the phone slot is half the viewport less the section padding
+	 * (44px), the column gap (14px below 560px, 22px above) and the card's own
+	 * padding (20px below 560px, 28px above).
+	 *
 	 * @var string
 	 */
-	public const GRID_SIZES = '(max-width: 560px) calc(100vw - 72px), (max-width: 880px) calc(50vw - 47px), 329px';
+	public const GRID_SIZES = '(max-width: 560px) calc(50vw - 49px), (max-width: 880px) calc(50vw - 61px), 329px';
 
 	/**
 	 * WooCommerce stylesheets that do nothing on the front page.

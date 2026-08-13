@@ -30,9 +30,9 @@ const boot = () => {
 		}
 	});
 
-	// Motif grid "show all" gate. The grid ships collapsed and the CSS only
-	// acts on the attribute below 880px, so this is a no-op on desktop — the
-	// button is display:none there and never receives a click.
+	// Motif grid "show all" gate. The grid ships collapsed; the CSS decides
+	// where the cut falls (nine cards, six on a phone) and this only flips the
+	// attribute the cut hangs off.
 	const motifGrid = document.querySelector('[data-motif-grid]');
 	const motifToggle = document.querySelector('[data-motifs-toggle]');
 	if (motifGrid && motifToggle) {

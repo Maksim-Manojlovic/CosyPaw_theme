@@ -948,13 +948,21 @@
 	gap: 10px;
 }
 
-/* Shown only where the grid collapses (see the responsive block). Full width
-   of the section so it reads as the end of the grid rather than as one more
-   card's worth of chrome. */
-.motifs-toggle {
+/* Nine cards is three rows — a full screen of motifs at desktop width, and
+   the section stops at about 1,450px instead of 3,400px. The phone cut is
+   tighter still; see the responsive block. */
+.motifs[data-collapsed] .motif-card:nth-child(n+10) {
 	display: none;
+}
+
+/* Sits under the grid as its own end-stop. Capped rather than full width —
+   a 1,200px pill reads as a banner, not a control. */
+.motifs-toggle {
+	display: flex;
 	width: 100%;
-	margin-top: 18px;
+	max-width: 340px;
+	margin-inline: auto;
+	margin-top: 26px;
 	cursor: pointer;
 	align-items: center;
 	justify-content: center;
@@ -1210,6 +1218,28 @@
 		display: none;
 	}
 
+	/* With the card gone the copy is about 480px of content in a ~760px box on
+	   a modern phone, which left it sitting as one tight lump between two dead
+	   bands. These space it to the screen it is actually on: the svh term does
+	   the filling, and the clamp floors keep a 667px iPhone SE from pushing
+	   the trust row off the bottom. */
+	.hero__title {
+		margin-top: clamp(16px, 3.2svh, 32px);
+	}
+
+	.hero__lead {
+		margin-top: clamp(14px, 3svh, 30px);
+	}
+
+	.hero__cta {
+		margin-top: clamp(20px, 4.4svh, 46px);
+	}
+
+	.trust {
+		margin-top: clamp(20px, 4.4svh, 44px);
+		gap: clamp(14px, 2.4svh, 24px);
+	}
+
 	.hero__cta, .trust { justify-content: center; }
 	.hero__lead { margin-left: auto; margin-right: auto; }
 	.benefits { grid-template-columns: 1fr 1fr; }
@@ -1229,8 +1259,11 @@
 		display: none;
 	}
 
+	/* Full width here — the phone card is ~150px, so a 340px pill would be
+	   narrower than two of them side by side and read as a stray card. */
 	.motifs-toggle {
-		display: flex;
+		max-width: none;
+		margin-top: 18px;
 	}
 
 	.testimonials { grid-template-columns: 1fr; }
@@ -1240,21 +1273,18 @@
 }
 
 @media (max-width: 560px) {
-	/* Desktop vertical rhythm is loose for a phone; tightening it keeps the
-	   headline, the lead, both CTAs and the trust row inside one screen. */
+	/* The 880px block owns the hero's vertical rhythm now. What is left here
+	   is type: without the card beside it the headline has the width to carry
+	   a larger floor, and 32px on a 390px screen looked timid holding the
+	   whole opening frame on its own. */
+	.hero__title {
+		font-size: clamp(34px, 8.6vw, 44px);
+	}
+
 	.hero__lead {
-		font-size: 16.5px;
-		margin-top: 16px;
+		font-size: 17px;
 	}
 
-	.hero__cta {
-		margin-top: 22px;
-	}
-
-	.trust {
-		margin-top: 22px;
-		gap: 14px;
-	}
 	.benefits { grid-template-columns: 1fr; }
 
 	/* The grid used to drop to a single column here, which put one ~470px card

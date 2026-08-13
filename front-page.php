@@ -169,10 +169,9 @@ foreach ( $packages as $pkg ) {
 
 		<?php
 		// data-collapsed is set here rather than by script so the grid never
-		// paints its full height and then jumps. Below 880px the CSS hides
-		// everything past the sixth card; above it the attribute matches
-		// nothing. The <noscript> block after the grid undoes the collapse
-		// where the toggle cannot run.
+		// paints its full height and then jumps. The CSS cuts at the tenth
+		// card, and at the seventh below 880px. The <noscript> block after the
+		// grid undoes the collapse where the toggle cannot run.
 		?>
 		<div class="motifs" id="motifs-grid" data-motif-grid data-collapsed>
 			<?php
@@ -257,7 +256,7 @@ foreach ( $packages as $pkg ) {
 		?>
 		<noscript>
 			<style>
-				.motifs[data-collapsed] .motif-card:nth-child(n+7) { display: block; }
+				.motifs[data-collapsed] .motif-card { display: block; }
 				.motifs-toggle { display: none; }
 			</style>
 		</noscript>

@@ -517,6 +517,24 @@
 	margin-top: 2px;
 }
 
+/* The card's loudest line after the price itself. Sand and clay rather than
+   the sage of the shipping pill below it — two green strips would read as one
+   block of small print, and this echoes the clay ribbon at the top instead.
+   claydk on sand is 4.88:1, and the type is well past the large-text floor. */
+.pkg-gratis {
+	display: block;
+	margin-top: 12px;
+	padding: 10px 14px;
+	border-radius: 14px;
+	background: var(--sand);
+	color: var(--claydk);
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: clamp(19px, 1.6vw, 23px);
+	letter-spacing: 0.5px;
+	text-align: center;
+}
+
 .pkg-freeship {
 	display: inline-flex;
 	align-items: center;

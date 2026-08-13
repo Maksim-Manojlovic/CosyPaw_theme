@@ -66,6 +66,7 @@ $sr_source = array(
 	'Kupi'                                                                                    => array( 'Buy', 'Купить' ),
 	'Prikaži sve motive (%d)'                                                                 => array( 'Show all designs (%d)', 'Показать все мотивы (%d)' ),
 	'Prikaži manje'                                                                           => array( 'Show less', 'Свернуть' ),
+	'%1$d+%2$d GRATIS'                                                                        => array( '%1$d+%2$d FREE', '%1$d+%2$d В ПОДАРОК' ),
 	'Dodato u korpu'                                                                          => array( 'Added to cart', 'Добавлено в корзину' ),
 	'Dodato'                                                                                  => array( 'Added', 'Добавлено' ),
 	'Rezultati za „%s”'                                                                       => array( 'Results for “%s”', 'Результаты по запросу «%s»' ),

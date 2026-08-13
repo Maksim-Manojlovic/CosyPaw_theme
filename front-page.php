@@ -344,6 +344,23 @@ foreach ( $packages as $pkg ) {
 									<span class="pkg-old"><?php echo esc_html( \Theme\Catalog::format_price( (int) $pkg['old'] ) ); ?></span>
 								<?php endif; ?>
 							</div>
+							<?php
+							// Derived in Catalog::gratis_count() from the live
+							// prices, so this only prints while the bundle
+							// really does hand a towel over for nothing.
+							if ( ! empty( $pkg['gratis'] ) ) :
+								?>
+								<span class="pkg-gratis">
+									<?php
+									printf(
+										/* translators: 1: towels paid for, 2: towels given free. */
+										esc_html__( '%1$d+%2$d GRATIS', 'cosypaw' ),
+										(int) $pkg['qty'] - (int) $pkg['gratis'],
+										(int) $pkg['gratis']
+									);
+									?>
+								</span>
+							<?php endif; ?>
 							<span class="pkg-per"><?php echo esc_html( \Theme\Catalog::format_price( $pkg['per'] ) . ' / ' . __( 'kom', 'cosypaw' ) ); ?></span>
 							<?php if ( ! empty( $pkg['free_ship'] ) ) : ?>
 								<span class="pkg-freeship">

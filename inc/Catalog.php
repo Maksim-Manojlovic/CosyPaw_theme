@@ -222,7 +222,11 @@ final class Catalog {
 	 * are recomputed from the live WooCommerce prices in
 	 * WooCommerce::inject_package_ids() — the values below are only the seed.
 	 *
-	 * @return array<int,array{id:string,name:string,qty:int,price:int,old:?int,per:int,badge:?string,badge_saving:bool,best:bool,free_ship:bool,desc:string}>
+	 * `gratis` is how many towels the saving actually pays for — the "2+1
+	 * GRATIS" claim on the card. It is derived, never authored, so it can only
+	 * appear while the arithmetic holds; see gratis_count().
+	 *
+	 * @return array<int,array{id:string,name:string,qty:int,price:int,old:?int,per:int,badge:?string,badge_saving:bool,best:bool,free_ship:bool,gratis:int,desc:string}>
 	 */
 	public function packages(): array {
 		$packages = array(
@@ -253,13 +257,16 @@ final class Catalog {
 				'free_ship'    => false,
 				'desc'         => __( 'Dva motiva po izboru', 'cosypaw' ),
 			),
+			// Priced at exactly two towels so the third is genuinely free — the
+			// card's "2+1 GRATIS" only renders while that holds, and 20 RSD
+			// above it (the old 1600) was enough to lose the claim.
 			array(
 				'id'           => 'trio',
 				'name'         => __( 'Trio paket', 'cosypaw' ),
 				'qty'          => 3,
-				'price'        => 1600,
+				'price'        => self::UNIT_PRICE * 2,
 				'old'          => self::UNIT_PRICE * 3,
-				'per'          => 534,
+				'per'          => (int) round( self::UNIT_PRICE * 2 / 3 ),
 				'badge'        => __( 'Najpopularnije', 'cosypaw' ),
 				'badge_saving' => false,
 				'best'         => true,
@@ -268,12 +275,40 @@ final class Catalog {
 			),
 		);
 
+		foreach ( $packages as &$package ) {
+			$package['gratis'] = self::gratis_count( $package['qty'], $package['price'], self::UNIT_PRICE );
+		}
+		unset( $package );
+
 		/**
 		 * Filter the package list.
 		 *
 		 * @param array $packages The package data.
 		 */
 		return (array) apply_filters( 'cosypaw_catalog_packages', $packages );
+	}
+
+	/**
+	 * How many towels in a bundle are covered by its own discount.
+	 *
+	 * The number behind "2+1 GRATIS": three towels for the price of two is one
+	 * free, so `gratis` is the quantity less the whole towels the bundle price
+	 * pays for. Rounding is deliberately against the claim — ceil() means a
+	 * bundle priced 10 RSD over two towels pays for three, returns zero, and
+	 * the card says nothing rather than advertising a towel it does not give
+	 * away. A price claim that is 99% true is a false price claim.
+	 *
+	 * @param int $qty   Towels in the bundle.
+	 * @param int $price What the bundle costs.
+	 * @param int $unit  What one towel costs on its own.
+	 * @return int Towels given free, 0 when the bundle is not that generous.
+	 */
+	public static function gratis_count( int $qty, int $price, int $unit ): int {
+		if ( $qty < 2 || $price < 1 || $unit < 1 ) {
+			return 0;
+		}
+
+		return max( 0, $qty - (int) ceil( $price / $unit ) );
 	}
 
 	/**

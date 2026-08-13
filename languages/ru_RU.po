@@ -143,6 +143,9 @@ msgstr "Показать все мотивы (%d)"
 msgid "Prikaži manje"
 msgstr "Свернуть"
 
+msgid "%1$d+%2$d GRATIS"
+msgstr "%1$d+%2$d В ПОДАРОК"
+
 msgid "Dodato u korpu"
 msgstr "Добавлено в корзину"
 

@@ -511,6 +511,11 @@ final class WooCommerce {
 			// price rise. Drop both rather than print a negative discount.
 			$row['old'] = $is_deal ? $full : null;
 
+			// Same reasoning as the struck price: the "2+1 GRATIS" line has to
+			// come off what the shop charges today, or it keeps promising a
+			// free towel the moment someone nudges the bundle price up.
+			$row['gratis'] = Catalog::gratis_count( $qty, $price, $unit );
+
 			if ( ! empty( $row['badge_saving'] ) ) {
 				/* translators: %s: formatted amount saved, e.g. "490 RSD". */
 				$row['badge'] = $is_deal ? sprintf( __( 'Ušteda %s', 'cosypaw' ), Catalog::format_price( $saving ) ) : null;

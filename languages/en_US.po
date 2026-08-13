@@ -143,6 +143,9 @@ msgstr "Show all designs (%d)"
 msgid "Prikaži manje"
 msgstr "Show less"
 
+msgid "%1$d+%2$d GRATIS"
+msgstr "%1$d+%2$d FREE"
+
 msgid "Dodato u korpu"
 msgstr "Added to cart"
 

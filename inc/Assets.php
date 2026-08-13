@@ -174,6 +174,10 @@ final class Assets {
 	 * in front-page.php, or the preload picks a different candidate and the
 	 * page downloads the motif twice.
 	 *
+	 * The `media` guard matches the breakpoint at which landing.css hides
+	 * `.hero__art`. Below it the card is not rendered at all, so the highest
+	 * priority fetch on the page would be for a picture nobody sees.
+	 *
 	 * @return void
 	 */
 	public function preload_lcp_image(): void {
@@ -187,7 +191,7 @@ final class Assets {
 		}
 
 		printf(
-			'<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s" imagesizes="%3$s" fetchpriority="high">' . "\n",
+			'<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s" imagesizes="%3$s" media="(min-width: 881px)" fetchpriority="high">' . "\n",
 			esc_url( $featured[0]['image_md'] ),
 			esc_attr( self::motif_srcset( $featured[0] ) ),
 			esc_attr( self::HERO_SIZES )

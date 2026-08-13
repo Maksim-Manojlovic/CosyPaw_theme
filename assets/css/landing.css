@@ -1146,30 +1146,31 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
+	/* One column, and it owns the opening screen. Stacked, the card pushed the
+	   CTAs and the trust row below the fold on anything shorter than a tall
+	   phone, so the pitch never finished on screen. The motifs still get their
+	   own section further down, and the packages carry product imagery.
+	   Height is the viewport less the sticky header (56px logo + 2*14px nav
+	   padding + 1px border); svh so a mobile URL bar cannot overshoot it. */
 	.hero {
 		grid-template-columns: 1fr;
 		text-align: center;
 		padding-top: 30px;
 		gap: 28px;
+		min-height: calc(100vh - 85px);
+		min-height: calc(100svh - 85px);
+		align-content: center;
 	}
 
-	/* Two changes here, both about the card.
-	   1. The art no longer carries order: -1. It used to come first, so the
-	      card was the entire opening screen on a phone — roughly 480px of
-	      image beneath a 36px announcement bar and a 70px sticky header — and
-	      the headline, the lead and both CTAs all sat below the fold. The page
-	      opened on a photograph with no statement of what was being sold.
-	      Copy first puts the pitch on screen and still shows the top of the
-	      card.
-	   2. The container is capped to the card's own width. The price tag and
-	      the blobs are positioned against .hero__art, not .hero__card, so
-	      while the container ran full-width and the card stayed at 380px they
-	      drifted off into the empty space beside it — most visibly between
-	      about 560px and 880px. */
-	.hero__art {
-		min-height: 0;
-		max-width: 380px;
+	.hero__copy {
+		width: 100%;
+		max-width: 560px;
 		margin-inline: auto;
+	}
+
+	/* The card, the blobs and the price tag all live in here. */
+	.hero__art {
+		display: none;
 	}
 
 	.hero__cta, .trust { justify-content: center; }
@@ -1188,16 +1189,8 @@
 }
 
 @media (max-width: 560px) {
-	/* The card is narrower than 380px here and sets its own height from the
-	   aspect ratio, so the container only needs breathing room. */
-	.hero__art {
-		padding-block: var(--space-4);
-	}
-
-	/* Desktop vertical rhythm costs about 40px between the headline and the
-	   card on a phone. Tightening it brings the top of the card back to the
-	   fold, so the opening screen carries the pitch and a glimpse of the
-	   product rather than one or the other. */
+	/* Desktop vertical rhythm is loose for a phone; tightening it keeps the
+	   headline, the lead, both CTAs and the trust row inside one screen. */
 	.hero__lead {
 		font-size: 16.5px;
 		margin-top: 16px;

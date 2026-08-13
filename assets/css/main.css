@@ -773,6 +773,19 @@ h1, h2, h3, h4 {
 
 /* ---------- Chrome responsive ---------- */
 @media (max-width: 880px) {
+	/* The marquee costs ~36px of the opening screen and runs a compositor
+	   animation for as long as the tab is open — on a phone that is battery
+	   and the odd dropped frame while scrolling, for three lines that appear
+	   again in the hero's trust row and in the packages section. Hiding the
+	   bar also stops the animation: an element with display:none does not
+	   animate, so nothing is left ticking behind the layout.
+	   Marquee.js still boots. It has to: the loop is declared in CSS, so the
+	   WCAG 2.2.2 pause control must exist wherever the bar is visible, which
+	   includes a desktop window someone drags narrow and back. */
+	.announce {
+		display: none;
+	}
+
 	.footer-grid { grid-template-columns: 1fr; gap: 30px; }
 
 	/* The header is sticky, so every pixel it takes is a pixel of phone screen

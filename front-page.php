@@ -6,7 +6,7 @@
  * FAQ) is deliberate: the catalogue has to precede the bundle builder, because
  * step 2 of the builder asks the visitor to choose motifs and the gallery is
  * where they meet them. It used to run the other way round — "Upoznaj sve
- * motive" sat after the section that made you pick three. Everything from
+ * peškiriće" sat after the section that made you pick three. Everything from
  * lifestyle down is objection handling, ordered softest first.
  *
  * Data comes from the plain \Theme\Catalog data object.
@@ -42,7 +42,7 @@ $from_price = $products
 	: \Theme\Catalog::UNIT_PRICE;
 $packages      = $catalog->packages();
 $default_pkg   = $catalog->default_package();
-$tagline       = __( 'Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo.', 'cosypaw' );
+$tagline       = __( 'Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo.', 'cosypaw' );
 
 // Resolve the initially-selected package for the CTA label.
 $selected = $packages[0];
@@ -76,7 +76,7 @@ foreach ( $packages as $pkg ) {
 
 			<div class="hero__cta">
 				<a href="#paketi" class="btn btn--primary"><?php esc_html_e( 'Izaberi paket', 'cosypaw' ); ?></a>
-				<a href="#galerija" class="btn btn--ghost"><?php esc_html_e( 'Pogledaj motive', 'cosypaw' ); ?></a>
+				<a href="#galerija" class="btn btn--ghost"><?php esc_html_e( 'Pogledaj peškiriće', 'cosypaw' ); ?></a>
 			</div>
 
 			<div class="trust">
@@ -101,7 +101,7 @@ foreach ( $packages as $pkg ) {
 			<div class="hero__blob hero__blob--sage" aria-hidden="true"></div>
 
 			<div class="hero__card">
-				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni motivi', 'cosypaw' ); ?>">
+				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni peškirići', 'cosypaw' ); ?>">
 					<div class="vertical-carousel__track">
 						<?php foreach ( $featured as $cosypaw_i => $f ) : ?>
 							<div class="vertical-carousel__slide">
@@ -137,10 +137,10 @@ foreach ( $packages as $pkg ) {
 						type="button"
 						class="carousel-toggle"
 						data-carousel-toggle
-						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
-						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje motiva', 'cosypaw' ); ?>"
+						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje peškirića', 'cosypaw' ); ?>"
+						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje peškirića', 'cosypaw' ); ?>"
 						aria-pressed="false"
-						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje motiva', 'cosypaw' ); ?>"
+						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje peškirića', 'cosypaw' ); ?>"
 						hidden
 					>
 						<svg class="carousel-toggle__pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
@@ -163,7 +163,7 @@ foreach ( $packages as $pkg ) {
 	<section id="galerija" class="section">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve motive', 'cosypaw' ); ?></h2>
+			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve peškiriće', 'cosypaw' ); ?></h2>
 			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
@@ -233,7 +233,7 @@ foreach ( $packages as $pkg ) {
 
 		<?php
 		/* translators: %d: total number of motifs. */
-		$cosypaw_more_label = sprintf( __( 'Prikaži sve motive (%d)', 'cosypaw' ), count( $products ) );
+		$cosypaw_more_label = sprintf( __( 'Prikaži sve peškiriće (%d)', 'cosypaw' ), count( $products ) );
 		$cosypaw_less_label = __( 'Prikaži manje', 'cosypaw' );
 		?>
 		<button
@@ -268,7 +268,7 @@ foreach ( $packages as $pkg ) {
 			<div class="section__head">
 				<span class="eyebrow"><?php esc_html_e( 'Napravi svoj paket', 'cosypaw' ); ?></span>
 				<h2 class="section__title"><?php esc_html_e( 'Što više peškirića, veća ušteda', 'cosypaw' ); ?></h2>
-				<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
+				<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
 			</div>
 
 			<?php
@@ -377,7 +377,7 @@ foreach ( $packages as $pkg ) {
 					<div class="builder__step-head">
 						<span class="builder__num">2</span>
 						<?php // tabindex=-1: focus lands here when the step is revealed. ?>
-						<span class="builder__step-title" data-builder-step2-heading tabindex="-1"><?php esc_html_e( 'Ubaci svoje motive', 'cosypaw' ); ?></span>
+						<span class="builder__step-title" data-builder-step2-heading tabindex="-1"><?php esc_html_e( 'Ubaci svoje peškiriće', 'cosypaw' ); ?></span>
 					</div>
 					<div class="builder__tools">
 						<?php

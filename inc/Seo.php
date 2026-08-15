@@ -91,7 +91,7 @@ final class Seo {
 		$text = '';
 
 		if ( is_front_page() ) {
-			$text = __( 'Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
+			$text = __( 'Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
 		} elseif ( is_singular() ) {
 			$post = get_queried_object();
 			if ( $post instanceof \WP_Post ) {

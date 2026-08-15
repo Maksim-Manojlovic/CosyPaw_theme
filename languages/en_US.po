@@ -32,7 +32,7 @@ msgstr "Search…"
 msgid "Traži"
 msgstr "Search"
 
-msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo."
+msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo."
 msgstr "Decorative towel pets in soft microfiber, with a hanging loop. Over 20 designs — pick yours and spoil your bathroom."
 
 msgid "Mekani svet peškirića"
@@ -47,7 +47,7 @@ msgstr "your bathroom"
 msgid "Izaberi paket"
 msgstr "Choose a package"
 
-msgid "Pogledaj motive"
+msgid "Pogledaj peškiriće"
 msgstr "See the designs"
 
 msgid "Ručni rad"
@@ -59,7 +59,7 @@ msgstr "Soft & absorbent"
 msgid "Besplatna dostava na 3"
 msgstr "Free shipping on 3"
 
-msgid "Izdvojeni motivi"
+msgid "Izdvojeni peškirići"
 msgstr "Featured designs"
 
 msgid "od %s"
@@ -101,7 +101,7 @@ msgstr "A sweet little thing that always brings a smile and an “awww”."
 msgid "Što više peškirića, veća ušteda"
 msgstr "The more towels, the bigger the saving"
 
-msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
+msgid "Izmešaj peškiriće kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Mix the designs however you like — the price per piece drops with each one."
 
 msgid "kom"
@@ -122,7 +122,7 @@ msgstr "Cash on delivery • Delivery in 2–4 business days"
 msgid "Cela družina"
 msgstr "The whole crew"
 
-msgid "Upoznaj sve motive"
+msgid "Upoznaj sve peškiriće"
 msgstr "Meet all the designs"
 
 msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
@@ -137,7 +137,7 @@ msgstr "Cart"
 msgid "Kupi"
 msgstr "Buy"
 
-msgid "Prikaži sve motive (%d)"
+msgid "Prikaži sve peškiriće (%d)"
 msgstr "Show all designs (%d)"
 
 msgid "Prikaži manje"
@@ -164,7 +164,7 @@ msgstr "Quick links"
 msgid "Paketi"
 msgstr "Packages"
 
-msgid "Svi motivi"
+msgid "Svi peškirići"
 msgstr "All designs"
 
 msgid "Poručivanje"
@@ -191,7 +191,7 @@ msgstr "Close"
 msgid "Korpa je još prazna"
 msgstr "Your cart is still empty"
 
-msgid "Izaberi paket ili omiljeni motiv."
+msgid "Izaberi paket ili omiljeni peškirić."
 msgstr "Pick a package or a favorite design."
 
 msgid "Ukupno"
@@ -206,7 +206,7 @@ msgstr "Handmade with lots of love"
 msgid "Besplatna dostava na Trio paket"
 msgstr "Free shipping on the Trio package"
 
-msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
 msgstr "Hand-sewn decorative bathroom towels — soft microfiber, a hanging loop and over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
 
 msgid "Rezultati pretrage za „%s“."
@@ -233,13 +233,13 @@ msgstr "Pause the announcements"
 msgid "Pusti najave"
 msgstr "Play the announcements"
 
-msgid "Pauziraj smenjivanje motiva"
+msgid "Pauziraj smenjivanje peškirića"
 msgstr "Pause the design slideshow"
 
-msgid "Pusti smenjivanje motiva"
+msgid "Pusti smenjivanje peškirića"
 msgstr "Play the design slideshow"
 
-msgid "Motivi"
+msgid "Peškirići"
 msgstr "Designs"
 
 msgid "Pogledaj korpu"
@@ -323,13 +323,13 @@ msgstr "Maple leaf"
 msgid "Pojedinačno"
 msgstr "Single"
 
-msgid "Jedan omiljeni motiv"
+msgid "Jedan omiljeni peškirić"
 msgstr "One favorite design"
 
 msgid "Duo paket"
 msgstr "Duo package"
 
-msgid "Dva motiva po izboru"
+msgid "Dva peškirića po izboru"
 msgstr "Two designs of your choice"
 
 msgid "Trio paket"
@@ -338,7 +338,7 @@ msgstr "Trio package"
 msgid "Najpopularnije"
 msgstr "Most popular"
 
-msgid "Tri motiva po izboru"
+msgid "Tri peškirića po izboru"
 msgstr "Three designs of your choice"
 
 msgid "Žurnal"
@@ -362,13 +362,13 @@ msgstr "There's no content here yet."
 msgid "Napravi svoj paket"
 msgstr "Build your package"
 
-msgid "Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim."
+msgid "Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim."
 msgstr "Pick a package size, then drop in your favorite designs. The price per piece drops with each one."
 
 msgid "Izaberi veličinu paketa"
 msgstr "Choose a package size"
 
-msgid "Ubaci svoje motive"
+msgid "Ubaci svoje peškiriće"
 msgstr "Add your designs"
 
 msgid "Izabrano"
@@ -380,7 +380,7 @@ msgstr "Surprise me"
 msgid "Očisti"
 msgstr "Clear"
 
-msgid "Motiv %d"
+msgid "Peškirić %d"
 msgstr "Design %d"
 
 msgid "Dodaj u korpu • %s"
@@ -389,19 +389,19 @@ msgstr "Add to cart • %s"
 msgid "Izaberi još %d"
 msgstr "Choose %d more"
 
-msgid "motiv"
+msgid "peškirić"
 msgstr "design"
 
-msgid "motiva"
+msgid "peškirića"
 msgstr "designs"
 
-msgid "Paket je pun — ukloni motiv da dodaš drugi"
+msgid "Paket je pun — ukloni peškirić da dodaš drugi"
 msgstr "The package is full — remove a design to add another"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Choose %d more — the package isn't full"
 
-msgid "Ukloni motiv"
+msgid "Ukloni peškirić"
 msgstr "Remove design"
 
 msgid "Dodajem…"

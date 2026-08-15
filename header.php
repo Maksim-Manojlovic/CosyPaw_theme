@@ -101,7 +101,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				// Listed in scroll order — nav that disagrees with the page it
 				// links into makes the anchors feel arbitrary.
 				$cosypaw_anchors = array(
-					'#galerija' => __( 'Motivi', 'cosypaw' ),
+					'#galerija' => __( 'Peškirići', 'cosypaw' ),
 					'#paketi'   => __( 'Paketi', 'cosypaw' ),
 					'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
 				);

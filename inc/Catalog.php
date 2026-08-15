@@ -241,7 +241,7 @@ final class Catalog {
 				'badge_saving' => false,
 				'best'         => false,
 				'free_ship'    => false,
-				'desc'         => __( 'Jedan omiljeni motiv', 'cosypaw' ),
+				'desc'         => __( 'Jedan omiljeni peškirić', 'cosypaw' ),
 			),
 			array(
 				'id'           => 'duo',
@@ -255,7 +255,7 @@ final class Catalog {
 				'badge_saving' => true,
 				'best'         => false,
 				'free_ship'    => false,
-				'desc'         => __( 'Dva motiva po izboru', 'cosypaw' ),
+				'desc'         => __( 'Dva peškirića po izboru', 'cosypaw' ),
 			),
 			// Priced at exactly two towels so the third is genuinely free — the
 			// card's "2+1 GRATIS" only renders while that holds, and 20 RSD
@@ -271,7 +271,7 @@ final class Catalog {
 				'badge_saving' => false,
 				'best'         => true,
 				'free_ship'    => true,
-				'desc'         => __( 'Tri motiva po izboru', 'cosypaw' ),
+				'desc'         => __( 'Tri peškirića po izboru', 'cosypaw' ),
 			),
 		);
 

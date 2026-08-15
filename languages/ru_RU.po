@@ -32,7 +32,7 @@ msgstr "Поиск…"
 msgid "Traži"
 msgstr "Найти"
 
-msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 motiva — izaberi svoje i razmazi kupatilo."
+msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo."
 msgstr "Декоративные полотенца-зверушки из мягкой микрофибры, с петелькой для подвешивания. Более 20 мотивов — выбери свои и побалуй ванную."
 
 msgid "Mekani svet peškirića"
@@ -47,7 +47,7 @@ msgstr "твою ванную"
 msgid "Izaberi paket"
 msgstr "Выбери набор"
 
-msgid "Pogledaj motive"
+msgid "Pogledaj peškiriće"
 msgstr "Смотреть мотивы"
 
 msgid "Ručni rad"
@@ -59,7 +59,7 @@ msgstr "Мягко и впитывает"
 msgid "Besplatna dostava na 3"
 msgstr "Бесплатная доставка от 3"
 
-msgid "Izdvojeni motivi"
+msgid "Izdvojeni peškirići"
 msgstr "Избранные мотивы"
 
 msgid "od %s"
@@ -101,7 +101,7 @@ msgstr "Милая мелочь, что всегда вызывает улыбк
 msgid "Što više peškirića, veća ušteda"
 msgstr "Чем больше полотенец, тем больше выгода"
 
-msgid "Izmešaj motive kako želiš — cena po komadu pada sa svakim sledećim."
+msgid "Izmešaj peškiriće kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Сочетай мотивы как хочешь — цена за штуку падает с каждым следующим."
 
 msgid "kom"
@@ -122,7 +122,7 @@ msgstr "Оплата при получении • Доставка 2–4 раб
 msgid "Cela družina"
 msgstr "Вся компания"
 
-msgid "Upoznaj sve motive"
+msgid "Upoznaj sve peškiriće"
 msgstr "Познакомься со всеми мотивами"
 
 msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
@@ -137,7 +137,7 @@ msgstr "Корзина"
 msgid "Kupi"
 msgstr "Купить"
 
-msgid "Prikaži sve motive (%d)"
+msgid "Prikaži sve peškiriće (%d)"
 msgstr "Показать все мотивы (%d)"
 
 msgid "Prikaži manje"
@@ -164,7 +164,7 @@ msgstr "Быстрые ссылки"
 msgid "Paketi"
 msgstr "Наборы"
 
-msgid "Svi motivi"
+msgid "Svi peškirići"
 msgstr "Все мотивы"
 
 msgid "Poručivanje"
@@ -191,7 +191,7 @@ msgstr "Закрыть"
 msgid "Korpa je još prazna"
 msgstr "Корзина пока пуста"
 
-msgid "Izaberi paket ili omiljeni motiv."
+msgid "Izaberi paket ili omiljeni peškirić."
 msgstr "Выбери набор или любимый мотив."
 
 msgid "Ukupno"
@@ -206,7 +206,7 @@ msgstr "Ручная работа с большой любовью"
 msgid "Besplatna dostava na Trio paket"
 msgstr "Бесплатная доставка для набора Trio"
 
-msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
 msgstr "Сшитые вручную декоративные полотенца для ванной — мягкая микрофибра, петелька для подвешивания и более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии."
 
 msgid "Rezultati pretrage za „%s“."
@@ -233,13 +233,13 @@ msgstr "Приостановить объявления"
 msgid "Pusti najave"
 msgstr "Возобновить объявления"
 
-msgid "Pauziraj smenjivanje motiva"
+msgid "Pauziraj smenjivanje peškirića"
 msgstr "Приостановить смену мотивов"
 
-msgid "Pusti smenjivanje motiva"
+msgid "Pusti smenjivanje peškirića"
 msgstr "Возобновить смену мотивов"
 
-msgid "Motivi"
+msgid "Peškirići"
 msgstr "Мотивы"
 
 msgid "Pogledaj korpu"
@@ -323,13 +323,13 @@ msgstr "Кленовый лист"
 msgid "Pojedinačno"
 msgstr "Поштучно"
 
-msgid "Jedan omiljeni motiv"
+msgid "Jedan omiljeni peškirić"
 msgstr "Один любимый мотив"
 
 msgid "Duo paket"
 msgstr "Набор Duo"
 
-msgid "Dva motiva po izboru"
+msgid "Dva peškirića po izboru"
 msgstr "Два мотива на выбор"
 
 msgid "Trio paket"
@@ -338,7 +338,7 @@ msgstr "Набор Trio"
 msgid "Najpopularnije"
 msgstr "Самое популярное"
 
-msgid "Tri motiva po izboru"
+msgid "Tri peškirića po izboru"
 msgstr "Три мотива на выбор"
 
 msgid "Žurnal"
@@ -362,13 +362,13 @@ msgstr "Здесь пока нет содержимого."
 msgid "Napravi svoj paket"
 msgstr "Собери свой набор"
 
-msgid "Izaberi veličinu paketa, pa ubaci omiljene motive. Cena po komadu pada sa svakim sledećim."
+msgid "Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim."
 msgstr "Выбери размер набора, затем добавь любимые мотивы. Цена за штуку падает с каждым следующим."
 
 msgid "Izaberi veličinu paketa"
 msgstr "Выбери размер набора"
 
-msgid "Ubaci svoje motive"
+msgid "Ubaci svoje peškiriće"
 msgstr "Добавь свои мотивы"
 
 msgid "Izabrano"
@@ -380,7 +380,7 @@ msgstr "Удиви меня"
 msgid "Očisti"
 msgstr "Очистить"
 
-msgid "Motiv %d"
+msgid "Peškirić %d"
 msgstr "Мотив %d"
 
 msgid "Dodaj u korpu • %s"
@@ -389,19 +389,19 @@ msgstr "В корзину • %s"
 msgid "Izaberi još %d"
 msgstr "Выбери ещё %d"
 
-msgid "motiv"
+msgid "peškirić"
 msgstr "мотив"
 
-msgid "motiva"
+msgid "peškirića"
 msgstr "мотива"
 
-msgid "Paket je pun — ukloni motiv da dodaš drugi"
+msgid "Paket je pun — ukloni peškirić da dodaš drugi"
 msgstr "Набор заполнен — удали мотив, чтобы добавить другой"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Выбери ещё %d — набор не заполнен"
 
-msgid "Ukloni motiv"
+msgid "Ukloni peškirić"
 msgstr "Удалить мотив"
 
 msgid "Dodajem…"

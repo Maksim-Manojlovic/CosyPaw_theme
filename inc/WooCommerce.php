@@ -221,7 +221,7 @@ final class WooCommerce {
 	public function display_motifs_cart_item_data( array $item_data, array $cart_item ): array {
 		if ( ! empty( $cart_item['cosypaw_motifs'] ) ) {
 			$item_data[] = array(
-				'key'   => __( 'Motivi', 'cosypaw' ),
+				'key'   => __( 'Peškirići', 'cosypaw' ),
 				'value' => $this->motif_names( (string) $cart_item['cosypaw_motifs'] ),
 			);
 		}
@@ -297,7 +297,7 @@ final class WooCommerce {
 		unset( $item );
 
 		if ( $meta && self::ORDER_MOTIFS_META === $meta->key ) {
-			return __( 'Motivi', 'cosypaw' );
+			return __( 'Peškirići', 'cosypaw' );
 		}
 
 		return (string) $display_key;

@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					// nowhere. Same home_url() prefix the header nav uses.
 					// Scroll order, matching the header nav.
 					$cosypaw_footer_links = array(
-						'#galerija' => __( 'Svi motivi', 'cosypaw' ),
+						'#galerija' => __( 'Svi peškirići', 'cosypaw' ),
 						'#paketi'   => __( 'Paketi', 'cosypaw' ),
 						'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
 					);
@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="cart-empty" data-cart-empty>
 				<div class="cart-empty__emoji" aria-hidden="true">🧺</div>
 				<p class="cart-empty__title"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
-				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni motiv.', 'cosypaw' ); ?></p>
+				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni peškirić.', 'cosypaw' ); ?></p>
 			</div>
 			<div data-cart-items></div>
 		</div>

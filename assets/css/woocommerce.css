@@ -278,7 +278,7 @@
 	color: var(--ink);
 }
 
-/* Product name + the "Motivi: …" line. */
+/* Product name + the "Peškirići: …" line. */
 .woocommerce table.cart .product-name a {
 	font-family: var(--font-heading);
 	font-weight: 700;

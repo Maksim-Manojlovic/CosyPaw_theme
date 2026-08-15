@@ -27,14 +27,14 @@ export class BundleBuilder {
 		this.cart = opts.cart || null;
 		this.l10n = Object.assign(
 			{
-				slotLabel: 'Motiv %d',
+				slotLabel: 'Peškirić %d',
 				addToCartPrice: 'Dodaj u korpu • %s',
 				chooseMore: 'Izaberi još %d',
-				motifOne: 'motiv',
-				motifMany: 'motiva',
-				bundleFull: 'Paket je pun — ukloni motiv da dodaš drugi',
+				motifOne: 'peškirić',
+				motifMany: 'peškirića',
+				bundleFull: 'Paket je pun — ukloni peškirić da dodaš drugi',
 				notFull: 'Izaberi još %d — paket nije popunjen',
-				removeMotif: 'Ukloni motiv',
+				removeMotif: 'Ukloni peškirić',
 				adding: 'Dodajem…',
 				addFailed: 'Dodavanje nije uspelo — pokušaj ponovo',
 				currency: 'RSD',

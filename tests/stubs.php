@@ -81,3 +81,59 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 	}
 }
+
+if ( ! class_exists( 'WC_Cart' ) ) {
+	/**
+	 * Minimal stand-in for WooCommerce's cart, recording the fees added to it.
+	 */
+	class WC_Cart {
+
+		/**
+		 * Cart lines, in WooCommerce's shape.
+		 *
+		 * @var array<int,array<string,mixed>>
+		 */
+		private array $contents;
+
+		/**
+		 * Fees booked by add_fee(), newest last.
+		 *
+		 * @var array<int,array{name:string,amount:float,taxable:bool}>
+		 */
+		public array $fees = array();
+
+		/**
+		 * Constructor.
+		 *
+		 * @param array<int,array<string,mixed>> $contents Cart lines.
+		 */
+		public function __construct( array $contents = array() ) {
+			$this->contents = $contents;
+		}
+
+		/**
+		 * Cart lines.
+		 *
+		 * @return array<int,array<string,mixed>>
+		 */
+		public function get_cart(): array {
+			return $this->contents;
+		}
+
+		/**
+		 * Record a fee.
+		 *
+		 * @param string $name    Fee label.
+		 * @param float  $amount  Fee amount (negative for a discount).
+		 * @param bool   $taxable Whether the fee is taxed.
+		 * @return void
+		 */
+		public function add_fee( string $name, float $amount, bool $taxable = false ): void {
+			$this->fees[] = array(
+				'name'    => $name,
+				'amount'  => (float) $amount,
+				'taxable' => $taxable,
+			);
+		}
+	}
+}

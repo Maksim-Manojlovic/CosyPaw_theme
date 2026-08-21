@@ -53,6 +53,13 @@ final class Bootstrap {
 	private ?WooCommerce $woocommerce = null;
 
 	/**
+	 * Cart-level package pricing. Null when WooCommerce is inactive.
+	 *
+	 * @var BundlePricing|null
+	 */
+	private ?BundlePricing $bundle_pricing = null;
+
+	/**
 	 * SEO meta / structured data module.
 	 *
 	 * @var Seo
@@ -74,7 +81,8 @@ final class Bootstrap {
 
 		// Conditional WooCommerce module.
 		if ( class_exists( 'WooCommerce' ) ) {
-			$this->woocommerce = new WooCommerce( $this->text_domain, new Catalog() );
+			$this->woocommerce    = new WooCommerce( $this->text_domain, new Catalog() );
+			$this->bundle_pricing = new BundlePricing( $this->text_domain, new Catalog() );
 		} else {
 			$this->register_missing_woocommerce_notice();
 		}

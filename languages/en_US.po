@@ -32,9 +32,6 @@ msgstr "Search…"
 msgid "Traži"
 msgstr "Search"
 
-msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo."
-msgstr "Decorative towel pets in soft microfiber, with a hanging loop. Over 20 designs — pick yours and spoil your bathroom."
-
 msgid "Mekani svet peškirića"
 msgstr "A soft world of little towels"
 
@@ -52,12 +49,6 @@ msgstr "See the designs"
 
 msgid "Ručni rad"
 msgstr "Handmade"
-
-msgid "Mekano i upijajuće"
-msgstr "Soft & absorbent"
-
-msgid "Besplatna dostava na 3"
-msgstr "Free shipping on 3"
 
 msgid "Izdvojeni peškirići"
 msgstr "Featured designs"
@@ -538,6 +529,21 @@ msgstr "Local pickup"
 
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Courier delivery (postage paid to the courier)"
+
+msgid "%d motiva od mekane mikrofibre, sa alkom za kačenje."
+msgstr "%d designs in soft microfiber, with a hanging loop."
+
+msgid "besplatna dostava"
+msgstr "free shipping"
+
+msgid "Uzmi %1$d — plati %2$d"
+msgstr "Take %1$d — pay for %2$d"
+
+msgid "ili pogledaj svih %d peškirića"
+msgstr "or see all %d towels"
+
+msgid "Besplatna dostava na %s"
+msgstr "Free shipping on the %s"
 
 msgid "Ušteda na paketima"
 msgstr "Package saving"

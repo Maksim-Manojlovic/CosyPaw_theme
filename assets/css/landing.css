@@ -54,18 +54,76 @@
 	text-wrap: pretty;
 }
 
+/* The offer ribbon. Loud on purpose: below 880px the hero is copy only, and
+   this is the first line of it — the one thing that has to land before a thumb
+   moves. Clay under a white label is 5.03:1. */
+.badge--offer {
+	background: var(--clay);
+	color: #fff;
+	font-size: 13.5px;
+	letter-spacing: 0.4px;
+	box-shadow: var(--shadow-accent);
+}
+
 .hero__cta {
 	display: flex;
-	gap: 14px;
+	align-items: center;
+	gap: 18px;
 	flex-wrap: wrap;
 	margin-top: 28px;
+}
+
+/* Two lines inside one pill: the promise, then what it costs. The price is the
+   half a phone never used to get — .hero__art carries the "od X" tag and is
+   display:none under 880px. */
+.hero__buy {
+	flex-direction: column;
+	align-items: center;
+	gap: 1px;
+	padding: 13px 34px;
+	line-height: 1.25;
+	text-align: center;
+}
+
+.hero__buy-label {
+	font-size: 17px;
+}
+
+/* Size and weight carry the hierarchy, not opacity — a tinted white on clay
+   drops under 4.5:1 at this size. */
+.hero__buy-price {
+	font-size: 15px;
+	font-weight: 700;
+	color: #fff;
+}
+
+/* The gallery used to be a second button of equal weight, which made the
+   opening screen a choice between two ways of scrolling. A link states the
+   alternative without competing for the press. */
+.hero__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 800;
+	font-size: 15px;
+	color: var(--claydk);
+	text-decoration: none;
+	text-underline-offset: 4px;
+	/* 44px tap target without pushing the row taller than the button. */
+	padding: 12px 2px;
+}
+
+.hero__link:hover {
+	text-decoration: underline;
 }
 
 .trust {
 	display: flex;
 	gap: 22px;
 	flex-wrap: wrap;
-	margin-top: 30px;
+	margin: 30px 0 0;
+	padding: 0;
+	list-style: none;
 }
 
 .trust__item {

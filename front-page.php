@@ -42,7 +42,16 @@ $from_price = $products
 	: \Theme\Catalog::UNIT_PRICE;
 $packages      = $catalog->packages();
 $default_pkg   = $catalog->default_package();
-$tagline       = __( 'Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo.', 'cosypaw' );
+
+// The hero lead used to carry four facts — material, hanging loop, catalogue
+// size and an instruction — two of which are repeated verbatim in the benefits
+// section. It is one line now; the offer does the selling, from the ribbon and
+// the button.
+$tagline = sprintf(
+	/* translators: %d: how many motifs are on sale. */
+	__( '%d motiva od mekane mikrofibre, sa alkom za kačenje.', 'cosypaw' ),
+	count( $products )
+);
 
 // Resolve the initially-selected package for the CTA label.
 $selected = $packages[0];
@@ -52,6 +61,37 @@ foreach ( $packages as $pkg ) {
 		break;
 	}
 }
+
+/*
+ * Every offer claim in the hero is derived from the package the bundle builder
+ * opens on, never authored. Reprice the Trio in wp-admin and the "2+1 GRATIS"
+ * ribbon and the "plati 2" button stop making the promise rather than keep
+ * making a false one — the same rule the package card follows, and the reason
+ * `gratis` is computed rather than typed. See Catalog::gratis_count().
+ *
+ * Deriving it also keeps the button honest about where it lands: the price on
+ * it is the price the builder will show, because both read $selected.
+ */
+$hero_qty    = (int) ( $selected['qty'] ?? 0 );
+$hero_gratis = (int) ( $selected['gratis'] ?? 0 );
+$hero_pay    = $hero_qty - $hero_gratis;
+$hero_deal   = $hero_qty > 1 && $hero_gratis > 0 && $hero_pay > 0;
+
+// The ribbon leads with the free towel and adds the shipping only where the
+// package actually carries it.
+$hero_ribbon = '';
+if ( $hero_deal ) {
+	$hero_ribbon = sprintf(
+		/* translators: 1: towels paid for, 2: towels given free, e.g. "2+1 GRATIS". */
+		__( '%1$d+%2$d GRATIS', 'cosypaw' ),
+		$hero_pay,
+		$hero_gratis
+	);
+
+	if ( ! empty( $selected['free_ship'] ) ) {
+		$hero_ribbon .= ' · ' . __( 'besplatna dostava', 'cosypaw' );
+	}
+}
 ?>
 
 <main id="primary" class="site-main" tabindex="-1">
@@ -59,10 +99,19 @@ foreach ( $packages as $pkg ) {
 	<!-- HERO -->
 	<section id="top" class="hero">
 		<div class="hero__copy">
-			<span class="badge">
-				<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1.2 9 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.4 0 4.8 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
-				<?php esc_html_e( 'Mekani svet peškirića', 'cosypaw' ); ?>
-			</span>
+			<?php
+			// The ribbon used to read "Mekani svet peškirića", which is the
+			// headline underneath it said twice — a spent line before the pitch
+			// begins, and on a phone the hero is copy only (.hero__art is
+			// display:none below 880px), so it was spent where there was least
+			// room. It carries the offer now, and only while the offer holds.
+			if ( '' !== $hero_ribbon ) :
+				?>
+				<span class="badge badge--offer">
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+					<?php echo esc_html( $hero_ribbon ); ?>
+				</span>
+			<?php endif; ?>
 			<h1 class="hero__title">
 				<?php
 				printf(
@@ -74,26 +123,92 @@ foreach ( $packages as $pkg ) {
 			</h1>
 			<p class="hero__lead"><?php echo esc_html( $tagline ); ?></p>
 
+			<?php
+			// Two equal buttons that both meant "keep scrolling" gave a visitor
+			// who arrived ready to buy nothing to press. One button now, and it
+			// carries the offer and the price — the price especially, because
+			// the "od X" tag lives on .hero__art, which no phone ever sees.
+			// The gallery keeps its link, demoted to the weight it deserves.
+			?>
 			<div class="hero__cta">
-				<a href="#paketi" class="btn btn--primary"><?php esc_html_e( 'Izaberi paket', 'cosypaw' ); ?></a>
-				<a href="#galerija" class="btn btn--ghost"><?php esc_html_e( 'Pogledaj peškiriće', 'cosypaw' ); ?></a>
+				<a href="#paketi" class="btn btn--primary hero__buy">
+					<span class="hero__buy-label">
+						<?php
+						echo esc_html(
+							$hero_deal
+								? sprintf(
+									/* translators: 1: towels in the package, 2: towels paid for, e.g. "Uzmi 3 — plati 2". */
+									__( 'Uzmi %1$d — plati %2$d', 'cosypaw' ),
+									$hero_qty,
+									$hero_pay
+								)
+								: __( 'Izaberi paket', 'cosypaw' )
+						);
+						?>
+					</span>
+					<span class="hero__buy-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $selected['price'] ) ); ?></span>
+				</a>
+
+				<a href="#galerija" class="hero__link">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: %d: how many motifs are on sale. */
+							__( 'ili pogledaj svih %d peškirića', 'cosypaw' ),
+							count( $products )
+						)
+					);
+					?>
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</a>
 			</div>
 
-			<div class="trust">
-				<?php
-				$trust_items = array(
-					__( 'Ručni rad', 'cosypaw' ),
-					__( 'Mekano i upijajuće', 'cosypaw' ),
-					__( 'Besplatna dostava na 3', 'cosypaw' ),
+			<?php
+			// The strip no longer repeats the offer the ribbon and the button
+			// already made. It answers what a first-time buyer asks next:
+			// what does delivery cost, how do I pay, who made this.
+			$trust_items = array();
+
+			if ( ! empty( $selected['free_ship'] ) ) {
+				$trust_items[] = array(
+					'label' => sprintf(
+						/* translators: %s: package name, e.g. "Trio paket". */
+						__( 'Besplatna dostava na %s', 'cosypaw' ),
+						$selected['name']
+					),
+					'icon'  => '<path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/>',
 				);
-				foreach ( $trust_items as $item ) :
-					?>
-					<div class="trust__item">
-						<span class="trust__check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
-						<?php echo esc_html( $item ); ?>
-					</div>
+			}
+
+			$trust_items[] = array(
+				'label' => __( 'Plaćanje pouzećem', 'cosypaw' ),
+				'icon'  => '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/>',
+			);
+			$trust_items[] = array(
+				'label' => __( 'Ručni rad', 'cosypaw' ),
+				'icon'  => '<path d="M12 21s-7-4.6-9.3-9C1.2 9 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.4 0 4.8 3.5 3.3 6.5C19 16.4 12 21 12 21z"/>',
+			);
+			?>
+			<ul class="trust">
+				<?php foreach ( $trust_items as $item ) : ?>
+					<li class="trust__item">
+						<span class="trust__check">
+							<?php
+							echo wp_kses(
+								'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $item['icon'] . '</svg>',
+								array(
+									'svg'    => array( 'width' => array(), 'height' => array(), 'viewbox' => array(), 'fill' => array(), 'stroke' => array(), 'stroke-width' => array(), 'stroke-linecap' => array(), 'stroke-linejoin' => array(), 'aria-hidden' => array() ),
+									'path'   => array( 'd' => array() ),
+									'rect'   => array( 'x' => array(), 'y' => array(), 'width' => array(), 'height' => array(), 'rx' => array() ),
+									'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ),
+								)
+							);
+							?>
+						</span>
+						<?php echo esc_html( $item['label'] ); ?>
+					</li>
 				<?php endforeach; ?>
-			</div>
+			</ul>
 		</div>
 
 		<div class="hero__art">

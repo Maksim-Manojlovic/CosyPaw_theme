@@ -32,9 +32,6 @@ msgstr "Поиск…"
 msgid "Traži"
 msgstr "Найти"
 
-msgid "Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo."
-msgstr "Декоративные полотенца-зверушки из мягкой микрофибры, с петелькой для подвешивания. Более 20 мотивов — выбери свои и побалуй ванную."
-
 msgid "Mekani svet peškirića"
 msgstr "Мягкий мир полотенчиков"
 
@@ -52,12 +49,6 @@ msgstr "Смотреть мотивы"
 
 msgid "Ručni rad"
 msgstr "Ручная работа"
-
-msgid "Mekano i upijajuće"
-msgstr "Мягко и впитывает"
-
-msgid "Besplatna dostava na 3"
-msgstr "Бесплатная доставка от 3"
 
 msgid "Izdvojeni peškirići"
 msgstr "Избранные мотивы"
@@ -538,6 +529,21 @@ msgstr "Самовывоз"
 
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Доставка курьером (почтовые расходы оплачиваются курьеру)"
+
+msgid "%d motiva od mekane mikrofibre, sa alkom za kačenje."
+msgstr "%d мотивов из мягкой микрофибры, с петелькой для подвешивания."
+
+msgid "besplatna dostava"
+msgstr "бесплатная доставка"
+
+msgid "Uzmi %1$d — plati %2$d"
+msgstr "Возьми %1$d — заплати за %2$d"
+
+msgid "ili pogledaj svih %d peškirića"
+msgstr "или посмотри все %d полотенец"
+
+msgid "Besplatna dostava na %s"
+msgstr "Бесплатная доставка на %s"
 
 msgid "Ušteda na paketima"
 msgstr "Скидка за наборы"

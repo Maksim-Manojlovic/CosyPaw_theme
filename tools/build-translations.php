@@ -29,15 +29,12 @@ $sr_source = array(
 	'Pretraga'                                                                                => array( 'Search', 'Поиск' ),
 	'Pretraži…'                                                                               => array( 'Search…', 'Поиск…' ),
 	'Traži'                                                                                   => array( 'Search', 'Найти' ),
-	'Ukrasni peškirići-ljubimci od mekane mikrofibre, sa alkom za kačenje. Preko 20 peškirića — izaberi svoje i razmazi kupatilo.'  => array( 'Decorative towel pets in soft microfiber, with a hanging loop. Over 20 designs — pick yours and spoil your bathroom.', 'Декоративные полотенца-зверушки из мягкой микрофибры, с петелькой для подвешивания. Более 20 мотивов — выбери свои и побалуй ванную.' ),
 	'Mekani svet peškirića'                                                                   => array( 'A soft world of little towels', 'Мягкий мир полотенчиков' ),
 	'Ručno šiveni peškirići koji grle %s'                                                           => array( 'Hand-sewn towels that hug %s', 'Сшитые вручную полотенца, что обнимают %s' ),
 	'tvoje kupatilo'                                                                          => array( 'your bathroom', 'твою ванную' ),
 	'Izaberi paket'                                                                           => array( 'Choose a package', 'Выбери набор' ),
 	'Pogledaj peškiriće'                                                                      => array( 'See the designs', 'Смотреть мотивы' ),
 	'Ručni rad'                                                                               => array( 'Handmade', 'Ручная работа' ),
-	'Mekano i upijajuće'                                                                      => array( 'Soft & absorbent', 'Мягко и впитывает' ),
-	'Besplatna dostava na 3'                                                                  => array( 'Free shipping on 3', 'Бесплатная доставка от 3' ),
 	'Izdvojeni peškirići'                                                                     => array( 'Featured designs', 'Избранные мотивы' ),
 	'od %s'                                                                                   => array( 'from %s', 'от %s' ),
 	'Zašto CosyPaw'                                                                           => array( 'Why CosyPaw', 'Почему CosyPaw' ),
@@ -208,6 +205,16 @@ $sr_source = array(
 
 	// Cart-level package pricing (BundlePricing) and the floating cart pill.
 	// The fee label reaches the order, so it has to resolve per locale too.
+	// Hero — the offer ribbon, the buy button and the strip under it. The
+	// numbers are placeholders because they are derived from the package the
+	// builder opens on, not written into the copy.
+	'%d motiva od mekane mikrofibre, sa alkom za kačenje.'                                    => array( '%d designs in soft microfiber, with a hanging loop.', '%d мотивов из мягкой микрофибры, с петелькой для подвешивания.' ),
+	'%1$d+%2$d GRATIS'                                                                        => array( '%1$d+%2$d FREE', '%1$d+%2$d В ПОДАРОК' ),
+	'besplatna dostava'                                                                       => array( 'free shipping', 'бесплатная доставка' ),
+	'Uzmi %1$d — plati %2$d'                                                                  => array( 'Take %1$d — pay for %2$d', 'Возьми %1$d — заплати за %2$d' ),
+	'ili pogledaj svih %d peškirića'                                                          => array( 'or see all %d towels', 'или посмотри все %d полотенец' ),
+	'Besplatna dostava na %s'                                                                 => array( 'Free shipping on the %s', 'Бесплатная доставка на %s' ),
+
 	'Ušteda na paketima'                                                                      => array( 'Package saving', 'Скидка за наборы' ),
 	'Ušteda na paketima (%s)'                                                                 => array( 'Package saving (%s)', 'Скидка за наборы (%s)' ),
 	'Još 1 peškirić za %s'                                                                    => array( '1 more towel for %s', 'Ещё 1 полотенце за %s' ),

@@ -98,6 +98,66 @@ if ( $hero_deal ) {
 
 	<!-- HERO -->
 	<section id="top" class="hero">
+		<?php
+		/*
+		 * Falling motifs, phones only.
+		 *
+		 * Below 880px .hero__art is display:none, which left the opening screen
+		 * as text on an empty page — the one view where the product is never
+		 * shown. These are the same motifs, at 96px and a sixth of full
+		 * opacity, drifting behind the copy.
+		 *
+		 * The table is authored rather than randomised: a per-request shuffle
+		 * would clump sprites and change the page between two loads of the same
+		 * URL. Columns are horizontal position (%), size (px), how long one fall
+		 * takes (s), how far into that fall the sprite starts (s, negative so
+		 * the screen is already populated at first paint rather than empty for
+		 * ten seconds) and how far it drifts sideways on the way down (px).
+		 */
+		$hero_fall = array(
+			array( 3, 44, 14.0, -1.2, 12 ),
+			array( 16, 32, 17.5, -8.0, -14 ),
+			array( 28, 52, 12.5, -4.6, 8 ),
+			array( 41, 36, 18.5, -13.0, -10 ),
+			array( 54, 46, 13.5, -6.8, 16 ),
+			array( 67, 30, 16.0, -2.4, -12 ),
+			array( 79, 50, 15.0, -10.5, 9 ),
+			array( 91, 34, 19.0, -5.2, -15 ),
+			array( 9, 38, 16.8, -12.0, 11 ),
+			array( 22, 48, 13.8, -9.4, -8 ),
+			array( 35, 30, 17.8, -3.0, 14 ),
+			array( 48, 40, 15.5, -14.2, -11 ),
+			array( 62, 34, 18.2, -7.6, 10 ),
+			array( 74, 44, 14.6, -11.8, -13 ),
+			array( 86, 32, 16.4, -0.8, 12 ),
+		);
+
+		// Drawn from the same filtered list the grid uses, so a retired motif
+		// stops falling the moment it stops being for sale.
+		if ( $products ) :
+			?>
+			<div class="hero__fall" aria-hidden="true">
+				<?php
+				foreach ( $hero_fall as $cosypaw_n => $drop ) :
+					$motif = $products[ $cosypaw_n % count( $products ) ];
+
+					// One line, because fifteen indented style blocks put a few
+					// kilobytes of whitespace into every front-page response.
+					$style = sprintf(
+						'--fall-x:%1$d%%;--fall-size:%2$dpx;--fall-dur:%3$ss;--fall-delay:%4$ss;--fall-drift:%5$dpx;--fall-img:url(%6$s)',
+						(int) $drop[0],
+						(int) $drop[1],
+						(float) $drop[2],
+						(float) $drop[3],
+						(int) $drop[4],
+						esc_url( $motif['image_xs'] )
+					);
+					?>
+					<span class="hero__fall-item" style="<?php echo esc_attr( $style ); ?>"></span>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+
 		<div class="hero__copy">
 			<?php
 			// The ribbon used to read "Mekani svet peškirića", which is the

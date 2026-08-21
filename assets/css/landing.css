@@ -54,6 +54,22 @@
 	text-wrap: pretty;
 }
 
+/* ---------- Falling motifs (phones only) ----------
+   The layer is inert here and carries no background-image, so a desktop
+   browser never requests a single sprite: the whole thing switches on inside
+   the 880px block below, which is also the width where .hero__art disappears
+   and leaves the hero with no product on it. */
+.hero__fall {
+	display: none;
+}
+
+/* The copy has to paint over the sprites, and .hero has no stacking context of
+   its own beyond position:relative. */
+.hero__copy {
+	position: relative;
+	z-index: 1;
+}
+
 /* The offer ribbon. Loud on purpose: below 880px the hero is copy only, and
    this is the first line of it — the one thing that has to land before a thumb
    moves. Clay under a white label is 5.03:1. */
@@ -1294,6 +1310,56 @@
 		display: none;
 	}
 
+	/* ...which is what these replace. Sprites are 96px AVIFs (~1.4 KB each)
+	   cut from the hand-cropped squares, so the whole layer costs about as
+	   much as one motif card's thumbnail. */
+	.hero__fall {
+		display: block;
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		overflow: hidden;
+		pointer-events: none;
+		/* Not `strict`: size containment would have the layer measure itself
+		   as empty. Layout and paint are what matter — a sprite must not be
+		   able to widen the page on its way past. */
+		contain: layout paint;
+	}
+
+	/* Opacity is the readability budget, not a taste call. The motif backdrops
+	   average #B3957A and go to roughly a quarter luminance at their darkest;
+	   washed over the cream page at 0.15 that lands the surface near 0.835,
+	   which keeps --muted (the lead, the smallest text over them) at ~4.6:1 and
+	   --ink far above it. Raising this past ~0.18 walks the lead under AA. */
+	.hero__fall-item {
+		position: absolute;
+		top: 0;
+		left: var(--fall-x);
+		width: var(--fall-size);
+		height: var(--fall-size);
+		margin-left: calc(var(--fall-size) / -2);
+		border-radius: 22%;
+		opacity: 0.15;
+		background-image: var(--fall-img);
+		background-size: cover;
+		background-position: center;
+		animation: hero-fall var(--fall-dur) linear var(--fall-delay) infinite;
+	}
+
+	/* svh rather than percentages: translate percentages resolve against the
+	   sprite's own box, not the layer's, and the phone hero is sized in svh
+	   anyway (min-height: calc(100svh - 85px) above). A hero grown taller than
+	   the viewport by long copy just retires its sprites slightly early, which
+	   at 0.15 opacity nobody reads as a bug. */
+	@keyframes hero-fall {
+		from {
+			transform: translate3d(0, calc(var(--fall-size) * -1.4), 0) rotate(0deg);
+		}
+		to {
+			transform: translate3d(var(--fall-drift), 100svh, 0) rotate(140deg);
+		}
+	}
+
 	/* With the card gone the copy is about 480px of content in a ~760px box on
 	   a modern phone, which left it sitting as one tight lump between two dead
 	   bands. These space it to the screen it is actually on: the svh term does
@@ -1402,4 +1468,14 @@
 	}
 
 	.section__title { font-size: 30px; }
+}
+
+/* Sprites are decoration with a motion cost, so they do not get the global
+   near-zero-duration treatment main.css applies to animation generally —
+   that would only park fifteen of them wherever the first frame left them.
+   After the 880px block, so this wins where both apply. */
+@media (prefers-reduced-motion: reduce) {
+	.hero__fall {
+		display: none;
+	}
 }

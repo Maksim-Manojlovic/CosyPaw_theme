@@ -40,13 +40,15 @@ final class Catalog {
 	/**
 	 * Towel motifs.
 	 *
-	 * Each id resolves to four AVIFs in assets/motifs/ — `<id>.avif` (1086x1448,
+	 * Each id resolves to five AVIFs in assets/motifs/ — `<id>.avif` (1086x1448,
 	 * the untouched camera original and the seeder's sideload source),
 	 * `<id>-lg.avif` (900x1200) and `<id>-md.avif` (600x800) for the hero and
-	 * motif cards at 2x-3x and 1x-2x respectively, and `<id>-sm.avif` (360x360
-	 * square, the bundle-builder picker). Serving the pre-cropped variants keeps
-	 * the motif grid off the full-size originals; regenerate the derived three
-	 * with `node tools/build-images.mjs`.
+	 * motif cards at 2x-3x and 1x-2x respectively, `<id>-sm.avif` (360x360
+	 * square, the bundle-builder picker) and `<id>-xs.avif` (96x96, cut from
+	 * that same square for the sprites that fall behind the hero copy on a
+	 * phone). Serving the pre-cropped variants keeps the motif grid off the
+	 * full-size originals; regenerate the derived four with
+	 * `node tools/build-images.mjs`.
 	 *
 	 * AVIF is safe for the front end (the images are referenced by URL, and
 	 * browser support is universal), but see ProductSeeder::avif_supported() for
@@ -63,7 +65,7 @@ final class Catalog {
 	 * seven motifs. ProductSeeder writes them into any field still empty and
 	 * never over an edit made in wp-admin.
 	 *
-	 * @return array<int,array{id:string,name:string,price:int,alt:string,caption:string,image:string,image_lg:string,image_md:string,image_sm:string}>
+	 * @return array<int,array{id:string,name:string,price:int,alt:string,caption:string,image:string,image_lg:string,image_md:string,image_sm:string,image_xs:string}>
 	 */
 	public function products(): array {
 		$motifs = array(
@@ -202,6 +204,7 @@ final class Catalog {
 				'image_lg' => $base . $m['id'] . '-lg.avif',
 				'image_md' => $base . $m['id'] . '-md.avif',
 				'image_sm' => $base . $m['id'] . '-sm.avif',
+				'image_xs' => $base . $m['id'] . '-xs.avif',
 			);
 		}
 
@@ -334,7 +337,7 @@ final class Catalog {
 	 * Map of motif id => { name, image } for fast lookups (cart thumbnails etc.).
 	 * Names are translated for the current locale (from products()).
 	 *
-	 * @return array<string,array{id:string,name:string,image:string,image_lg:string,image_md:string,image_sm:string}>
+	 * @return array<string,array{id:string,name:string,image:string,image_lg:string,image_md:string,image_sm:string,image_xs:string}>
 	 */
 	public function motif_map(): array {
 		$map = array();
@@ -357,7 +360,7 @@ final class Catalog {
 	/**
 	 * Featured products for the hero carousel, in order.
 	 *
-	 * @return array<int,array{id:string,name:string,image:string,image_lg:string,image_md:string,image_sm:string}>
+	 * @return array<int,array{id:string,name:string,image:string,image_lg:string,image_md:string,image_sm:string,image_xs:string}>
 	 */
 	public function featured(): array {
 		$by_id = array();

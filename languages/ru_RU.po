@@ -539,6 +539,15 @@ msgstr "Самовывоз"
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Доставка курьером (почтовые расходы оплачиваются курьеру)"
 
+msgid "Ušteda na paketima"
+msgstr "Скидка за наборы"
+
+msgid "Ušteda na paketima (%s)"
+msgstr "Скидка за наборы (%s)"
+
+msgid "Još 1 peškirić za %s"
+msgstr "Ещё 1 полотенце за %s"
+
 msgid "Nothing found."
 msgstr "Ничего не найдено."
 

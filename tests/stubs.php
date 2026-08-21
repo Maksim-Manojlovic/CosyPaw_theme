@@ -135,5 +135,41 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 				'taxable' => $taxable,
 			);
 		}
+
+		/**
+		 * Total quantity across the cart lines.
+		 *
+		 * @return int
+		 */
+		public function get_cart_contents_count(): int {
+			$count = 0;
+			foreach ( $this->contents as $item ) {
+				$count += (int) ( $item['quantity'] ?? 0 );
+			}
+
+			return $count;
+		}
+
+		/**
+		 * Formatted cart total. WooCommerce returns markup here, so the stub
+		 * does too — the pill has to survive it.
+		 *
+		 * @return string
+		 */
+		public function get_cart_total(): string {
+			$total = 0.0;
+			foreach ( $this->contents as $item ) {
+				$product = $item['data'] ?? null;
+				if ( $product instanceof \WC_Product ) {
+					$total += (float) $product->get_price() * (int) ( $item['quantity'] ?? 0 );
+				}
+			}
+
+			foreach ( $this->fees as $fee ) {
+				$total += $fee['amount'];
+			}
+
+			return '<span class="woocommerce-Price-amount">' . number_format( $total, 0, ',', '.' ) . ' RSD</span>';
+		}
 	}
 }

@@ -539,3 +539,12 @@ msgstr "Local pickup"
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Courier delivery (postage paid to the courier)"
 
+msgid "Ušteda na paketima"
+msgstr "Package saving"
+
+msgid "Ušteda na paketima (%s)"
+msgstr "Package saving (%s)"
+
+msgid "Još 1 peškirić za %s"
+msgstr "1 more towel for %s"
+

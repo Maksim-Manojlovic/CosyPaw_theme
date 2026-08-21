@@ -60,6 +60,13 @@ final class Bootstrap {
 	private ?BundlePricing $bundle_pricing = null;
 
 	/**
+	 * Floating cart pill. Null when WooCommerce is inactive.
+	 *
+	 * @var FloatingCart|null
+	 */
+	private ?FloatingCart $floating_cart = null;
+
+	/**
 	 * SEO meta / structured data module.
 	 *
 	 * @var Seo
@@ -83,6 +90,10 @@ final class Bootstrap {
 		if ( class_exists( 'WooCommerce' ) ) {
 			$this->woocommerce    = new WooCommerce( $this->text_domain, new Catalog() );
 			$this->bundle_pricing = new BundlePricing( $this->text_domain, new Catalog() );
+
+			// The pill quotes the package pricing rather than recomputing it,
+			// so the two can never disagree about what one more towel costs.
+			$this->floating_cart = new FloatingCart( $this->text_domain, $this->bundle_pricing );
 		} else {
 			$this->register_missing_woocommerce_notice();
 		}

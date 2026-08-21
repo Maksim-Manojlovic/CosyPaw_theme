@@ -205,6 +205,12 @@ $sr_source = array(
 	'Pripremi iznos u gotovini za trenutak preuzimanja.'                                      => array( 'Have the amount ready in cash for the moment of handover.', 'Приготовьте сумму наличными к моменту получения.' ),
 	'Lično preuzimanje'                                                                       => array( 'Local pickup', 'Самовывоз' ),
 	'Dostava kurirskom službom (poštarina se plaća kuriru)'                                   => array( 'Courier delivery (postage paid to the courier)', 'Доставка курьером (почтовые расходы оплачиваются курьеру)' ),
+
+	// Cart-level package pricing (BundlePricing) and the floating cart pill.
+	// The fee label reaches the order, so it has to resolve per locale too.
+	'Ušteda na paketima'                                                                      => array( 'Package saving', 'Скидка за наборы' ),
+	'Ušteda na paketima (%s)'                                                                 => array( 'Package saving (%s)', 'Скидка за наборы (%s)' ),
+	'Još 1 peškirić za %s'                                                                    => array( '1 more towel for %s', 'Ещё 1 полотенце за %s' ),
 );
 
 // English-source msgid => [ serbian, russian ].

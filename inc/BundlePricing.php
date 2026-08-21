@@ -207,6 +207,63 @@ final class BundlePricing {
 	}
 
 	/**
+	 * How many towels the cart holds, packages counted as their own quantity.
+	 *
+	 * @param \WC_Cart|null $cart Cart to count, or the session cart.
+	 * @return int
+	 */
+	public function cart_towels( ?\WC_Cart $cart = null ): int {
+		if ( ! $cart instanceof \WC_Cart ) {
+			$cart = function_exists( 'WC' ) && WC()->cart ? WC()->cart : null;
+		}
+
+		return $cart instanceof \WC_Cart ? $this->pool( $cart )['towels'] : 0;
+	}
+
+	/**
+	 * What one more towel would cost, when the packages make it cheap.
+	 *
+	 * The pill's nudge. It is the marginal price of the next towel under the
+	 * best plan, not an invitation: at three towels the fourth costs full
+	 * price, so nothing is offered rather than dressing a single up as a deal.
+	 * That silence is correct — a cart sitting on a whole Trio is already at an
+	 * optimum, and the next saving is two towels away, which is a bigger ask
+	 * than a floating pill should make.
+	 *
+	 * @param int $towels Towels currently in the cart.
+	 * @return array{price:int,saving:int}|null Marginal price and what it saves, or null.
+	 */
+	public function next_step( int $towels ): ?array {
+		$tiers = $this->tiers();
+		if ( $towels < 1 || count( $tiers ) < 2 ) {
+			return null;
+		}
+
+		$single = 0;
+		foreach ( $tiers as $tier ) {
+			if ( 1 === $tier['qty'] ) {
+				$single = $tier['price'];
+				break;
+			}
+		}
+
+		if ( $single < 1 ) {
+			return null;
+		}
+
+		$marginal = self::plan( $towels + 1, $tiers )['total'] - self::plan( $towels, $tiers )['total'];
+
+		if ( $marginal < 1 || $marginal >= $single ) {
+			return null;
+		}
+
+		return array(
+			'price'  => $marginal,
+			'saving' => $single - $marginal,
+		);
+	}
+
+	/**
 	 * The towels in the cart and what they currently cost.
 	 *
 	 * Both numbers come from the same pass so they can never describe
@@ -366,9 +423,10 @@ final class BundlePricing {
 
 		$parts = array();
 		foreach ( $lines as $id => $count ) {
-			$name = $names[ $id ] ?? $id;
-			/* translators: 1: how many of this package, 2: package name, e.g. "1x Trio paket". */
-			$parts[] = sprintf( _x( '%1$dx %2$s', 'bundle plan line', 'cosypaw' ), $count, $name );
+			// Not translated: "2x Trio paket" is a count against a name the
+			// shop already stores per locale, and build-translations.php has
+			// no msgctxt to keep a format this generic apart from other uses.
+			$parts[] = sprintf( '%1$dx %2$s', $count, $names[ $id ] ?? $id );
 		}
 
 		if ( ! $parts ) {

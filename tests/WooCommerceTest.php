@@ -38,6 +38,7 @@ require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
+require_once dirname( __DIR__ ) . '/inc/FloatingCart.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';
 
@@ -213,12 +214,19 @@ final class WooCommerceTest extends TestCase {
 	 * swaps on AJAX add-to-cart, hidden at zero items.
 	 */
 	public function test_cart_count_fragment_outputs_badge_selector(): void {
+		// WC() is mocked to an empty cart rather than left undefined: Brain\Monkey
+		// declares a mocked function for the whole process, so a sibling test
+		// file that mocks WC() would otherwise decide this one's branch.
+		$holder = new \stdClass();
+		$holder->cart = new \WC_Cart();
+		Functions\when( 'WC' )->justReturn( $holder );
+
 		$wc        = new WooCommerce( 'cosypaw', new Catalog() );
 		$fragments = $wc->cart_count_fragment( array() );
 
 		$this->assertArrayHasKey( 'span.cart-btn__badge', $fragments );
 		$this->assertStringContainsString( 'cart-btn__badge', $fragments['span.cart-btn__badge'] );
-		// WooCommerce is undefined in this process → zero count → hidden.
+		// Zero items → hidden.
 		$this->assertStringContainsString( 'hidden', $fragments['span.cart-btn__badge'] );
 	}
 

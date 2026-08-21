@@ -312,6 +312,54 @@ final class BundlePricingTest extends TestCase {
 	}
 
 	/**
+	 * The pill's nudge is the marginal price of the next towel — and silence
+	 * where there is no saving to offer, rather than a single dressed as one.
+	 *
+	 * @dataProvider next_step_provider
+	 *
+	 * @param int      $towels Towels in the cart.
+	 * @param int|null $price  Expected marginal price, or null for no nudge.
+	 */
+	public function test_next_step_only_speaks_when_the_next_towel_is_cheap( int $towels, ?int $price ): void {
+		$step = ( new BundlePricing( 'cosypaw', new Catalog() ) )->next_step( $towels );
+
+		if ( null === $price ) {
+			$this->assertNull( $step );
+
+			return;
+		}
+
+		$this->assertNotNull( $step );
+		$this->assertSame( $price, $step['price'] );
+		$this->assertSame( 990 - $price, $step['saving'] );
+	}
+
+	/**
+	 * Towel count => what one more costs, or null when it costs full price.
+	 *
+	 * @return array<string,array{0:int,1:int|null}>
+	 */
+	public static function next_step_provider(): array {
+		return array(
+			'one towel opens a duo'      => array( 1, 500 ),
+			'two towels open a trio'     => array( 2, 490 ),
+			'three towels are complete'  => array( 3, null ),
+			'four towels reopen a duo'   => array( 4, 500 ),
+			'five towels open a trio'    => array( 5, 490 ),
+			'six towels are complete'    => array( 6, null ),
+		);
+	}
+
+	/**
+	 * Unseeded packages leave nothing to nudge towards.
+	 */
+	public function test_next_step_is_silent_without_packages(): void {
+		$this->stub_packages( array() );
+
+		$this->assertNull( ( new BundlePricing( 'cosypaw', new Catalog() ) )->next_step( 2 ) );
+	}
+
+	/**
 	 * wp-admin renders order screens against the cart; a fee booked there would
 	 * be double-counted against the one the front end already applied.
 	 */

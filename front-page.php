@@ -280,21 +280,57 @@ if ( $hero_deal ) {
 					<div class="vertical-carousel__track">
 						<?php foreach ( $featured as $cosypaw_i => $f ) : ?>
 							<div class="vertical-carousel__slide">
-								<img
-									class="hero__slide"
-									src="<?php echo esc_url( $f['image_md'] ); ?>"
-									srcset="<?php echo esc_attr( \Theme\Assets::motif_srcset( $f ) ); ?>"
-									sizes="<?php echo esc_attr( \Theme\Assets::HERO_SIZES ); ?>"
-									width="600"
-									height="800"
-									alt="<?php echo esc_attr( $f['name'] ); ?>"
-									decoding="async"
+								<picture>
 									<?php
-									// The first slide is the hero image; the rest sit
-									// outside the card's visible area and can wait.
-									echo 0 === $cosypaw_i ? 'fetchpriority="high"' : 'loading="lazy"';
+									/*
+									 * Desktop only, and deliberately so.
+									 *
+									 * .hero__art is display:none below 881px, but a
+									 * browser still fetches an <img> inside a hidden
+									 * subtree — and the first slide asks for
+									 * fetchpriority="high". A phone was spending the
+									 * best moment of its connection on ~40 KB of a
+									 * picture it never paints, more than the entire
+									 * falling-motif layer that replaced the card
+									 * there. A media-gated <source> is the only way
+									 * to skip that fetch without surrendering the
+									 * priority on desktop, where this is the LCP
+									 * element.
+									 *
+									 * srcset and sizes must stay character-identical
+									 * to Assets::preload_lcp_image(), or the preload
+									 * and the picture choose different candidates and
+									 * the motif is downloaded twice. That includes
+									 * HERO_SIZES' (max-width: 424px) branch, which is
+									 * unreachable inside a source gated at 881px but
+									 * load-bearing for the match.
+									 */
 									?>
-								>
+									<source
+										media="(min-width: 881px)"
+										srcset="<?php echo esc_attr( \Theme\Assets::motif_srcset( $f ) ); ?>"
+										sizes="<?php echo esc_attr( \Theme\Assets::HERO_SIZES ); ?>"
+									>
+									<?php
+									// What a phone resolves to instead: a 1x1
+									// transparent GIF, inline, so there is no request
+									// to make. It is never painted either — the card
+									// it would sit in is not rendered at this width.
+									?>
+									<img
+										class="hero__slide"
+										src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+										width="600"
+										height="800"
+										alt="<?php echo esc_attr( $f['name'] ); ?>"
+										decoding="async"
+										<?php
+										// The first slide is the hero image; the rest sit
+										// outside the card's visible area and can wait.
+										echo 0 === $cosypaw_i ? 'fetchpriority="high"' : 'loading="lazy"';
+										?>
+									>
+								</picture>
 							</div>
 						<?php endforeach; ?>
 					</div>

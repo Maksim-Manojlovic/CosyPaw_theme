@@ -190,7 +190,18 @@ final class Assets {
 			return;
 		}
 
-		$featured = ( new Catalog() )->featured();
+		// Same availability filter front-page.php applies to the carousel. A
+		// retired motif keeps its Catalog row so old orders can still resolve
+		// its name, but it is not rendered — and preloading it would both waste
+		// the highest-priority fetch on the page and leave the slide that IS
+		// rendered to download separately.
+		$featured = array_values(
+			array_filter(
+				( new Catalog() )->featured(),
+				static fn( array $row ): bool => (bool) ( $row['available'] ?? true )
+			)
+		);
+
 		if ( empty( $featured[0] ) ) {
 			return;
 		}

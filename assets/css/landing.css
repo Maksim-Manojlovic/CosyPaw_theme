@@ -230,6 +230,15 @@
 	background: var(--cream2);
 }
 
+/* <picture> is inline by default, which would leave .hero__slide with no
+   definite parent height to fill and collapse the slide. The wrapper exists so
+   the slide's <source> can be gated to desktop — see front-page.php. */
+.hero__card-inner picture {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
 /* <img> rather than a background: backgrounds cannot carry srcset or
    loading="lazy", so every motif on the page was fetched at one size, eagerly. */
 .hero__slide {

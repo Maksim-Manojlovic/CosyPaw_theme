@@ -48,6 +48,10 @@ export class BundleBuilder {
 		this.tiers = Array.from(root.querySelectorAll('[data-tiers] [data-package]'));
 		this.motifs = Array.from(root.querySelectorAll('[data-gallery] [data-motif-id]'));
 		this.step2El = root.querySelector('[data-builder-step2]');
+		// Slots, price and CTA share this row, so it is what every "look at
+		// your bundle" scroll aims at — the button alone would put the towels
+		// off the top of the screen on a phone, where the row stacks.
+		this.summaryEl = root.querySelector('[data-builder-summary]');
 		this.slotsEl = root.querySelector('[data-slots]');
 		this.countEl = root.querySelector('[data-count]');
 		this.qtyLabelEl = root.querySelector('[data-qty-label]');
@@ -168,9 +172,9 @@ export class BundleBuilder {
 		}
 		this.picks.push(id);
 		this._render();
-		// When the bundle just filled up, bring the CTA into view.
+		// When the bundle just filled up, bring the summary into view.
 		if (this.picks.length === qty) {
-			this._scrollTo(this.ctaBtn);
+			this._scrollTo(this.summaryEl || this.ctaBtn);
 		}
 	}
 
@@ -198,7 +202,7 @@ export class BundleBuilder {
 
 		const remaining = this._qty() - this.picks.length;
 		if (remaining <= 0) {
-			// addMotif scrolled to the CTA — this click filled the bundle.
+			// addMotif scrolled to the summary — this click filled the bundle.
 			this._toast(this.l10n.bundleReady);
 			return;
 		}
@@ -261,7 +265,7 @@ export class BundleBuilder {
 		}
 
 		this._render();
-		this._scrollTo(this.ctaBtn);
+		this._scrollTo(this.summaryEl || this.ctaBtn);
 	}
 
 	/**
@@ -396,6 +400,11 @@ export class BundleBuilder {
 
 		this._renderSlots(qty);
 		this._renderGalleryBadges();
+
+		// The row carries the finished state, so the styling has one hook for it.
+		if (this.summaryEl) {
+			this.summaryEl.classList.toggle('is-full', this.picks.length >= qty);
+		}
 
 		if (this.countEl) this.countEl.textContent = String(this.picks.length);
 		if (this.qtyLabelEl) this.qtyLabelEl.textContent = String(qty);

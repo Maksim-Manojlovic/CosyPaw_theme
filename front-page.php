@@ -680,7 +680,28 @@ if ( $hero_deal ) {
 				</div>
 
 				<div class="builder-card">
-					<div class="builder-slots" data-slots></div>
+					<?php
+					// The price and the button used to sit at the far end of the card,
+					// a whole gallery below the towels they were pricing — two separate
+					// screenfuls for one decision. They share a row with the slots now:
+					// what is in the bundle, what it costs, and the way to buy it.
+					?>
+					<div class="builder-summary" data-builder-summary>
+						<div class="builder-slots" data-slots></div>
+						<div class="builder-cta">
+							<div class="builder-cta__info">
+								<div class="builder-cta__price">
+									<span class="pkg-price" data-sel-price><?php echo esc_html( \Theme\Catalog::format_price( $selected['price'] ) ); ?></span>
+									<span class="pkg-old" data-sel-old<?php echo empty( $selected['old'] ) ? ' hidden' : ''; ?>><?php echo esc_html( empty( $selected['old'] ) ? '' : \Theme\Catalog::format_price( (int) $selected['old'] ) ); ?></span>
+								</div>
+								<span class="builder-cta__meta"><span data-sel-name><?php echo esc_html( $selected['name'] ); ?></span> • <span data-sel-per><?php echo esc_html( \Theme\Catalog::format_price( $selected['per'] ) . ' / ' . __( 'kom', 'cosypaw' ) ); ?></span></span>
+							</div>
+							<button type="button" class="pkg-cta builder-cta__btn" data-add-bundle>
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>
+								<span data-cta-label><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></span>
+							</button>
+						</div>
+					</div>
 
 					<div class="builder-gallery" data-gallery>
 						<?php foreach ( $products as $p ) : ?>
@@ -713,20 +734,6 @@ if ( $hero_deal ) {
 								</span>
 							</button>
 						<?php endforeach; ?>
-					</div>
-
-					<div class="builder-cta">
-						<div class="builder-cta__info">
-							<div class="builder-cta__price">
-								<span class="pkg-price" data-sel-price><?php echo esc_html( \Theme\Catalog::format_price( $selected['price'] ) ); ?></span>
-								<span class="pkg-old" data-sel-old<?php echo empty( $selected['old'] ) ? ' hidden' : ''; ?>><?php echo esc_html( empty( $selected['old'] ) ? '' : \Theme\Catalog::format_price( (int) $selected['old'] ) ); ?></span>
-							</div>
-							<span class="builder-cta__meta"><span data-sel-name><?php echo esc_html( $selected['name'] ); ?></span> • <span data-sel-per><?php echo esc_html( \Theme\Catalog::format_price( $selected['per'] ) . ' / ' . __( 'kom', 'cosypaw' ) ); ?></span></span>
-						</div>
-						<button type="button" class="pkg-cta builder-cta__btn" data-add-bundle>
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>
-							<span data-cta-label><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></span>
-						</button>
 					</div>
 				</div>
 

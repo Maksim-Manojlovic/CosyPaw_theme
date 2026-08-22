@@ -789,6 +789,65 @@
 	box-shadow: var(--shadow-md);
 }
 
+/* Slots, price and button on one line: the bundle and its total belong in one
+   glance, and they used to be a gallery apart. Wraps to two rows the moment
+   the line no longer fits, which is most of the way down a tablet. */
+.builder-summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	flex-wrap: wrap;
+	padding-bottom: 24px;
+	margin-bottom: 24px;
+	border-bottom: 1px dashed var(--line);
+}
+
+/* The bundle is complete — the dashes close up. */
+.builder-summary.is-full {
+	border-bottom-style: solid;
+	border-bottom-color: var(--sage);
+}
+
+.builder-summary .builder-slots {
+	flex: 0 1 auto;
+	gap: 12px;
+	padding-bottom: 0;
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+.builder-summary .builder-cta {
+	flex: 0 1 auto;
+	gap: 16px;
+	margin-top: 0;
+	padding-top: 0;
+	border-top: none;
+}
+
+/* Below this the slots, the price and the button stop fitting on one line —
+   about a 1,000px viewport with a Trio. The price and the button take a line
+   of their own there, so the wrap reads as a layout rather than an accident. */
+@media (max-width: 1080px) {
+	.builder-summary .builder-cta {
+		width: 100%;
+		justify-content: space-between;
+	}
+}
+
+/* Slightly tighter than the row they replaced — three of them now share the
+   line with a price and a button. */
+.builder-summary .builder-slot {
+	width: 96px;
+}
+
+.builder-summary .builder-slot__img,
+.builder-summary .builder-slot__placeholder {
+	width: 84px;
+	height: 84px;
+	border-radius: 20px;
+}
+
 /* Slots */
 .builder-slots {
 	display: flex;
@@ -1560,6 +1619,14 @@ a.testimonial__meta:focus-visible {
 		max-width: none;
 	}
 
+	/* Not enough width for slots and a price side by side. The slots keep the
+	   first line, the price and the button take the second one whole. */
+	.builder-card { padding: 20px; }
+
+	.builder-summary {
+		gap: 16px;
+	}
+
 	.testimonials { grid-template-columns: 1fr; }
 	.lifestyle { grid-template-columns: 1fr; }
 	.pkg-banner { grid-template-columns: 1fr; }
@@ -1620,6 +1687,56 @@ a.testimonial__meta:focus-visible {
 	}
 
 	.section__title { font-size: 30px; }
+
+	/* Three slots still have to share one line at 360px, or the summary stops
+	   being a summary. 76px each leaves room for the gaps and the card padding.
+	   The remove buttons come in with them: at this spacing a 44px hit area
+	   reaches into its neighbour. */
+	.builder-card { padding: 16px; }
+
+	.builder-summary .builder-slots {
+		width: 100%;
+		gap: 12px;
+	}
+
+	.builder-summary .builder-slot {
+		width: 76px;
+	}
+
+	.builder-summary .builder-slot__img,
+	.builder-summary .builder-slot__placeholder {
+		width: 68px;
+		height: 68px;
+		border-radius: 16px;
+	}
+
+	.builder-summary .builder-slot__remove::after {
+		width: 38px;
+		height: 38px;
+	}
+
+	/* Motif names are one word wider than the slot at this size, and the same
+	   name is printed under the tile in the gallery below. */
+	.builder-summary .builder-slot__name {
+		max-width: 100%;
+		font-size: 11.5px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.builder-cta__price .pkg-price { font-size: 24px; }
+
+	.builder-summary .builder-cta {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.builder-summary .builder-cta__btn {
+		width: 100%;
+		justify-content: center;
+	}
 }
 
 /* Sprites are decoration with a motion cost, so they do not get the global

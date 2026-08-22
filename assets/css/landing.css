@@ -374,22 +374,28 @@
 	border: 1px solid var(--line);
 }
 
-.benefit__icon {
-	width: 52px;
-	height: 52px;
-	border-radius: 16px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+/* A real towel, not a stock glyph. 76px against a 192px source covers a 2.5x
+   screen; the squircle is the radius the hero's falling sprites use, so the two
+   places a motif appears cropped agree with each other.
 
-.benefit__icon--sand { background: var(--sand); color: var(--claydk); }
-.benefit__icon--sage { background: var(--sagelt); color: var(--sage); }
+   No tinted plate behind it any more. The old --sand/--sage tiles alternated by
+   position in the loop rather than by meaning, and the photographs bring their
+   own colour — a plate under them would only fight it. */
+.benefit__photo {
+	display: block;
+	width: 76px;
+	height: 76px;
+	border-radius: 22%;
+	object-fit: cover;
+	object-position: center;
+	background-color: var(--cream2);
+	box-shadow: 0 6px 16px rgba(62, 51, 42, 0.12);
+}
 
 .benefit__title {
 	font-weight: 700;
 	font-size: 20px;
-	margin: 16px 0 6px;
+	margin: 18px 0 6px;
 }
 
 .benefit__text {

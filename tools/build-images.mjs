@@ -16,17 +16,25 @@
  *              with lettering, where 4:2:0 smears the edges for a few hundred
  *              bytes of savings.
  *
- * `<id>-sm.avif` (the 360x360 bundle-builder thumbnail) is deliberately not
- * regenerated: it is a hand-picked 1:1 crop, not a plain downscale, and it
- * never reaches the critical path. It IS read, though — `-xs` (96x96, the
- * hero's falling sprites on a phone) is derived from it rather than from the
- * portrait original, so the sprites keep that same hand-picked framing.
+ *   squares    the cuts taken from `<id>-sm.avif` rather than the original:
+ *              `-th` (192px, the benefit cards) and `-xs` (96px, the hero's
+ *              falling sprites on a phone). Both want a square, and the square
+ *              is the one a person chose — deriving them from the portrait
+ *              original would reframe every one of them.
+ *
+ * `<id>-sm.avif` itself (the 360x360 bundle-builder thumbnail) is deliberately
+ * never regenerated: it is that hand-picked 1:1 crop, not a plain downscale,
+ * and it never reaches the critical path. The `squares` family only reads it.
+ *
+ * It is its own `--only` family because it is cheap — 20 small sources — while
+ * `motifs` re-encodes twenty 1086x1448 originals at effort 9 and takes minutes.
+ * Adding a square size should not cost a full motif rebuild.
  *
  * The photo quality numbers are tuned for terry-cloth texture viewed at ~350
  * CSS px. The -lg cut is always downscaled at least 2.4x on screen, so it
  * tolerates a lower quality than -md, which can be shown near 1:1.
  *
- * Usage: node tools/build-images.mjs [--only=motifs,logo,lifestyle] [--dry]
+ * Usage: node tools/build-images.mjs [--only=motifs,squares,logo,lifestyle] [--dry]
  */
 
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
@@ -41,11 +49,14 @@ const PHOTO_VARIANTS = [
 	{ suffix: '-md', width: 600, quality: 42 },
 ];
 
-// Derived from `-sm`, not from the original: these are square, and the square
-// crop is the one a person chose. Shown at 34-58 CSS px behind the hero copy at
-// a fifth of full opacity, so 96px covers a 2x phone and the quality only has
-// to survive being looked past.
-const SQUARE_VARIANTS = [ { suffix: '-xs', width: 96, quality: 44 } ];
+// Cut from `-sm`, never from the original. `-th` is shown at 76 CSS px on the
+// benefit cards, where it is looked *at*, so it carries the quality of a real
+// thumbnail; `-xs` is looked *past* at 34-58 px behind the hero copy and only
+// has to hold its shape.
+const SQUARE_VARIANTS = [
+	{ suffix: '-th', width: 192, quality: 50 },
+	{ suffix: '-xs', width: 96, quality: 44 },
+];
 
 const args = process.argv.slice( 2 );
 const dry = args.includes( '--dry' );
@@ -89,7 +100,7 @@ async function derive( src, dest, { width, quality, chroma = '4:2:0' } ) {
 
 if ( wanted( 'motifs' ) ) {
 	const ids = readdirSync( MOTIF_DIR )
-		.filter( ( f ) => f.endsWith( '.avif' ) && ! /-(lg|md|sm|xs)\.avif$/.test( f ) )
+		.filter( ( f ) => f.endsWith( '.avif' ) && ! /-(lg|md|sm|th|xs)\.avif$/.test( f ) )
 		.map( ( f ) => f.replace( /\.avif$/, '' ) )
 		.sort();
 
@@ -97,17 +108,21 @@ if ( wanted( 'motifs' ) ) {
 		for ( const v of PHOTO_VARIANTS ) {
 			await derive( join( MOTIF_DIR, `${ id }.avif` ), join( MOTIF_DIR, `${ id }${ v.suffix }.avif` ), v );
 		}
+	}
+}
 
-		// A motif with no hand-cropped square simply gets no sprite; the hero
-		// picks from whatever exists rather than falling back to a portrait
-		// crop that would read as a different picture.
-		const square = join( MOTIF_DIR, `${ id }-sm.avif` );
-		if ( ! statSync( square, { throwIfNoEntry: false } ) ) {
-			continue;
-		}
+if ( wanted( 'squares' ) ) {
+	const ids = readdirSync( MOTIF_DIR )
+		.filter( ( f ) => f.endsWith( '-sm.avif' ) )
+		.map( ( f ) => f.replace( /-sm\.avif$/, '' ) )
+		.sort();
 
+	// A motif with no hand-cropped square simply gets no square cuts. The page
+	// falls back to another motif rather than reframing a portrait original,
+	// which would read as a different picture.
+	for ( const id of ids ) {
 		for ( const v of SQUARE_VARIANTS ) {
-			await derive( square, join( MOTIF_DIR, `${ id }${ v.suffix }.avif` ), v );
+			await derive( join( MOTIF_DIR, `${ id }-sm.avif` ), join( MOTIF_DIR, `${ id }${ v.suffix }.avif` ), v );
 		}
 	}
 }

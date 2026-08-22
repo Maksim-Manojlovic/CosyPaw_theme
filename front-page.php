@@ -709,38 +709,64 @@ if ( $hero_deal ) {
 
 		<div class="benefits">
 			<?php
+			/*
+			 * Each card is illustrated by the motif whose own catalogue caption
+			 * already carries the point it is making: the koala "spava dok se
+			 * ti umivaš", the bear is "zagrljaj na kuki", the cherry is "mašna
+			 * na vrhu dana". The pairing is editorial, not decorative — which
+			 * is also why it is written here rather than derived from the order
+			 * the catalogue happens to be in.
+			 *
+			 * These used to be four stock line icons — a cloud, a droplet, a
+			 * hook, a gift — on the only section of the page that showed no
+			 * product at all, in a shop that sells hand-sewn animals.
+			 */
 			$benefits = array(
 				array(
-					'tone'  => 'sand',
-					'icon'  => '<path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.6A4 4 0 0 1 17 18z"/>',
-					'title' => __( 'Mekano kao oblak', 'cosypaw' ),
-					'text'  => __( 'Plišana mikrofibra prijatna i nežnoj dečjoj koži.', 'cosypaw' ),
+					'motif' => 'koala',
+					'title' => __( 'Deca ih biraju sama', 'cosypaw' ),
+					'text'  => __( 'Ruke se obrišu bez pregovora kad na kuki visi drugar.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'sage',
-					'icon'  => '<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z"/>',
-					'title' => __( 'Upija u trenu', 'cosypaw' ),
-					'text'  => __( 'Brzo suši ručice i ostaje suv i svež tokom dana.', 'cosypaw' ),
+					'motif' => 'pingvin',
+					'title' => __( 'Upija, ne samo ukrašava', 'cosypaw' ),
+					'text'  => __( 'Plišana mikrofibra osuši ručice u trenu i ostane sveža do večeri.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'sand',
-					'icon'  => '<path d="M12 4v6"/><circle cx="12" cy="15" r="5"/>',
-					'title' => __( 'Alka za kačenje', 'cosypaw' ),
-					'text'  => __( 'Okačiš ga na kuku ili ručku — uvek na svom mestu.', 'cosypaw' ),
+					'motif' => 'meda',
+					'title' => __( 'Šiven rukom, jedan po jedan', 'cosypaw' ),
+					'text'  => __( 'Isečen, šiven i pregledan ručno. Nema dva potpuno ista.', 'cosypaw' ),
 				),
 				array(
-					'tone'  => 'sage',
-					'icon'  => '<path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5zM12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5z"/>',
-					'title' => __( 'Savršen poklon', 'cosypaw' ),
-					'text'  => __( 'Slatka sitnica koja uvek izmami osmeh i „awww”.', 'cosypaw' ),
+					'motif' => 'tresnja',
+					'title' => __( 'Poklon koji se pamti', 'cosypaw' ),
+					'text'  => __( 'Sitnica koja izmami osmeh pre nego što je odmotana.', 'cosypaw' ),
 				),
 			);
-			foreach ( $benefits as $b ) :
+
+			// Resolved against the in-stock list, so retiring a motif in
+			// wp-admin cannot leave a card with a broken picture. The fallback
+			// walks the catalogue rather than repeating one motif, which would
+			// put the same towel on two cards side by side.
+			$cosypaw_by_id = array_column( $products, null, 'id' );
+
+			foreach ( $benefits as $cosypaw_b => $b ) :
+				$motif = $cosypaw_by_id[ $b['motif'] ] ?? ( $products[ $cosypaw_b % count( $products ) ] ?? null );
+
+				if ( ! $motif ) {
+					continue;
+				}
 				?>
 				<div class="benefit">
-					<span class="benefit__icon benefit__icon--<?php echo esc_attr( $b['tone'] ); ?>">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?php echo wp_kses( $b['icon'], array( 'path' => array( 'd' => array() ), 'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ) ) ); ?></svg>
-					</span>
+					<img
+						class="benefit__photo"
+						src="<?php echo esc_url( $motif['image_th'] ); ?>"
+						width="192"
+						height="192"
+						alt="<?php echo esc_attr( $motif['name'] ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
 					<h3 class="benefit__title"><?php echo esc_html( $b['title'] ); ?></h3>
 					<p class="benefit__text"><?php echo esc_html( $b['text'] ); ?></p>
 				</div>

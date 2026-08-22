@@ -65,29 +65,29 @@ msgstr "A little hug by the sink"
 msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
 msgstr "Every towel is soft, absorbent and has a hanging loop — always at hand, always cute."
 
-msgid "Mekano kao oblak"
-msgstr "Soft as a cloud"
+msgid "Deca ih biraju sama"
+msgstr "Children pick them out themselves"
 
-msgid "Plišana mikrofibra prijatna i nežnoj dečjoj koži."
-msgstr "Plush microfiber, gentle even on a child's skin."
+msgid "Ruke se obrišu bez pregovora kad na kuki visi drugar."
+msgstr "Hands get dried without an argument when a friend is hanging on the hook."
 
-msgid "Upija u trenu"
-msgstr "Absorbs instantly"
+msgid "Upija, ne samo ukrašava"
+msgstr "It absorbs, it does not just decorate"
 
-msgid "Brzo suši ručice i ostaje suv i svež tokom dana."
-msgstr "Dries little hands fast and stays dry and fresh all day."
+msgid "Plišana mikrofibra osuši ručice u trenu i ostane sveža do večeri."
+msgstr "Plush microfiber dries little hands in an instant and stays fresh till evening."
 
-msgid "Alka za kačenje"
-msgstr "Hanging loop"
+msgid "Šiven rukom, jedan po jedan"
+msgstr "Sewn by hand, one at a time"
 
-msgid "Okačiš ga na kuku ili ručku — uvek na svom mestu."
-msgstr "Hang it on a hook or handle — always in its place."
+msgid "Isečen, šiven i pregledan ručno. Nema dva potpuno ista."
+msgstr "Cut, sewn and checked by hand. No two are exactly alike."
 
-msgid "Savršen poklon"
-msgstr "Perfect gift"
+msgid "Poklon koji se pamti"
+msgstr "A gift that is remembered"
 
-msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
-msgstr "A sweet little thing that always brings a smile and an “awww”."
+msgid "Sitnica koja izmami osmeh pre nego što je odmotana."
+msgstr "A little thing that draws a smile before it is even unwrapped."
 
 msgid "Što više peškirića, veća ušteda"
 msgstr "The more towels, the bigger the saving"

@@ -65,29 +65,29 @@ msgstr "Маленькое объятие у раковины"
 msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
 msgstr "Каждое полотенце мягкое, впитывающее и с петелькой — всегда под рукой, всегда милое."
 
-msgid "Mekano kao oblak"
-msgstr "Мягкое, как облако"
+msgid "Deca ih biraju sama"
+msgstr "Дети выбирают их сами"
 
-msgid "Plišana mikrofibra prijatna i nežnoj dečjoj koži."
-msgstr "Плюшевая микрофибра, приятная даже нежной детской коже."
+msgid "Ruke se obrišu bez pregovora kad na kuki visi drugar."
+msgstr "Руки вытираются без уговоров, когда на крючке висит друг."
 
-msgid "Upija u trenu"
-msgstr "Впитывает мгновенно"
+msgid "Upija, ne samo ukrašava"
+msgstr "Впитывает, а не только украшает"
 
-msgid "Brzo suši ručice i ostaje suv i svež tokom dana."
-msgstr "Быстро сушит ручки и остаётся сухим и свежим весь день."
+msgid "Plišana mikrofibra osuši ručice u trenu i ostane sveža do večeri."
+msgstr "Плюшевая микрофибра сушит ручки мгновенно и остаётся свежей до вечера."
 
-msgid "Alka za kačenje"
-msgstr "Петелька для подвешивания"
+msgid "Šiven rukom, jedan po jedan"
+msgstr "Сшито вручную, по одному"
 
-msgid "Okačiš ga na kuku ili ručku — uvek na svom mestu."
-msgstr "Повесь на крючок или ручку — всегда на своём месте."
+msgid "Isečen, šiven i pregledan ručno. Nema dva potpuno ista."
+msgstr "Раскроено, сшито и проверено вручную. Нет двух совершенно одинаковых."
 
-msgid "Savršen poklon"
-msgstr "Идеальный подарок"
+msgid "Poklon koji se pamti"
+msgstr "Подарок, который запоминается"
 
-msgid "Slatka sitnica koja uvek izmami osmeh i „awww”."
-msgstr "Милая мелочь, что всегда вызывает улыбку и «ня»."
+msgid "Sitnica koja izmami osmeh pre nego što je odmotana."
+msgstr "Мелочь, что вызывает улыбку ещё до того, как её развернут."
 
 msgid "Što više peškirića, veća ušteda"
 msgstr "Чем больше полотенец, тем больше выгода"

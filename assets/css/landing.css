@@ -681,13 +681,10 @@
 	margin-bottom: 0;
 }
 
-/* Step 2 is revealed only after a tier is chosen. */
+/* Step 2 ships open with a tier pre-selected; this only covers a builder
+   that somehow has no tiers to select. */
 .builder__reveal[hidden] {
 	display: none;
-}
-
-.builder__reveal {
-	animation: pop 0.28s ease;
 }
 
 .builder__step {

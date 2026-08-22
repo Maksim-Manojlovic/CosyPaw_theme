@@ -539,10 +539,17 @@ if ( $hero_deal ) {
 			</div>
 
 			<?php
-			// data-default-package is the tier a deep link from a product page
-			// lands on: arriving with ?motif= set means the towel is already
-			// chosen, so the builder opens on a size rather than on nothing.
+			// The builder opens on data-default-package already selected, with
+			// step 2 visible: an unselected grid read as decoration, and people
+			// scrolled past it without noticing a size had to be picked.
+			// Changing the size is still one click, and the tier is also what a
+			// deep link from a product page (?motif=) lands on.
 			?>
+			<noscript>
+				<?php // Nothing in step 2 works without JS, and it no longer starts hidden. ?>
+				<style>.builder__reveal { display: none; }</style>
+			</noscript>
+
 			<div class="builder" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>">
 
 				<div class="builder__step">
@@ -567,7 +574,7 @@ if ( $hero_deal ) {
 							<?php if ( ! empty( $pkg['product_id'] ) ) : ?>
 							data-product-id="<?php echo esc_attr( (string) (int) $pkg['product_id'] ); ?>"
 							<?php endif; ?>
-							aria-pressed="false"
+							aria-pressed="<?php echo $pkg['id'] === $default_pkg ? 'true' : 'false'; ?>"
 						>
 							<span class="pkg-card__ring" aria-hidden="true"></span>
 							<?php if ( ! empty( $pkg['badge'] ) ) : ?>
@@ -609,19 +616,18 @@ if ( $hero_deal ) {
 					<?php endforeach; ?>
 				</div>
 
-				<div class="builder__reveal" data-builder-step2 hidden>
+				<div class="builder__reveal" data-builder-step2>
 				<div class="builder__step builder__step--row">
 					<div class="builder__step-head">
 						<span class="builder__num">2</span>
-						<?php // tabindex=-1: focus lands here when the step is revealed. ?>
-						<span class="builder__step-title" data-builder-step2-heading tabindex="-1"><?php esc_html_e( 'Ubaci svoje peškiriće', 'cosypaw' ); ?></span>
+						<span class="builder__step-title"><?php esc_html_e( 'Ubaci svoje peškiriće', 'cosypaw' ); ?></span>
 					</div>
 					<div class="builder__tools">
 						<?php
 						// Live region: the count is the only feedback that a motif
 						// was added or removed, and it was changing silently.
 						?>
-						<span class="builder__count" role="status" aria-live="polite"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label>3</b></span>
+						<span class="builder__count" role="status" aria-live="polite"><?php esc_html_e( 'Izabrano', 'cosypaw' ); ?> <b data-count>0</b> / <b data-qty-label><?php echo esc_html( (string) (int) $selected['qty'] ); ?></b></span>
 						<button type="button" class="builder__tool" data-random>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/></svg>
 							<?php esc_html_e( 'Iznenadi me', 'cosypaw' ); ?>

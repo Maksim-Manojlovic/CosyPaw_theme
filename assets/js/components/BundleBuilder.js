@@ -59,8 +59,19 @@ export class BundleBuilder {
 		this.selPerEl = root.querySelector('[data-sel-per]');
 
 		this.picks = [];
-		// No tier is pre-selected: Step 2 stays hidden until the user picks one.
-		this.selected = this.tiers.find((t) => t.getAttribute('aria-pressed') === 'true') || null;
+		// The markup ships one tier already pressed (see front-page.php). The
+		// fallbacks cover markup that does not: prefer data-default-package,
+		// then the first tier, so the builder is never a dead grid.
+		this.selected =
+			this.tiers.find((t) => t.getAttribute('aria-pressed') === 'true') ||
+			this.tiers.find((t) => t.dataset.package === root.dataset.defaultPackage) ||
+			this.tiers[0] ||
+			null;
+		if (this.selected) {
+			this.tiers.forEach((t) =>
+				t.setAttribute('aria-pressed', t === this.selected ? 'true' : 'false')
+			);
+		}
 		// True while an add-to-cart request is in flight.
 		this.busy = false;
 
@@ -72,12 +83,8 @@ export class BundleBuilder {
 	}
 
 	/**
-	 * Open the builder on a motif carried in from a product page (?motif=id).
-	 *
-	 * The "no tier pre-selected" rule exists so the page does not decide for a
-	 * visitor who has decided nothing yet. Someone arriving from a product page
-	 * has already picked a towel, so here the default size is a head start
-	 * rather than a guess — and they can change it in one click.
+	 * Drop a motif carried in from a product page (?motif=id) into the bundle.
+	 * The tier is already selected by then, so the towel just lands in slot 1.
 	 */
 	_applyDeepLink() {
 		let wanted = '';
@@ -87,15 +94,7 @@ export class BundleBuilder {
 			return;
 		}
 
-		if (!wanted || !this._motifById(wanted)) return;
-
-		if (!this.selected) {
-			const preferred = this.root.dataset.defaultPackage;
-			const tier =
-				this.tiers.find((t) => t.dataset.package === preferred) || this.tiers[0];
-			if (!tier) return;
-			this.selectTier(tier);
-		}
+		if (!wanted || !this._motifById(wanted) || !this.selected) return;
 
 		this.addMotif(wanted);
 	}
@@ -153,22 +152,10 @@ export class BundleBuilder {
 	/* ---------- actions ---------- */
 
 	selectTier(el) {
-		const wasHidden = this.step2El ? this.step2El.hidden : false;
 		this.selected = el;
 		this.tiers.forEach((t) => t.setAttribute('aria-pressed', t === el ? 'true' : 'false'));
 		this.picks = this.picks.slice(0, this._qty());
 		this._render();
-		// Guide the eye to the now-revealed motif step (only on first reveal).
-		// Focus follows the scroll: a sighted user sees the new section arrive,
-		// and without this a screen reader or keyboard user gets no signal that
-		// anything appeared.
-		if (wasHidden) {
-			this._scrollTo(this.step2El);
-			const heading = this.step2El
-				? this.step2El.querySelector('[data-builder-step2-heading]')
-				: null;
-			if (heading) heading.focus({ preventScroll: true });
-		}
 	}
 
 	addMotif(id) {
@@ -362,7 +349,7 @@ export class BundleBuilder {
 	}
 
 	_render() {
-		// Step 2 is revealed only once a tier is chosen.
+		// Step 2 only hides in the degenerate case of a builder with no tiers.
 		if (this.step2El) this.step2El.hidden = !this.selected;
 		if (!this.selected) return;
 

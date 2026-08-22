@@ -191,7 +191,13 @@ if ( $hero_deal ) {
 			// The gallery keeps its link, demoted to the weight it deserves.
 			?>
 			<div class="hero__cta">
-				<a href="#paketi" class="btn btn--primary hero__buy">
+				<?php
+				// #napravi-paket, not #paketi: the section opens on its heading
+				// and a full-width gift photo, so landing on the section left a
+				// visitor who pressed a priced buy button looking at neither a
+				// price nor a button. This lands on the builder itself.
+				?>
+				<a href="#napravi-paket" class="btn btn--primary hero__buy">
 					<span class="hero__buy-label">
 						<?php
 						echo esc_html(
@@ -505,7 +511,7 @@ if ( $hero_deal ) {
 		$cosypaw_bundle_save = (int) ( $selected['old'] ?? 0 ) - (int) $selected['price'];
 		if ( $cosypaw_bundle_save > 0 ) :
 			?>
-			<a class="motif-handoff" href="#paketi">
+			<a class="motif-handoff" href="#napravi-paket">
 				<span>
 					<?php
 					printf(
@@ -593,7 +599,7 @@ if ( $hero_deal ) {
 				<style>.builder__reveal { display: none; }</style>
 			</noscript>
 
-			<div class="builder" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>">
+			<div class="builder" id="napravi-paket" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>">
 
 				<div class="builder__step">
 					<span class="builder__num">1</span>

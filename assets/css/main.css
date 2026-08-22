@@ -115,6 +115,14 @@
 	}
 }
 
+/* Every in-page link used to hand its target to the sticky header, which sat
+   on top of it — the packages anchor landed on a heading nobody could read.
+   --header-h is measured at runtime in app.js (the nav grows when it wraps,
+   and an admin bar can sit above it); the fallback is the desktop height. */
+html {
+	scroll-padding-top: calc(var(--header-h, 76px) + 18px);
+}
+
 body {
 	margin: 0;
 	background-color: var(--color-surface);

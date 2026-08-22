@@ -15,11 +15,29 @@ import { SiteNav } from './components/SiteNav.js';
 import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
 
+/**
+ * Publish the sticky header's height as --header-h, which main.css turns into
+ * scroll-padding-top. Without a number there, every anchor jump parks its
+ * target underneath the header.
+ */
+const syncHeaderOffset = (header) => {
+	if (!header) return;
+	// The admin bar is fixed above the header and takes it with it.
+	let offset = header.offsetHeight;
+	if (document.body.classList.contains('admin-bar')) {
+		offset += window.matchMedia('(max-width: 782px)').matches ? 46 : 32;
+	}
+	document.documentElement.style.setProperty('--header-h', Math.round(offset) + 'px');
+};
+
 const boot = () => {
 	const l10n = window.CosyPawL10n || {};
 
 	const header = document.querySelector('[data-site-nav]');
 	if (header) new SiteNav(header);
+
+	syncHeaderOffset(header);
+	window.addEventListener('resize', () => syncHeaderOffset(header));
 
 	const marquee = document.querySelector('[data-marquee]');
 	if (marquee) new Marquee(marquee, l10n);

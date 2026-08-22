@@ -1335,11 +1335,11 @@
 		contain: layout paint;
 	}
 
-	/* Opacity is the readability budget, not a taste call. The motif backdrops
-	   average #B3957A and go to roughly a quarter luminance at their darkest;
-	   washed over the cream page at 0.15 that lands the surface near 0.835,
-	   which keeps --muted (the lead, the smallest text over them) at ~4.6:1 and
-	   --ink far above it. Raising this past ~0.18 walks the lead under AA. */
+	/* A flat 0.15 everywhere was the readable number, and it read as nothing:
+	   pastel towels at a sixth of opacity on a cream page are barely a stain.
+	   The sprites are nearly solid now, and the readability budget moved off
+	   this property and onto .hero__copy::before below — the constraint was
+	   never the sprites, only the sprites *behind words*. */
 	.hero__fall-item {
 		position: absolute;
 		top: 0;
@@ -1348,18 +1348,47 @@
 		height: var(--fall-size);
 		margin-left: calc(var(--fall-size) / -2);
 		border-radius: 22%;
-		opacity: 0.15;
+		opacity: 0.9;
 		background-image: var(--fall-img);
 		background-size: cover;
 		background-position: center;
 		animation: hero-fall var(--fall-dur) linear var(--fall-delay) infinite;
 	}
 
+	/* The copy brings its own ground, so the sprites can be vivid everywhere
+	   the copy is not.
+
+	   Cream is the page background, so over bare page this paints nothing at
+	   all — it is only ever visible as sprites fading out where words are. No
+	   border, no blur, no edge: a panel would read as a card in a hero that
+	   has none.
+
+	   The 0.82 core is the readability budget restated. The motif backdrops
+	   average #B3957A and reach about a quarter luminance at their darkest;
+	   0.9 opacity seen through an 0.82 cream wash is an effective 0.16, which
+	   lands the surface near 0.83 and holds --muted — the lead, the smallest
+	   text over them — at roughly 4.6:1. Thinning this core past ~0.80 walks
+	   the lead under AA. */
+	.hero__copy::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		inset: -5% -14%;
+		pointer-events: none;
+		background: radial-gradient(
+			ellipse at center,
+			rgba(251, 246, 239, 0.82) 0%,
+			rgba(251, 246, 239, 0.82) 44%,
+			rgba(251, 246, 239, 0.55) 66%,
+			rgba(251, 246, 239, 0) 85%
+		);
+	}
+
 	/* svh rather than percentages: translate percentages resolve against the
 	   sprite's own box, not the layer's, and the phone hero is sized in svh
 	   anyway (min-height: calc(100svh - 85px) above). A hero grown taller than
-	   the viewport by long copy just retires its sprites slightly early, which
-	   at 0.15 opacity nobody reads as a bug. */
+	   the viewport by long copy just retires its sprites slightly early, a few
+	   pixels below the fold where nothing is looking. */
 	@keyframes hero-fall {
 		from {
 			transform: translate3d(0, calc(var(--fall-size) * -1.4), 0) rotate(0deg);

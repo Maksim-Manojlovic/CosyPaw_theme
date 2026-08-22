@@ -133,10 +133,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="nav__actions">
 			<?php
 			$cosypaw_wc    = function_exists( 'WC' ) && function_exists( 'wc_get_cart_url' );
+
+			// WooCommerce being active is not the same as the shop being live:
+			// until the seeder has run, nothing in the catalog is a real product
+			// and the demo cart is still the one holding the customer's picks.
+			$cosypaw_live = $cosypaw_wc && class_exists( '\Theme\WooCommerce' ) && (
+				(array) get_option( \Theme\WooCommerce::PRODUCT_MAP_OPTION, array() )
+				|| (array) get_option( \Theme\WooCommerce::PACKAGE_MAP_OPTION, array() )
+			);
 			$cosypaw_count = ( $cosypaw_wc && WC()->cart ) ? (int) WC()->cart->get_cart_contents_count() : 0;
 			$cosypaw_cart_svg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>';
+			// data-cart-owner marks the badge as the live shop's. The demo cart
+			// in CartDrawer.js writes to [data-cart-count] on boot from its own
+			// sessionStorage, which off the front page is the last word on the
+			// element — there is no cart-fragments script out here to correct it
+			// afterwards, so a live cart of two would render as the demo cart's
+			// nothing. The marker tells the demo cart to leave it alone.
 			$cosypaw_badge = sprintf(
-				'<span class="cart-btn__badge" data-cart-count%1$s>%2$s</span>',
+				'<span class="cart-btn__badge" data-cart-count%1$s%2$s>%3$s</span>',
+				$cosypaw_live ? ' data-cart-owner="wc"' : '',
 				$cosypaw_count < 1 ? ' hidden' : '',
 				esc_html( (string) $cosypaw_count )
 			);
@@ -144,7 +159,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'svg'    => array( 'width' => array(), 'height' => array(), 'viewbox' => array(), 'fill' => array(), 'stroke' => array(), 'stroke-width' => array(), 'stroke-linecap' => array(), 'stroke-linejoin' => array(), 'aria-hidden' => array() ),
 				'path'   => array( 'd' => array() ),
 				'circle' => array( 'cx' => array(), 'cy' => array(), 'r' => array() ),
-				'span'   => array( 'class' => array(), 'data-cart-count' => array(), 'hidden' => array() ),
+				'span'   => array( 'class' => array(), 'data-cart-count' => array(), 'data-cart-owner' => array(), 'hidden' => array() ),
 			);
 			if ( $cosypaw_wc ) :
 				?>

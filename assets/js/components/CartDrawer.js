@@ -38,6 +38,11 @@ export class CartDrawer {
 		this.footEl = root.querySelector('[data-cart-foot]');
 		this.totalEl = root.querySelector('[data-cart-total]');
 		this.countEl = root.querySelector('[data-cart-count]');
+		// When WooCommerce owns the badge the number is rendered server-side and
+		// refreshed by cart fragments. This cart is a demo whose contents live in
+		// sessionStorage, so writing its own count here would replace a real cart
+		// of two with a demo cart of nothing.
+		if (this.countEl && this.countEl.dataset.cartOwner === 'wc') this.countEl = null;
 		this.toastEl = root.querySelector('[data-toast]');
 		this.toastMsgEl = root.querySelector('[data-toast-msg]');
 

@@ -533,6 +533,12 @@ h1, h2, h3, h4 {
 	color: var(--ink);
 }
 
+/* display:flex below outranks the user agent's [hidden] { display: none },
+   so an empty cart printed a "0" chip instead of nothing. */
+.cart-btn__badge[hidden] {
+	display: none;
+}
+
 .cart-btn__badge {
 	position: absolute;
 	top: -4px;

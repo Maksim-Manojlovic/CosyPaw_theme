@@ -241,6 +241,9 @@ final class WooCommerceTest extends TestCase {
 		$this->assertStringContainsString( 'cart-btn__badge', $fragments['span.cart-btn__badge'] );
 		// Zero items → hidden.
 		$this->assertStringContainsString( 'hidden', $fragments['span.cart-btn__badge'] );
+		// The replacement swaps the whole element, so the marker that keeps the
+		// demo cart off a live badge has to come back with it.
+		$this->assertStringContainsString( 'data-cart-owner="wc"', $fragments['span.cart-btn__badge'] );
 	}
 
 	/**

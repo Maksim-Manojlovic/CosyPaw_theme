@@ -626,7 +626,12 @@ final class WooCommerce {
 
 		ob_start();
 		?>
-		<span class="cart-btn__badge" data-cart-count<?php echo $count < 1 ? ' hidden' : ''; ?>><?php echo esc_html( (string) $count ); ?></span>
+		<?php
+		// data-cart-owner has to survive the replacement: WooCommerce swaps the
+		// whole element, and a fragment without the marker would hand the badge
+		// back to the demo cart on the next page load.
+		?>
+		<span class="cart-btn__badge" data-cart-count data-cart-owner="wc"<?php echo $count < 1 ? ' hidden' : ''; ?>><?php echo esc_html( (string) $count ); ?></span>
 		<?php
 		$fragments['span.cart-btn__badge'] = (string) ob_get_clean();
 

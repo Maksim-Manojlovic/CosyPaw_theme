@@ -461,8 +461,8 @@ msgstr "I bought the Trio package as a gift and it was a real hit. The packaging
 msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
 msgstr "The hanging loop is a small thing that means a lot — the towel is always in its place and never ends up on the floor."
 
-msgid "5 od 5 zvezdica"
-msgstr "5 out of 5 stars"
+msgid "%d od 5 zvezdica"
+msgstr "%d out of 5 stars"
 
 msgid "Jovana M."
 msgstr "Jovana M."
@@ -553,4 +553,55 @@ msgstr "Package saving (%s)"
 
 msgid "Još 1 peškirić za %s"
 msgstr "1 more towel for %s"
+
+msgid "Kako su peškirići, %s?"
+msgstr "How are the towels, %s?"
+
+msgid "Kako su peškirići?"
+msgstr "How are the towels?"
+
+msgid "Reci nam par reči o svojim peškirićima"
+msgstr "Tell us a few words about your towels"
+
+msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom."
+msgstr "A week has passed since the parcel arrived — just enough time to hang the towels, try them out and wash them at least once."
+
+msgid "Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće."
+msgstr "If you have a minute, leave a short review. It helps others choose, and it tells us what to make next."
+
+msgid "Hvala na poverenju — CosyPaw"
+msgstr "Thank you for your trust — CosyPaw"
+
+msgid "Kupac"
+msgstr "Customer"
+
+msgid "Dodaj u paket"
+msgstr "Add to a package"
+
+msgid "Cena po komadu pada sa svakim sledećim peškirićem"
+msgstr "The price per towel drops with every one you add"
+
+msgid "Materijal"
+msgstr "Fabric"
+
+msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
+msgstr "Plush microfibre — soft, light and highly absorbent."
+
+msgid "Kačenje"
+msgstr "Hanging"
+
+msgid "Alka za kačenje, da peškirić uvek stoji na svom mestu."
+msgstr "A hanging loop, so the towel always stays where it belongs."
+
+msgid "Održavanje"
+msgstr "Care"
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik."
+msgstr "Machine wash at 40°C, no fabric softener. Dries fast and keeps its shape."
+
+msgid "Dostava"
+msgstr "Delivery"
+
+msgid "Plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
+msgstr "Cash on delivery, 2–4 days anywhere in Serbia."
 

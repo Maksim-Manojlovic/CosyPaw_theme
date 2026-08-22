@@ -389,8 +389,20 @@ if ( $hero_deal ) {
 			foreach ( $products as $p ) :
 				/* translators: %s: motif name. */
 				$item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
+
+				// Only a seeded motif has a product page behind it. Without one
+				// the card stays exactly what it was: a picture and a buy button.
+				$cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 				?>
 				<div class="motif-card">
+					<?php
+					if ( '' !== $cosypaw_link ) :
+						// aria-hidden + tabindex="-1": the name below links to the
+						// same place and carries the accessible text, so the image
+						// would only be a second, unlabelled stop on the way there.
+						?>
+						<a class="motif-card__link" href="<?php echo esc_url( $cosypaw_link ); ?>" aria-hidden="true" tabindex="-1">
+					<?php endif; ?>
 					<?php
 					// alt="" — the motif name is printed as text directly below.
 					// The srcset omits image_sm on purpose: it is a 1:1 crop while
@@ -409,9 +421,18 @@ if ( $hero_deal ) {
 						loading="lazy"
 						decoding="async"
 					>
+					<?php if ( '' !== $cosypaw_link ) : ?>
+						</a>
+					<?php endif; ?>
 					<div class="motif-card__row">
 						<div>
-							<div class="motif-name"><?php echo esc_html( $p['name'] ); ?></div>
+							<div class="motif-name">
+								<?php if ( '' !== $cosypaw_link ) : ?>
+									<a class="motif-name__link" href="<?php echo esc_url( $cosypaw_link ); ?>"><?php echo esc_html( $p['name'] ); ?></a>
+								<?php else : ?>
+									<?php echo esc_html( $p['name'] ); ?>
+								<?php endif; ?>
+							</div>
 							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
 						</div>
 						<?php if ( ! empty( $p['product_id'] ) ) : ?>
@@ -517,7 +538,12 @@ if ( $hero_deal ) {
 				</div>
 			</div>
 
-			<div class="builder" data-bundle-builder>
+			<?php
+			// data-default-package is the tier a deep link from a product page
+			// lands on: arriving with ?motif= set means the towel is already
+			// chosen, so the builder opens on a size rather than on nothing.
+			?>
+			<div class="builder" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>">
 
 				<div class="builder__step">
 					<span class="builder__num">1</span>
@@ -781,8 +807,16 @@ if ( $hero_deal ) {
 			<h2 class="section__title"><?php esc_html_e( 'Mali peškirići, veliki osmesi', 'cosypaw' ); ?></h2>
 		</div>
 
-		<div class="testimonials">
-			<?php
+		<?php
+		// Real reviews, pooled from every motif, so one review written on a
+		// product page also does its work here. The 'meta' line names the towel
+		// it was written about rather than a city.
+		$testimonials = class_exists( '\Theme\Reviews' ) ? \Theme\Reviews::latest( 6 ) : array();
+
+		// A section built for a row of cards looks half-finished with one card
+		// in it, so the written-in copy holds the floor until the shop has
+		// enough reviews of its own to fill it.
+		if ( count( $testimonials ) < 3 ) {
 			$testimonials = array(
 				array(
 					'quote' => __( 'Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan.', 'cosypaw' ),
@@ -800,12 +834,20 @@ if ( $hero_deal ) {
 					'meta'  => __( 'Niš', 'cosypaw' ),
 				),
 			);
+		}
+		?>
+
+		<div class="testimonials">
+			<?php
 			foreach ( $testimonials as $t ) :
+				$rating    = (int) ( $t['rating'] ?? 5 );
+				$permalink = (string) ( $t['permalink'] ?? '' );
 				?>
 				<figure class="testimonial">
-					<span class="testimonial__stars" role="img" aria-label="<?php esc_attr_e( '5 od 5 zvezdica', 'cosypaw' ); ?>">
-						<?php for ( $i = 0; $i < 5; $i++ ) : ?>
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.7L12 17l-6 3.6 1.5-6.7L2.4 9.4l6.8-.6z"/></svg>
+					<?php /* translators: %d: star rating, 1-5. */ ?>
+					<span class="testimonial__stars" role="img" aria-label="<?php echo esc_attr( sprintf( __( '%d od 5 zvezdica', 'cosypaw' ), $rating ) ); ?>">
+						<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
+							<svg class="<?php echo $i <= $rating ? 'testimonial__star' : 'testimonial__star testimonial__star--empty'; ?>" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.7L12 17l-6 3.6 1.5-6.7L2.4 9.4l6.8-.6z"/></svg>
 						<?php endfor; ?>
 					</span>
 					<blockquote class="testimonial__quote"><?php echo esc_html( $t['quote'] ); ?></blockquote>
@@ -813,7 +855,15 @@ if ( $hero_deal ) {
 						<span class="testimonial__avatar" aria-hidden="true"><?php echo esc_html( mb_substr( $t['name'], 0, 1 ) ); ?></span>
 						<span>
 							<span class="testimonial__name"><?php echo esc_html( $t['name'] ); ?></span>
-							<span class="testimonial__meta"><?php echo esc_html( $t['meta'] ); ?></span>
+							<?php
+							// The written-in copy has no review to link to; a real
+							// one links to itself, in place on the product page.
+							if ( '' !== $permalink ) :
+								?>
+								<a class="testimonial__meta" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $t['meta'] ); ?></a>
+							<?php else : ?>
+								<span class="testimonial__meta"><?php echo esc_html( $t['meta'] ); ?></span>
+							<?php endif; ?>
 						</span>
 					</figcaption>
 				</figure>

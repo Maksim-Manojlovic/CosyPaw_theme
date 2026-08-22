@@ -1,6 +1,7 @@
 <?php
 /**
- * ProductNames — per-product English/Russian name overrides.
+ * ProductNames — per-product English/Russian name and short-description
+ * overrides.
  *
  * The Serbian name of a product is its post_title, edited in the normal title
  * field. English and Russian names normally come from the .po files, keyed on
@@ -35,6 +36,18 @@ final class ProductNames {
 	 * @var string
 	 */
 	public const META_PREFIX = '_cosypaw_name_';
+
+	/**
+	 * Post meta key prefix for the short description; the locale is appended.
+	 *
+	 * Serbian is deliberately absent here too: it is the product's own excerpt,
+	 * edited in WooCommerce's "Product short description" box. Unlike names,
+	 * these have no .po fallback — a description is per-product prose nobody
+	 * writes into a translation file — so an empty field falls back to Serbian.
+	 *
+	 * @var string
+	 */
+	public const DESC_META_PREFIX = '_cosypaw_desc_';
 
 	/**
 	 * Nonce action/field name.
@@ -85,6 +98,27 @@ final class ProductNames {
 	}
 
 	/**
+	 * Read the stored short description for a product in a given locale.
+	 *
+	 * @param int    $product_id Product ID.
+	 * @param string $locale     Locale, or '' for the current one.
+	 * @return string Empty string when no override is set.
+	 */
+	public function get_description( int $product_id, string $locale = '' ): string {
+		if ( ! $product_id ) {
+			return '';
+		}
+
+		$locale = '' !== $locale ? $locale : determine_locale();
+
+		if ( ! isset( self::LOCALES[ $locale ] ) ) {
+			return '';
+		}
+
+		return trim( (string) get_post_meta( $product_id, self::DESC_META_PREFIX . $locale, true ) );
+	}
+
+	/**
 	 * Register the meta box on the product edit screen.
 	 *
 	 * @return void
@@ -92,10 +126,10 @@ final class ProductNames {
 	public function add_meta_box(): void {
 		add_meta_box(
 			'cosypaw-product-names',
-			__( 'CosyPaw — names', 'cosypaw' ),
+			__( 'CosyPaw — names & short description', 'cosypaw' ),
 			array( $this, 'render' ),
 			'product',
-			'side',
+			'normal',
 			'default'
 		);
 	}
@@ -121,6 +155,7 @@ final class ProductNames {
 			$value = $this->get( $product_id, $locale );
 			// What the front end would show if this field stays empty.
 			$fallback = $this->translate_in( $source, $locale );
+			$desc     = $this->get_description( $product_id, $locale );
 			?>
 			<p>
 				<label for="cosypaw-name-<?php echo esc_attr( $locale ); ?>">
@@ -135,10 +170,30 @@ final class ProductNames {
 					placeholder="<?php echo esc_attr( $fallback ); ?>"
 				/>
 			</p>
+			<p>
+				<label for="cosypaw-desc-<?php echo esc_attr( $locale ); ?>">
+					<?php
+					printf(
+						/* translators: %s: language name, e.g. English. */
+						esc_html__( 'Short description (%s)', 'cosypaw' ),
+						esc_html( $label )
+					);
+					?>
+				</label><br />
+				<textarea
+					class="widefat"
+					rows="3"
+					id="cosypaw-desc-<?php echo esc_attr( $locale ); ?>"
+					name="cosypaw_desc[<?php echo esc_attr( $locale ); ?>]"
+				><?php echo esc_textarea( $desc ); ?></textarea>
+			</p>
 		<?php endforeach; ?>
 
 		<p class="description">
-			<?php esc_html_e( 'Leave empty to use the translation from the theme language files (shown greyed out).', 'cosypaw' ); ?>
+			<?php esc_html_e( 'Leave a name empty to use the translation from the theme language files (shown greyed out).', 'cosypaw' ); ?>
+		</p>
+		<p class="description">
+			<?php esc_html_e( 'Descriptions have no language-file fallback: an empty field shows the Serbian short description above. Write two or three sentences about this motif — the shared facts (fabric, hanging loop, washing) are printed under every product automatically, so there is no need to repeat them.', 'cosypaw' ); ?>
 		</p>
 		<?php
 	}
@@ -217,6 +272,7 @@ final class ProductNames {
 		}
 
 		$submitted = isset( $_POST['cosypaw_name'] ) ? (array) wp_unslash( $_POST['cosypaw_name'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$descs     = isset( $_POST['cosypaw_desc'] ) ? (array) wp_unslash( $_POST['cosypaw_desc'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		foreach ( array_keys( self::LOCALES ) as $locale ) {
 			$key   = self::META_PREFIX . $locale;
@@ -224,10 +280,19 @@ final class ProductNames {
 
 			if ( '' === trim( $value ) ) {
 				delete_post_meta( $post_id, $key );
+			} else {
+				update_post_meta( $post_id, $key, $value );
+			}
+
+			$desc_key = self::DESC_META_PREFIX . $locale;
+			$desc     = isset( $descs[ $locale ] ) ? sanitize_textarea_field( (string) $descs[ $locale ] ) : '';
+
+			if ( '' === trim( $desc ) ) {
+				delete_post_meta( $post_id, $desc_key );
 				continue;
 			}
 
-			update_post_meta( $post_id, $key, $value );
+			update_post_meta( $post_id, $desc_key, $desc );
 		}
 	}
 }

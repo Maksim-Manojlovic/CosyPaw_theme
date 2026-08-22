@@ -461,8 +461,8 @@ msgstr "Купила набор Trio в подарок — и это был на
 msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
 msgstr "Петелька — мелочь, которая много значит: полотенце всегда на своём месте и не падает на пол."
 
-msgid "5 od 5 zvezdica"
-msgstr "5 из 5 звёзд"
+msgid "%d od 5 zvezdica"
+msgstr "%d из 5 звёзд"
 
 msgid "Jovana M."
 msgstr "Йована М."
@@ -554,6 +554,57 @@ msgstr "Скидка за наборы (%s)"
 msgid "Još 1 peškirić za %s"
 msgstr "Ещё 1 полотенце за %s"
 
+msgid "Kako su peškirići, %s?"
+msgstr "Как полотенца, %s?"
+
+msgid "Kako su peškirići?"
+msgstr "Как полотенца?"
+
+msgid "Reci nam par reči o svojim peškirićima"
+msgstr "Расскажите пару слов о своих полотенцах"
+
+msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom."
+msgstr "Прошла неделя с тех пор, как посылка пришла — как раз достаточно, чтобы повесить полотенца, испытать их и постирать хотя бы раз."
+
+msgid "Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće."
+msgstr "Если у вас есть минута, оставьте короткий отзыв. Это помогает другим выбрать, а нам — понять, что делать дальше."
+
+msgid "Hvala na poverenju — CosyPaw"
+msgstr "Спасибо за доверие — CosyPaw"
+
+msgid "Kupac"
+msgstr "Покупатель"
+
+msgid "Dodaj u paket"
+msgstr "Добавить в набор"
+
+msgid "Cena po komadu pada sa svakim sledećim peškirićem"
+msgstr "Цена за штуку падает с каждым следующим полотенцем"
+
+msgid "Materijal"
+msgstr "Материал"
+
+msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
+msgstr "Плюшевая микрофибра — мягкая, лёгкая и очень впитывающая."
+
+msgid "Kačenje"
+msgstr "Подвешивание"
+
+msgid "Alka za kačenje, da peškirić uvek stoji na svom mestu."
+msgstr "Петелька для подвешивания, чтобы полотенце всегда было на своём месте."
+
+msgid "Održavanje"
+msgstr "Уход"
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik."
+msgstr "Машинная стирка при 40°C, без кондиционера. Быстро сохнет и держит форму."
+
+msgid "Dostava"
+msgstr "Доставка"
+
+msgid "Plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
+msgstr "Оплата при получении, доставка 2–4 дня по всей Сербии."
+
 msgid "Nothing found."
 msgstr "Ничего не найдено."
 
@@ -611,14 +662,20 @@ msgstr "WooCommerce не активен."
 msgid "This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again."
 msgstr "Этот сайт не может обрабатывать изображения AVIF, а фотографии мотивов CosyPaw поставляются именно в этом формате. Seeder создаст товары, но их изображения будут отсутствовать или остаться без миниатюр. Для AVIF нужен WordPress 6.5 или новее и GD/Imagick с поддержкой AVIF — попроси хостинг включить её и запусти seeder снова."
 
-msgid "CosyPaw — names"
-msgstr "CosyPaw — названия"
+msgid "CosyPaw — names & short description"
+msgstr "CosyPaw — названия и краткое описание"
 
 msgid "The title field above is the Serbian name. Fill these in to set the name shown to English and Russian visitors."
 msgstr "Поле заголовка выше — сербское название. Заполни эти поля, чтобы задать название для англоязычных и русскоязычных посетителей."
 
-msgid "Leave empty to use the translation from the theme language files (shown greyed out)."
-msgstr "Оставь пустым, чтобы использовать перевод из языковых файлов темы (показан серым)."
+msgid "Leave a name empty to use the translation from the theme language files (shown greyed out)."
+msgstr "Оставь имя пустым, чтобы использовать перевод из языковых файлов темы (показан серым)."
+
+msgid "Short description (%s)"
+msgstr "Краткое описание (%s)"
+
+msgid "Descriptions have no language-file fallback: an empty field shows the Serbian short description above. Write two or three sentences about this motif — the shared facts (fabric, hanging loop, washing) are printed under every product automatically, so there is no need to repeat them."
+msgstr "У описаний нет резерва в языковых файлах: пустое поле покажет сербское краткое описание выше. Напиши две-три фразы об этом мотиве — общие факты (материал, петелька, стирка) печатаются под каждым товаром автоматически, повторять их не нужно."
 
 msgid "Cart"
 msgstr "Корзина"

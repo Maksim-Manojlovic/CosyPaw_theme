@@ -177,7 +177,7 @@ $sr_source = array(
 	'Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan.' => array( 'They arrived faster than I expected and are softer than in the photos. My daughter picks which one to use every day.', 'Пришли быстрее, чем я ожидала, и мягче, чем на фото. Дочка сама выбирает, какое использовать каждый день.' ),
 	'Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš.' => array( 'I bought the Trio package as a gift and it was a real hit. The packaging is adorable, no extra wrapping needed.', 'Купила набор Trio в подарок — и это был настоящий хит. Упаковка очаровательна, ничего дополнительно заворачивать не нужно.' ),
 	'Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu.' => array( 'The hanging loop is a small thing that means a lot — the towel is always in its place and never ends up on the floor.', 'Петелька — мелочь, которая много значит: полотенце всегда на своём месте и не падает на пол.' ),
-	'5 od 5 zvezdica'                                                                         => array( '5 out of 5 stars', '5 из 5 звёзд' ),
+	'%d od 5 zvezdica'                                                                        => array( '%d out of 5 stars', '%d из 5 звёзд' ),
 	'Jovana M.'                                                                               => array( 'Jovana M.', 'Йована М.' ),
 	'Milica P.'                                                                               => array( 'Milica P.', 'Милица П.' ),
 	'Ana T.'                                                                                  => array( 'Ana T.', 'Ана Т.' ),
@@ -221,6 +221,29 @@ $sr_source = array(
 	'Ušteda na paketima'                                                                      => array( 'Package saving', 'Скидка за наборы' ),
 	'Ušteda na paketima (%s)'                                                                 => array( 'Package saving (%s)', 'Скидка за наборы (%s)' ),
 	'Još 1 peškirić za %s'                                                                    => array( '1 more towel for %s', 'Ещё 1 полотенце за %s' ),
+
+	// Post-delivery review request (Theme\ReviewRequest).
+	'Kako su peškirići, %s?'                                                                  => array( 'How are the towels, %s?', 'Как полотенца, %s?' ),
+	'Kako su peškirići?'                                                                      => array( 'How are the towels?', 'Как полотенца?' ),
+	'Reci nam par reči o svojim peškirićima'                                                  => array( 'Tell us a few words about your towels', 'Расскажите пару слов о своих полотенцах' ),
+	'Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom.' => array( 'A week has passed since the parcel arrived — just enough time to hang the towels, try them out and wash them at least once.', 'Прошла неделя с тех пор, как посылка пришла — как раз достаточно, чтобы повесить полотенца, испытать их и постирать хотя бы раз.' ),
+	'Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće.' => array( 'If you have a minute, leave a short review. It helps others choose, and it tells us what to make next.', 'Если у вас есть минута, оставьте короткий отзыв. Это помогает другим выбрать, а нам — понять, что делать дальше.' ),
+	'Hvala na poverenju — CosyPaw'                                                            => array( 'Thank you for your trust — CosyPaw', 'Спасибо за доверие — CosyPaw' ),
+
+	// Pooled landing-page reviews (Theme\Reviews).
+	'Kupac'                                                                                   => array( 'Customer', 'Покупатель' ),
+
+	// Single product page: bundle route and the shared spec list.
+	'Dodaj u paket'                                                                           => array( 'Add to a package', 'Добавить в набор' ),
+	'Cena po komadu pada sa svakim sledećim peškirićem'                                       => array( 'The price per towel drops with every one you add', 'Цена за штуку падает с каждым следующим полотенцем' ),
+	'Materijal'                                                                               => array( 'Fabric', 'Материал' ),
+	'Plišana mikrofibra — mekana, lagana i jako upijajuća.'                                   => array( 'Plush microfibre — soft, light and highly absorbent.', 'Плюшевая микрофибра — мягкая, лёгкая и очень впитывающая.' ),
+	'Kačenje'                                                                                 => array( 'Hanging', 'Подвешивание' ),
+	'Alka za kačenje, da peškirić uvek stoji na svom mestu.'                                  => array( 'A hanging loop, so the towel always stays where it belongs.', 'Петелька для подвешивания, чтобы полотенце всегда было на своём месте.' ),
+	'Održavanje'                                                                              => array( 'Care', 'Уход' ),
+	'Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik.'                  => array( 'Machine wash at 40°C, no fabric softener. Dries fast and keeps its shape.', 'Машинная стирка при 40°C, без кондиционера. Быстро сохнет и держит форму.' ),
+	'Dostava'                                                                                 => array( 'Delivery', 'Доставка' ),
+	'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.'                                      => array( 'Cash on delivery, 2–4 days anywhere in Serbia.', 'Оплата при получении, доставка 2–4 дня по всей Сербии.' ),
 );
 
 // English-source msgid => [ serbian, russian ].
@@ -244,9 +267,11 @@ $en_source = array(
 	'You are not allowed to do this.'                                                                          => array( 'Nije vam dozvoljeno da ovo uradite.', 'У вас нет прав для этого действия.' ),
 	'WooCommerce is not active.'                                                                               => array( 'WooCommerce nije aktivan.', 'WooCommerce не активен.' ),
 	'This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again.' => array( 'Ovaj sajt ne može da obradi AVIF slike, a CosyPaw fotografije peškirića su u tom formatu. Seeder će kreirati proizvode, ali će njihove slike nedostajati ili biti bez sličica. AVIF zahteva WordPress 6.5 ili noviji i GD/Imagick sa AVIF podrškom — zatraži od hostinga da je uključi, pa ponovo pokreni seeder.', 'Этот сайт не может обрабатывать изображения AVIF, а фотографии мотивов CosyPaw поставляются именно в этом формате. Seeder создаст товары, но их изображения будут отсутствовать или остаться без миниатюр. Для AVIF нужен WordPress 6.5 или новее и GD/Imagick с поддержкой AVIF — попроси хостинг включить её и запусти seeder снова.' ),
-	'CosyPaw — names'                                                                                          => array( 'CosyPaw — imena', 'CosyPaw — названия' ),
+	'CosyPaw — names & short description'                                                                      => array( 'CosyPaw — imena i kratak opis', 'CosyPaw — названия и краткое описание' ),
 	'The title field above is the Serbian name. Fill these in to set the name shown to English and Russian visitors.' => array( 'Polje za naslov iznad je srpski naziv. Popuni ova polja da postaviš naziv koji vide posetioci na engleskom i ruskom.', 'Поле заголовка выше — сербское название. Заполни эти поля, чтобы задать название для англоязычных и русскоязычных посетителей.' ),
-	'Leave empty to use the translation from the theme language files (shown greyed out).'                     => array( 'Ostavi prazno da se koristi prevod iz jezičkih fajlova teme (prikazan sivo).', 'Оставь пустым, чтобы использовать перевод из языковых файлов темы (показан серым).' ),
+	'Leave a name empty to use the translation from the theme language files (shown greyed out).'              => array( 'Ostavi ime prazno da se koristi prevod iz jezičkih fajlova teme (prikazan sivo).', 'Оставь имя пустым, чтобы использовать перевод из языковых файлов темы (показан серым).' ),
+	'Short description (%s)'                                                                                   => array( 'Kratak opis (%s)', 'Краткое описание (%s)' ),
+	'Descriptions have no language-file fallback: an empty field shows the Serbian short description above. Write two or three sentences about this motif — the shared facts (fabric, hanging loop, washing) are printed under every product automatically, so there is no need to repeat them.' => array( 'Opisi nemaju rezervu u jezičkim fajlovima: prazno polje prikazuje srpski kratak opis iznad. Napiši dve-tri rečenice o ovom motivu — zajedničke činjenice (materijal, alka, pranje) štampaju se ispod svakog proizvoda automatski, pa ih ne treba ponavljati.', 'У описаний нет резерва в языковых файлах: пустое поле покажет сербское краткое описание выше. Напиши две-три фразы об этом мотиве — общие факты (материал, петелька, стирка) печатаются под каждым товаром автоматически, повторять их не нужно.' ),
 	// WooCommerce page titles (DB content, translated via the_title for the WC page IDs).
 	'Cart'                                                                                                     => array( 'Korpa', 'Корзина' ),
 	'Checkout'                                                                                                 => array( 'Plaćanje', 'Оформление заказа' ),

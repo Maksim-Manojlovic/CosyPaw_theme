@@ -62,14 +62,20 @@ msgstr "WooCommerce nije aktivan."
 msgid "This site cannot process AVIF images, and the CosyPaw motif photography ships in that format. Seeding will create the products but their images will be missing or thumbnail-less. AVIF needs WordPress 6.5 or newer plus GD/Imagick built with AVIF support — ask your host to enable it, then run the seeder again."
 msgstr "Ovaj sajt ne može da obradi AVIF slike, a CosyPaw fotografije peškirića su u tom formatu. Seeder će kreirati proizvode, ali će njihove slike nedostajati ili biti bez sličica. AVIF zahteva WordPress 6.5 ili noviji i GD/Imagick sa AVIF podrškom — zatraži od hostinga da je uključi, pa ponovo pokreni seeder."
 
-msgid "CosyPaw — names"
-msgstr "CosyPaw — imena"
+msgid "CosyPaw — names & short description"
+msgstr "CosyPaw — imena i kratak opis"
 
 msgid "The title field above is the Serbian name. Fill these in to set the name shown to English and Russian visitors."
 msgstr "Polje za naslov iznad je srpski naziv. Popuni ova polja da postaviš naziv koji vide posetioci na engleskom i ruskom."
 
-msgid "Leave empty to use the translation from the theme language files (shown greyed out)."
-msgstr "Ostavi prazno da se koristi prevod iz jezičkih fajlova teme (prikazan sivo)."
+msgid "Leave a name empty to use the translation from the theme language files (shown greyed out)."
+msgstr "Ostavi ime prazno da se koristi prevod iz jezičkih fajlova teme (prikazan sivo)."
+
+msgid "Short description (%s)"
+msgstr "Kratak opis (%s)"
+
+msgid "Descriptions have no language-file fallback: an empty field shows the Serbian short description above. Write two or three sentences about this motif — the shared facts (fabric, hanging loop, washing) are printed under every product automatically, so there is no need to repeat them."
+msgstr "Opisi nemaju rezervu u jezičkim fajlovima: prazno polje prikazuje srpski kratak opis iznad. Napiši dve-tri rečenice o ovom motivu — zajedničke činjenice (materijal, alka, pranje) štampaju se ispod svakog proizvoda automatski, pa ih ne treba ponavljati."
 
 msgid "Cart"
 msgstr "Korpa"

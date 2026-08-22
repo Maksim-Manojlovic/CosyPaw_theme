@@ -41,6 +41,8 @@ require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
 require_once dirname( __DIR__ ) . '/inc/FloatingCart.php';
 require_once dirname( __DIR__ ) . '/inc/ShopStrings.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
+require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';
+require_once dirname( __DIR__ ) . '/inc/Reviews.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';
 
 final class WooCommerceTest extends TestCase {
@@ -74,6 +76,11 @@ final class WooCommerceTest extends TestCase {
 				// Mapped products default to on-sale and purchasable.
 				'get_post_status'    => 'publish',
 				'wc_get_product'     => static fn() => new \WC_Product(),
+				'esc_url'            => static fn( $url ) => $url,
+				'esc_attr'           => static fn( $text ) => $text,
+				'home_url'           => static fn( $path = '/' ) => 'http://example.test' . $path,
+				'apply_filters'      => static fn( $hook, $value = null ) => $value,
+				'get_permalink'      => static fn( $id ) => 'http://example.test/product/' . $id . '/',
 			)
 		);
 	}
@@ -111,7 +118,8 @@ final class WooCommerceTest extends TestCase {
 	}
 
 	/**
-	 * inject_product_ids() adds product_id + add_to_cart_url to mapped rows only.
+	 * inject_product_ids() adds product_id, add_to_cart_url and permalink to
+	 * mapped rows only.
 	 */
 	public function test_inject_product_ids_adds_mapped_ids(): void {
 		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
@@ -125,8 +133,12 @@ final class WooCommerceTest extends TestCase {
 
 		$this->assertSame( 42, $out[0]['product_id'] );
 		$this->assertArrayHasKey( 'add_to_cart_url', $out[0] );
+		// The permalink is what puts a review form within reach of the grid: no
+		// link on the card, no way for a customer to ever reach one.
+		$this->assertSame( 'http://example.test/product/42/', $out[0]['permalink'] );
 		// Unmapped row is untouched.
 		$this->assertArrayNotHasKey( 'product_id', $out[1] );
+		$this->assertArrayNotHasKey( 'permalink', $out[1] );
 	}
 
 	/**
@@ -297,6 +309,95 @@ final class WooCommerceTest extends TestCase {
 			'admin_notices',
 			$registered_hooks,
 			'Bootstrap should NOT register the missing-WooCommerce notice when WC is active.'
+		);
+	}
+
+	/**
+	 * A motif page routes to the package builder with that motif carried along,
+	 * so the single-towel page still argues for the offer the shop is built on.
+	 */
+	public function test_bundle_cta_links_the_motif_into_the_builder(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->bundle_cta();
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'motif=zirafa', $out );
+		$this->assertStringContainsString( '#paketi', $out );
+		$this->assertStringContainsString( 'Dodaj u paket', $out );
+	}
+
+	/**
+	 * A package is already sold as a package, and anything the shop added by
+	 * hand has no motif to carry — neither gets the route.
+	 */
+	public function test_bundle_cta_stays_off_an_unmapped_product(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio', '2190', true, 900 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->bundle_cta();
+
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
+	 * The shared facts are printed under every seeded product, so the written
+	 * description never has to repeat them twenty times.
+	 */
+	public function test_product_specs_print_the_shared_facts(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->product_specs();
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'cosypaw-specs', $out );
+		$this->assertStringContainsString( 'Materijal', $out );
+		$this->assertStringContainsString( 'Održavanje', $out );
+	}
+
+	/**
+	 * Nothing the shop added by hand gets the theme's spec list bolted onto it.
+	 */
+	public function test_product_specs_stay_off_a_product_we_did_not_seed(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Nešto drugo', '500', true, 4242 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->product_specs();
+
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
+	 * An English or Russian visitor reads the override typed on the product
+	 * screen; an empty override leaves the Serbian excerpt alone.
+	 */
+	public function test_short_description_prefers_the_per_locale_override(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( $id, $key ) => '_cosypaw_desc_en_US' === $key ? 'A long-necked friend.' : ''
+		);
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		$this->assertSame(
+			'A long-necked friend.',
+			$wc->translate_short_description( 'Žirafa duga vrata.' )
 		);
 	}
 }

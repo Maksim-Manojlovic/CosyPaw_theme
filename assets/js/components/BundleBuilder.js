@@ -68,6 +68,36 @@ export class BundleBuilder {
 		root.addEventListener('click', this._onClick);
 
 		this._render();
+		this._applyDeepLink();
+	}
+
+	/**
+	 * Open the builder on a motif carried in from a product page (?motif=id).
+	 *
+	 * The "no tier pre-selected" rule exists so the page does not decide for a
+	 * visitor who has decided nothing yet. Someone arriving from a product page
+	 * has already picked a towel, so here the default size is a head start
+	 * rather than a guess — and they can change it in one click.
+	 */
+	_applyDeepLink() {
+		let wanted = '';
+		try {
+			wanted = new URLSearchParams(window.location.search).get('motif') || '';
+		} catch (e) {
+			return;
+		}
+
+		if (!wanted || !this._motifById(wanted)) return;
+
+		if (!this.selected) {
+			const preferred = this.root.dataset.defaultPackage;
+			const tier =
+				this.tiers.find((t) => t.dataset.package === preferred) || this.tiers[0];
+			if (!tier) return;
+			this.selectTier(tier);
+		}
+
+		this.addMotif(wanted);
 	}
 
 	/* ---------- helpers ---------- */

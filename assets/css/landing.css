@@ -1035,6 +1035,12 @@
 	border: 1px solid var(--line);
 }
 
+/* The picture is wrapped in a link on seeded motifs. Without display:block the
+   inline anchor adds a text baseline gap under the image and the card grows. */
+.motif-card__link {
+	display: block;
+}
+
 .motif-card__img {
 	position: relative;
 	display: block;
@@ -1104,6 +1110,19 @@
 	font-family: var(--font-heading);
 	font-weight: 700;
 	font-size: 18px;
+}
+
+/* The name is the card's only real link — the picture above it is aria-hidden.
+   It stays looking like the heading it was; the underline arrives on hover. */
+.motif-name__link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.motif-name__link:hover,
+.motif-name__link:focus-visible {
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .motif-price {
@@ -1186,6 +1205,13 @@
 	color: var(--ochre-ink);
 }
 
+/* A four-star review is still worth quoting, so the fifth star has to read as
+   unearned rather than missing. The rating is also in the label for screen
+   readers, which never see this. */
+.testimonial__star--empty {
+	opacity: 0.26;
+}
+
 .testimonial__quote {
 	font-size: 15.5px;
 	line-height: 1.6;
@@ -1227,6 +1253,19 @@
 	font-size: 13px;
 	color: var(--muted);
 	font-weight: 600;
+}
+
+/* On a real review the meta line names the towel and links to the review in
+   place. It keeps the muted weight it has as plain text. */
+a.testimonial__meta {
+	text-decoration: none;
+}
+
+a.testimonial__meta:hover,
+a.testimonial__meta:focus-visible {
+	color: var(--ink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 /* ---------- FAQ ---------- */

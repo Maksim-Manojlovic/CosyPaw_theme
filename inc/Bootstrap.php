@@ -74,6 +74,21 @@ final class Bootstrap {
 	private ?ShopStrings $shop_strings = null;
 
 	/**
+	 * Post-delivery review ask. Null when WooCommerce is inactive.
+	 *
+	 * @var ReviewRequest|null
+	 */
+	private ?ReviewRequest $review_request = null;
+
+	/**
+	 * Pooled review list for the landing page. Null when WooCommerce is
+	 * inactive.
+	 *
+	 * @var Reviews|null
+	 */
+	private ?Reviews $reviews = null;
+
+	/**
 	 * SEO meta / structured data module.
 	 *
 	 * @var Seo
@@ -103,6 +118,15 @@ final class Bootstrap {
 			$this->floating_cart = new FloatingCart( $this->text_domain, $this->bundle_pricing );
 
 			$this->shop_strings = new ShopStrings();
+
+			// Registers a cron hook, so it has to be constructed on every
+			// request — including the one cron itself fires — not only where
+			// the shop renders.
+			$this->review_request = new ReviewRequest( $this->text_domain );
+
+			// Reading the pooled list is static; this instance exists only to
+			// drop the cache when a review is approved, edited or removed.
+			$this->reviews = new Reviews();
 		} else {
 			$this->register_missing_woocommerce_notice();
 		}

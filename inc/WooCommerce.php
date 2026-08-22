@@ -147,6 +147,38 @@ final class WooCommerce {
 		add_filter( 'the_title', array( $this, 'translate_product_title' ), 10, 2 );
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'translate_cart_item_name' ), 10, 2 );
 		add_filter( 'woocommerce_order_item_name', array( $this, 'translate_order_item_name' ), 10, 2 );
+
+		// Per-locale short description: the Serbian one is the product excerpt,
+		// the other two are overrides typed on the product screen.
+		add_filter( 'woocommerce_short_description', array( $this, 'translate_short_description' ) );
+	}
+
+	/**
+	 * Swap in the per-locale short description on a seeded product.
+	 *
+	 * Runs on the excerpt of whatever product is being rendered, so it has to
+	 * find the product itself: the filter carries no id.
+	 *
+	 * @param string $description Short description (the product excerpt).
+	 * @return string
+	 */
+	public function translate_short_description( $description ): string {
+		$product_id = 0;
+
+		if ( function_exists( 'wc_get_product' ) ) {
+			$product = wc_get_product();
+			if ( $product instanceof \WC_Product ) {
+				$product_id = (int) $product->get_id();
+			}
+		}
+
+		if ( ! $product_id || ! in_array( $product_id, $this->our_product_ids(), true ) ) {
+			return (string) $description;
+		}
+
+		$override = $this->names->get_description( $product_id );
+
+		return '' !== $override ? $override : (string) $description;
 	}
 
 	/**
@@ -444,7 +476,7 @@ final class WooCommerce {
 	}
 
 	/**
-	 * Inject mapped WC product ids + add-to-cart URLs into the motif catalog.
+	 * Inject mapped WC product ids, add-to-cart URLs and permalinks into the motif catalog.
 	 *
 	 * @param array<int,array<string,mixed>> $products Catalog products.
 	 * @return array<int,array<string,mixed>>
@@ -454,7 +486,7 @@ final class WooCommerce {
 	}
 
 	/**
-	 * Inject mapped WC product ids + add-to-cart URLs into the package list.
+	 * Inject mapped WC product ids, add-to-cart URLs and permalinks into the package list.
 	 *
 	 * @param array<int,array<string,mixed>> $packages Catalog packages.
 	 * @return array<int,array<string,mixed>>
@@ -527,7 +559,7 @@ final class WooCommerce {
 	}
 
 	/**
-	 * Shared id-injection: adds product_id + add_to_cart_url to mapped rows.
+	 * Shared id-injection: adds product_id, add_to_cart_url and permalink to rows.
 	 *
 	 * @param array<int,array<string,mixed>> $rows Catalog rows (each has an 'id').
 	 * @param array<string,int>              $map  id => product id map.
@@ -540,6 +572,9 @@ final class WooCommerce {
 				$pid                    = (int) $map[ $key ];
 				$row['product_id']      = $pid;
 				$row['add_to_cart_url'] = esc_url_raw( add_query_arg( 'add-to-cart', $pid ) );
+
+				$permalink        = get_permalink( $pid );
+				$row['permalink'] = is_string( $permalink ) ? $permalink : '';
 
 				$product = wc_get_product( $pid );
 
@@ -631,6 +666,110 @@ final class WooCommerce {
 
 		// Related products: 3 across, 3 total — matches the motif grid rhythm.
 		add_filter( 'woocommerce_output_related_products_args', array( $this, 'related_products_args' ) );
+
+		// Single product: the bundle route sits right under WooCommerce's own
+		// add-to-cart (priority 30), and the shared facts under the meta (40).
+		add_action( 'woocommerce_single_product_summary', array( $this, 'bundle_cta' ), 31 );
+		add_action( 'woocommerce_single_product_summary', array( $this, 'product_specs' ), 45 );
+	}
+
+	/**
+	 * The motif id a seeded product was created from, or '' for anything else.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return string
+	 */
+	private function motif_id_for_product( int $product_id ): string {
+		$map = (array) get_option( self::PRODUCT_MAP_OPTION, array() );
+		$key = array_search( $product_id, array_map( 'intval', $map ), true );
+
+		return is_string( $key ) ? $key : '';
+	}
+
+	/**
+	 * Route from a single motif to the package builder, with that motif already
+	 * in the basket it lands in.
+	 *
+	 * The shop's whole offer is "the more towels, the cheaper each one gets", so
+	 * a product page that only sells one is quietly arguing against it. This is
+	 * the primary action; WooCommerce's own add-to-cart stays above it for the
+	 * customer who really does want a single towel.
+	 *
+	 * @return void
+	 */
+	public function bundle_cta(): void {
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		if ( ! $product instanceof \WC_Product ) {
+			return;
+		}
+
+		$motif_id = $this->motif_id_for_product( (int) $product->get_id() );
+
+		// Packages have no motif id of their own, and neither does anything the
+		// shop added by hand. Both are already sold as what they are.
+		if ( '' === $motif_id ) {
+			return;
+		}
+
+		printf(
+			'<a class="cosypaw-bundle-cta" href="%1$s">%2$s<span class="cosypaw-bundle-cta__hint">%3$s</span></a>',
+			esc_url( add_query_arg( 'motif', rawurlencode( $motif_id ), home_url( '/' ) ) . '#paketi' ),
+			esc_html__( 'Dodaj u paket', 'cosypaw' ),
+			esc_html__( 'Cena po komadu pada sa svakim sledećim peškirićem', 'cosypaw' )
+		);
+	}
+
+	/**
+	 * The facts every towel shares, printed under each product.
+	 *
+	 * Twenty products whose descriptions all repeat the same fabric and washing
+	 * instructions read as twenty copies of one page to a search engine. Keeping
+	 * the shared half here leaves the written description free to be about the
+	 * motif alone.
+	 *
+	 * @return void
+	 */
+	public function product_specs(): void {
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		if ( ! $product instanceof \WC_Product || ! in_array( (int) $product->get_id(), $this->our_product_ids(), true ) ) {
+			return;
+		}
+
+		/**
+		 * The shared spec list, label => value.
+		 *
+		 * Deliberately short and only what the shop already states elsewhere on
+		 * the site. Nothing here is measured, so no dimensions are claimed.
+		 *
+		 * @param array<string,string> $specs      Label => value.
+		 * @param int                  $product_id Product ID.
+		 */
+		$specs = (array) apply_filters(
+			'cosypaw_product_specs',
+			array(
+				__( 'Materijal', 'cosypaw' )  => __( 'Plišana mikrofibra — mekana, lagana i jako upijajuća.', 'cosypaw' ),
+				__( 'Kačenje', 'cosypaw' )    => __( 'Alka za kačenje, da peškirić uvek stoji na svom mestu.', 'cosypaw' ),
+				__( 'Održavanje', 'cosypaw' ) => __( 'Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik.', 'cosypaw' ),
+				__( 'Dostava', 'cosypaw' )    => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),
+			),
+			(int) $product->get_id()
+		);
+
+		if ( ! $specs ) {
+			return;
+		}
+
+		echo '<dl class="cosypaw-specs">';
+		foreach ( $specs as $label => $value ) {
+			printf(
+				'<div class="cosypaw-specs__row"><dt>%1$s</dt><dd>%2$s</dd></div>',
+				esc_html( (string) $label ),
+				esc_html( (string) $value )
+			);
+		}
+		echo '</dl>';
 	}
 
 	/**

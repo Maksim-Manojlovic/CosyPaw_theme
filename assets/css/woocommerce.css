@@ -265,6 +265,78 @@
 	border-bottom-color: var(--line);
 }
 
+/* ---------- Single product: bundle route + shared facts ---------- */
+
+/* The primary action on a motif page. WooCommerce's own add-to-cart keeps the
+   filled clay button above it, so this one is outlined: two solid buttons in a
+   row would argue about which is the real one. */
+.cosypaw-bundle-cta {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	margin: 0 0 22px;
+	padding: 12px 24px;
+	border-radius: var(--radius-lg);
+	background: var(--cream2);
+	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
+	color: var(--ink);
+	font-family: var(--font-heading);
+	font-weight: 800;
+	text-align: center;
+	text-decoration: none;
+	transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.cosypaw-bundle-cta:hover,
+.cosypaw-bundle-cta:focus-visible {
+	background: var(--sand);
+	color: var(--ink);
+	transform: translateY(-2px);
+}
+
+.cosypaw-bundle-cta__hint {
+	font-family: var(--font-body);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+.cosypaw-specs {
+	margin: 22px 0 0;
+	padding: 18px 20px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	background: #fff;
+	display: grid;
+	gap: 10px;
+}
+
+.cosypaw-specs__row {
+	display: grid;
+	grid-template-columns: minmax(90px, 26%) 1fr;
+	gap: 12px;
+	font-size: 14.5px;
+	line-height: 1.55;
+}
+
+.cosypaw-specs dt {
+	font-weight: 800;
+	color: var(--ink);
+}
+
+.cosypaw-specs dd {
+	margin: 0;
+	color: var(--muted);
+}
+
+@media (max-width: 560px) {
+	.cosypaw-specs__row {
+		grid-template-columns: 1fr;
+		gap: 2px;
+	}
+}
+
 /* ---------- Cart ---------- */
 .woocommerce table.shop_table {
 	border: 1px solid var(--line);

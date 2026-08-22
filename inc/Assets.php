@@ -437,6 +437,8 @@ final class Assets {
 				'motifOne'       => __( 'peškirić', 'cosypaw' ),
 				'motifMany'      => __( 'peškirića', 'cosypaw' ),
 				'bundleFull'     => __( 'Paket je pun — ukloni peškirić da dodaš drugi', 'cosypaw' ),
+				'bundleAdded'    => __( 'Dodato u paket — izaberi još %d', 'cosypaw' ),
+				'bundleReady'    => __( 'Paket je pun — dodaj u korpu', 'cosypaw' ),
 				'notFull'        => __( 'Izaberi još %d — paket nije popunjen', 'cosypaw' ),
 				'removeMotif'    => __( 'Ukloni peškirić', 'cosypaw' ),
 				'adding'         => __( 'Dodajem…', 'cosypaw' ),

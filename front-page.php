@@ -425,7 +425,7 @@ if ( $hero_deal ) {
 						</a>
 					<?php endif; ?>
 					<div class="motif-card__row">
-						<div>
+						<div class="motif-card__meta">
 							<div class="motif-name">
 								<?php if ( '' !== $cosypaw_link ) : ?>
 									<a class="motif-name__link" href="<?php echo esc_url( $cosypaw_link ); ?>"><?php echo esc_html( $p['name'] ); ?></a>
@@ -434,30 +434,47 @@ if ( $hero_deal ) {
 								<?php endif; ?>
 							</div>
 							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
+							<?php
+							// Buying one is still here, demoted to a text link. The
+							// card's main action now sends the motif to the builder:
+							// a single towel is the cheapest thing the shop sells and
+							// the only one that pays for its own delivery, so it is a
+							// poor default for a click made at peak enthusiasm.
+							if ( ! empty( $p['product_id'] ) ) :
+								?>
+								<a
+									href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
+									class="motif-single add_to_cart_button ajax_add_to_cart"
+									data-product_id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
+									data-quantity="1"
+									rel="nofollow"
+									aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Kupi %s, 1 kom', 'cosypaw' ), $p['name'] ) ); ?>"
+								><?php esc_html_e( 'Kupi 1 kom', 'cosypaw' ); ?></a>
+							<?php else : ?>
+								<button
+									type="button"
+									class="motif-single"
+									data-cart-add
+									data-name="<?php echo esc_attr( $item_label ); ?>"
+									data-price="<?php echo esc_attr( (string) (int) $p['price'] ); ?>"
+									aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Kupi %s, 1 kom', 'cosypaw' ), $p['name'] ) ); ?>"
+								><?php esc_html_e( 'Kupi 1 kom', 'cosypaw' ); ?></button>
+							<?php endif; ?>
 						</div>
-						<?php if ( ! empty( $p['product_id'] ) ) : ?>
-							<a
-								href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
-								class="motif-add add_to_cart_button ajax_add_to_cart"
-								data-product_id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
-								data-quantity="1"
-								rel="nofollow"
-							>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
-							</a>
-						<?php else : ?>
-							<button
-								type="button"
-								class="motif-add"
-								data-cart-add
-								data-name="<?php echo esc_attr( $item_label ); ?>"
-								data-price="<?php echo esc_attr( (string) (int) $p['price'] ); ?>"
-							>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-								<?php esc_html_e( 'Kupi', 'cosypaw' ); ?>
-							</button>
-						<?php endif; ?>
+						<?php
+						// Drops the motif straight into a builder slot further down
+						// the page — see BundleBuilder.addMotifFromGallery().
+						?>
+						<button
+							type="button"
+							class="motif-add"
+							data-add-to-bundle
+							data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
+							aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Dodaj %s u paket', 'cosypaw' ), $p['name'] ) ); ?>"
+						>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+							<?php esc_html_e( 'U paket', 'cosypaw' ); ?>
+						</button>
 					</div>
 				</div>
 			<?php endforeach; ?>
@@ -482,14 +499,40 @@ if ( $hero_deal ) {
 		</button>
 
 		<?php
+		// The grid used to end on the toggle, which left a visitor who liked
+		// several motifs with no route to the package that makes them cheaper.
+		// Only printed while the default package really does save something.
+		$cosypaw_bundle_save = (int) ( $selected['old'] ?? 0 ) - (int) $selected['price'];
+		if ( $cosypaw_bundle_save > 0 ) :
+			?>
+			<a class="motif-handoff" href="#paketi">
+				<span>
+					<?php
+					printf(
+						/* translators: 1: towels in the package, 2: formatted saving, e.g. "990 RSD". */
+						esc_html__( 'Spoji %1$d peškirića u paket — ušteda %2$s', 'cosypaw' ),
+						(int) $selected['qty'],
+						esc_html( \Theme\Catalog::format_price( $cosypaw_bundle_save ) )
+					);
+					?>
+				</span>
+				<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+			</a>
+		<?php endif; ?>
+
+		<?php
 		// Without script the button cannot expand anything, so the collapse has
-		// to lift and the control has to go. Specificity matches the rule in
-		// landing.css and this sits later in the document, so it wins.
+		// to lift and the control has to go. The builder button goes too: it
+		// has nothing to drop a motif into until BundleBuilder boots, and the
+		// "Kupi 1 kom" link beside it still works on its own href. Specificity
+		// matches the rules in landing.css and this sits later in the document,
+		// so it wins.
 		?>
 		<noscript>
 			<style>
 				.motifs[data-collapsed] .motif-card { display: block; }
 				.motifs-toggle { display: none; }
+				.motif-card__row .motif-add { display: none; }
 			</style>
 		</noscript>
 	</section>

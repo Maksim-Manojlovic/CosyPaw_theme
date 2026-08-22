@@ -1103,6 +1103,36 @@
 	}
 }
 
+/* Hand-off to the builder, directly under the toggle. Sand fill so it reads
+   as the warmer of the two controls — the toggle only shows more of the same,
+   this one carries the offer. */
+.motif-handoff {
+	display: flex;
+	width: 100%;
+	max-width: 420px;
+	margin-inline: auto;
+	margin-top: 12px;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	padding: 12px 22px;
+	border-radius: var(--radius-pill);
+	background: var(--sand);
+	color: var(--claydk);
+	font-weight: 800;
+	font-size: 15px;
+	text-align: center;
+	text-decoration: none;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.motif-handoff:hover,
+.motif-handoff:focus-visible {
+	background: var(--clay);
+	color: #fff;
+}
+
 .motif-name {
 	font-family: var(--font-heading);
 	font-weight: 700;
@@ -1122,10 +1152,42 @@
 	text-underline-offset: 3px;
 }
 
+.motif-card__meta {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	min-width: 0;
+}
+
 .motif-price {
 	font-size: 14px;
 	color: var(--clay);
 	font-weight: 800;
+}
+
+/* Buying a single towel: still one click, but no longer the loudest thing on
+   the card. Kept as text so the pill beside it reads as the card's action. */
+.motif-single {
+	display: inline-flex;
+	align-items: center;
+	min-height: 32px;
+	margin-top: 2px;
+	padding: 0;
+	border: none;
+	background: none;
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--muted);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
+}
+
+.motif-single:hover,
+.motif-single:focus-visible {
+	color: var(--claydk);
 }
 
 .motif-add {
@@ -1154,7 +1216,8 @@
    no longer loads on the front page (see Assets::trim_woocommerce_assets), so
    the in-flight state is styled here instead — without it the button looks
    inert for the whole round trip and invites a second click. */
-.motif-add.loading {
+.motif-add.loading,
+.motif-single.loading {
 	opacity: 0.55;
 	cursor: progress;
 	pointer-events: none;
@@ -1165,6 +1228,11 @@
 .pkg-cta.is-added {
 	background: var(--sage);
 	color: #fff;
+}
+
+.motif-single.is-added {
+	color: var(--sage);
+	text-decoration: none;
 }
 
 /* WooCommerce appends a "View cart" link (.added_to_cart) after each AJAX
@@ -1486,6 +1554,10 @@ a.testimonial__meta:focus-visible {
 	.motifs-toggle {
 		max-width: none;
 		margin-top: 18px;
+	}
+
+	.motif-handoff {
+		max-width: none;
 	}
 
 	.testimonials { grid-template-columns: 1fr; }

@@ -65,8 +65,19 @@ const boot = () => {
 	const cart = window.CosyPawCart || null;
 
 	// Bundle builder ("Napravi svoj paket").
-	const builder = document.querySelector('[data-bundle-builder]');
-	if (builder) new BundleBuilder(builder, { cart, l10n });
+	const builderEl = document.querySelector('[data-bundle-builder]');
+	const builder = builderEl ? new BundleBuilder(builderEl, { cart, l10n }) : null;
+
+	// The motif grid's main action drops the towel into a builder slot instead
+	// of buying a single one — the grid is far above the builder, so the
+	// component handles the scroll and the confirmation.
+	if (builder) {
+		document.querySelectorAll('[data-add-to-bundle]').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				builder.addMotifFromGallery(btn.dataset.motifId);
+			});
+		});
+	}
 
 	// WooCommerce AJAX add-to-cart feedback. WC fires `added_to_cart` (jQuery)
 	// after a successful ajax add; we hide WC's default "View cart" link, so

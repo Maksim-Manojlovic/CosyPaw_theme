@@ -395,6 +395,27 @@ msgstr "Choose %d more — the package isn't full"
 msgid "Ukloni peškirić"
 msgstr "Remove design"
 
+msgid "Dodato u paket — izaberi još %d"
+msgstr "Added to the package — choose %d more"
+
+msgid "Paket je pun — dodaj u korpu"
+msgstr "The package is full — add it to the cart"
+
+msgid "U paket"
+msgstr "Add to pack"
+
+msgid "Dodaj %s u paket"
+msgstr "Add %s to the package"
+
+msgid "Kupi 1 kom"
+msgstr "Buy just one"
+
+msgid "Kupi %s, 1 kom"
+msgstr "Buy %s, 1 piece"
+
+msgid "Spoji %1$d peškirića u paket — ušteda %2$s"
+msgstr "Bundle %1$d designs and save %2$s"
+
 msgid "Dodajem…"
 msgstr "Adding…"
 

@@ -33,6 +33,8 @@ export class BundleBuilder {
 				motifOne: 'peškirić',
 				motifMany: 'peškirića',
 				bundleFull: 'Paket je pun — ukloni peškirić da dodaš drugi',
+				bundleAdded: 'Dodato u paket — izaberi još %d',
+				bundleReady: 'Paket je pun — dodaj u korpu',
 				notFull: 'Izaberi još %d — paket nije popunjen',
 				removeMotif: 'Ukloni peškirić',
 				adding: 'Dodajem…',
@@ -170,6 +172,43 @@ export class BundleBuilder {
 		if (this.picks.length === qty) {
 			this._scrollTo(this.ctaBtn);
 		}
+	}
+
+	/**
+	 * Add a motif picked outside the builder — the grid further up the page —
+	 * and bring the builder into view.
+	 *
+	 * The grid is where enthusiasm peaks, but its buttons are nowhere near the
+	 * slots, so a silent add reads as a dead button. Every path here ends in
+	 * either a scroll or a toast, and usually both.
+	 *
+	 * @param {string} id Motif id, as printed on the grid button.
+	 */
+	addMotifFromGallery(id) {
+		if (!this.selected || !this._motifById(id)) return;
+
+		const before = this.picks.length;
+		this.addMotif(id);
+
+		// Nothing landed: the bundle is full, and addMotif has said so already.
+		if (this.picks.length === before) {
+			this._scrollTo(this.step2El);
+			return;
+		}
+
+		const remaining = this._qty() - this.picks.length;
+		if (remaining <= 0) {
+			// addMotif scrolled to the CTA — this click filled the bundle.
+			this._toast(this.l10n.bundleReady);
+			return;
+		}
+
+		this._toast(
+			this.l10n.bundleAdded.replace('%d', String(remaining)) +
+				' ' +
+				(remaining === 1 ? this.l10n.motifOne : this.l10n.motifMany)
+		);
+		this._scrollTo(this.step2El);
 	}
 
 	removeSlot(index) {

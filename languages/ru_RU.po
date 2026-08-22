@@ -395,6 +395,27 @@ msgstr "Выбери ещё %d — набор не заполнен"
 msgid "Ukloni peškirić"
 msgstr "Удалить мотив"
 
+msgid "Dodato u paket — izaberi još %d"
+msgstr "Добавлено в набор — выбери ещё %d"
+
+msgid "Paket je pun — dodaj u korpu"
+msgstr "Набор собран — добавь в корзину"
+
+msgid "U paket"
+msgstr "В набор"
+
+msgid "Dodaj %s u paket"
+msgstr "Добавить %s в набор"
+
+msgid "Kupi 1 kom"
+msgstr "Купить 1 шт"
+
+msgid "Kupi %s, 1 kom"
+msgstr "Купить %s, 1 шт"
+
+msgid "Spoji %1$d peškirića u paket — ušteda %2$s"
+msgstr "Собери %1$d мотива в набор — экономия %2$s"
+
 msgid "Dodajem…"
 msgstr "Добавляем…"
 

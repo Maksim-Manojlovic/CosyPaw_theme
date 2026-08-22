@@ -183,6 +183,24 @@ final class FloatingCartTest extends TestCase {
 	}
 
 	/**
+	 * The price on the pill is the price after the package saving.
+	 *
+	 * This is the regression that shipped: WooCommerce's get_cart_total() is
+	 * the cart *contents* total and excludes fees, so the pill advertised
+	 * 2.970 for three towels the shop was charging 1.980 for — the exact
+	 * number the package pricing exists to replace. It passed review because
+	 * the WC_Cart stub folded fees into its own get_cart_total(); the stub
+	 * mirrors WooCommerce now, and this asserts the undiscounted figure is
+	 * nowhere on the pill.
+	 */
+	public function test_the_pill_never_quotes_the_undiscounted_price(): void {
+		$markup = $this->pill( 3 );
+
+		$this->assertStringContainsString( '1.980 RSD', $markup );
+		$this->assertStringNotContainsString( '2.970', $markup );
+	}
+
+	/**
 	 * Two towels are one short of a Trio, and the pill says what that costs.
 	 */
 	public function test_the_nudge_quotes_the_next_towel(): void {

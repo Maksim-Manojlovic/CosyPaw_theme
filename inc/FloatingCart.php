@@ -103,7 +103,17 @@ final class FloatingCart {
 		// selector that is already on the page, and hiding it here rather than
 		// skipping it is what lets the first add-to-cart bring it back.
 		$hidden = $count < 1 ? ' hidden' : '';
-		$total  = $count > 0 ? (string) $cart->get_cart_total() : '';
+
+		// Not get_cart_total(): despite the name that is WooCommerce's cart
+		// *contents* total, which excludes fees — so the pill was quoting the
+		// price before the package saving, the one number this whole feature
+		// exists to replace. Contents plus fees is what the towels actually
+		// cost; shipping is deliberately left out, since it is paid to the
+		// courier and is not part of what the cart is worth.
+		$total = '';
+		if ( $count > 0 ) {
+			$total = (string) wc_price( $cart->get_cart_contents_total() + $cart->get_fee_total() );
+		}
 		$step   = $count > 0 ? $this->pricing->next_step( $this->pricing->cart_towels( $cart ) ) : null;
 
 		$nudge = '';

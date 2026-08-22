@@ -67,6 +67,13 @@ final class Bootstrap {
 	private ?FloatingCart $floating_cart = null;
 
 	/**
+	 * WooCommerce's Serbian, in Latin. Null when WooCommerce is inactive.
+	 *
+	 * @var ShopStrings|null
+	 */
+	private ?ShopStrings $shop_strings = null;
+
+	/**
 	 * SEO meta / structured data module.
 	 *
 	 * @var Seo
@@ -94,6 +101,8 @@ final class Bootstrap {
 			// The pill quotes the package pricing rather than recomputing it,
 			// so the two can never disagree about what one more towel costs.
 			$this->floating_cart = new FloatingCart( $this->text_domain, $this->bundle_pricing );
+
+			$this->shop_strings = new ShopStrings();
 		} else {
 			$this->register_missing_woocommerce_notice();
 		}

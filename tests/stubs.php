@@ -151,12 +151,15 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		}
 
 		/**
-		 * Formatted cart total. WooCommerce returns markup here, so the stub
-		 * does too — the pill has to survive it.
+		 * Sum of the line prices, fees excluded.
 		 *
-		 * @return string
+		 * Fees excluded on purpose: that is what WooCommerce's own
+		 * get_cart_contents_total() means, and a stub that quietly folded them in
+		 * is exactly what let the cart pill ship quoting the pre-discount price.
+		 *
+		 * @return float
 		 */
-		public function get_cart_total(): string {
+		public function get_cart_contents_total(): float {
 			$total = 0.0;
 			foreach ( $this->contents as $item ) {
 				$product = $item['data'] ?? null;
@@ -165,11 +168,45 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 				}
 			}
 
+			return $total;
+		}
+
+		/**
+		 * Sum of the fees booked on the cart, negative for a discount.
+		 *
+		 * @return float
+		 */
+		public function get_fee_total(): float {
+			$total = 0.0;
 			foreach ( $this->fees as $fee ) {
 				$total += $fee['amount'];
 			}
 
-			return '<span class="woocommerce-Price-amount">' . number_format( $total, 0, ',', '.' ) . ' RSD</span>';
+			return $total;
 		}
+
+		/**
+		 * WooCommerce's cart *contents* total, formatted. Despite the name it
+		 * excludes fees — mirrored here so a test cannot pass on a total the real
+		 * cart would never produce.
+		 *
+		 * @return string
+		 */
+		public function get_cart_total(): string {
+			return wc_price( $this->get_cart_contents_total() );
+		}
+	}
+}
+
+if ( ! function_exists( 'wc_price' ) ) {
+	/**
+	 * Stand-in for WooCommerce's price formatter, in the shop's own format:
+	 * de-DE grouping and an RSD suffix, matching Theme\Catalog::format_price().
+	 *
+	 * @param float $amount Amount.
+	 * @return string
+	 */
+	function wc_price( float $amount ): string {
+		return '<span class="woocommerce-Price-amount">' . number_format( $amount, 0, ',', '.' ) . ' RSD</span>';
 	}
 }

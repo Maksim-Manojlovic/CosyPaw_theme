@@ -684,6 +684,12 @@ final class WooCommerce {
 		// Late, so it wraps the reviews tab whatever else has touched it.
 		add_filter( 'woocommerce_product_tabs', array( $this, 'reviews_tab_intro' ), 98 );
 
+		// Below the product, in the landing's own order: the gift banner after
+		// the tabs (10), the FAQ after the related products (20). Both answer
+		// what a visitor asks next, and both were only on the front page.
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'gift_banner' ), 12 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'faq_section' ), 25 );
+
 		// Come back to the product page carrying a flag the panel above reads.
 		add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'add_to_cart_redirect' ) );
 	}
@@ -1189,6 +1195,55 @@ final class WooCommerce {
 			esc_html__( 'Pročitaj utiske kupaca', 'cosypaw' )
 		);
 		echo '</div>';
+	}
+
+	/**
+	 * Whether the product being viewed is one of ours.
+	 *
+	 * @return bool
+	 */
+	private function is_our_single_product(): bool {
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		return $product instanceof \WC_Product
+			&& in_array( (int) $product->get_id(), $this->our_product_ids(), true );
+	}
+
+	/**
+	 * The gift banner, under the product.
+	 *
+	 * "Stiže spremno za poklon" is the shop's answer to what arrives in the
+	 * post, and the unboxing clip is the evidence — both of which only the
+	 * front page was making. A product page is where the question is asked.
+	 *
+	 * @return void
+	 */
+	public function gift_banner(): void {
+		if ( ! $this->is_our_single_product() ) {
+			return;
+		}
+
+		echo '<div class="cosypaw-product-block">';
+		get_template_part( 'template-parts/gift-banner' );
+		echo '</div>';
+	}
+
+	/**
+	 * The FAQ accordion, under the product.
+	 *
+	 * Fabric, washing, delivery, payment — the four things someone reads
+	 * before a first order, which a product page was sending them back to the
+	 * front page to find. The template part carries no structured data, so the
+	 * FAQPage node stays where it belongs, on one URL.
+	 *
+	 * @return void
+	 */
+	public function faq_section(): void {
+		if ( ! $this->is_our_single_product() ) {
+			return;
+		}
+
+		get_template_part( 'template-parts/faq' );
 	}
 
 	/**

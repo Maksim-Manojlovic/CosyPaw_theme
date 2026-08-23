@@ -14,6 +14,7 @@ import '../css/main.css';
 import { SiteNav } from './components/SiteNav.js';
 import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
+import { InViewVideo } from './components/InViewVideo.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -41,6 +42,14 @@ const boot = () => {
 
 	const marquee = document.querySelector('[data-marquee]');
 	if (marquee) new Marquee(marquee, l10n);
+
+	// The gift banner's unboxing clip. It is on the landing and under every
+	// product now, so it boots from here rather than from the landing entry.
+	if (InViewVideo.wanted()) {
+		document.querySelectorAll('[data-inview-video]').forEach((video) => {
+			new InViewVideo(video, l10n);
+		});
+	}
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

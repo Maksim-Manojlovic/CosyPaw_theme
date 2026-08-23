@@ -7,6 +7,8 @@
  * Consumes tokens from main.css.
  */
 
+@import "./blocks.css";
+
 /* Shop archive / single-product content wrapper (printed by Theme\WooCommerce).
    NOTE: body carries the .woocommerce class on WC pages — never put layout/width
    on `.woocommerce` itself or it constrains the whole body. Scope to .shop-main. */
@@ -198,6 +200,23 @@
 
 .woocommerce .woocommerce-breadcrumb a:hover {
 	color: var(--claydk);
+}
+
+/* ---------- Shared blocks under a product ---------- */
+
+/* Same rule the related products get: a line, then air. Without it the gift
+   banner reads as part of the tabs above it. */
+.cosypaw-product-block {
+	margin-top: 56px;
+	border-top: 1px solid var(--line);
+	padding-top: 36px;
+}
+
+/* .section carries the landing's own 22px gutter, and .shop-main has already
+   spent it — nested, the FAQ ended up inset from everything around it. */
+.woocommerce div.product > .section {
+	padding-left: 0;
+	padding-right: 0;
 }
 
 /* ---------- Related / up-sell blocks ---------- */

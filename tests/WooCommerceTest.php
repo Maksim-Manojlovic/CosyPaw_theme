@@ -74,6 +74,7 @@ final class WooCommerceTest extends TestCase {
 				},
 				'esc_url_raw'        => static fn( $url ) => $url,
 				'wp_unslash'         => static fn( $value ) => $value,
+				'wp_trim_words'      => static fn( $text, $words = 55, $more = '…' ) => $text,
 				'wc_get_cart_url'    => 'http://example.test/korpa/',
 				'wc_get_page_permalink' => static fn( $page ) => 'http://example.test/' . $page . '/',
 				'absint'             => static fn( $value ) => abs( (int) $value ),
@@ -394,6 +395,96 @@ final class WooCommerceTest extends TestCase {
 		$this->assertStringContainsString( 'Napravi paket', $out );
 		$this->assertStringContainsString( 'Nastavi kupovinu', $out );
 		$this->assertStringContainsString( 'Trio paket', $out );
+	}
+
+	/**
+	 * Most motifs have no review of their own, and an empty product page reads
+	 * as a shop nobody has bought from. The newest review from anywhere in the
+	 * shop stands in — carrying the name of the towel it was written about,
+	 * because without it the quote would be a review of this one.
+	 */
+	public function test_review_proof_borrows_the_shops_newest_when_a_motif_has_none(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+		Functions\when( 'get_comments' )->justReturn( array() );
+		Functions\when( 'get_transient' )->justReturn(
+			array(
+				array(
+					'product_id' => 7,
+					'rating'     => 5,
+					'author'     => 'Milica',
+					'text'       => 'Ćerka bira baš ovaj svako veče.',
+					'id'         => 3,
+				),
+			)
+		);
+		Functions\when( 'get_the_title' )->justReturn( 'Pingvin' );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->review_proof();
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Milica', $out );
+		$this->assertStringContainsString( 'o proizvodu', $out );
+		$this->assertStringContainsString( 'Pingvin', $out );
+		// A borrowed review must never carry this product's structured data.
+		$this->assertStringNotContainsString( 'itemprop', $out );
+	}
+
+	/**
+	 * Once the towel has a review of its own, that is the one worth quoting —
+	 * and it needs no "about" label, because it is about this page.
+	 */
+	public function test_review_proof_prefers_the_products_own_review(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				(object) array(
+					'comment_ID'      => 12,
+					'comment_author'  => 'Jelena',
+					'comment_content' => 'Stigao brzo, mekan i baš onakav kao na slici.',
+				),
+			)
+		);
+		Functions\when( 'get_comment_meta' )->justReturn( 5 );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->review_proof();
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Jelena', $out );
+		$this->assertStringNotContainsString( 'o proizvodu', $out );
+	}
+
+	/**
+	 * The invitation replaces an empty tab and leaves a full one alone.
+	 */
+	public function test_reviews_tab_intro_only_wraps_an_empty_tab(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+
+		$product = new \WC_Product( 'Žirafa', '790', true, 42 );
+		Functions\when( 'wc_get_product' )->justReturn( $product );
+
+		$wc   = new WooCommerce( 'cosypaw', new Catalog() );
+		$tabs = array( 'reviews' => array( 'callback' => static fn() => print 'WOO' ) );
+
+		$empty = $wc->reviews_tab_intro( $tabs );
+		ob_start();
+		call_user_func( $empty['reviews']['callback'] );
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Budi prvi', $out );
+		$this->assertStringContainsString( 'Žirafa', $out );
+		// Wrapping, not replacing: WooCommerce's own tab still runs.
+		$this->assertStringContainsString( 'WOO', $out );
+
+		$product->set_review_count( 4 );
+		$this->assertSame( $tabs, $wc->reviews_tab_intro( $tabs ) );
 	}
 
 	/**

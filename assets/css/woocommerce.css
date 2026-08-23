@@ -284,6 +284,90 @@
 	color: var(--muted);
 }
 
+/* One review, beside the buy button. Quiet on purpose — the summary already
+   carries a price, an offer and two buttons, and this is evidence rather than
+   another thing to press. */
+.cosypaw-proof {
+	display: grid;
+	gap: 6px;
+	margin: 0 0 22px;
+	padding: 14px 18px;
+	border-radius: var(--radius-lg);
+	background: #fff;
+	box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.cosypaw-proof__stars {
+	display: inline-flex;
+	gap: 2px;
+	color: var(--ochre-ink);
+}
+
+/* A four-star review is still worth quoting, so the fifth star has to read as
+   unearned rather than missing — the rating is in the label either way. */
+.cosypaw-proof__star--empty {
+	color: var(--sandmid);
+}
+
+.cosypaw-proof__quote {
+	margin: 0;
+	font-size: 14.5px;
+	line-height: 1.55;
+	color: var(--ink);
+}
+
+.cosypaw-proof__by {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px 8px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--muted);
+}
+
+.cosypaw-proof__about a {
+	color: var(--claydk);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.cosypaw-proof__about a:hover,
+.cosypaw-proof__about a:focus-visible {
+	color: var(--ink);
+}
+
+/* The invitation above an empty reviews tab. */
+.cosypaw-reviews-intro {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 16px;
+	margin-bottom: 20px;
+	padding: 14px 18px;
+	border-radius: var(--radius-lg);
+	background: var(--cream2);
+}
+
+.cosypaw-reviews-intro__text {
+	margin: 0;
+	font-weight: 700;
+	color: var(--ink);
+}
+
+.cosypaw-reviews-intro__link {
+	color: var(--claydk);
+	font-weight: 800;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* WooCommerce's own "there are no reviews yet" sits inside #reviews, a sibling
+   of the invitation. Where the invitation printed, the tab has already said
+   this — in a sentence that asks for something. */
+.cosypaw-reviews-intro ~ #reviews .woocommerce-noreviews {
+	display: none;
+}
+
 /* The inactive tabs keep the pill from the block below; only their label was
    still browser blue. */
 .woocommerce div.product .woocommerce-tabs ul.tabs li a {

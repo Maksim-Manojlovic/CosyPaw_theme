@@ -678,7 +678,11 @@ final class WooCommerce {
 		// only pressed one button is still looking.
 		add_action( 'woocommerce_single_product_summary', array( $this, 'added_panel' ), 4 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'bundle_cta' ), 31 );
+		add_action( 'woocommerce_single_product_summary', array( $this, 'review_proof' ), 33 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'product_specs' ), 45 );
+
+		// Late, so it wraps the reviews tab whatever else has touched it.
+		add_filter( 'woocommerce_product_tabs', array( $this, 'reviews_tab_intro' ), 98 );
 
 		// Come back to the product page carrying a flag the panel above reads.
 		add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'add_to_cart_redirect' ) );
@@ -956,6 +960,235 @@ final class WooCommerce {
 		}
 
 		echo '</div></div>';
+	}
+
+	/**
+	 * One review, beside the buy button.
+	 *
+	 * Twenty motifs split a small pile of reviews twenty ways, so most product
+	 * pages have none of their own and read as deserted at the moment someone
+	 * is deciding. This shows the product's own newest review where it has one,
+	 * and otherwise borrows the shop's newest — labelled with the towel it was
+	 * written about, because an unlabelled one would be a review of this towel.
+	 *
+	 * Deliberately plain markup with no itemprop: a borrowed review must never
+	 * reach this product's structured data, where it would be a rating Google
+	 * reads as this product's own.
+	 *
+	 * @return void
+	 */
+	public function review_proof(): void {
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		if ( ! $product instanceof \WC_Product || ! in_array( (int) $product->get_id(), $this->our_product_ids(), true ) ) {
+			return;
+		}
+
+		$row = $this->proof_row( (int) $product->get_id() );
+
+		if ( ! $row ) {
+			return;
+		}
+
+		$rating    = (int) ( $row['rating'] ?? 5 );
+		$permalink = (string) ( $row['permalink'] ?? '' );
+		$about     = (string) ( $row['meta'] ?? '' );
+
+		echo '<figure class="cosypaw-proof">';
+		$this->rating_stars( $rating );
+		printf( '<blockquote class="cosypaw-proof__quote">%s</blockquote>', esc_html( (string) ( $row['quote'] ?? '' ) ) );
+
+		echo '<figcaption class="cosypaw-proof__by">';
+		printf( '<span class="cosypaw-proof__name">%s</span>', esc_html( (string) ( $row['name'] ?? '' ) ) );
+
+		// The label only makes sense on a borrowed review — on the product's
+		// own it would say "about Sova" underneath Sova.
+		if ( ! empty( $row['borrowed'] ) && '' !== $about ) {
+			$label = sprintf(
+				/* translators: %s: product name the review was written about. */
+				__( 'o proizvodu %s', 'cosypaw' ),
+				$about
+			);
+
+			printf(
+				'<span class="cosypaw-proof__about">%s</span>',
+				'' !== $permalink
+					? sprintf( '<a href="%1$s">%2$s</a>', esc_url( $permalink ), esc_html( $label ) )
+					: esc_html( $label )
+			);
+		}
+
+		echo '</figcaption></figure>';
+	}
+
+	/**
+	 * The review to quote beside the buy button, or an empty array for none.
+	 *
+	 * @param int $product_id Product being viewed.
+	 * @return array<string,mixed>
+	 */
+	private function proof_row( int $product_id ): array {
+		$own = $this->own_review( $product_id );
+
+		if ( $own ) {
+			return $own;
+		}
+
+		if ( ! class_exists( Reviews::class ) ) {
+			return array();
+		}
+
+		$pool = Reviews::latest( 1 );
+		$row  = $pool[0] ?? array();
+
+		if ( ! $row ) {
+			return array();
+		}
+
+		$row['borrowed'] = true;
+
+		return $row;
+	}
+
+	/**
+	 * The product's own newest approved review, reduced to the proof row shape.
+	 *
+	 * @param int $product_id Product to read.
+	 * @return array<string,mixed>
+	 */
+	private function own_review( int $product_id ): array {
+		if ( ! function_exists( 'get_comments' ) ) {
+			return array();
+		}
+
+		$comments = (array) get_comments(
+			array(
+				'post_id'  => $product_id,
+				'status'   => 'approve',
+				'type__in' => array( 'review', 'comment' ),
+				'parent'   => 0,
+				'number'   => 1,
+				'orderby'  => 'comment_date_gmt',
+				'order'    => 'DESC',
+			)
+		);
+
+		$comment = $comments[0] ?? null;
+
+		if ( ! is_object( $comment ) || empty( $comment->comment_ID ) ) {
+			return array();
+		}
+
+		$rating = function_exists( 'get_comment_meta' )
+			? (int) get_comment_meta( (int) $comment->comment_ID, 'rating', true )
+			: 0;
+
+		$author = trim( (string) ( $comment->comment_author ?? '' ) );
+
+		return array(
+			'quote'     => wp_trim_words( (string) ( $comment->comment_content ?? '' ), 28, '…' ),
+			// Same reasoning as Reviews::render(): a byline is owed even where
+			// none was given, and "Kupac" beats inventing one.
+			'name'      => '' !== $author ? $author : __( 'Kupac', 'cosypaw' ),
+			'rating'    => $rating > 0 ? $rating : 5,
+			'permalink' => '#comment-' . (int) $comment->comment_ID,
+			'meta'      => '',
+			'borrowed'  => false,
+		);
+	}
+
+	/**
+	 * Five stars, filled to the rating. Mirrors the landing's testimonials.
+	 *
+	 * @param int $rating Stars earned, 1-5.
+	 * @return void
+	 */
+	private function rating_stars( int $rating ): void {
+		$rating = max( 1, min( 5, $rating ) );
+
+		printf(
+			'<span class="cosypaw-proof__stars" role="img" aria-label="%s">',
+			esc_attr(
+				sprintf(
+					/* translators: %d: star rating, 1-5. */
+					__( '%d od 5 zvezdica', 'cosypaw' ),
+					$rating
+				)
+			)
+		);
+
+		for ( $i = 1; $i <= 5; $i++ ) {
+			printf(
+				'<svg class="cosypaw-proof__star%s" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.7L12 17l-6 3.6 1.5-6.7L2.4 9.4l6.8-.6z"/></svg>',
+				$i <= $rating ? '' : ' cosypaw-proof__star--empty'
+			);
+		}
+
+		echo '</span>';
+	}
+
+	/**
+	 * Turn the empty reviews tab into an invitation.
+	 *
+	 * "Još nema recenzija" is the whole tab on most motifs, and it reads as a
+	 * shop nobody has bought from. The line below asks for the first review and
+	 * points at the ones the shop does have; WooCommerce's own empty notice is
+	 * hidden by the stylesheet where this runs, so the tab says it once.
+	 *
+	 * @param array<string,array<string,mixed>> $tabs Product tabs.
+	 * @return array<string,array<string,mixed>>
+	 */
+	public function reviews_tab_intro( $tabs ) {
+		if ( ! is_array( $tabs ) || empty( $tabs['reviews']['callback'] ) ) {
+			return $tabs;
+		}
+
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		// A product with reviews of its own needs no invitation, and the tab
+		// is then about them.
+		if ( ! $product instanceof \WC_Product || (int) $product->get_review_count() > 0 ) {
+			return $tabs;
+		}
+
+		$original = $tabs['reviews']['callback'];
+		$name     = (string) $product->get_name();
+
+		$tabs['reviews']['callback'] = function ( ...$args ) use ( $original, $name ) {
+			$this->reviews_tab_invite( $name );
+
+			if ( is_callable( $original ) ) {
+				call_user_func_array( $original, $args );
+			}
+		};
+
+		return $tabs;
+	}
+
+	/**
+	 * The invitation printed above an empty reviews tab.
+	 *
+	 * @param string $name Product name.
+	 * @return void
+	 */
+	public function reviews_tab_invite( string $name ): void {
+		echo '<div class="cosypaw-reviews-intro">';
+		printf(
+			'<p class="cosypaw-reviews-intro__text">%s</p>',
+			esc_html(
+				sprintf(
+					/* translators: %s: product name. */
+					__( 'Budi prvi koji je ocenio %s.', 'cosypaw' ),
+					$name
+				)
+			)
+		);
+		printf(
+			'<a class="cosypaw-reviews-intro__link" href="%1$s">%2$s</a>',
+			esc_url( home_url( '/#utisci' ) ),
+			esc_html__( 'Pročitaj utiske kupaca', 'cosypaw' )
+		);
+		echo '</div>';
 	}
 
 	/**

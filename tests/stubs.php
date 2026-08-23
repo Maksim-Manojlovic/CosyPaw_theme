@@ -48,6 +48,13 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private int $id;
 
 		/**
+		 * Approved reviews on this product.
+		 *
+		 * @var int
+		 */
+		private int $review_count = 0;
+
+		/**
 		 * Constructor.
 		 *
 		 * @param string $name        Product name.
@@ -96,6 +103,25 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 */
 		public function is_purchasable(): bool {
 			return $this->purchasable;
+		}
+
+		/**
+		 * How many approved reviews the product carries.
+		 *
+		 * @return int
+		 */
+		public function get_review_count(): int {
+			return $this->review_count;
+		}
+
+		/**
+		 * Set the review count for a test that turns on it.
+		 *
+		 * @param int $count Reviews.
+		 * @return void
+		 */
+		public function set_review_count( int $count ): void {
+			$this->review_count = $count;
 		}
 	}
 }

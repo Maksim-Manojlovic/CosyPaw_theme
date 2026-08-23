@@ -242,6 +242,9 @@ $sr_source = array(
 
 	// Pooled landing-page reviews (Theme\Reviews).
 	'Kupac'                                                                                   => array( 'Customer', 'Покупатель' ),
+	'o proizvodu %s'                                                                          => array( 'about %s', 'о товаре %s' ),
+	'Budi prvi koji je ocenio %s.'                                                            => array( 'Be the first to review %s.', 'Оставь первый отзыв о %s.' ),
+	'Pročitaj utiske kupaca'                                                                  => array( 'Read what customers say', 'Читать отзывы покупателей' ),
 
 	// Single product page: bundle route and the shared spec list.
 	'Dodaj u paket'                                                                           => array( 'Add to a package', 'Добавить в набор' ),

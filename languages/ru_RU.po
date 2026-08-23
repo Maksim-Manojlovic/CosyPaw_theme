@@ -605,6 +605,15 @@ msgstr "Спасибо за доверие — CosyPaw"
 msgid "Kupac"
 msgstr "Покупатель"
 
+msgid "o proizvodu %s"
+msgstr "о товаре %s"
+
+msgid "Budi prvi koji je ocenio %s."
+msgstr "Оставь первый отзыв о %s."
+
+msgid "Pročitaj utiske kupaca"
+msgstr "Читать отзывы покупателей"
+
 msgid "Dodaj u paket"
 msgstr "Добавить в набор"
 

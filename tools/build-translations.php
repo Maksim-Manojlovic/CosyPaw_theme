@@ -246,6 +246,12 @@ $sr_source = array(
 	// Single product page: bundle route and the shared spec list.
 	'Dodaj u paket'                                                                           => array( 'Add to a package', 'Добавить в набор' ),
 	'Cena po komadu pada sa svakim sledećim peškirićem'                                       => array( 'The price per towel drops with every one you add', 'Цена за штуку падает с каждым следующим полотенцем' ),
+	'Uzmi više, plati manje'                                                                  => array( 'Take more, pay less', 'Бери больше — плати меньше' ),
+	'%s / kom'                                                                                => array( '%s / pc', '%s / шт' ),
+	'%s je u korpi.'                                                                          => array( '%s is in your cart.', '%s в корзине.' ),
+	'Napravi paket'                                                                           => array( 'Build a package', 'Собрать набор' ),
+	'Nastavi kupovinu'                                                                        => array( 'Keep shopping', 'Продолжить покупки' ),
+	'Idi u korpu'                                                                             => array( 'Go to cart', 'В корзину' ),
 	'Materijal'                                                                               => array( 'Fabric', 'Материал' ),
 	'Plišana mikrofibra — mekana, lagana i jako upijajuća.'                                   => array( 'Plush microfibre — soft, light and highly absorbent.', 'Плюшевая микрофибра — мягкая, лёгкая и очень впитывающая.' ),
 	'Kačenje'                                                                                 => array( 'Hanging', 'Подвешивание' ),

@@ -89,15 +89,24 @@ export class BundleBuilder {
 	}
 
 	/**
-	 * Drop a motif carried in from a product page (?motif=id) into the bundle.
-	 * The tier is already selected by then, so the towel just lands in slot 1.
+	 * Drop a motif carried in from a product page (?motif=id) into the bundle,
+	 * on the size that page was arguing for (?package=trio) when it names one.
+	 * A tier is already selected by then, so the towel just lands in slot 1.
 	 */
 	_applyDeepLink() {
 		let wanted = '';
+		let size = '';
 		try {
-			wanted = new URLSearchParams(window.location.search).get('motif') || '';
+			const params = new URLSearchParams(window.location.search);
+			wanted = params.get('motif') || '';
+			size = params.get('package') || '';
 		} catch (e) {
 			return;
+		}
+
+		if (size) {
+			const tier = this.tiers.find((t) => t.dataset.package === size);
+			if (tier) this.selectTier(tier);
 		}
 
 		if (!wanted || !this._motifById(wanted) || !this.selected) return;

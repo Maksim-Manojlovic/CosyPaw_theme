@@ -302,6 +302,169 @@
 	color: var(--muted);
 }
 
+/* The package offer, stated where the choice between one towel and three is
+   actually made. One row per bundle, each row a way into the builder with
+   that size already chosen. */
+.cosypaw-offer {
+	margin: 0 0 22px;
+}
+
+/* The route below the rows closes the block, so its own bottom margin would
+   only double the one above. */
+.cosypaw-offer .cosypaw-bundle-cta {
+	margin-bottom: 0;
+}
+
+.cosypaw-offer__title {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 12.5px;
+	font-weight: 800;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	color: var(--claydk);
+}
+
+.cosypaw-offer__list {
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: 8px;
+}
+
+.cosypaw-offer__row a {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+	min-height: 48px;
+	padding: 10px 14px;
+	border-radius: var(--radius-lg);
+	background: #fff;
+	box-shadow: inset 0 0 0 1px var(--line);
+	color: var(--ink);
+	text-decoration: none;
+	transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cosypaw-offer__row a:hover,
+.cosypaw-offer__row a:focus-visible {
+	background: var(--cream2);
+	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
+}
+
+.cosypaw-offer__name {
+	font-weight: 800;
+	font-size: 15px;
+}
+
+.cosypaw-offer__per {
+	color: var(--clay);
+	font-weight: 800;
+	font-size: 14px;
+}
+
+/* Pushed to the end of the row so the claims line up under each other, and
+   wrapping under the name rather than squeezing it on a narrow column. */
+.cosypaw-offer__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-left: auto;
+}
+
+.cosypaw-offer__tag {
+	padding: 4px 10px;
+	border-radius: var(--radius-pill);
+	background: var(--sand);
+	color: var(--claydk);
+	font-size: 12px;
+	font-weight: 800;
+	white-space: nowrap;
+}
+
+/* What to do next, above the title of a product just added to the cart. */
+.cosypaw-added {
+	margin: 0 0 20px;
+	padding: 18px 20px;
+	border-radius: var(--radius-lg);
+	background: var(--sagelt);
+	color: var(--ink);
+}
+
+.cosypaw-added__title {
+	margin: 0 0 12px;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 18px;
+}
+
+/* On the panel's fill the rows need their own ground to sit on, and the
+   offer's bottom margin is the panel's padding here. */
+.cosypaw-added .cosypaw-offer {
+	margin-bottom: 14px;
+}
+
+.cosypaw-added .cosypaw-offer__title {
+	color: var(--sage);
+}
+
+.cosypaw-added__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 18px;
+}
+
+.cosypaw-added__btn {
+	display: inline-flex;
+	align-items: center;
+	min-height: 48px;
+	padding: 12px 26px;
+	border-radius: var(--radius-pill);
+	background: var(--clay);
+	color: #fff;
+	font-weight: 800;
+	text-decoration: none;
+	transition: background 0.15s ease;
+}
+
+.cosypaw-added__btn:hover,
+.cosypaw-added__btn:focus-visible {
+	background: var(--claydk);
+	color: #fff;
+}
+
+.cosypaw-added__link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: var(--sage);
+	font-weight: 800;
+	font-size: 14.5px;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.cosypaw-added__link:hover,
+.cosypaw-added__link:focus-visible {
+	color: var(--ink);
+}
+
+@media (max-width: 560px) {
+	/* The tags carry the offer, so they keep the width and the row stacks. */
+	.cosypaw-offer__tags {
+		margin-left: 0;
+		width: 100%;
+	}
+
+	.cosypaw-added__btn {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
 .cosypaw-specs {
 	margin: 22px 0 0;
 	padding: 18px 20px;

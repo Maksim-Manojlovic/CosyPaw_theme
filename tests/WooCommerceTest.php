@@ -63,8 +63,20 @@ final class WooCommerceTest extends TestCase {
 				// CheckoutSetup registers one filter only outside wp-admin.
 				'is_admin'           => false,
 				'untrailingslashit'  => static fn( $s ) => rtrim( (string) $s, '/' ),
-				'add_query_arg'      => static fn( $key, $value = '' ) => 'http://example.test/?' . $key . '=' . $value,
+				// Faithful enough to WordPress's own to be worth testing links
+				// against: both signatures, and the URL it is handed is kept.
+				'add_query_arg'      => static function ( $key, $value = '', $url = '' ) {
+					$args = is_array( $key ) ? $key : array( $key => $value );
+					$base = is_array( $key ) ? (string) $value : (string) $url;
+					$base = '' !== $base ? $base : 'http://example.test/';
+
+					return $base . ( str_contains( $base, '?' ) ? '&' : '?' ) . http_build_query( $args );
+				},
 				'esc_url_raw'        => static fn( $url ) => $url,
+				'wp_unslash'         => static fn( $value ) => $value,
+				'wc_get_cart_url'    => 'http://example.test/korpa/',
+				'wc_get_page_permalink' => static fn( $page ) => 'http://example.test/' . $page . '/',
+				'absint'             => static fn( $value ) => abs( (int) $value ),
 				'esc_html'           => static fn( $text ) => $text,
 				// i18n stubs return the original string.
 				'__'                 => static fn( $text ) => $text,
@@ -83,6 +95,11 @@ final class WooCommerceTest extends TestCase {
 				'get_permalink'      => static fn( $id ) => 'http://example.test/product/' . $id . '/',
 			)
 		);
+
+		// A WooCommerce with no cart session, which is what a unit test has.
+		// Another test file defines WC(), so leaving it unmocked here is an
+		// error rather than a function_exists() miss.
+		Functions\when( 'WC' )->justReturn( (object) array( 'cart' => null ) );
 	}
 
 	protected function tearDown(): void {
@@ -330,8 +347,89 @@ final class WooCommerceTest extends TestCase {
 		$out = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'motif=zirafa', $out );
-		$this->assertStringContainsString( '#paketi', $out );
+		$this->assertStringContainsString( '#napravi-paket', $out );
 		$this->assertStringContainsString( 'Dodaj u paket', $out );
+	}
+
+	/**
+	 * The offer the rest of the site makes — the price per piece falling, the
+	 * free towel, the free shipping — has to survive the trip to a product
+	 * page, which is where a customer decides between one towel and three.
+	 */
+	public function test_bundle_cta_states_the_package_offer(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		ob_start();
+		$wc->bundle_cta();
+		$out = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Duo paket', $out );
+		$this->assertStringContainsString( 'Trio paket', $out );
+		$this->assertStringContainsString( '2+1 GRATIS', $out );
+		$this->assertStringContainsString( 'Besplatna dostava', $out );
+		// Every row is a way in, with the size it names already chosen.
+		$this->assertStringContainsString( 'package=trio', $out );
+	}
+
+	/**
+	 * Adding a towel used to end the conversation on the page it started. The
+	 * panel only appears for the product that was just added.
+	 */
+	public function test_added_panel_answers_what_now(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		$_GET['cosypaw-added'] = '42';
+		ob_start();
+		$wc->added_panel();
+		$out = (string) ob_get_clean();
+		unset( $_GET['cosypaw-added'] );
+
+		$this->assertStringContainsString( 'Žirafa', $out );
+		$this->assertStringContainsString( 'Napravi paket', $out );
+		$this->assertStringContainsString( 'Nastavi kupovinu', $out );
+		$this->assertStringContainsString( 'Trio paket', $out );
+	}
+
+	/**
+	 * Another product's flag is not this product's news.
+	 */
+	public function test_added_panel_stays_off_a_product_that_was_not_added(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Žirafa', '790', true, 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		$_GET['cosypaw-added'] = '99';
+		ob_start();
+		$wc->added_panel();
+		$out = (string) ob_get_clean();
+		unset( $_GET['cosypaw-added'] );
+
+		$this->assertSame( '', $out );
+	}
+
+	/**
+	 * The flag rides back on the redirect WooCommerce was already making — and
+	 * never over a shop that sends its customers to the cart instead.
+	 */
+	public function test_add_to_cart_redirect_carries_the_flag_without_overruling_the_shop(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		$_REQUEST['add-to-cart'] = '42';
+		$flagged                 = $wc->add_to_cart_redirect( '' );
+		$settled                 = $wc->add_to_cart_redirect( 'http://example.test/korpa/' );
+		unset( $_REQUEST['add-to-cart'] );
+
+		$this->assertStringContainsString( 'cosypaw-added=42', $flagged );
+		$this->assertSame( 'http://example.test/korpa/', $settled );
 	}
 
 	/**

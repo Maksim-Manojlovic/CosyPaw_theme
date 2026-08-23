@@ -611,6 +611,24 @@ msgstr "Добавить в набор"
 msgid "Cena po komadu pada sa svakim sledećim peškirićem"
 msgstr "Цена за штуку падает с каждым следующим полотенцем"
 
+msgid "Uzmi više, plati manje"
+msgstr "Бери больше — плати меньше"
+
+msgid "%s / kom"
+msgstr "%s / шт"
+
+msgid "%s je u korpi."
+msgstr "%s в корзине."
+
+msgid "Napravi paket"
+msgstr "Собрать набор"
+
+msgid "Nastavi kupovinu"
+msgstr "Продолжить покупки"
+
+msgid "Idi u korpu"
+msgstr "В корзину"
+
 msgid "Materijal"
 msgstr "Материал"
 

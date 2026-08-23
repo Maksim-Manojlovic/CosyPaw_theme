@@ -674,8 +674,14 @@ final class WooCommerce {
 
 		// Single product: the bundle route sits right under WooCommerce's own
 		// add-to-cart (priority 30), and the shared facts under the meta (40).
+		// The just-added panel goes above the title, where a customer who has
+		// only pressed one button is still looking.
+		add_action( 'woocommerce_single_product_summary', array( $this, 'added_panel' ), 4 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'bundle_cta' ), 31 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'product_specs' ), 45 );
+
+		// Come back to the product page carrying a flag the panel above reads.
+		add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'add_to_cart_redirect' ) );
 	}
 
 	/**
@@ -717,12 +723,239 @@ final class WooCommerce {
 			return;
 		}
 
+		echo '<div class="cosypaw-offer">';
+		$this->offer_rows( $motif_id );
+
 		printf(
 			'<a class="cosypaw-bundle-cta" href="%1$s">%2$s<span class="cosypaw-bundle-cta__hint">%3$s</span></a>',
-			esc_url( add_query_arg( 'motif', rawurlencode( $motif_id ), home_url( '/' ) ) . '#paketi' ),
+			esc_url( $this->builder_url( $motif_id ) ),
 			esc_html__( 'Dodaj u paket', 'cosypaw' ),
 			esc_html__( 'Cena po komadu pada sa svakim sledećim peškirićem', 'cosypaw' )
 		);
+		echo '</div>';
+	}
+
+	/**
+	 * The landing's builder, with a motif already chosen and, optionally, a size.
+	 *
+	 * @param string $motif_id Motif id to carry along.
+	 * @param string $package  Package id to open on, or '' for the default.
+	 * @return string
+	 */
+	private function builder_url( string $motif_id, string $package = '' ): string {
+		$args = array( 'motif' => rawurlencode( $motif_id ) );
+
+		if ( '' !== $package ) {
+			$args['package'] = rawurlencode( $package );
+		}
+
+		return add_query_arg( $args, home_url( '/' ) ) . '#napravi-paket';
+	}
+
+	/**
+	 * The package offer, printed as a row per bundle.
+	 *
+	 * The shop's argument is on every other page — "2+1 GRATIS", free shipping
+	 * on the Trio, the per-piece price falling with each towel — and the
+	 * product page was the one place making none of it. The numbers come from
+	 * the catalogue, which reads the live WooCommerce prices, so a reprice
+	 * cannot leave a stale claim behind here.
+	 *
+	 * @param string $motif_id Motif the rows carry into the builder.
+	 * @return void
+	 */
+	private function offer_rows( string $motif_id ): void {
+		$rows = array();
+
+		foreach ( $this->catalog->packages() as $package ) {
+			if ( (int) ( $package['qty'] ?? 0 ) > 1 ) {
+				$rows[] = $package;
+			}
+		}
+
+		if ( ! $rows ) {
+			return;
+		}
+
+		printf( '<span class="cosypaw-offer__title">%s</span>', esc_html__( 'Uzmi više, plati manje', 'cosypaw' ) );
+		echo '<ul class="cosypaw-offer__list">';
+
+		foreach ( $rows as $package ) {
+			$tags   = array();
+			$gratis = (int) ( $package['gratis'] ?? 0 );
+
+			// Derived in Catalog::gratis_count() from the live prices, so it
+			// only appears while the bundle really does hand a towel over.
+			if ( $gratis > 0 ) {
+				$tags[] = sprintf(
+					/* translators: 1: towels paid for, 2: towels given free. */
+					__( '%1$d+%2$d GRATIS', 'cosypaw' ),
+					(int) $package['qty'] - $gratis,
+					$gratis
+				);
+			}
+
+			if ( ! empty( $package['free_ship'] ) ) {
+				$tags[] = __( 'Besplatna dostava', 'cosypaw' );
+			}
+
+			// Already reads "Ušteda 490 RSD" where there is a saving to state,
+			// and is null the moment the arithmetic stops supporting one.
+			if ( ! empty( $package['badge_saving'] ) && ! empty( $package['badge'] ) ) {
+				$tags[] = (string) $package['badge'];
+			}
+
+			$tag_html = '';
+			foreach ( $tags as $tag ) {
+				$tag_html .= '<span class="cosypaw-offer__tag">' . esc_html( $tag ) . '</span>';
+			}
+
+			printf(
+				'<li class="cosypaw-offer__row"><a href="%1$s"><span class="cosypaw-offer__name">%2$s</span><span class="cosypaw-offer__per">%3$s</span><span class="cosypaw-offer__tags">%4$s</span></a></li>',
+				esc_url( $this->builder_url( $motif_id, (string) ( $package['id'] ?? '' ) ) ),
+				esc_html( (string) ( $package['name'] ?? '' ) ),
+				esc_html(
+					sprintf(
+						/* translators: %s: formatted per-piece price, e.g. "660 RSD". */
+						__( '%s / kom', 'cosypaw' ),
+						Catalog::format_price( (int) ( $package['per'] ?? 0 ) )
+					)
+				),
+				$tag_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from esc_html() above.
+			);
+		}
+
+		echo '</ul>';
+	}
+
+	/**
+	 * Send a customer back to the product page carrying a flag added_panel reads.
+	 *
+	 * Only where WooCommerce was going to return them there anyway: a shop set
+	 * to jump to the cart after every add has already answered "what now", and
+	 * this has no business overruling it.
+	 *
+	 * @param string $url Redirect target WooCommerce settled on, '' for none.
+	 * @return string
+	 */
+	public function add_to_cart_redirect( $url ) {
+		if ( ! empty( $url ) || ! function_exists( 'get_permalink' ) ) {
+			return $url;
+		}
+
+		// Display-only flag, on a request WooCommerce has already validated.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$product_id = isset( $_REQUEST['add-to-cart'] ) ? absint( wp_unslash( $_REQUEST['add-to-cart'] ) ) : 0;
+
+		if ( $product_id < 1 || ! in_array( $product_id, $this->our_product_ids(), true ) ) {
+			return $url;
+		}
+
+		$permalink = get_permalink( $product_id );
+
+		return $permalink ? add_query_arg( 'cosypaw-added', $product_id, $permalink ) : $url;
+	}
+
+	/**
+	 * Whether the cart currently holds a product.
+	 *
+	 * Compares product ids rather than cart-item keys: a bundle carries its
+	 * motifs as item data, which hashes into a different key for the same
+	 * product, and the question here is only "is this towel in there".
+	 *
+	 * True where there is no cart to ask — the flag is then the best evidence
+	 * available, which is the situation in the unit tests.
+	 *
+	 * @param int $product_id Product to look for.
+	 * @return bool
+	 */
+	private function cart_holds( int $product_id ): bool {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return true;
+		}
+
+		foreach ( (array) WC()->cart->get_cart() as $item ) {
+			if ( (int) ( $item['product_id'] ?? 0 ) === $product_id ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * What to do next, printed above the title of a product just added.
+	 *
+	 * Adding a towel used to end the conversation: the page reloaded, said the
+	 * product was in the cart, and left the customer looking at the single
+	 * towel they had already bought. This puts the two things they might want
+	 * next — the package that makes each towel cheaper, and the rest of the
+	 * range — where they are still looking.
+	 *
+	 * @return void
+	 */
+	public function added_panel(): void {
+		// Display-only flag; the add itself was validated by WooCommerce.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$added = isset( $_GET['cosypaw-added'] ) ? absint( wp_unslash( $_GET['cosypaw-added'] ) ) : 0;
+
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+
+		if ( $added < 1 || ! $product instanceof \WC_Product || $added !== (int) $product->get_id() ) {
+			return;
+		}
+
+		// A bookmarked or shared URL carries the flag long after the cart has
+		// moved on, and "Sova je u korpi" has to be true when it is printed.
+		if ( ! $this->cart_holds( $added ) ) {
+			return;
+		}
+
+		$motif_id = $this->motif_id_for_product( (int) $product->get_id() );
+
+		echo '<div class="cosypaw-added" role="status">';
+		printf(
+			'<p class="cosypaw-added__title">%s</p>',
+			esc_html(
+				sprintf(
+					/* translators: %s: product name. */
+					__( '%s je u korpi.', 'cosypaw' ),
+					(string) $product->get_name()
+				)
+			)
+		);
+
+		// A package is already the offer; a single towel gets the case for one.
+		if ( '' !== $motif_id ) {
+			$this->offer_rows( $motif_id );
+		}
+
+		echo '<div class="cosypaw-added__actions">';
+
+		if ( '' !== $motif_id ) {
+			printf(
+				'<a class="cosypaw-added__btn" href="%1$s">%2$s</a>',
+				esc_url( $this->builder_url( $motif_id, $this->catalog->default_package() ) ),
+				esc_html__( 'Napravi paket', 'cosypaw' )
+			);
+		}
+
+		$shop = function_exists( 'wc_get_page_permalink' ) ? (string) wc_get_page_permalink( 'shop' ) : '';
+		printf(
+			'<a class="cosypaw-added__link" href="%1$s">%2$s</a>',
+			esc_url( '' !== $shop ? $shop : home_url( '/#galerija' ) ),
+			esc_html__( 'Nastavi kupovinu', 'cosypaw' )
+		);
+
+		if ( function_exists( 'wc_get_cart_url' ) ) {
+			printf(
+				'<a class="cosypaw-added__link" href="%1$s">%2$s</a>',
+				esc_url( wc_get_cart_url() ),
+				esc_html__( 'Idi u korpu', 'cosypaw' )
+			);
+		}
+
+		echo '</div></div>';
 	}
 
 	/**

@@ -611,6 +611,24 @@ msgstr "Add to a package"
 msgid "Cena po komadu pada sa svakim sledećim peškirićem"
 msgstr "The price per towel drops with every one you add"
 
+msgid "Uzmi više, plati manje"
+msgstr "Take more, pay less"
+
+msgid "%s / kom"
+msgstr "%s / pc"
+
+msgid "%s je u korpi."
+msgstr "%s is in your cart."
+
+msgid "Napravi paket"
+msgstr "Build a package"
+
+msgid "Nastavi kupovinu"
+msgstr "Keep shopping"
+
+msgid "Idi u korpu"
+msgstr "Go to cart"
+
 msgid "Materijal"
 msgstr "Fabric"
 

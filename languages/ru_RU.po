@@ -440,6 +440,15 @@ msgstr "На крючке, всегда под рукой"
 msgid "Stiže spremno za poklon"
 msgstr "Приходит готовым к подарку"
 
+msgid "Pauziraj video"
+msgstr "Приостановить видео"
+
+msgid "Pusti video"
+msgstr "Воспроизвести видео"
+
+msgid "Otvaranje CosyPaw paketa"
+msgstr "Распаковка набора CosyPaw"
+
 msgid "Svaki paket je mali poklon"
 msgstr "Каждый набор — маленький подарок"
 

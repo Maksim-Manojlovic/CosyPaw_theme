@@ -475,6 +475,69 @@
 	object-position: center;
 }
 
+/* The video's cell. It holds the still's 3:4 box: the clip itself is 9:16,
+   and left to its own shape it made the banner a third taller than the design
+   the moment its metadata arrived. The box still stretches if the copy beside
+   it runs longer, exactly as the image it replaced did. */
+.pkg-banner__media {
+	position: relative;
+	aspect-ratio: 1086 / 1448;
+	min-height: 300px;
+}
+
+/* Absolute so the box above is what sizes the cell, and the clip is cropped
+   into it (object-fit comes from .pkg-banner__img). The fill shows while the
+   poster loads. */
+.pkg-banner__video {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--cream2);
+}
+
+/* Bottom-left, over the photo: WCAG 2.2.2's pause for a clip that starts on
+   its own and loops. Mirrors the announcement bar's toggle, sized to 44px
+   here because the corner it sits in has the room. */
+.pkg-banner__toggle {
+	position: absolute;
+	left: 14px;
+	bottom: 14px;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	color: #fff;
+	background: rgba(58, 44, 36, 0.55);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	transition: background 0.15s ease;
+}
+
+.pkg-banner__toggle:hover,
+.pkg-banner__toggle:focus-visible {
+	background: rgba(58, 44, 36, 0.78);
+}
+
+.pkg-banner__toggle[hidden] {
+	display: none;
+}
+
+.pkg-banner__toggle .pkg-banner__play-icon,
+.pkg-banner__toggle[aria-pressed="true"] .pkg-banner__pause-icon {
+	display: none;
+}
+
+.pkg-banner__toggle[aria-pressed="true"] .pkg-banner__play-icon {
+	display: block;
+}
+
 .pkg-banner__body {
 	align-self: center;
 	padding: 36px 40px;

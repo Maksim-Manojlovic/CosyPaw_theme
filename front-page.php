@@ -553,22 +553,57 @@ if ( $hero_deal ) {
 			</div>
 
 			<?php
-			// Unlike the hero and the grid, this one really is shown wide
-			// (547 CSS px), so the 1086w original stays a candidate.
 			$pkg_banner = get_template_directory_uri() . '/assets/motifs/pingvin';
+
+			// An unboxing clip, with the still it replaced as the poster: same
+			// 3:4 box (the width/height below), same crop, so the slot looks
+			// exactly as it did until the video plays — and stays that way if
+			// it never does. Filterable because the file lives in uploads, not
+			// in the theme, and a copy of this theme elsewhere has its own.
+			$pkg_video = apply_filters(
+				'cosypaw_pkg_banner_video',
+				'https://cosypaw.rs/wp-content/uploads/2026/08/Unboxing-gorana-2x.mp4'
+			);
 			?>
 			<div class="pkg-banner">
-				<img
-					class="pkg-banner__img"
-					src="<?php echo esc_url( $pkg_banner . '-md.avif' ); ?>"
-					srcset="<?php echo esc_attr( "{$pkg_banner}-md.avif 600w, {$pkg_banner}-lg.avif 900w, {$pkg_banner}.avif 1086w" ); ?>"
-					sizes="(max-width: 880px) calc(100vw - 44px), 547px"
-					width="1086"
-					height="1448"
-					alt="<?php esc_attr_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?>"
-					loading="lazy"
-					decoding="async"
-				>
+				<?php
+				// preload="none": 1.1 MB nobody has scrolled to yet. The clip is
+				// silent, so `muted` costs nothing and buys the right to start
+				// on its own; landing.js does that only in view and only where
+				// motion is welcome.
+				//
+				// No native controls — a permanent grey bar across the product
+				// photo is most of what this banner is. The toggle below is the
+				// pause WCAG 2.2.2 wants for a loop this long, and it ships
+				// hidden like the announcement bar's: without script nothing
+				// ever moves, so there is nothing to pause.
+				?>
+				<div class="pkg-banner__media">
+					<video
+						class="pkg-banner__img pkg-banner__video"
+						data-inview-video
+						src="<?php echo esc_url( $pkg_video ); ?>"
+						poster="<?php echo esc_url( $pkg_banner . '-md.avif' ); ?>"
+						width="1086"
+						height="1448"
+						preload="none"
+						muted
+						loop
+						playsinline
+						aria-label="<?php esc_attr_e( 'Otvaranje CosyPaw paketa', 'cosypaw' ); ?>"
+					></video>
+					<button
+						type="button"
+						class="pkg-banner__toggle"
+						data-video-toggle
+						aria-pressed="false"
+						aria-label="<?php esc_attr_e( 'Pauziraj video', 'cosypaw' ); ?>"
+						hidden
+					>
+						<svg class="pkg-banner__pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+						<svg class="pkg-banner__play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+					</button>
+				</div>
 				<div class="pkg-banner__body">
 					<span class="eyebrow"><?php esc_html_e( 'Stiže spremno za poklon', 'cosypaw' ); ?></span>
 					<h3 class="pkg-banner__title"><?php esc_html_e( 'Svaki paket je mali poklon', 'cosypaw' ); ?></h3>

@@ -440,6 +440,15 @@ msgstr "On the hook, always at hand"
 msgid "Stiže spremno za poklon"
 msgstr "Arrives gift-ready"
 
+msgid "Pauziraj video"
+msgstr "Pause the video"
+
+msgid "Pusti video"
+msgstr "Play the video"
+
+msgid "Otvaranje CosyPaw paketa"
+msgstr "Opening a CosyPaw package"
+
 msgid "Svaki paket je mali poklon"
 msgstr "Every package is a little gift"
 

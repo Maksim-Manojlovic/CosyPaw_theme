@@ -428,6 +428,9 @@ final class Assets {
 				// Announcement bar pause control (WCAG 2.2.2).
 				'marqueePause' => __( 'Pauziraj najave', 'cosypaw' ),
 				'marqueePlay'  => __( 'Pusti najave', 'cosypaw' ),
+				// Packages-banner video toggle.
+				'videoPause'   => __( 'Pauziraj video', 'cosypaw' ),
+				'videoPlay'    => __( 'Pusti video', 'cosypaw' ),
 				'currency'    => __( 'RSD', 'cosypaw' ),
 				'locale'      => 'de-DE',
 				// Bundle builder.

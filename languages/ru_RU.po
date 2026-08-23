@@ -59,7 +59,7 @@ msgstr "от %s"
 msgid "Zašto CosyPaw"
 msgstr "Почему CosyPaw"
 
-msgid "Mali zagrljaj pored sudopere"
+msgid "Mali zagrljaj pored lavaboa"
 msgstr "Маленькое объятие у раковины"
 
 msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."

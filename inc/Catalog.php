@@ -122,7 +122,7 @@ final class Catalog {
 				'id'      => 'kucence',
 				'name'    => __( 'Kucence', 'cosypaw' ),
 				'alt'     => __( 'Ručno šiven ukrasni peškirić u obliku belog kucenceta sa plavim detaljem', 'cosypaw' ),
-				'caption' => __( 'Kucence — verni čuvar sudopere.', 'cosypaw' ),
+				'caption' => __( 'Kucence — verni čuvar kupatila.', 'cosypaw' ),
 			),
 			array(
 				'id'      => 'zeka',

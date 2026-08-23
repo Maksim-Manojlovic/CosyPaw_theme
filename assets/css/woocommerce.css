@@ -234,6 +234,64 @@
 	border-radius: var(--radius-lg);
 }
 
+/* Ratings and the links around them shipped in WooCommerce's own colours —
+   a browser-default blue link and black stars, both of which read as somebody
+   else's page. --ochre-ink rather than --ochre for the same reason the
+   testimonials use it: as a foreground graphic the rating needs 3:1. */
+.woocommerce .star-rating,
+.woocommerce p.stars a {
+	color: var(--ochre-ink);
+}
+
+.woocommerce div.product .woocommerce-product-rating {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px 12px;
+	margin-bottom: 16px;
+}
+
+/* Underlined rather than coloured alone: the link sits in a line of text, and
+   colour on its own is not a distinction everyone can see (WCAG 1.4.1). */
+.woocommerce a.woocommerce-review-link,
+.woocommerce div.product .product_meta a,
+.woocommerce #reviews .comment-text a,
+.woocommerce #reviews .comment-reply-title a {
+	color: var(--claydk);
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.woocommerce a.woocommerce-review-link:hover,
+.woocommerce a.woocommerce-review-link:focus-visible,
+.woocommerce div.product .product_meta a:hover,
+.woocommerce div.product .product_meta a:focus-visible,
+.woocommerce #reviews .comment-text a:hover,
+.woocommerce #reviews .comment-text a:focus-visible {
+	color: var(--ink);
+}
+
+/* The stars in the review form are links too, and they are a control rather
+   than prose — no underline, and they keep the rating colour. */
+.woocommerce #reviews p.stars a {
+	color: var(--ochre-ink);
+	text-decoration: none;
+}
+
+.woocommerce div.product .product_meta {
+	font-size: 14.5px;
+	color: var(--muted);
+}
+
+/* The inactive tabs keep the pill from the block below; only their label was
+   still browser blue. */
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+	color: var(--claydk);
+	font-weight: 800;
+	text-decoration: none;
+}
+
 .woocommerce div.product form.cart .quantity .qty {
 	border: 1px solid var(--color-border-control);
 	border-radius: var(--radius-sm);

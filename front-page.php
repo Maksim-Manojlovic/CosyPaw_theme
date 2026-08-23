@@ -826,7 +826,7 @@ if ( $hero_deal ) {
 	<section id="zasto" class="section">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Mali zagrljaj pored sudopere', 'cosypaw' ); ?></h2>
+			<h2 class="section__title"><?php esc_html_e( 'Mali zagrljaj pored lavaboa', 'cosypaw' ); ?></h2>
 			<p class="section__lead"><?php esc_html_e( 'Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.', 'cosypaw' ); ?></p>
 		</div>
 

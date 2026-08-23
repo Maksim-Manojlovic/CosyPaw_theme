@@ -38,7 +38,7 @@ $sr_source = array(
 	'Izdvojeni peškirići'                                                                     => array( 'Featured designs', 'Избранные мотивы' ),
 	'od %s'                                                                                   => array( 'from %s', 'от %s' ),
 	'Zašto CosyPaw'                                                                           => array( 'Why CosyPaw', 'Почему CosyPaw' ),
-	'Mali zagrljaj pored sudopere'                                                            => array( 'A little hug by the sink', 'Маленькое объятие у раковины' ),
+	'Mali zagrljaj pored lavaboa'                                                             => array( 'A little hug by the sink', 'Маленькое объятие у раковины' ),
 	'Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.'   => array( 'Every towel is soft, absorbent and has a hanging loop — always at hand, always cute.', 'Каждое полотенце мягкое, впитывающее и с петелькой — всегда под рукой, всегда милое.' ),
 	// "Zašto CosyPaw" cards. The four they replace were feature-talk, and three
 	// of the four facts are already spent above: the hero lead carries the

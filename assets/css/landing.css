@@ -1389,7 +1389,15 @@ a.testimonial__meta:focus-visible {
 		content: "";
 		position: absolute;
 		z-index: -1;
-		inset: -5% -14%;
+		/* The wash used to sit at a flat -14%, which on a phone is wider than
+		   the 22px of page padding it has to grow into: at 390px the copy is
+		   346px, 14% of it is 48px, and the pseudo hung 26px past the right
+		   edge of the screen. That is the page a finger could drag sideways.
+		   max() of two negatives takes the one closer to zero, so the bleed is
+		   whichever is smaller: 14% where there is room for it, and the page
+		   padding once there is not. */
+		inset-block: -5%;
+		inset-inline: max(-14%, -22px);
 		pointer-events: none;
 		background: radial-gradient(
 			ellipse at center,

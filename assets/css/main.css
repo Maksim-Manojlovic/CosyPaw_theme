@@ -129,7 +129,31 @@ body {
 	color: var(--color-text-primary);
 	font-family: var(--font-body);
 	line-height: 1.5;
-	overflow-x: hidden;
+}
+
+/* Horizontal overflow is clipped on BOTH boxes, and with `clip` rather than
+   `hidden`. overflow-x: hidden on body alone is supposed to propagate to the
+   viewport, but iOS Safari still lets a finger pan a page whose content is
+   wider than the screen — which is how the phone hero could be dragged
+   sideways off its own headline. It cannot be `hidden` once html carries it:
+   propagation stops, body keeps the value itself, and a body with hidden
+   overflow is a scroll container — .site-header would then stick to a box
+   that never scrolls. `clip` only paints, so the header keeps the viewport as
+   its scrollport.
+
+   This is the net, not the fix: an element that overflows still has to be
+   found and narrowed, or its content is simply unreachable. */
+html,
+body {
+	overflow-x: clip;
+}
+
+/* Safari below 16 has no overflow: clip. The old band-aid is the fallback
+   there — sticky is worth more than the clip on browsers that have both. */
+@supports not (overflow-x: clip) {
+	body {
+		overflow-x: hidden;
+	}
 }
 
 h1, h2, h3, h4 {

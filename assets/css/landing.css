@@ -1306,6 +1306,152 @@ a.testimonial__meta:focus-visible {
 	text-underline-offset: 3px;
 }
 
+/* ---------- "Ostavi utisak" (the section's own ask) ----------
+   Everything above this is other people's words. The reader had nowhere to add
+   theirs, and enough of them wrote in asking where the form is that the answer
+   belongs on the page. */
+
+/* Spans the whole row rather than taking a cell: the quote count varies from
+   three to six, so a cell would sit orphaned beside empty space on every count
+   that is not a multiple of three. */
+.review-cta {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 10px;
+	padding: 30px 24px;
+	border-radius: var(--radius-lg);
+	/* Dashed, and on the page ground rather than white: the cards above are
+	   finished things, this is the empty slot waiting for one. */
+	border: 2px dashed var(--sand);
+	background: var(--cream2);
+}
+
+.review-cta__mark {
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	background: var(--sagelt);
+	color: var(--claydk);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+}
+
+.review-cta__title {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: 22px;
+	margin: 0;
+}
+
+.review-cta__text {
+	margin: 0;
+	max-width: 46ch;
+	font-size: 15px;
+	line-height: 1.55;
+	color: var(--muted);
+}
+
+.review-cta__picker {
+	width: 100%;
+	max-width: 460px;
+	margin-top: 8px;
+	/* The pill is an inline-flex summary in a block details, so it would sit
+	   against the left edge of this box while everything above it is centred.
+	   The list re-aligns itself to the left below. */
+	text-align: center;
+}
+
+/* The disclosure triangle is replaced by the chevron inside the pill, which
+   has to be removed in two ways — Safari still ships the WebKit pseudo. */
+.review-cta__summary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 13px 24px;
+	border-radius: var(--radius-pill);
+	background: var(--clay);
+	color: #fff;
+	font-weight: 800;
+	font-size: 15.5px;
+	cursor: pointer;
+	list-style: none;
+	box-shadow: var(--shadow-accent);
+}
+
+.review-cta__summary::-webkit-details-marker {
+	display: none;
+}
+
+.review-cta__summary:hover {
+	background: var(--claydk);
+}
+
+.review-cta__summary:focus-visible {
+	outline: 2px solid var(--claydk);
+	outline-offset: 3px;
+}
+
+.review-cta__chevron {
+	display: inline-flex;
+	transition: transform 0.18s ease;
+}
+
+.review-cta__picker[open] .review-cta__chevron {
+	transform: rotate(180deg);
+}
+
+.review-cta__hint {
+	margin: 16px 0 10px;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+/* Twenty towels is a long list on a phone, so it scrolls inside the card
+   instead of pushing the FAQ a screen and a half down. Two columns because the
+   names are short and a single column would need the scroll twice as often. */
+.review-cta__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	max-height: 280px;
+	overflow-y: auto;
+	text-align: left;
+}
+
+.review-cta__item {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 10px 14px;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid var(--line);
+	color: var(--ink);
+	font-weight: 700;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.review-cta__item:hover {
+	border-color: var(--clay);
+	color: var(--claydk);
+}
+
+.review-cta__item:focus-visible {
+	outline: 2px solid var(--clay);
+	outline-offset: 2px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	/* One column, and it owns the opening screen. Stacked, the card pushed the
@@ -1587,6 +1733,17 @@ a.testimonial__meta:focus-visible {
 	.builder-summary .builder-cta__btn {
 		width: 100%;
 		justify-content: center;
+	}
+
+	/* Two columns leaves ~150px a name, and "Čokoladni keks" wraps to three
+	   lines in it. One column, and the scroll does the work instead. */
+	.review-cta__list {
+		grid-template-columns: 1fr;
+		max-height: 46svh;
+	}
+
+	.review-cta {
+		padding: 24px 18px;
 	}
 }
 

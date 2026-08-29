@@ -434,6 +434,17 @@ final class Seo {
 				'q' => __( 'Kako mogu da platim?', 'cosypaw' ),
 				'a' => __( 'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.', 'cosypaw' ),
 			),
+			/*
+			 * Added because it was being asked, repeatedly, by people who had
+			 * already bought something. The answer names both routes and no
+			 * link: this list also feeds the FAQPage node and the accordion
+			 * printed under every product, where a front-page anchor would be
+			 * the wrong advice half the time.
+			 */
+			array(
+				'q' => __( 'Gde mogu da ostavim utisak?', 'cosypaw' ),
+				'a' => __( 'Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“.', 'cosypaw' ),
+			),
 		);
 	}
 }

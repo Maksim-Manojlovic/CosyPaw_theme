@@ -512,6 +512,18 @@ msgstr "Белград"
 msgid "Niš"
 msgstr "Ниш"
 
+msgid "Sad si ti na redu"
+msgstr "Теперь твоя очередь"
+
+msgid "Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere."
+msgstr "Полотенце уже у вас? Напишите пару слов — именно это помогает следующему покупателю выбрать."
+
+msgid "Ostavi utisak"
+msgstr "Оставить отзыв"
+
+msgid "Izaberi peškirić koji imaš — forma je na njegovoj stranici."
+msgstr "Выберите полотенце, которое у вас есть — форма на его странице."
+
 msgid "Česta pitanja"
 msgstr "Частые вопросы"
 
@@ -544,6 +556,12 @@ msgstr "Как я могу оплатить?"
 
 msgid "Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa."
 msgstr "Оплата при получении — вы платите курьеру при получении посылки."
+
+msgid "Gde mogu da ostavim utisak?"
+msgstr "Где можно оставить отзыв?"
+
+msgid "Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“."
+msgstr "Внизу главной страницы, в разделе с отзывами покупателей, нажмите «Оставить отзыв» и выберите своё полотенце. То же можно сделать на странице любого полотенца, во вкладке «Отзывы»."
 
 msgid "Plaćanje pouzećem"
 msgstr "Оплата при получении"

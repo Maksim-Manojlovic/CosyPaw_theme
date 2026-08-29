@@ -30,10 +30,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 					// nowhere. Same home_url() prefix the header nav uses.
 					// Scroll order, matching the header nav.
 					$cosypaw_footer_links = array(
-						'#galerija' => __( 'Svi peškirići', 'cosypaw' ),
-						'#paketi'   => __( 'Paketi', 'cosypaw' ),
-						'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
+						'#galerija'      => __( 'Svi peškirići', 'cosypaw' ),
+						'#paketi'        => __( 'Paketi', 'cosypaw' ),
+						'#zasto'         => __( 'Zašto CosyPaw', 'cosypaw' ),
+						// Last in scroll order, and the reason it is in the
+						// footer at all: the ask lives in one section of the
+						// front page, but the people looking for it arrive on
+						// a product page from an old order or a DM. The footer
+						// is the only chrome every one of those pages shares.
+						'#ostavi-utisak' => __( 'Ostavi utisak', 'cosypaw' ),
 					);
+
+					/*
+					 * The review block renders only where the motifs have real
+					 * product pages behind them, because a review form is a
+					 * WooCommerce product page. Unseeded, the anchor does not
+					 * exist and the link would scroll to nothing — the same
+					 * condition front-page.php tests, read from the same map.
+					 */
+					if ( ! class_exists( '\Theme\WooCommerce' ) || ! get_option( \Theme\WooCommerce::PRODUCT_MAP_OPTION, array() ) ) {
+						unset( $cosypaw_footer_links['#ostavi-utisak'] );
+					}
+
 					$cosypaw_home_base = is_front_page() ? '' : home_url( '/' );
 					foreach ( $cosypaw_footer_links as $cosypaw_anchor => $cosypaw_label ) {
 						printf(

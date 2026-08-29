@@ -61,6 +61,20 @@ const boot = () => {
 		});
 	}
 
+	// "Ostavi utisak" — the footer link and the FAQ both send people to
+	// #ostavi-utisak, and a disclosure that lands closed asks the visitor to
+	// press the thing they just pressed. Opening it on arrival rather than
+	// shipping it open keeps twenty towel names out of the section for
+	// everyone who only came to read.
+	const reviewPicker = document.querySelector('[data-review-picker]');
+	if (reviewPicker) {
+		const openOnHash = () => {
+			if (window.location.hash === '#ostavi-utisak') reviewPicker.open = true;
+		};
+		openOnHash();
+		window.addEventListener('hashchange', openOnHash);
+	}
+
 	// Cart drawer — booted site-wide by app.js.
 	const cart = window.CosyPawCart || null;
 

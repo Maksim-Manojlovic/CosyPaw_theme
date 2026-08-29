@@ -194,6 +194,11 @@ $sr_source = array(
 	'Novi Sad'                                                                                => array( 'Novi Sad', 'Нови-Сад' ),
 	'Beograd'                                                                                 => array( 'Belgrade', 'Белград' ),
 	'Niš'                                                                                     => array( 'Niš', 'Ниш' ),
+	// The section's own ask — see front-page.php.
+	'Sad si ti na redu'                                                                       => array( 'Your turn now', 'Теперь твоя очередь' ),
+	'Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere.' => array( 'Has your towel arrived? Write a few words — that is what helps the next customer choose.', 'Полотенце уже у вас? Напишите пару слов — именно это помогает следующему покупателю выбрать.' ),
+	'Ostavi utisak'                                                                           => array( 'Leave a review', 'Оставить отзыв' ),
+	'Izaberi peškirić koji imaš — forma je na njegovoj stranici.'                             => array( 'Pick the towel you own — the form is on its page.', 'Выберите полотенце, которое у вас есть — форма на его странице.' ),
 	// FAQ.
 	'Česta pitanja'                                                                           => array( 'FAQ', 'Частые вопросы' ),
 	'Sve što te zanima'                                                                       => array( 'Everything you want to know', 'Всё, что вас интересует' ),
@@ -206,6 +211,8 @@ $sr_source = array(
 	'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.' => array( 'Delivery is 2–4 business days across Serbia. The Trio package comes with free shipping.', 'Доставка 2–4 рабочих дня по всей Сербии. Набор Trio — с бесплатной доставкой.' ),
 	'Kako mogu da platim?'                                                                    => array( 'How can I pay?', 'Как я могу оплатить?' ),
 	'Plaćanje je pouzećem — platiš kuriru pri preuzimanju paketa.'                            => array( 'Payment is cash on delivery — you pay the courier when you receive the package.', 'Оплата при получении — вы платите курьеру при получении посылки.' ),
+	'Gde mogu da ostavim utisak?'                                                             => array( 'Where can I leave a review?', 'Где можно оставить отзыв?' ),
+	'Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“.' => array( 'At the bottom of the home page, in the customer reviews part, click “Leave a review” and pick the towel you own. You can also do it from any towel’s page, in the “Reviews” tab.', 'Внизу главной страницы, в разделе с отзывами покупателей, нажмите «Оставить отзыв» и выберите своё полотенце. То же можно сделать на странице любого полотенца, во вкладке «Отзывы».' ),
 
 	// Checkout labels. CheckoutSetup writes these into the WooCommerce gateway
 	// and shipping-zone settings in the source language; they are resolved back

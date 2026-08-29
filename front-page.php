@@ -897,6 +897,67 @@ if ( $hero_deal ) {
 					</figcaption>
 				</figure>
 			<?php endforeach; ?>
+
+			<?php
+			/*
+			 * The section only ever pointed one way: it printed what other
+			 * people wrote and left the reader with nowhere to write. Customers
+			 * were asking where the form is, which is the question this answers
+			 * at the moment it occurs to them — right under the last quote.
+			 *
+			 * Motifs only. BundlePricing keeps every order on motif line items
+			 * (packages are cart-level pricing, not products anyone is shipped),
+			 * so a motif is the thing a customer actually owns — and the thing
+			 * WooCommerce can recognise them as the verified owner of. Package
+			 * products can hold reviews, but no order has ever contained one.
+			 */
+			$reviewable = array_values(
+				array_filter(
+					$products,
+					static fn( array $row ): bool => '' !== (string) ( $row['permalink'] ?? '' )
+				)
+			);
+
+			// No WooCommerce, no product pages, no form to point at. The demo
+			// catalog browses fine without this.
+			if ( $reviewable ) :
+				?>
+				<div class="review-cta" id="ostavi-utisak">
+					<span class="review-cta__mark" aria-hidden="true">
+						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+					</span>
+					<h3 class="review-cta__title"><?php esc_html_e( 'Sad si ti na redu', 'cosypaw' ); ?></h3>
+					<p class="review-cta__text"><?php esc_html_e( 'Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere.', 'cosypaw' ); ?></p>
+
+					<?php
+					/*
+					 * A disclosure rather than a link, because WooCommerce has no
+					 * shop-wide review form: every review is written on one
+					 * product's page. The choice of towel is the first step of
+					 * the flow whether we ask for it here or make them go and
+					 * find it, so it is asked here, in one tap.
+					 */
+					?>
+					<details class="review-cta__picker" data-review-picker>
+						<summary class="review-cta__summary">
+							<?php esc_html_e( 'Ostavi utisak', 'cosypaw' ); ?>
+							<span class="review-cta__chevron" aria-hidden="true">
+								<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+							</span>
+						</summary>
+						<p class="review-cta__hint"><?php esc_html_e( 'Izaberi peškirić koji imaš — forma je na njegovoj stranici.', 'cosypaw' ); ?></p>
+						<ul class="review-cta__list">
+							<?php foreach ( $reviewable as $cosypaw_r ) : ?>
+								<li>
+									<a class="review-cta__item" href="<?php echo esc_url( $cosypaw_r['permalink'] . '#reviews' ); ?>">
+										<?php echo esc_html( $cosypaw_r['name'] ); ?>
+									</a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</details>
+				</div>
+			<?php endif; ?>
 		</div>
 	</section>
 

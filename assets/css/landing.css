@@ -1419,13 +1419,71 @@ a.testimonial__meta:focus-visible {
 .review-cta__list {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	/* Gutter for the scrollbar below, so the thumb never sits on a tile. */
+	padding: 0 8px 0 0;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 8px;
 	max-height: 280px;
 	overflow-y: auto;
+	/* The list is inside a long page. Without this, reaching the end of the
+	   towels hands the gesture to the document and the section leaves the
+	   screen mid-choice. */
+	overscroll-behavior: contain;
 	text-align: left;
+}
+
+/* ---------- The picker's scrollbar ----------
+   The default is a grey system bar in a warm card, and on a phone it is not
+   drawn at all until a finger is already moving. Both are handled below: a
+   clay pill where the platform draws one, a fade where it does not. */
+
+/* Firefox, which has no ::-webkit-scrollbar. Guarded rather than declared
+   alongside the pseudo-elements, because Chromium 121+ honours `scrollbar-color`
+   as soon as it is present and drops the pseudo styling entirely — and the
+   inset pill below is the better of the two shapes. */
+@supports not selector(::-webkit-scrollbar) {
+	.review-cta__list {
+		scrollbar-width: thin;
+		scrollbar-color: var(--clay) var(--sand);
+	}
+}
+
+.review-cta__list::-webkit-scrollbar {
+	width: 10px;
+}
+
+.review-cta__list::-webkit-scrollbar-track {
+	background: var(--sand);
+	border-radius: var(--radius-pill);
+}
+
+/* The border is the inset: with background-clip: padding-box the clay stops
+   short of it, so a 10px track carries a 6px pill with sand on both sides.
+   Clay is 4.4:1 on sand, which clears the 3:1 that 1.4.11 asks of a control
+   — the old grey thumb on this card was under 2:1. */
+.review-cta__list::-webkit-scrollbar-thumb {
+	background: var(--clay);
+	background-clip: padding-box;
+	border: 2px solid transparent;
+	border-radius: var(--radius-pill);
+}
+
+/* background is a shorthand, so it resets the clip — both have to be restated. */
+.review-cta__list::-webkit-scrollbar-thumb:hover {
+	background: var(--claydk);
+	background-clip: padding-box;
+}
+
+/* A touch device paints no scrollbar until the list is already moving, so the
+   bar cannot be the thing that says "this scrolls". The fade at the bottom
+   edge says it instead: names that run out of view rather than stopping at a
+   hard edge read as more of them below. */
+@media (hover: none) {
+	.review-cta__list {
+		-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent 100%);
+	}
 }
 
 .review-cta__item {

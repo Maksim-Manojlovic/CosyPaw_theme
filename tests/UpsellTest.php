@@ -241,13 +241,17 @@ final class UpsellTest extends TestCase {
 
 	/**
 	 * A whole Trio is already at an optimum — the fourth towel is full price.
-	 * With no threshold to quote either, the panel has nothing to say and does
-	 * not print an empty box to say it in.
+	 * With no threshold to quote either, there is nothing to say and no box is
+	 * printed to say it in.
+	 *
+	 * The slot around it stays, empty: it is what CartUpsell re-renders into
+	 * when a towel comes back out of the cart, and a cart that had nothing to
+	 * offer could otherwise never offer anything again without a full reload.
 	 */
 	public function test_a_complete_package_gets_no_panel(): void {
 		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
-		$this->assertSame( '', $markup );
+		$this->assertSame( '<div class="cosypaw-upsell-slot" data-upsell-panel></div>', $markup );
 	}
 
 	/**

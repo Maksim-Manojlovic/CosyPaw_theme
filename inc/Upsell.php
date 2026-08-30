@@ -141,13 +141,40 @@ final class Upsell {
 	}
 
 	/**
-	 * Render the offer.
+	 * The slot the offer lives in — printed even when there is no offer.
+	 *
+	 * WooCommerce's cart script answers an AJAX remove or quantity change by
+	 * replacing exactly two nodes of the re-rendered page: the cart form and
+	 * `.cart_totals` (see update_wc_div() in cart.js). Everything else in the
+	 * collaterals, this offer included, keeps whatever it said before the
+	 * change — so a cart that dropped from three towels back to two kept the
+	 * silence a whole Trio had earned. CartUpsell re-renders this slot from the
+	 * same response WooCommerce is already holding, which needs the slot to be
+	 * on the page in both states: it is the anchor an offer comes back into.
+	 *
+	 * Left empty it is an unstyled, marginless div — a grid cell holding the
+	 * totals in their column, and nothing at all to look at.
 	 *
 	 * @param string $stay Which page an add-to-cart from here returns to.
 	 * @param bool   $bar  Whether to draw the free-delivery progress bar.
 	 * @return void
 	 */
 	private function panel( string $stay, bool $bar ): void {
+		// No whitespace inside the wrapper: the CSS that collapses the empty
+		// slot on a phone matches :empty, which a stray newline would defeat.
+		echo '<div class="cosypaw-upsell-slot" data-upsell-panel>';
+		$this->offer( $stay, $bar );
+		echo '</div>';
+	}
+
+	/**
+	 * Render the offer itself, where there is one to make.
+	 *
+	 * @param string $stay Which page an add-to-cart from here returns to.
+	 * @param bool   $bar  Whether to draw the free-delivery progress bar.
+	 * @return void
+	 */
+	private function offer( string $stay, bool $bar ): void {
 		$towel    = $this->next_towel();
 		$shipping = $this->free_shipping();
 

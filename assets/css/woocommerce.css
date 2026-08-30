@@ -893,6 +893,14 @@
 	margin: 0;
 }
 
+/* The slot is printed on every cart, offer or no offer — it is the anchor
+   CartUpsell re-renders into after an AJAX remove. Empty it is an unstyled
+   div, which on a desktop is exactly what is wanted: an empty first column
+   holding the totals in the second, where they were before. */
+.cosypaw-upsell-slot {
+	min-width: 0;
+}
+
 /* Cross-sells, where a shop has configured any, are a section rather than a
    column and take the full width under both. */
 .woocommerce-cart .cart-collaterals .cross-sells {
@@ -1180,6 +1188,12 @@
 @media (max-width: 900px) {
 	.woocommerce-cart .cart-collaterals {
 		grid-template-columns: minmax(0, 1fr);
+	}
+
+	/* Stacked, an empty slot is no longer holding a column open — it is a row
+	   of nothing with a 22px gap under it. */
+	.cosypaw-upsell-slot:empty {
+		display: none;
 	}
 }
 

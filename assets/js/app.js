@@ -15,7 +15,7 @@ import { SiteNav } from './components/SiteNav.js';
 import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
 import { InViewVideo } from './components/InViewVideo.js';
-import { UpsellSlider } from './components/UpsellSlider.js';
+import { CartUpsell } from './components/CartUpsell.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -52,10 +52,11 @@ const boot = () => {
 		});
 	}
 
-	// The cart / checkout offer's motif strip. Those two views load no entry
-	// of their own beyond this one, so its arrows boot from here.
-	document.querySelectorAll('[data-upsell-slider]').forEach((slider) => {
-		new UpsellSlider(slider);
+	// The cart / checkout package offer: its motif strip, and the re-render
+	// that keeps it in step with WooCommerce's AJAX cart. Those two views load
+	// no entry of their own beyond this one, so it boots from here.
+	document.querySelectorAll('[data-upsell-panel]').forEach((slot) => {
+		new CartUpsell(slot);
 	});
 
 	if (document.querySelector('[data-cart-drawer]')) {

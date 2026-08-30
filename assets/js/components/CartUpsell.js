@@ -47,19 +47,23 @@ export class CartUpsell {
 	/**
 	 * Swap in the offer from a cart response.
 	 *
+	 * The response is matched on what it contains, not on where it came from.
+	 * Removing a line requests the remove link's own href and updating the cart
+	 * posts to the form's action — plain cart URLs, neither of them a `wc-ajax`
+	 * endpoint (see item_remove_clicked and update_cart in WooCommerce's
+	 * cart.js), so a check on the URL rejects the two calls that matter most.
+	 * Carrying the slot marker is the honest test: only a rendered cart page
+	 * has one, and the responses that do not — the fragment refresh, the
+	 * checkout's order review, the totals-only refresh — fall through.
+	 *
 	 * @param {Event}  event    jQuery event (unused).
 	 * @param {object} xhr      The completed request.
-	 * @param {object} settings Its settings, which carry the URL.
+	 * @param {object} settings Its settings (unused).
 	 */
 	_onAjax(event, xhr, settings) {
-		const url = (settings && settings.url) || '';
-
-		// Only the cart endpoints answer with a page; the fragment refresh and
-		// the checkout's order review answer with JSON that has none of this.
-		if (url.indexOf('wc-ajax=') === -1) return;
-
 		const html = xhr && xhr.responseText;
-		if (!html || html.indexOf('data-upsell-panel') === -1) return;
+
+		if (typeof html !== 'string' || html.indexOf('data-upsell-panel') === -1) return;
 
 		const fresh = new DOMParser()
 			.parseFromString(html, 'text/html')

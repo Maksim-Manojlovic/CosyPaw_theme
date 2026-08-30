@@ -84,11 +84,13 @@ const boot = () => {
 
 	// The motif grid's main action drops the towel into a builder slot instead
 	// of buying a single one — the grid is far above the builder, so the
-	// component handles the scroll and the confirmation.
+	// component handles the scroll and the confirmation. A button may also name
+	// the package it is arguing for (the per-piece price on the card), which
+	// selects that tier on the way in.
 	if (builder) {
 		document.querySelectorAll('[data-add-to-bundle]').forEach((btn) => {
 			btn.addEventListener('click', () => {
-				builder.addMotifFromGallery(btn.dataset.motifId);
+				builder.addMotifFromGallery(btn.dataset.motifId, btn.dataset.package || '');
 			});
 		});
 	}

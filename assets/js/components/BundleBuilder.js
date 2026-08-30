@@ -196,9 +196,18 @@ export class BundleBuilder {
 	 * either a scroll or a toast, and usually both.
 	 *
 	 * @param {string} id Motif id, as printed on the grid button.
+	 * @param {string} [pkg] Package id to switch to first, when the button was
+	 *   the card's per-piece price and is therefore arguing for a size.
 	 */
-	addMotifFromGallery(id) {
+	addMotifFromGallery(id, pkg = '') {
 		if (!this.selected || !this._motifById(id)) return;
+
+		// Before the add: selectTier truncates picks to the new size, so
+		// switching afterwards could drop the towel that was just added.
+		if (pkg) {
+			const tier = this.tiers.find((t) => t.dataset.package === pkg);
+			if (tier && tier !== this.selected) this.selectTier(tier);
+		}
 
 		const before = this.picks.length;
 		this.addMotif(id);

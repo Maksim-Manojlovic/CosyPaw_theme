@@ -67,6 +67,14 @@ final class Bootstrap {
 	private ?FloatingCart $floating_cart = null;
 
 	/**
+	 * Package offer on the cart, the checkout and the thank-you page. Null when
+	 * WooCommerce is inactive.
+	 *
+	 * @var Upsell|null
+	 */
+	private ?Upsell $upsell = null;
+
+	/**
 	 * WooCommerce's Serbian, in Latin. Null when WooCommerce is inactive.
 	 *
 	 * @var ShopStrings|null
@@ -116,6 +124,10 @@ final class Bootstrap {
 			// The pill quotes the package pricing rather than recomputing it,
 			// so the two can never disagree about what one more towel costs.
 			$this->floating_cart = new FloatingCart( $this->text_domain, $this->bundle_pricing );
+
+			// Same rule as the pill: the offer quotes BundlePricing's plan
+			// rather than working out a second opinion on what a towel costs.
+			$this->upsell = new Upsell( $this->text_domain, $this->bundle_pricing, new Catalog() );
 
 			$this->shop_strings = new ShopStrings();
 

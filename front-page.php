@@ -53,6 +53,27 @@ $tagline = sprintf(
 	count( $products )
 );
 
+/*
+ * The cheapest per-piece price any package reaches, printed beside the single
+ * price on every motif card. The card used to state one number — what one
+ * towel costs — on a page whose whole argument is that nobody should buy one.
+ * The comparison is the argument, so it is made where the price is read rather
+ * than a section further down.
+ *
+ * Derived, like every other offer claim here: it is null while no package
+ * undercuts the singles, and the ladder then does not print at all.
+ */
+$cosypaw_ladder = null;
+foreach ( $packages as $pkg ) {
+	if ( (int) ( $pkg['qty'] ?? 0 ) < 2 || (int) ( $pkg['per'] ?? 0 ) < 1 ) {
+		continue;
+	}
+
+	if ( null === $cosypaw_ladder || (int) $pkg['per'] < (int) $cosypaw_ladder['per'] ) {
+		$cosypaw_ladder = $pkg;
+	}
+}
+
 // Resolve the initially-selected package for the CTA label.
 $selected = $packages[0];
 foreach ( $packages as $pkg ) {
@@ -439,7 +460,45 @@ if ( $hero_deal ) {
 									<?php echo esc_html( $p['name'] ); ?>
 								<?php endif; ?>
 							</div>
-							<div class="motif-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></div>
+							<div class="motif-price">
+								<span><?php echo esc_html( \Theme\Catalog::format_price( (int) $p['price'] ) ); ?></span>
+								<?php
+								// The same motif, priced as part of the best package.
+								// Only where that price actually undercuts this
+								// card's own — motifs are priced individually in
+								// wp-admin, so the comparison is made per card and
+								// not once for the grid.
+								if ( null !== $cosypaw_ladder && (int) $cosypaw_ladder['per'] < (int) $p['price'] ) :
+									?>
+									<button
+										type="button"
+										class="motif-ladder"
+										data-add-to-bundle
+										data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
+										data-package="<?php echo esc_attr( (string) $cosypaw_ladder['id'] ); ?>"
+										aria-label="<?php
+										echo esc_attr(
+											sprintf(
+												/* translators: 1: towels in the package, 2: formatted per-piece price, 3: motif name. */
+												__( 'Napravi paket od %1$d peškirića po %2$s, počni sa motivom %3$s', 'cosypaw' ),
+												(int) $cosypaw_ladder['qty'],
+												\Theme\Catalog::format_price( (int) $cosypaw_ladder['per'] ),
+												$p['name']
+											)
+										);
+										?>"
+									>
+										<?php
+										printf(
+											/* translators: 1: towels in the package, 2: formatted per-piece price. */
+											esc_html__( '%1$d kom · %2$s / kom', 'cosypaw' ),
+											(int) $cosypaw_ladder['qty'],
+											esc_html( \Theme\Catalog::format_price( (int) $cosypaw_ladder['per'] ) )
+										);
+										?>
+									</button>
+								<?php endif; ?>
+							</div>
 							<?php
 							// Buying one is still here, demoted to a text link. The
 							// card's main action now sends the motif to the builder:

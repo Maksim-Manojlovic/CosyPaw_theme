@@ -1134,9 +1134,40 @@
 }
 
 .motif-price {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 8px;
 	font-size: 14px;
 	color: var(--clay);
 	font-weight: 800;
+}
+
+/* The same towel's price inside the best package, set against the single price
+   it is beside. The contrast is the offer, so it is a tag rather than a third
+   button: the card already has two, and this one only has to be read. Clicking
+   it opens the builder on that package with the motif in slot one. */
+.motif-ladder {
+	display: inline-flex;
+	align-items: center;
+	min-height: 24px;
+	padding: 3px 9px;
+	border: none;
+	border-radius: var(--radius-pill);
+	background: var(--cream2);
+	color: var(--claydk);
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 800;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.motif-ladder:hover,
+.motif-ladder:focus-visible {
+	background: var(--clay);
+	color: #fff;
 }
 
 /* Buying a single towel: still one click, but no longer the loudest thing on
@@ -1736,6 +1767,7 @@ a.testimonial__meta:focus-visible {
 
 	.motif-name { font-size: 15px; }
 	.motif-price { font-size: 13px; }
+	.motif-ladder { font-size: 11.5px; padding: 3px 8px; }
 
 	.motif-add {
 		justify-content: center;

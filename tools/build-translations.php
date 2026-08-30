@@ -239,6 +239,20 @@ $sr_source = array(
 	'Ušteda na paketima (%s)'                                                                 => array( 'Package saving (%s)', 'Скидка за наборы (%s)' ),
 	'Još 1 peškirić za %s'                                                                    => array( '1 more towel for %s', 'Ещё 1 полотенце за %s' ),
 
+	// Package offer on the cart, the checkout and the thank-you page (Theme\Upsell).
+	'Još malo, pa povoljnije'                                                                 => array( 'A little more, a little cheaper', 'Ещё немного — и выгоднее' ),
+	'Još jedan peškirić košta %s — i dostava je na nama.'                                     => array( 'One more towel costs %s — and delivery is on us.', 'Ещё одно полотенце стоит %s — и доставка за наш счёт.' ),
+	'Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s.'                           => array( 'One more towel costs %1$s instead of full price — you save %2$s.', 'Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s.' ),
+	'Dodaj još 1 × %s'                                                                        => array( 'Add 1 more × %s', 'Добавить ещё 1 × %s' ),
+	'Izaberi drugi motiv'                                                                     => array( 'Pick a different design', 'Выбрать другой мотив' ),
+	'Izaberi peškirić'                                                                        => array( 'Pick a towel', 'Выбрать полотенце' ),
+	'Još %s do besplatne dostave'                                                             => array( '%s more for free delivery', 'Ещё %s до бесплатной доставки' ),
+	'Ostatak družine te čeka'                                                                 => array( 'The rest of the crew is waiting', 'Остальная компания тебя ждёт' ),
+
+	// The per-piece price on a motif card (front-page.php).
+	'%1$d kom · %2$s / kom'                                                                   => array( '%1$d pcs · %2$s / pc', '%1$d шт · %2$s / шт' ),
+	'Napravi paket od %1$d peškirića po %2$s, počni sa motivom %3$s'                          => array( 'Build a package of %1$d towels at %2$s each, starting with %3$s', 'Собрать набор из %1$d полотенец по %2$s, начиная с мотива %3$s' ),
+
 	// Post-delivery review request (Theme\ReviewRequest).
 	'Kako su peškirići, %s?'                                                                  => array( 'How are the towels, %s?', 'Как полотенца, %s?' ),
 	'Kako su peškirići?'                                                                      => array( 'How are the towels?', 'Как полотенца?' ),

@@ -853,6 +853,23 @@ final class WooCommerce {
 			return $url;
 		}
 
+		// The cart and checkout upsells add a towel from a page that is not a
+		// product page, and answering that click with a product page throws
+		// away the very cart they were reading. This filter runs on `wp_loaded`,
+		// before the query is parsed, so is_cart() cannot be asked — the link
+		// says where it came from instead. The value is matched against a
+		// two-name allowlist and never used as a URL.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$stay = isset( $_REQUEST[ Upsell::STAY_PARAM ] ) ? sanitize_key( wp_unslash( $_REQUEST[ Upsell::STAY_PARAM ] ) ) : '';
+
+		if ( Upsell::STAY_CHECKOUT === $stay && function_exists( 'wc_get_checkout_url' ) ) {
+			return wc_get_checkout_url();
+		}
+
+		if ( Upsell::STAY_CART === $stay && function_exists( 'wc_get_cart_url' ) ) {
+			return wc_get_cart_url();
+		}
+
 		// Display-only flag, on a request WooCommerce has already validated.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$product_id = isset( $_REQUEST['add-to-cart'] ) ? absint( wp_unslash( $_REQUEST['add-to-cart'] ) ) : 0;

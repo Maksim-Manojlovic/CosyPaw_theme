@@ -39,6 +39,7 @@ require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
 require_once dirname( __DIR__ ) . '/inc/FloatingCart.php';
+require_once dirname( __DIR__ ) . '/inc/Upsell.php';
 require_once dirname( __DIR__ ) . '/inc/ShopStrings.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
 require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';

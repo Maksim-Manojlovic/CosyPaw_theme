@@ -602,6 +602,36 @@ msgstr "Скидка за наборы (%s)"
 msgid "Još 1 peškirić za %s"
 msgstr "Ещё 1 полотенце за %s"
 
+msgid "Još malo, pa povoljnije"
+msgstr "Ещё немного — и выгоднее"
+
+msgid "Još jedan peškirić košta %s — i dostava je na nama."
+msgstr "Ещё одно полотенце стоит %s — и доставка за наш счёт."
+
+msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
+msgstr "Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s."
+
+msgid "Dodaj još 1 × %s"
+msgstr "Добавить ещё 1 × %s"
+
+msgid "Izaberi drugi motiv"
+msgstr "Выбрать другой мотив"
+
+msgid "Izaberi peškirić"
+msgstr "Выбрать полотенце"
+
+msgid "Još %s do besplatne dostave"
+msgstr "Ещё %s до бесплатной доставки"
+
+msgid "Ostatak družine te čeka"
+msgstr "Остальная компания тебя ждёт"
+
+msgid "%1$d kom · %2$s / kom"
+msgstr "%1$d шт · %2$s / шт"
+
+msgid "Napravi paket od %1$d peškirića po %2$s, počni sa motivom %3$s"
+msgstr "Собрать набор из %1$d полотенец по %2$s, начиная с мотива %3$s"
+
 msgid "Kako su peškirići, %s?"
 msgstr "Как полотенца, %s?"
 

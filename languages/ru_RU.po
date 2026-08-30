@@ -611,14 +611,14 @@ msgstr "Ещё одно полотенце стоит %s — и доставка
 msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s."
 
-msgid "Dodaj još 1 × %s"
-msgstr "Добавить ещё 1 × %s"
+msgid "Dodaj"
+msgstr "Добавить"
 
-msgid "Izaberi drugi motiv"
-msgstr "Выбрать другой мотив"
+msgid "Prethodni peškirići"
+msgstr "Предыдущие полотенца"
 
-msgid "Izaberi peškirić"
-msgstr "Выбрать полотенце"
+msgid "Sledeći peškirići"
+msgstr "Следующие полотенца"
 
 msgid "Još %s do besplatne dostave"
 msgstr "Ещё %s до бесплатной доставки"

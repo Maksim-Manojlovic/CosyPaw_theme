@@ -611,14 +611,14 @@ msgstr "One more towel costs %s — and delivery is on us."
 msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "One more towel costs %1$s instead of full price — you save %2$s."
 
-msgid "Dodaj još 1 × %s"
-msgstr "Add 1 more × %s"
+msgid "Dodaj"
+msgstr "Add"
 
-msgid "Izaberi drugi motiv"
-msgstr "Pick a different design"
+msgid "Prethodni peškirići"
+msgstr "Previous towels"
 
-msgid "Izaberi peškirić"
-msgstr "Pick a towel"
+msgid "Sledeći peškirići"
+msgstr "Next towels"
 
 msgid "Još %s do besplatne dostave"
 msgstr "%s more for free delivery"

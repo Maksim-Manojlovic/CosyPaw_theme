@@ -81,6 +81,7 @@ final class UpsellTest extends TestCase {
 				'wp_kses_post'              => static fn( $html ) => $html,
 				'__'                        => static fn( $text ) => $text,
 				'esc_html__'                => static fn( $text ) => $text,
+				'esc_attr__'                => static fn( $text ) => $text,
 				'determine_locale'          => 'sr_RS',
 				'get_post_meta'             => '',
 				'get_post_status'           => 'publish',
@@ -200,28 +201,42 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
-	 * The offer is one click: the motif already in the cart, added again, on a
-	 * link that comes back to the cart rather than to a product page.
+	 * Each tile on the strip is an add-to-cart that comes back to the cart,
+	 * rather than to the product page add_to_cart_redirect() would choose.
 	 */
-	public function test_the_offer_adds_the_motif_in_the_cart(): void {
+	public function test_the_strip_adds_from_the_cart(): void {
 		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
-		$this->assertStringContainsString( 'add-to-cart=' . self::MOTIF_ID, $markup );
+		$this->assertStringContainsString( 'cosypaw-upsell__track', $markup );
+		$this->assertStringContainsString( 'add-to-cart=' . ( self::MOTIF_ID + 1 ) . '&', $markup );
 		$this->assertStringContainsString( Upsell::STAY_PARAM . '=' . Upsell::STAY_CART, $markup );
 		$this->assertStringContainsString( 'http://example.test/korpa/', $markup );
 	}
 
 	/**
-	 * A cart of packages alone has no single motif to repeat. Guessing one is
-	 * worse than sending the buyer to the catalogue, so only the link prints.
+	 * The towel already in the cart is the one towel its owner has chosen, and
+	 * a second copy of it is the least interesting thing on sale. The strip
+	 * offers the other nineteen.
 	 */
-	public function test_a_package_only_cart_gets_no_one_click_add(): void {
+	public function test_the_strip_leaves_out_what_is_already_in_the_cart(): void {
+		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => self::LIVE_PRICES['solo'] ) ) );
+
+		$this->assertStringNotContainsString( 'add-to-cart=' . self::MOTIF_ID . '&', $markup );
+		$this->assertSame( 19, substr_count( $markup, 'class="cosypaw-upsell__slide"' ) );
+	}
+
+	/**
+	 * A package carries its motifs as item data rather than as products, so a
+	 * cart holding one says nothing about which single towels its owner has
+	 * seen: the strip offers the whole catalogue.
+	 */
+	public function test_a_package_only_cart_gets_the_whole_strip(): void {
 		$markup = $this->panel( array( array( 'id' => self::DUO_ID, 'qty' => 1, 'price' => self::LIVE_PRICES['duo'] ) ) );
 
 		// A Duo is two towels, so the third is still the cheap one.
 		$this->assertStringContainsString( 'cosypaw-upsell', $markup );
-		$this->assertStringNotContainsString( 'add-to-cart=', $markup );
-		$this->assertStringContainsString( 'http://example.test/prodavnica/', $markup );
+		$this->assertStringContainsString( 'add-to-cart=' . self::MOTIF_ID . '&', $markup );
+		$this->assertSame( 20, substr_count( $markup, 'class="cosypaw-upsell__slide"' ) );
 	}
 
 	/**

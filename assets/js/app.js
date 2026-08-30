@@ -15,6 +15,7 @@ import { SiteNav } from './components/SiteNav.js';
 import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
 import { InViewVideo } from './components/InViewVideo.js';
+import { UpsellSlider } from './components/UpsellSlider.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -50,6 +51,12 @@ const boot = () => {
 			new InViewVideo(video, l10n);
 		});
 	}
+
+	// The cart / checkout offer's motif strip. Those two views load no entry
+	// of their own beyond this one, so its arrows boot from here.
+	document.querySelectorAll('[data-upsell-slider]').forEach((slider) => {
+		new UpsellSlider(slider);
+	});
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

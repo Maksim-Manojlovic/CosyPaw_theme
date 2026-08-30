@@ -105,10 +105,12 @@ final class Upsell {
 		$this->pricing     = $pricing;
 		$this->catalog     = $catalog;
 
-		// Under the cart table rather than beside the totals: the offer is
-		// about what is in the cart, and it reads as the last line of the list
-		// instead of a second opinion on the price.
-		add_action( 'woocommerce_after_cart_table', array( $this, 'cart_panel' ) );
+		// Inside the collaterals, beside the totals. Under the cart table it was
+		// a full-width band with the whole left half of the totals row empty
+		// underneath it — two stacked blocks where the page had room for one
+		// line. Priority 5 puts it in front of the cross-sells and the totals,
+		// which is the reading order the grid then lays out left to right.
+		add_action( 'woocommerce_cart_collaterals', array( $this, 'cart_panel' ), 5 );
 
 		// Above the checkout form, not above the Place order button. The offer
 		// is a link, and following a link from the middle of a half-typed
@@ -167,26 +169,26 @@ final class Upsell {
 		);
 
 		if ( null !== $towel ) {
-			$this->towel_line( $towel, $stay, $closes );
+			$this->towel_line( $towel, $closes );
 		}
 
 		if ( $bar && null !== $shipping && 'gap' === $shipping['state'] && ! $closes ) {
 			$this->shipping_bar( $shipping );
 		}
 
+		$this->motif_slider( $stay );
+
 		echo '</div>';
 	}
 
 	/**
-	 * The "one more towel" line, with a one-click add where there is something
-	 * obvious to add.
+	 * The "one more towel" line: what the next towel costs and what it saves.
 	 *
-	 * @param array{price:int,saving:int,product_id:int,name:string} $towel  Marginal towel.
-	 * @param string                                                 $stay   Page to return to.
-	 * @param bool                                                   $closes Whether it also wins free delivery.
+	 * @param array{price:int,saving:int} $towel  Marginal towel.
+	 * @param bool                        $closes Whether it also wins free delivery.
 	 * @return void
 	 */
-	private function towel_line( array $towel, string $stay, bool $closes ): void {
+	private function towel_line( array $towel, bool $closes ): void {
 		$price = Catalog::format_price( $towel['price'] );
 
 		$copy = $closes
@@ -200,36 +202,92 @@ final class Upsell {
 			);
 
 		printf( '<p class="cosypaw-upsell__copy">%s</p>', esc_html( $copy ) );
+	}
 
-		echo '<div class="cosypaw-upsell__actions">';
+	/**
+	 * The catalogue, as a strip that adds a towel on click.
+	 *
+	 * The offer used to be a button for one more of whatever was already in the
+	 * cart, which is the one towel the buyer has already chosen — a second copy
+	 * of it is the least interesting thing on sale. The strip lists the motifs
+	 * the cart does *not* have, so the marginal price above is spent on a towel
+	 * they have not seen up close yet.
+	 *
+	 * Each tile is a plain add-to-cart link: WooCommerce's AJAX add does not
+	 * redraw the cart table, so on this page a reload is the honest answer to
+	 * the click, and the link carries the page it was clicked from back with it.
+	 *
+	 * @param string $stay Which page an add-to-cart from here returns to.
+	 * @return void
+	 */
+	private function motif_slider( string $stay ): void {
+		$in_cart = $this->cart_motif_ids();
+		$offer   = array();
 
-		// A cart of packages alone has no single motif to repeat, and guessing
-		// one for the buyer is worse than sending them to the catalogue.
-		if ( $towel['product_id'] > 0 ) {
+		foreach ( $this->motifs() as $product_id => $motif ) {
+			if ( ! in_array( $product_id, $in_cart, true ) ) {
+				$offer[ $product_id ] = $motif;
+			}
+		}
+
+		// A cart holding one of everything is not owed an empty rail; the
+		// catalogue itself is then the offer.
+		if ( ! $offer ) {
+			return;
+		}
+
+		echo '<div class="cosypaw-upsell__slider" data-upsell-slider>';
+
+		// Hidden until the script measures an overflow: without one they are
+		// two buttons that scroll nothing, and without script they never work.
+		printf(
+			'<button type="button" class="cosypaw-upsell__nav cosypaw-upsell__nav--prev" data-upsell-prev aria-label="%s" hidden>%s</button>',
+			esc_attr__( 'Prethodni peškirići', 'cosypaw' ),
+			$this->chevron( true ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
+		);
+
+		echo '<ul class="cosypaw-upsell__track" data-upsell-track>';
+
+		foreach ( $offer as $product_id => $motif ) {
 			printf(
-				'<a class="cosypaw-upsell__btn" href="%1$s" rel="nofollow">%2$s</a>',
-				esc_url( $this->add_url( $towel['product_id'], $stay ) ),
-				esc_html(
-					sprintf(
-						/* translators: %s: motif name, e.g. "Sova". */
-						__( 'Dodaj još 1 × %s', 'cosypaw' ),
-						$towel['name']
-					)
-				)
+				'<li class="cosypaw-upsell__slide">' .
+					'<a class="cosypaw-upsell__pick" href="%1$s" rel="nofollow">' .
+						'<img class="cosypaw-upsell__img" src="%2$s" width="192" height="192" alt="" loading="lazy" decoding="async">' .
+						'<span class="cosypaw-upsell__name">%3$s</span>' .
+						'<span class="cosypaw-upsell__price">%4$s</span>' .
+						'<span class="cosypaw-upsell__add">%5$s</span>' .
+					'</a>' .
+				'</li>',
+				esc_url( $this->add_url( $product_id, $stay ) ),
+				esc_url( (string) ( $motif['image_th'] ?? $motif['image_sm'] ?? '' ) ),
+				esc_html( (string) ( $motif['name'] ?? '' ) ),
+				esc_html( Catalog::format_price( (int) ( $motif['price'] ?? 0 ) ) ),
+				esc_html__( 'Dodaj', 'cosypaw' )
 			);
 		}
 
+		echo '</ul>';
+
 		printf(
-			'<a class="cosypaw-upsell__link" href="%1$s">%2$s</a>',
-			esc_url( $this->gallery_url() ),
-			esc_html(
-				$towel['product_id'] > 0
-					? __( 'Izaberi drugi motiv', 'cosypaw' )
-					: __( 'Izaberi peškirić', 'cosypaw' )
-			)
+			'<button type="button" class="cosypaw-upsell__nav cosypaw-upsell__nav--next" data-upsell-next aria-label="%s" hidden>%s</button>',
+			esc_attr__( 'Sledeći peškirići', 'cosypaw' ),
+			$this->chevron( false ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
 		);
 
 		echo '</div>';
+	}
+
+	/**
+	 * A nav chevron.
+	 *
+	 * @param bool $back Whether it points back.
+	 * @return string
+	 */
+	private function chevron( bool $back ): string {
+		return sprintf(
+			'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="%s"/></svg>',
+			$back ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'
+		);
 	}
 
 	/**
@@ -340,9 +398,9 @@ final class Upsell {
 	}
 
 	/**
-	 * What one more towel costs, and which one the cart would repeat.
+	 * What one more towel costs.
 	 *
-	 * @return array{price:int,saving:int,product_id:int,name:string}|null
+	 * @return array{price:int,saving:int}|null
 	 */
 	private function next_towel(): ?array {
 		$cart = $this->cart();
@@ -357,56 +415,37 @@ final class Upsell {
 			return null;
 		}
 
-		$motif = $this->cart_motif( $cart );
-
 		return array(
-			'price'      => (int) $step['price'],
-			'saving'     => (int) $step['saving'],
-			'product_id' => (int) $motif['product_id'],
-			'name'       => (string) $motif['name'],
+			'price'  => (int) $step['price'],
+			'saving' => (int) $step['saving'],
 		);
 	}
 
 	/**
-	 * The motif the cart would most naturally add another of.
+	 * The motifs the cart already holds.
 	 *
-	 * The last one added, not the first: the towel someone reached for a
-	 * moment ago is a better guess at their favourite than the one they picked
-	 * at the top of the session. Package products are skipped — "one more
-	 * Trio" is not what the marginal price is quoting.
+	 * What the strip leaves out. A package counts for none of them: its motifs
+	 * are item data rather than products, and the Trio a buyer assembled says
+	 * nothing about which single towels they have seen.
 	 *
-	 * @param \WC_Cart $cart Cart to read.
-	 * @return array{product_id:int,name:string}
+	 * @return int[]
 	 */
-	private function cart_motif( \WC_Cart $cart ): array {
-		$found  = array(
-			'product_id' => 0,
-			'name'       => '',
-		);
+	private function cart_motif_ids(): array {
+		$cart = $this->cart();
+
+		if ( null === $cart ) {
+			return array();
+		}
+
 		$motifs = $this->motifs();
+		$found  = array();
 
 		foreach ( $cart->get_cart() as $item ) {
 			$product_id = (int) ( $item['product_id'] ?? 0 );
 
-			if ( ! isset( $motifs[ $product_id ] ) ) {
-				continue;
+			if ( isset( $motifs[ $product_id ] ) ) {
+				$found[] = $product_id;
 			}
-
-			$product = $item['data'] ?? null;
-
-			// A motif retired since it was added is still in the cart and
-			// still on the order; it just cannot be sold again.
-			if ( ! $product instanceof \WC_Product || ! $product->is_purchasable() ) {
-				continue;
-			}
-
-			$found = array(
-				'product_id' => $product_id,
-				// The catalog row carries the name WooCommerce charges under,
-				// already through the per-locale override — get_name() would
-				// hand back the stored Serbian title on an English page.
-				'name'       => (string) ( $motifs[ $product_id ]['name'] ?? $product->get_name() ),
-			);
 		}
 
 		return $found;
@@ -552,17 +591,6 @@ final class Upsell {
 			),
 			$base
 		);
-	}
-
-	/**
-	 * The catalogue, wherever it lives on this install.
-	 *
-	 * @return string
-	 */
-	private function gallery_url(): string {
-		$shop = function_exists( 'wc_get_page_permalink' ) ? (string) wc_get_page_permalink( 'shop' ) : '';
-
-		return '' !== $shop ? $shop : home_url( '/#galerija' );
 	}
 
 	/**

@@ -243,9 +243,9 @@ $sr_source = array(
 	'Još malo, pa povoljnije'                                                                 => array( 'A little more, a little cheaper', 'Ещё немного — и выгоднее' ),
 	'Još jedan peškirić košta %s — i dostava je na nama.'                                     => array( 'One more towel costs %s — and delivery is on us.', 'Ещё одно полотенце стоит %s — и доставка за наш счёт.' ),
 	'Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s.'                           => array( 'One more towel costs %1$s instead of full price — you save %2$s.', 'Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s.' ),
-	'Dodaj još 1 × %s'                                                                        => array( 'Add 1 more × %s', 'Добавить ещё 1 × %s' ),
-	'Izaberi drugi motiv'                                                                     => array( 'Pick a different design', 'Выбрать другой мотив' ),
-	'Izaberi peškirić'                                                                        => array( 'Pick a towel', 'Выбрать полотенце' ),
+	'Dodaj'                                                                                   => array( 'Add', 'Добавить' ),
+	'Prethodni peškirići'                                                                     => array( 'Previous towels', 'Предыдущие полотенца' ),
+	'Sledeći peškirići'                                                                       => array( 'Next towels', 'Следующие полотенца' ),
 	'Još %s do besplatne dostave'                                                             => array( '%s more for free delivery', 'Ещё %s до бесплатной доставки' ),
 	'Ostatak družine te čeka'                                                                 => array( 'The rest of the crew is waiting', 'Остальная компания тебя ждёт' ),
 

@@ -778,6 +778,9 @@
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-sm);
 	padding: 8px 20px 20px;
+	/* WooCommerce floats this right at 48%, which a grid cannot place. */
+	float: none;
+	width: auto;
 }
 
 .woocommerce .cart_totals h2 {
@@ -864,15 +867,38 @@
 
 /* ---------- The package offer on the cart and the checkout ---------- */
 
-/* Sits under the cart table and above the checkout form: the two views that
-   knew what was in the basket and said nothing about what one more towel
-   would cost. Printed by Theme\Upsell, and only while it has a real number. */
+/* Beside the cart totals and above the checkout form: the two views that knew
+   what was in the basket and said nothing about what one more towel would
+   cost. Printed by Theme\Upsell, and only while it has a real number. */
 .cosypaw-upsell {
 	margin: 24px 0 30px;
 	padding: 18px 20px;
 	border-radius: var(--radius-lg);
 	background: var(--sand);
 	color: var(--ink);
+}
+
+/* The cart's collaterals are one row now: the offer on the left, the totals
+   on the right, where WooCommerce's own 48% float used to leave the whole left
+   half empty under a full-width band. Both children are laid out here, so the
+   float has to go or it would take the totals out of the grid. */
+.woocommerce-cart .cart-collaterals {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+	gap: 22px;
+	align-items: start;
+}
+
+.woocommerce-cart .cart-collaterals .cosypaw-upsell {
+	margin: 0;
+}
+
+/* Cross-sells, where a shop has configured any, are a section rather than a
+   column and take the full width under both. */
+.woocommerce-cart .cart-collaterals .cross-sells {
+	grid-column: 1 / -1;
+	width: auto;
+	float: none;
 }
 
 .cosypaw-upsell__title {
@@ -893,46 +919,176 @@
 	line-height: 1.35;
 }
 
-.cosypaw-upsell__actions {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 10px 18px;
+/* ---------- The motif strip ----------
+   The offer was a button for one more of the towel already in the cart, which
+   is the least interesting thing on sale. This is the rest of the catalogue,
+   scrolling in place: every tile is an add-to-cart, and the marginal price
+   above buys a towel the cart has not met yet. */
+.cosypaw-upsell__slider {
+	position: relative;
+	margin-top: 14px;
 }
 
-.cosypaw-upsell__btn {
-	display: inline-flex;
-	align-items: center;
-	min-height: 48px;
-	padding: 12px 26px;
+.cosypaw-upsell__track {
+	display: flex;
+	gap: 10px;
+	margin: 0;
+	/* Room under the tiles for the scrollbar, so the thumb never sits on one. */
+	padding: 0 0 10px;
+	list-style: none;
+	overflow-x: auto;
+	scroll-snap-type: x proximity;
+	/* The strip sits inside a long page; without this, reaching the last towel
+	   hands the gesture to the document and the cart leaves the screen. */
+	overscroll-behavior-x: contain;
+}
+
+.cosypaw-upsell__slide {
+	flex: 0 0 118px;
+	scroll-snap-align: start;
+}
+
+.cosypaw-upsell__pick {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+	padding: 8px;
+	border-radius: var(--radius-lg);
+	background: #fff;
+	box-shadow: inset 0 0 0 1px var(--line);
+	color: var(--ink);
+	text-decoration: none;
+	transition: box-shadow 0.15s ease;
+}
+
+.cosypaw-upsell__pick:hover,
+.cosypaw-upsell__pick:focus-visible {
+	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
+}
+
+.cosypaw-upsell__img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 6px;
+	border-radius: 12px;
+	aspect-ratio: 1;
+	background-color: var(--cream2);
+	object-fit: cover;
+}
+
+.cosypaw-upsell__name {
+	font-family: var(--font-heading);
+	font-size: 13.5px;
+	font-weight: 700;
+	/* One line: twenty motifs share a rail, and a name that wraps on three of
+	   them makes every tile as tall as the worst case. */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cosypaw-upsell__price {
+	font-size: 12.5px;
+	font-weight: 800;
+	color: var(--clay);
+}
+
+.cosypaw-upsell__add {
+	margin-top: 7px;
+	padding: 5px 0;
 	border-radius: var(--radius-pill);
+	background: var(--sand);
+	color: var(--claydk);
+	font-size: 12px;
+	font-weight: 800;
+	text-align: center;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cosypaw-upsell__pick:hover .cosypaw-upsell__add,
+.cosypaw-upsell__pick:focus-visible .cosypaw-upsell__add {
 	background: var(--clay);
 	color: #fff;
-	font-weight: 800;
-	text-decoration: none;
-	transition: background 0.15s ease;
 }
 
-.cosypaw-upsell__btn:hover,
-.cosypaw-upsell__btn:focus-visible {
-	background: var(--claydk);
+/* A trackpad, a finger and the keyboard all scroll the rail already. These are
+   for the mouse, and they ship hidden until UpsellSlider measures an overflow
+   — arrows that scroll nothing are worse than none. */
+.cosypaw-upsell__nav {
+	position: absolute;
+	top: calc(50% - 5px);
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	transform: translateY(-50%);
+	border: none;
+	border-radius: 50%;
+	background: #fff;
+	color: var(--claydk);
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.cosypaw-upsell__nav:hover:not(:disabled) {
+	background: var(--clay);
 	color: #fff;
 }
 
-.cosypaw-upsell__link {
-	display: inline-flex;
-	align-items: center;
-	min-height: 44px;
-	color: var(--claydk);
-	font-weight: 800;
-	font-size: 14.5px;
-	text-decoration: underline;
-	text-underline-offset: 3px;
+.cosypaw-upsell__nav:disabled {
+	opacity: 0.3;
+	cursor: default;
 }
 
-.cosypaw-upsell__link:hover,
-.cosypaw-upsell__link:focus-visible {
-	color: var(--ink);
+.cosypaw-upsell__nav--prev {
+	left: -8px;
+}
+
+.cosypaw-upsell__nav--next {
+	right: -8px;
+}
+
+/* The rail's scrollbar, in the shop's colours rather than the platform's —
+   the same pill the review picker wears, laid on its side. */
+@supports not selector(::-webkit-scrollbar) {
+	.cosypaw-upsell__track {
+		scrollbar-width: thin;
+		scrollbar-color: var(--clay) #fff;
+	}
+}
+
+.cosypaw-upsell__track::-webkit-scrollbar {
+	height: 10px;
+}
+
+.cosypaw-upsell__track::-webkit-scrollbar-track {
+	background: #fff;
+	border-radius: var(--radius-pill);
+}
+
+.cosypaw-upsell__track::-webkit-scrollbar-thumb {
+	background: var(--clay);
+	background-clip: padding-box;
+	border: 2px solid transparent;
+	border-radius: var(--radius-pill);
+}
+
+.cosypaw-upsell__track::-webkit-scrollbar-thumb:hover {
+	background: var(--claydk);
+	background-clip: padding-box;
+}
+
+/* A touch device paints no scrollbar until the rail is already moving, and has
+   no arrows either, so the fade at the edge is what says "there is more". */
+@media (hover: none) {
+	.cosypaw-upsell__track {
+		-webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+		mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+	}
 }
 
 /* Free delivery, and how far off it is. The sentence is the accessible
@@ -1019,10 +1175,21 @@
 	color: var(--clay);
 }
 
+/* One column below this: the totals need about 300px to keep the price and its
+   label on one line, and the strip needs about 360px to show three towels. */
+@media (max-width: 900px) {
+	.woocommerce-cart .cart-collaterals {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
 @media (max-width: 560px) {
-	.cosypaw-upsell__btn {
-		width: 100%;
-		justify-content: center;
+	.cosypaw-upsell {
+		padding: 16px;
+	}
+
+	.cosypaw-upsell__copy {
+		font-size: 16.5px;
 	}
 
 	/* Three cards at phone width would be three thumbnails; two is a card. */

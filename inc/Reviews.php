@@ -8,6 +8,10 @@
  * list the landing page can show, which lets one review work in two places: on
  * the towel it was written about, and as proof on the way in.
  *
+ * Pooled, not stacked: a customer who has reviewed every motif is quoted once,
+ * on their newest review. The product page is unaffected — it still shows every
+ * approved review it has, however many of them one person wrote.
+ *
  * Rows are cached raw — ids, text, rating — and never with a product name
  * baked in. The name is translated per request, and a cache holding a Serbian
  * title would serve it to a Russian visitor.
@@ -77,7 +81,8 @@ final class Reviews {
 	}
 
 	/**
-	 * The newest approved reviews across the whole catalog.
+	 * The newest approved reviews across the whole catalog, at most one per
+	 * reviewer.
 	 *
 	 * Each row: product_id, rating, author, quote, permalink.
 	 *
@@ -143,13 +148,17 @@ final class Reviews {
 				'type'       => 'review',
 				'orderby'    => 'comment_date_gmt',
 				'order'      => 'DESC',
-				// Over-fetch: the rating filter below drops an unknown share.
+				// Over-fetch: the rating filter and the one-per-author rule below
+				// each drop an unknown share, and a single prolific reviewer can
+				// account for a long run of these on their own.
 				'number'     => self::POOL_SIZE * 3,
 				'no_found_rows' => true,
 			)
 		);
 
-		$rows = array();
+		$rows     = array();
+		$seen     = array();
+		$statuses = array();
 
 		foreach ( (array) $comments as $comment ) {
 			if ( ! is_object( $comment ) || ! isset( $comment->comment_ID ) ) {
@@ -163,9 +172,36 @@ final class Reviews {
 				continue;
 			}
 
+			// One voice, one quote. A regular who has reviewed half the catalog
+			// would otherwise fill the section on their own and read as a shill;
+			// the whole point of the pool is that it sounds like a shop. The
+			// comments arrive newest-first, so the first one kept is the newest.
+			$who = self::author_key( $comment );
+
+			if ( '' !== $who && isset( $seen[ $who ] ) ) {
+				continue;
+			}
+
+			// Checked here, not only at render, so that a review sitting on a
+			// retired motif does not spend its author's one slot on a link the
+			// landing page will drop later.
+			$product_id = (int) $comment->comment_post_ID;
+
+			if ( ! isset( $statuses[ $product_id ] ) ) {
+				$statuses[ $product_id ] = (string) get_post_status( $product_id );
+			}
+
+			if ( 'publish' !== $statuses[ $product_id ] ) {
+				continue;
+			}
+
+			if ( '' !== $who ) {
+				$seen[ $who ] = true;
+			}
+
 			$rows[] = array(
 				'id'         => (int) $comment->comment_ID,
-				'product_id' => (int) $comment->comment_post_ID,
+				'product_id' => $product_id,
 				'rating'     => min( 5, $rating ),
 				'author'     => trim( (string) $comment->comment_author ),
 				'text'       => $text,
@@ -177,6 +213,35 @@ final class Reviews {
 		}
 
 		return $rows;
+	}
+
+	/**
+	 * A stable identity for whoever left the review.
+	 *
+	 * An account is the same person however they signed the box, so it wins;
+	 * failing that the email, which survives a changed display name; failing
+	 * that the name itself. Someone who left neither cannot be told apart from
+	 * the next such reviewer, so they get an empty key and are never merged.
+	 *
+	 * @param object $comment Comment row.
+	 * @return string Identity key, or '' when there is nothing to match on.
+	 */
+	private static function author_key( object $comment ): string {
+		$user_id = (int) ( $comment->user_id ?? 0 );
+
+		if ( $user_id > 0 ) {
+			return 'u:' . $user_id;
+		}
+
+		$email = strtolower( trim( (string) ( $comment->comment_author_email ?? '' ) ) );
+
+		if ( '' !== $email ) {
+			return 'e:' . $email;
+		}
+
+		$name = strtolower( trim( (string) ( $comment->comment_author ?? '' ) ) );
+
+		return '' !== $name ? 'n:' . $name : '';
 	}
 
 	/**

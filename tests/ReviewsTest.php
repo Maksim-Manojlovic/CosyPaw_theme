@@ -60,14 +60,18 @@ final class ReviewsTest extends TestCase {
 	 * @param int    $post_id Product ID.
 	 * @param string $author  Comment author.
 	 * @param string $content Comment body.
+	 * @param string $email   Comment author email.
+	 * @param int    $user_id Account behind the review, 0 for a guest.
 	 * @return object
 	 */
-	private function comment( int $id, int $post_id, string $author = 'Ana', string $content = 'Mekani su.' ): object {
+	private function comment( int $id, int $post_id, string $author = 'Ana', string $content = 'Mekani su.', string $email = '', int $user_id = 0 ): object {
 		return (object) array(
-			'comment_ID'      => $id,
-			'comment_post_ID' => $post_id,
-			'comment_author'  => $author,
-			'comment_content' => $content,
+			'comment_ID'           => $id,
+			'comment_post_ID'      => $post_id,
+			'comment_author'       => $author,
+			'comment_author_email' => $email,
+			'user_id'              => $user_id,
+			'comment_content'      => $content,
 		);
 	}
 
@@ -181,14 +185,139 @@ final class ReviewsTest extends TestCase {
 		$this->ratings( array( 1 => 5, 2 => 5, 3 => 5, 4 => 5 ) );
 		Functions\when( 'get_comments' )->justReturn(
 			array(
-				$this->comment( 1, 11 ),
-				$this->comment( 2, 11 ),
-				$this->comment( 3, 11 ),
-				$this->comment( 4, 11 ),
+				$this->comment( 1, 11, 'Ana' ),
+				$this->comment( 2, 11, 'Bojana' ),
+				$this->comment( 3, 11, 'Vesna' ),
+				$this->comment( 4, 11, 'Goran' ),
 			)
 		);
 
 		$this->assertCount( 2, Reviews::latest( 2 ) );
 		$this->assertSame( array(), Reviews::latest( 0 ) );
+	}
+
+	/**
+	 * One reviewer who has worked through the catalog is quoted once, on their
+	 * newest review — the section is the shop speaking, not one customer.
+	 */
+	public function test_latest_quotes_a_reviewer_only_once(): void {
+		$this->seed(
+			array(
+				'zirafa' => 11,
+				'lisica' => 12,
+				'medved' => 13,
+			)
+		);
+		$this->ratings( array( 1 => 5, 2 => 5, 3 => 5 ) );
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				// Newest first, the way the query hands them over.
+				$this->comment( 1, 11, 'Gorana', 'Najnovija.' ),
+				$this->comment( 2, 12, 'Gorana', 'Starija.' ),
+				$this->comment( 3, 13, 'Ana', 'Tudja.' ),
+			)
+		);
+
+		$out = Reviews::latest( 6 );
+
+		$this->assertCount( 2, $out );
+		$this->assertSame( 'Najnovija.', $out[0]['quote'] );
+		$this->assertSame( 'Ana', $out[1]['name'] );
+	}
+
+	/**
+	 * The account wins over the name: the same customer signing two reviews
+	 * differently is still one voice.
+	 */
+	public function test_latest_matches_a_reviewer_by_account(): void {
+		$this->seed(
+			array(
+				'zirafa' => 11,
+				'lisica' => 12,
+			)
+		);
+		$this->ratings( array( 1 => 5, 2 => 5 ) );
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				$this->comment( 1, 11, 'Gorana', 'Najnovija.', 'g@example.test', 7 ),
+				$this->comment( 2, 12, 'Gorana M.', 'Starija.', 'druga@example.test', 7 ),
+			)
+		);
+
+		$out = Reviews::latest( 6 );
+
+		$this->assertCount( 1, $out );
+		$this->assertSame( 'Najnovija.', $out[0]['quote'] );
+	}
+
+	/**
+	 * A guest who changed how they sign is still matched on their email.
+	 */
+	public function test_latest_matches_a_guest_by_email(): void {
+		$this->seed(
+			array(
+				'zirafa' => 11,
+				'lisica' => 12,
+			)
+		);
+		$this->ratings( array( 1 => 5, 2 => 5 ) );
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				$this->comment( 1, 11, 'Gorana', 'Najnovija.', 'Gorana@Example.test' ),
+				$this->comment( 2, 12, 'gorana p', 'Starija.', 'gorana@example.test' ),
+			)
+		);
+
+		$this->assertCount( 1, Reviews::latest( 6 ) );
+	}
+
+	/**
+	 * Two reviewers who left no name and no email cannot be told apart, so
+	 * neither is folded into the other.
+	 */
+	public function test_latest_keeps_unsigned_reviews_apart(): void {
+		$this->seed(
+			array(
+				'zirafa' => 11,
+				'lisica' => 12,
+			)
+		);
+		$this->ratings( array( 1 => 5, 2 => 5 ) );
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				$this->comment( 1, 11, '', 'Prva.' ),
+				$this->comment( 2, 12, '', 'Druga.' ),
+			)
+		);
+
+		$this->assertCount( 2, Reviews::latest( 6 ) );
+	}
+
+	/**
+	 * A reviewer whose newest review sits on a retired motif is quoted from the
+	 * next one that still has a page, rather than losing their slot to it.
+	 */
+	public function test_latest_falls_through_to_a_live_motif(): void {
+		$this->seed(
+			array(
+				'zirafa' => 11,
+				'lisica' => 12,
+			)
+		);
+		$this->ratings( array( 1 => 5, 2 => 5 ) );
+		Functions\when( 'get_post_status' )->alias(
+			static fn( $id ) => 11 === (int) $id ? 'draft' : 'publish'
+		);
+		Functions\when( 'get_comments' )->justReturn(
+			array(
+				$this->comment( 1, 11, 'Gorana', 'Na povucenom motivu.' ),
+				$this->comment( 2, 12, 'Gorana', 'Na zivom motivu.' ),
+			)
+		);
+
+		$out = Reviews::latest( 6 );
+
+		$this->assertCount( 1, $out );
+		$this->assertSame( 'Na zivom motivu.', $out[0]['quote'] );
 	}
 }

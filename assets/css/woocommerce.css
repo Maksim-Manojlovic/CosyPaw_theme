@@ -705,22 +705,6 @@
 	margin: 0;
 }
 
-/* Coupon row — branded pill input. */
-.woocommerce .cart .coupon .input-text {
-	min-width: 200px;
-	border: 1px solid var(--color-border-control);
-	border-radius: var(--radius-pill);
-	padding: 12px 18px;
-	background: #fff;
-	color: var(--ink);
-	font: inherit;
-}
-
-.woocommerce .cart .coupon .input-text:focus-visible {
-	outline: 2px solid var(--clay);
-	outline-offset: 1px;
-}
-
 /* No shipping/tax → Subtotal equals Total (both read "Укупно" in sr). Drop the
    redundant subtotal row so only the Total shows. */
 .woocommerce .cart_totals .cart-subtotal {

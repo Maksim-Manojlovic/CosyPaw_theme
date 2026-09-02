@@ -151,6 +151,11 @@ final class WooCommerce {
 		// Per-locale short description: the Serbian one is the product excerpt,
 		// the other two are overrides typed on the product screen.
 		add_filter( 'woocommerce_short_description', array( $this, 'translate_short_description' ) );
+
+		// The shop issues no discount codes, and an empty coupon box on the cart
+		// only invites a code no buyer has. Turning coupons off drops the cart
+		// form, the checkout "have a coupon?" notice and the totals row at once.
+		add_filter( 'woocommerce_coupons_enabled', '__return_false' );
 	}
 
 	/**

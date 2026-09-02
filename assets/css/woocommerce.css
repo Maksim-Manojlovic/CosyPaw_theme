@@ -885,6 +885,18 @@
 	min-width: 0;
 }
 
+/* An empty cart has no collaterals and no totals column, so the same strip
+   stands on its own under the "return to shop" line. Wider tiles: there is a
+   whole page across rather than one column of a two-column row, and at 118px
+   the range read as a filmstrip of thumbnails rather than an offer. */
+.cosypaw-upsell--empty {
+	margin: 34px 0 0;
+}
+
+.cosypaw-upsell--empty .cosypaw-upsell__slide {
+	flex-basis: 148px;
+}
+
 /* Cross-sells, where a shop has configured any, are a section rather than a
    column and take the full width under both. */
 .woocommerce-cart .cart-collaterals .cross-sells {

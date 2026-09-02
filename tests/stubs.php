@@ -181,6 +181,15 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		}
 
 		/**
+		 * Whether the cart holds nothing at all.
+		 *
+		 * @return bool
+		 */
+		public function is_empty(): bool {
+			return array() === $this->contents;
+		}
+
+		/**
 		 * Total quantity across the cart lines.
 		 *
 		 * @return int

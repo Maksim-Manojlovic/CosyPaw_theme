@@ -121,10 +121,15 @@ final class Upsell {
 
 		// An empty cart offers one thing: a link back to the shop. The towels
 		// themselves answer better than a link to the page that lists them.
-		// Not on woocommerce_cart_is_empty — that action fires above the
-		// "Return to shop" button, and the strip belongs under the message it
-		// answers. Priority 5 keeps it inside WooCommerce::close_content_wrapper().
-		add_action( 'woocommerce_after_main_content', array( $this, 'empty_cart_picks' ), 5 );
+		//
+		// On the content, because an empty cart has no hook to sit on. The cart
+		// is a plain page holding [woocommerce_cart], so it never reaches the
+		// product templates that fire woocommerce_after_main_content, and the
+		// one action cart-empty.php does fire — woocommerce_cart_is_empty —
+		// runs above the "Return to shop" button, where the strip would sit on
+		// top of the message it answers. Priority 20 is after the shortcode has
+		// been expanded at 11, so this appends to a rendered cart.
+		add_filter( 'the_content', array( $this, 'append_empty_cart_picks' ), 20 );
 
 		add_action( 'woocommerce_thankyou', array( $this, 'thankyou_picks' ), 15 );
 	}
@@ -134,21 +139,30 @@ final class Upsell {
 	 *
 	 * The same strip the filled cart carries beside its totals, with nothing in
 	 * the cart to subtract from it — so here it is the whole sellable range.
-	 * Fires on every WooCommerce view, so it checks the one it belongs on.
+	 * Runs on every page's content, so it checks the one it belongs on: the
+	 * cart page itself, in the main query, with an empty cart.
 	 *
-	 * @return void
+	 * @param string $content Post content, cart shortcode already expanded.
+	 * @return string
 	 */
-	public function empty_cart_picks(): void {
-		$cart = $this->cart();
+	public function append_empty_cart_picks( $content ): string {
+		$content = (string) $content;
+		$cart    = $this->cart();
 
-		if ( ! function_exists( 'is_cart' ) || ! is_cart() || null === $cart || ! $cart->is_empty() ) {
-			return;
+		if ( ! function_exists( 'is_cart' ) || ! is_cart() || ! is_main_query() || ! in_the_loop() ) {
+			return $content;
+		}
+
+		if ( null === $cart || ! $cart->is_empty() ) {
+			return $content;
 		}
 
 		// A shop with nothing sellable in it gets no heading over an empty rail.
 		if ( ! $this->motifs() ) {
-			return;
+			return $content;
 		}
+
+		ob_start();
 
 		echo '<div class="cosypaw-upsell cosypaw-upsell--empty" data-upsell-panel>';
 
@@ -160,6 +174,8 @@ final class Upsell {
 		$this->motif_slider( self::STAY_CART );
 
 		echo '</div>';
+
+		return $content . (string) ob_get_clean();
 	}
 
 	/**

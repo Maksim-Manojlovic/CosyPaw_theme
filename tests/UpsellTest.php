@@ -313,4 +313,63 @@ final class UpsellTest extends TestCase {
 
 		$this->assertSame( '', (string) ob_get_clean() );
 	}
+
+	/**
+	 * An empty cart has no collaterals and no hook of its own, so the strip is
+	 * appended to the page content the cart shortcode has already rendered.
+	 */
+	public function test_an_empty_cart_gets_the_whole_strip_under_its_content(): void {
+		Functions\when( 'is_cart' )->justReturn( true );
+		Functions\when( 'is_main_query' )->justReturn( true );
+		Functions\when( 'in_the_loop' )->justReturn( true );
+
+		$this->cart = new \WC_Cart();
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+		$markup = $upsell->append_empty_cart_picks( '<p class="cart-empty">Vaša korpa je trenutno prazna.</p>' );
+
+		$this->assertStringContainsString( 'Vaša korpa je trenutno prazna.', $markup );
+		$this->assertStringContainsString( 'cosypaw-upsell--empty', $markup );
+		$this->assertStringContainsString( 'data-upsell-slider', $markup );
+		$this->assertStringContainsString( 'cosypaw-stay=cart', $markup );
+	}
+
+	/**
+	 * A cart with something in it already carries the strip beside its totals.
+	 * A second copy under the table would be the same offer made twice.
+	 */
+	public function test_a_filled_cart_leaves_its_content_alone(): void {
+		Functions\when( 'is_cart' )->justReturn( true );
+		Functions\when( 'is_main_query' )->justReturn( true );
+		Functions\when( 'in_the_loop' )->justReturn( true );
+
+		$this->cart = new \WC_Cart(
+			array(
+				array(
+					'product_id' => self::MOTIF_ID,
+					'quantity'   => 1,
+					'data'       => new \WC_Product( 'Žirafa', (string) self::LIVE_PRICES['solo'], true, self::MOTIF_ID ),
+				),
+			)
+		);
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+
+		$this->assertSame( '<p>korpa</p>', $upsell->append_empty_cart_picks( '<p>korpa</p>' ) );
+	}
+
+	/**
+	 * The filter runs on every page's content; only the cart page is its own.
+	 */
+	public function test_every_other_page_keeps_its_content(): void {
+		Functions\when( 'is_cart' )->justReturn( false );
+		Functions\when( 'is_main_query' )->justReturn( true );
+		Functions\when( 'in_the_loop' )->justReturn( true );
+
+		$this->cart = new \WC_Cart();
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+
+		$this->assertSame( '<p>o nama</p>', $upsell->append_empty_cart_picks( '<p>o nama</p>' ) );
+	}
 }

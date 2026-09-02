@@ -105,12 +105,12 @@ final class Upsell {
 		$this->pricing     = $pricing;
 		$this->catalog     = $catalog;
 
-		// Inside the collaterals, beside the totals. Under the cart table it was
-		// a full-width band with the whole left half of the totals row empty
-		// underneath it — two stacked blocks where the page had room for one
-		// line. Priority 5 puts it in front of the cross-sells and the totals,
-		// which is the reading order the grid then lays out left to right.
-		add_action( 'woocommerce_cart_collaterals', array( $this, 'cart_panel' ), 5 );
+		// Inside the collaterals, under the totals. Beside them it was a 380px
+		// column showing three towels out of thirteen, with its arrows doing
+		// the rest of the work; across the whole width the range is read at a
+		// glance. Priority 20 puts it after the cross-sells and the totals,
+		// which is the order the stacked grid then reads top to bottom.
+		add_action( 'woocommerce_cart_collaterals', array( $this, 'cart_panel' ), 20 );
 
 		// Above the checkout form, not above the Place order button. The offer
 		// is a link, and following a link from the middle of a half-typed

@@ -623,6 +623,9 @@ msgstr "Следующие полотенца"
 msgid "Još %s do besplatne dostave"
 msgstr "Ещё %s до бесплатной доставки"
 
+msgid "Možda vam se svidi"
+msgstr "Возможно, вам понравится"
+
 msgid "Ostatak družine te čeka"
 msgstr "Остальная компания тебя ждёт"
 

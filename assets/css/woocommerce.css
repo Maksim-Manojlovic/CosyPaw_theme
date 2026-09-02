@@ -705,22 +705,6 @@
 	margin: 0;
 }
 
-/* Coupon row — branded pill input. */
-.woocommerce .cart .coupon .input-text {
-	min-width: 200px;
-	border: 1px solid var(--color-border-control);
-	border-radius: var(--radius-pill);
-	padding: 12px 18px;
-	background: #fff;
-	color: var(--ink);
-	font: inherit;
-}
-
-.woocommerce .cart .coupon .input-text:focus-visible {
-	outline: 2px solid var(--clay);
-	outline-offset: 1px;
-}
-
 /* No shipping/tax → Subtotal equals Total (both read "Укупно" in sr). Drop the
    redundant subtotal row so only the Total shows. */
 .woocommerce .cart_totals .cart-subtotal {
@@ -899,6 +883,18 @@
    holding the totals in the second, where they were before. */
 .cosypaw-upsell-slot {
 	min-width: 0;
+}
+
+/* An empty cart has no collaterals and no totals column, so the same strip
+   stands on its own under the "return to shop" line. Wider tiles: there is a
+   whole page across rather than one column of a two-column row, and at 118px
+   the range read as a filmstrip of thumbnails rather than an offer. */
+.cosypaw-upsell--empty {
+	margin: 34px 0 0;
+}
+
+.cosypaw-upsell--empty .cosypaw-upsell__slide {
+	flex-basis: 148px;
 }
 
 /* Cross-sells, where a shop has configured any, are a section rather than a

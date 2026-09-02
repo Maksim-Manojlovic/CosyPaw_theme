@@ -247,6 +247,7 @@ $sr_source = array(
 	'Prethodni peškirići'                                                                     => array( 'Previous towels', 'Предыдущие полотенца' ),
 	'Sledeći peškirići'                                                                       => array( 'Next towels', 'Следующие полотенца' ),
 	'Još %s do besplatne dostave'                                                             => array( '%s more for free delivery', 'Ещё %s до бесплатной доставки' ),
+	'Možda vam se svidi'                                                                      => array( 'You might like', 'Возможно, вам понравится' ),
 	'Ostatak družine te čeka'                                                                 => array( 'The rest of the crew is waiting', 'Остальная компания тебя ждёт' ),
 
 	// The per-piece price on a motif card (front-page.php).

@@ -119,7 +119,47 @@ final class Upsell {
 		// started, when leaving costs nothing.
 		add_action( 'woocommerce_before_checkout_form', array( $this, 'checkout_panel' ), 5 );
 
+		// An empty cart offers one thing: a link back to the shop. The towels
+		// themselves answer better than a link to the page that lists them.
+		// Not on woocommerce_cart_is_empty — that action fires above the
+		// "Return to shop" button, and the strip belongs under the message it
+		// answers. Priority 5 keeps it inside WooCommerce::close_content_wrapper().
+		add_action( 'woocommerce_after_main_content', array( $this, 'empty_cart_picks' ), 5 );
+
 		add_action( 'woocommerce_thankyou', array( $this, 'thankyou_picks' ), 15 );
+	}
+
+	/**
+	 * The catalogue as a strip under an empty cart.
+	 *
+	 * The same strip the filled cart carries beside its totals, with nothing in
+	 * the cart to subtract from it — so here it is the whole sellable range.
+	 * Fires on every WooCommerce view, so it checks the one it belongs on.
+	 *
+	 * @return void
+	 */
+	public function empty_cart_picks(): void {
+		$cart = $this->cart();
+
+		if ( ! function_exists( 'is_cart' ) || ! is_cart() || null === $cart || ! $cart->is_empty() ) {
+			return;
+		}
+
+		// A shop with nothing sellable in it gets no heading over an empty rail.
+		if ( ! $this->motifs() ) {
+			return;
+		}
+
+		echo '<div class="cosypaw-upsell cosypaw-upsell--empty" data-upsell-panel>';
+
+		printf(
+			'<span class="cosypaw-upsell__title">%s</span>',
+			esc_html__( 'Možda vam se svidi', 'cosypaw' )
+		);
+
+		$this->motif_slider( self::STAY_CART );
+
+		echo '</div>';
 	}
 
 	/**

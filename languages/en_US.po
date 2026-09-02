@@ -623,6 +623,9 @@ msgstr "Next towels"
 msgid "Još %s do besplatne dostave"
 msgstr "%s more for free delivery"
 
+msgid "Možda vam se svidi"
+msgstr "You might like"
+
 msgid "Ostatak družine te čeka"
 msgstr "The rest of the crew is waiting"
 

@@ -862,15 +862,22 @@
 	color: var(--ink);
 }
 
-/* The cart's collaterals are one row now: the offer on the left, the totals
-   on the right, where WooCommerce's own 48% float used to leave the whole left
-   half empty under a full-width band. Both children are laid out here, so the
-   float has to go or it would take the totals out of the grid. */
+/* The cart's collaterals stack: the totals card, then the strip across the
+   full width under it. Beside the totals the strip was a 380px column showing
+   three towels out of thirteen, with its arrows doing most of the work; the
+   whole width shows the range at a glance. WooCommerce's own 48% float has to
+   go either way, or the totals would drop out of the grid. */
 .woocommerce-cart .cart-collaterals {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+	grid-template-columns: minmax(0, 1fr);
 	gap: 22px;
 	align-items: start;
+}
+
+/* The totals are a card, not a band: full width they would stretch a two-line
+   table across the page. This is the column they used to sit in. */
+.woocommerce-cart .cart-collaterals .cart_totals {
+	max-width: 420px;
 }
 
 .woocommerce-cart .cart-collaterals .cosypaw-upsell {
@@ -878,29 +885,19 @@
 }
 
 /* The slot is printed on every cart, offer or no offer — it is the anchor
-   CartUpsell re-renders into after an AJAX remove. Empty it is an unstyled
-   div, which on a desktop is exactly what is wanted: an empty first column
-   holding the totals in the second, where they were before. */
+   CartUpsell re-renders into after an AJAX remove. */
 .cosypaw-upsell-slot {
 	min-width: 0;
 }
 
-/* An empty cart has no collaterals and no totals column, so the same strip
-   stands on its own under the "return to shop" line. Wider tiles: there is a
-   whole page across rather than one column of a two-column row, and at 118px
-   the range read as a filmstrip of thumbnails rather than an offer. */
+/* An empty cart has no collaterals at all, so the same strip stands on its own
+   under the "return to shop" line, which needs room above it. */
 .cosypaw-upsell--empty {
 	margin: 34px 0 0;
 }
 
-.cosypaw-upsell--empty .cosypaw-upsell__slide {
-	flex-basis: 148px;
-}
-
-/* Cross-sells, where a shop has configured any, are a section rather than a
-   column and take the full width under both. */
+/* Cross-sells, where a shop has configured any, are a row like the rest. */
 .woocommerce-cart .cart-collaterals .cross-sells {
-	grid-column: 1 / -1;
 	width: auto;
 	float: none;
 }
@@ -948,7 +945,7 @@
 }
 
 .cosypaw-upsell__slide {
-	flex: 0 0 118px;
+	flex: 0 0 148px;
 	scroll-snap-align: start;
 }
 
@@ -1179,18 +1176,10 @@
 	color: var(--clay);
 }
 
-/* One column below this: the totals need about 300px to keep the price and its
-   label on one line, and the strip needs about 360px to show three towels. */
-@media (max-width: 900px) {
-	.woocommerce-cart .cart-collaterals {
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	/* Stacked, an empty slot is no longer holding a column open — it is a row
-	   of nothing with a 22px gap under it. */
-	.cosypaw-upsell-slot:empty {
-		display: none;
-	}
+/* An empty slot is a row of nothing with a 22px gap under it. It is still
+   printed on every cart — it is the anchor CartUpsell re-renders into. */
+.cosypaw-upsell-slot:empty {
+	display: none;
 }
 
 @media (max-width: 560px) {

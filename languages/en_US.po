@@ -620,6 +620,21 @@ msgstr "Previous towels"
 msgid "Sledeći peškirići"
 msgstr "Next towels"
 
+msgid "Ostvarena"
+msgstr "Earned"
+
+msgid "Još %s"
+msgstr "%s to go"
+
+msgid "Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima."
+msgstr "The threshold counts the towels themselves (%s) — the package saving is not subtracted."
+
+msgid "Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama."
+msgstr "Add one more towel to pass %s — delivery is then on us."
+
+msgid "Dostava je besplatna preko %s."
+msgstr "Delivery is free over %s."
+
 msgid "Još %s do besplatne dostave"
 msgstr "%s more for free delivery"
 

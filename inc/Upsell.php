@@ -132,6 +132,101 @@ final class Upsell {
 		add_filter( 'the_content', array( $this, 'append_empty_cart_picks' ), 20 );
 
 		add_action( 'woocommerce_thankyou', array( $this, 'thankyou_picks' ), 15 );
+
+		// Inside the totals table, directly above "Ukupno". The offer panel in
+		// the collaterals already carried the progress bar, but it sits beside
+		// the totals rather than in them — and the one number a shopper reads
+		// is the last row of that table. A cart of 2.080 in towels with a 100
+		// RSD package saving prints "Ukupno 1.980" under a promise that says
+		// "preko 2.000", which reads as a threshold missed by 20 dinars when it
+		// was in fact cleared. The verdict belongs on the same table as the
+		// number that contradicts it.
+		add_action( 'woocommerce_cart_totals_before_order_total', array( $this, 'cart_shipping_row' ) );
+	}
+
+	/**
+	 * The free-delivery verdict, as a row of the cart totals table.
+	 *
+	 * States what the threshold is measured on rather than only how far off it
+	 * is, because those are two different numbers whenever a package saving is
+	 * booked — see qualifying_total(). Silent where free_shipping() cannot
+	 * establish an answer: an unresolved threshold is no row at all, never a
+	 * guess printed next to the money.
+	 *
+	 * @return void
+	 */
+	public function cart_shipping_row(): void {
+		$shipping = $this->free_shipping();
+
+		if ( null === $shipping ) {
+			return;
+		}
+
+		$label = __( 'Besplatna dostava', 'cosypaw' );
+
+		if ( 'earned' === $shipping['state'] ) {
+			$value = __( 'Ostvarena', 'cosypaw' );
+
+			// Only where the two numbers actually differ. Without a package
+			// saving the total already agrees with the threshold, and the
+			// sentence would be explaining a contradiction nobody can see.
+			$note = $this->has_bundle_saving()
+				? sprintf(
+					/* translators: %s: formatted subtotal the threshold is measured on, e.g. "2.080 RSD". */
+					__( 'Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['total'] )
+				)
+				: '';
+		} else {
+			$value = sprintf(
+				/* translators: %s: formatted amount still to spend, e.g. "320 RSD". */
+				__( 'Još %s', 'cosypaw' ),
+				Catalog::format_price( (int) $shipping['gap'] )
+			);
+
+			// One more towel closes it: say so, because that is an instruction
+			// the shopper can act on. Further out it stays an amount, which is
+			// the only honest thing to promise about a basket this module
+			// cannot see the shape of.
+			$note = $shipping['unit'] > 0 && $shipping['gap'] <= $shipping['unit']
+				? sprintf(
+					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+					__( 'Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['min'] )
+				)
+				: sprintf(
+					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+					__( 'Dostava je besplatna preko %s.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['min'] )
+				);
+		}
+
+		printf(
+			'<tr class="cosypaw-ship-row cosypaw-ship-row--%1$s">' .
+				'<th>%2$s</th>' .
+				'<td data-title="%2$s"><strong>%3$s</strong>%4$s</td>' .
+			'</tr>',
+			esc_attr( (string) $shipping['state'] ),
+			esc_html( $label ),
+			esc_html( $value ),
+			'' === $note ? '' : '<small>' . esc_html( $note ) . '</small>'
+		);
+	}
+
+	/**
+	 * Whether a package saving is booked against this cart.
+	 *
+	 * BundlePricing books it as a negative fee, so any fee total below zero is
+	 * one. Used only to decide whether the totals row has to explain itself.
+	 *
+	 * @return bool
+	 */
+	private function has_bundle_saving(): bool {
+		$cart = $this->cart();
+
+		return null !== $cart
+			&& is_callable( array( $cart, 'get_fee_total' ) )
+			&& (float) $cart->get_fee_total() < 0.0;
 	}
 
 	/**
@@ -576,9 +671,10 @@ final class Upsell {
 					return array(
 						'state' => 'earned',
 						'gap'   => 0,
-						'min'   => 0,
+						'min'   => (int) round( $this->qualifying_total( $cart ) ),
 						'pct'   => 100,
 						'unit'  => 0,
+						'total' => (int) round( $this->qualifying_total( $cart ) ),
 					);
 				}
 			}
@@ -612,11 +708,7 @@ final class Upsell {
 			return null;
 		}
 
-		$total = (float) $cart->get_displayed_subtotal();
-
-		if ( is_callable( array( $cart, 'get_discount_total' ) ) ) {
-			$total -= (float) $cart->get_discount_total();
-		}
+		$total = $this->qualifying_total( $cart );
 
 		$gap = (int) ceil( $min - $total );
 
@@ -630,7 +722,39 @@ final class Upsell {
 			'min'   => (int) round( $min ),
 			'pct'   => (int) max( 0, min( 100, round( $total / $min * 100 ) ) ),
 			'unit'  => $this->unit_price(),
+			'total' => (int) round( $total ),
 		);
+	}
+
+	/**
+	 * The number the free-delivery threshold is actually measured against.
+	 *
+	 * WC_Shipping_Free_Shipping::is_available() compares get_displayed_subtotal()
+	 * less the coupon discount — the line items, and nothing else. The package
+	 * saving is a *fee*, so it is not in here and must not be: WooCommerce will
+	 * not subtract it either when it decides whether delivery is free.
+	 *
+	 * That difference is the whole reason the cart needed a row of its own. A
+	 * basket of 2.080 in towels with a 100 RSD package saving prints "Ukupno
+	 * 1.980" beside a promise that reads "preko 2.000 RSD", and a customer who
+	 * has already earned free delivery cannot tell. Quoting this number next to
+	 * the verdict is what makes the two agree on screen.
+	 *
+	 * @param \WC_Cart $cart Cart being measured.
+	 * @return float
+	 */
+	private function qualifying_total( $cart ): float {
+		if ( ! is_callable( array( $cart, 'get_displayed_subtotal' ) ) ) {
+			return 0.0;
+		}
+
+		$total = (float) $cart->get_displayed_subtotal();
+
+		if ( is_callable( array( $cart, 'get_discount_total' ) ) ) {
+			$total -= (float) $cart->get_discount_total();
+		}
+
+		return $total;
 	}
 
 	/**

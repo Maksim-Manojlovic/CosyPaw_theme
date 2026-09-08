@@ -620,6 +620,21 @@ msgstr "Предыдущие полотенца"
 msgid "Sledeći peškirići"
 msgstr "Следующие полотенца"
 
+msgid "Ostvarena"
+msgstr "Получена"
+
+msgid "Još %s"
+msgstr "Ещё %s"
+
+msgid "Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima."
+msgstr "Порог считается по сумме полотенец (%s) — скидка за набор не вычитается."
+
+msgid "Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama."
+msgstr "Добавь ещё одно полотенце, чтобы превысить %s — доставка тогда за наш счёт."
+
+msgid "Dostava je besplatna preko %s."
+msgstr "Доставка бесплатна свыше %s."
+
 msgid "Još %s do besplatne dostave"
 msgstr "Ещё %s до бесплатной доставки"
 

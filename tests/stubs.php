@@ -248,6 +248,211 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		public function get_cart_total(): string {
 			return wc_price( $this->get_cart_contents_total() );
 		}
+
+		/**
+		 * The number WC_Shipping_Free_Shipping measures its threshold against:
+		 * the line items, fees excluded. Kept distinct from the fee-inclusive
+		 * totals on purpose — the gap between the two is what
+		 * Upsell::cart_shipping_row() exists to explain.
+		 *
+		 * @return float
+		 */
+		public function get_displayed_subtotal(): float {
+			return $this->get_cart_contents_total();
+		}
+
+		/**
+		 * Coupon discount. No test drives coupons; free delivery is won by
+		 * spending here, never by a code.
+		 *
+		 * @return float
+		 */
+		public function get_discount_total(): float {
+			return 0.0;
+		}
+
+		/**
+		 * Every towel is a physical thing in a box.
+		 *
+		 * @return bool
+		 */
+		public function needs_shipping(): bool {
+			return true;
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Mock_Shipping_Rate' ) ) {
+	/**
+	 * One offered shipping rate, identified by the method that produced it.
+	 */
+	class WC_Mock_Shipping_Rate {
+
+		/**
+		 * Shipping method id, e.g. 'free_shipping'.
+		 *
+		 * @var string
+		 */
+		private string $method_id;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param string $method_id Shipping method id.
+		 */
+		public function __construct( string $method_id ) {
+			$this->method_id = $method_id;
+		}
+
+		/**
+		 * Shipping method id.
+		 *
+		 * @return string
+		 */
+		public function get_method_id(): string {
+			return $this->method_id;
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Mock_Shipping' ) ) {
+	/**
+	 * WC()->shipping(), holding the packages a test wants rated.
+	 */
+	class WC_Mock_Shipping {
+
+		/**
+		 * Shipping packages, in WooCommerce's shape.
+		 *
+		 * @var array<int,array<string,mixed>>
+		 */
+		public array $packages = array();
+
+		/**
+		 * Constructor.
+		 *
+		 * @param array<int,array<string,mixed>> $packages Shipping packages.
+		 */
+		public function __construct( array $packages = array() ) {
+			$this->packages = $packages;
+		}
+
+		/**
+		 * Shipping packages.
+		 *
+		 * @return array<int,array<string,mixed>>
+		 */
+		public function get_packages(): array {
+			return $this->packages;
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Mock_Zone' ) ) {
+	/**
+	 * A shipping zone and the methods attached to it.
+	 */
+	class WC_Mock_Zone {
+
+		/**
+		 * Attached shipping methods.
+		 *
+		 * @var array<int,object>
+		 */
+		private array $methods;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param array<int,object> $methods Shipping methods.
+		 */
+		public function __construct( array $methods = array() ) {
+			$this->methods = $methods;
+		}
+
+		/**
+		 * Attached shipping methods.
+		 *
+		 * @param bool $enabled_only Ignored; the stub holds only enabled ones.
+		 * @return array<int,object>
+		 */
+		public function get_shipping_methods( bool $enabled_only = false ): array {
+			unset( $enabled_only );
+
+			return $this->methods;
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
+	/**
+	 * Zone registry. A test assigns the zone a package should match; the
+	 * default is none, which is the "cannot establish a threshold" case the
+	 * theme answers with silence.
+	 */
+	class WC_Shipping_Zones {
+
+		/**
+		 * Zone returned for any package, or null for none.
+		 *
+		 * @var \WC_Mock_Zone|null
+		 */
+		public static $zone = null;
+
+		/**
+		 * The zone that would rate this package.
+		 *
+		 * @param array<string,mixed> $package Shipping package.
+		 * @return \WC_Mock_Zone|null
+		 */
+		public static function get_zone_matching_package( array $package ) {
+			unset( $package );
+
+			return self::$zone;
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Mock_WC' ) ) {
+	/**
+	 * WC(): the cart and the shipping engine, as methods rather than
+	 * properties, because the theme reaches them through is_callable().
+	 */
+	class WC_Mock_WC {
+
+		/**
+		 * The cart.
+		 *
+		 * @var \WC_Cart|null
+		 */
+		public $cart = null;
+
+		/**
+		 * The shipping engine.
+		 *
+		 * @var \WC_Mock_Shipping
+		 */
+		private \WC_Mock_Shipping $shipping;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param \WC_Cart|null      $cart     The cart.
+		 * @param \WC_Mock_Shipping|null $shipping Shipping engine.
+		 */
+		public function __construct( $cart = null, $shipping = null ) {
+			$this->cart     = $cart;
+			$this->shipping = $shipping instanceof \WC_Mock_Shipping ? $shipping : new \WC_Mock_Shipping();
+		}
+
+		/**
+		 * The shipping engine.
+		 *
+		 * @return \WC_Mock_Shipping
+		 */
+		public function shipping(): \WC_Mock_Shipping {
+			return $this->shipping;
+		}
 	}
 }
 

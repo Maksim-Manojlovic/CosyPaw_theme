@@ -274,6 +274,47 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
+	 * The cart page has no rated shipping package until a country is known —
+	 * WC_Cart::show_shipping() will not calculate one — so a cart holding a
+	 * single Trio used to say nothing at all about free delivery, on the one
+	 * screen where saying it is worth a sale. The zone is readable without an
+	 * address, so the row still names the bar and what clears it.
+	 */
+	public function test_the_totals_row_speaks_before_shipping_is_rated(): void {
+		$this->cart = new \WC_Cart(
+			array(
+				array(
+					'product_id' => self::MOTIF_ID,
+					'quantity'   => 1,
+					'data'       => new \WC_Product( 'Trio paket', '1390', true, self::MOTIF_ID ),
+				),
+			)
+		);
+
+		$method             = new \stdClass();
+		$method->id         = 'free_shipping';
+		$method->requires   = 'min_amount';
+		$method->min_amount = 2000;
+
+		\WC_Shipping_Zones::$zone = new \WC_Mock_Zone( array( $method ) );
+
+		// No packages at all: exactly what get_packages() returns on a cart
+		// page the customer has not given an address to.
+		$shipping = new \WC_Mock_Shipping( array() );
+		Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+
+		ob_start();
+		$upsell->cart_shipping_row();
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
+		$this->assertStringContainsString( '610 RSD', $markup );
+		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
+	}
+
+	/**
 	 * No free-delivery method, no row. An offer the checkout cannot keep is
 	 * worse than no offer — the rule the whole module follows.
 	 */

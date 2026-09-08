@@ -410,6 +410,29 @@ if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
 
 			return self::$zone;
 		}
+
+		/**
+		 * Every zone but "rest of the world", in get_zones()' array shape.
+		 *
+		 * @return array<int,array<string,mixed>>
+		 */
+		public static function get_zones(): array {
+			return null === self::$zone
+				? array()
+				: array( array( 'shipping_methods' => self::$zone->get_shipping_methods() ) );
+		}
+
+		/**
+		 * One zone by id. Zone 0 is "rest of the world"; no test configures it.
+		 *
+		 * @param int $zone_id Zone id.
+		 * @return \WC_Mock_Zone|null
+		 */
+		public static function get_zone( int $zone_id ) {
+			unset( $zone_id );
+
+			return null;
+		}
 	}
 }
 

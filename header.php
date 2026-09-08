@@ -26,11 +26,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- Announcement marquee -->
 <div class="announce" data-marquee>
 	<?php
-	$announcements = array(
-		__( 'Ručni rad sa puno ljubavi', 'cosypaw' ),
-		__( 'Besplatna dostava na Trio paket', 'cosypaw' ),
-		__( 'Mekani svet peškirića', 'cosypaw' ),
-	);
+	// The delivery line quotes the threshold CheckoutSetup actually enforces,
+	// so a change there moves the bar's promise too. It drops out entirely
+	// while free delivery is switched off rather than announcing a bar of 0.
+	$cosypaw_free_min = \Theme\Catalog::free_shipping_min();
+
+	$announcements = array( __( 'Ručni rad sa puno ljubavi', 'cosypaw' ) );
+
+	if ( $cosypaw_free_min > 0 ) {
+		$announcements[] = sprintf(
+			/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+			__( 'Besplatna dostava preko %s', 'cosypaw' ),
+			\Theme\Catalog::format_price( $cosypaw_free_min )
+		);
+	}
+
+	$announcements[] = __( 'Mekani svet peškirića', 'cosypaw' );
 	// One group is rendered twice; the track animates -50% (one full group),
 	// so the second group is in place exactly when the first scrolls out =
 	// seamless, gap-free loop. Phrases are repeated inside each group so a

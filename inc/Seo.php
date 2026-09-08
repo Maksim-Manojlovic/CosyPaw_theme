@@ -417,6 +417,11 @@ final class Seo {
 	 * @return array<int,array{q:string,a:string}>
 	 */
 	public static function faqs(): array {
+		// The delivery answer quotes the threshold the shipping zone enforces,
+		// and this list also feeds the FAQPage node — a number typed here would
+		// be a structured-data claim about a price nobody charges.
+		$free_min = Catalog::free_shipping_min();
+
 		return array(
 			array(
 				'q' => __( 'Od čega su peškirići napravljeni?', 'cosypaw' ),
@@ -428,7 +433,13 @@ final class Seo {
 			),
 			array(
 				'q' => __( 'Koliko traje dostava?', 'cosypaw' ),
-				'a' => __( 'Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu.', 'cosypaw' ),
+				'a' => $free_min > 0
+					? sprintf(
+						/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+						__( 'Dostava je 2–4 radna dana na teritoriji cele Srbije. Za porudžbine preko %s dostava je besplatna.', 'cosypaw' ),
+						Catalog::format_price( $free_min )
+					)
+					: __( 'Dostava je 2–4 radna dana na teritoriji cele Srbije.', 'cosypaw' ),
 			),
 			array(
 				'q' => __( 'Kako mogu da platim?', 'cosypaw' ),

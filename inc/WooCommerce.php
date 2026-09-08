@@ -499,7 +499,30 @@ final class WooCommerce {
 	public function inject_package_ids( array $packages ): array {
 		$packages = $this->inject_ids( $packages, (array) get_option( self::PACKAGE_MAP_OPTION, array() ) );
 
-		return $this->derive_package_savings( $packages );
+		return $this->derive_free_shipping( $this->derive_package_savings( $packages ) );
+	}
+
+	/**
+	 * Re-test the free-delivery claim against the live package prices.
+	 *
+	 * Catalog derives the pill from its seed prices; inject_ids() has since
+	 * replaced them with what the shop charges, and the claim has to move with
+	 * them. A package under the threshold says nothing rather than promising
+	 * delivery the cart will bill for at checkout — the same rule "2+1 GRATIS"
+	 * follows in derive_package_savings().
+	 *
+	 * @param array<int,array<string,mixed>> $packages Packages, prices already injected.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private function derive_free_shipping( array $packages ): array {
+		$min = Catalog::free_shipping_min();
+
+		foreach ( $packages as &$row ) {
+			$row['free_ship'] = $min > 0 && (int) ( $row['price'] ?? 0 ) >= $min;
+		}
+		unset( $row );
+
+		return $packages;
 	}
 
 	/**

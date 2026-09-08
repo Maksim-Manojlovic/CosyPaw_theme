@@ -194,8 +194,8 @@ msgstr "Proceed to checkout"
 msgid "Ručni rad sa puno ljubavi"
 msgstr "Handmade with lots of love"
 
-msgid "Besplatna dostava na Trio paket"
-msgstr "Free shipping on the Trio package"
+msgid "Besplatna dostava preko %s"
+msgstr "Free shipping over %s"
 
 msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
 msgstr "Hand-sewn decorative bathroom towels — soft microfiber, a hanging loop and over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
@@ -452,8 +452,8 @@ msgstr "Opening a CosyPaw package"
 msgid "Svaki paket je mali poklon"
 msgstr "Every package is a little gift"
 
-msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande. Trio paket stiže uz <strong>besplatnu dostavu</strong> — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
-msgstr "Carefully packed in a CosyPaw box, with a welcome note and a scent of lavender. The Trio package arrives with <strong>free shipping</strong> — perfect for a birthday, baby shower, or just to spoil someone."
+msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
+msgstr "Carefully packed in a CosyPaw box, with a welcome note and a scent of lavender — perfect for a birthday, baby shower, or just to spoil someone."
 
 msgid "Jezik"
 msgstr "Language"
@@ -548,8 +548,11 @@ msgstr "Machine wash at 40°C, without fabric softener so they stay absorbent. T
 msgid "Koliko traje dostava?"
 msgstr "How long does delivery take?"
 
-msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu."
-msgstr "Delivery is 2–4 business days across Serbia. The Trio package comes with free shipping."
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Za porudžbine preko %s dostava je besplatna."
+msgstr "Delivery is 2–4 business days across Serbia. Orders over %s ship free."
+
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije."
+msgstr "Delivery is 2–4 business days across Serbia."
 
 msgid "Kako mogu da platim?"
 msgstr "How can I pay?"
@@ -590,9 +593,6 @@ msgstr "Take %1$d — pay for %2$d"
 msgid "ili pogledaj svih %d peškirića"
 msgstr "or see all %d towels"
 
-msgid "Besplatna dostava na %s"
-msgstr "Free shipping on the %s"
-
 msgid "Ušteda na paketima"
 msgstr "Package saving"
 
@@ -619,6 +619,21 @@ msgstr "Previous towels"
 
 msgid "Sledeći peškirići"
 msgstr "Next towels"
+
+msgid "Ostvarena"
+msgstr "Earned"
+
+msgid "Još %s"
+msgstr "%s to go"
+
+msgid "Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima."
+msgstr "The threshold counts the towels themselves (%s) — the package saving is not subtracted."
+
+msgid "Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama."
+msgstr "Add one more towel to pass %s — delivery is then on us."
+
+msgid "Dostava je besplatna preko %s."
+msgstr "Delivery is free over %s."
 
 msgid "Još %s do besplatne dostave"
 msgstr "%s more for free delivery"

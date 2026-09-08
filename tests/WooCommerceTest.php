@@ -355,8 +355,8 @@ final class WooCommerceTest extends TestCase {
 
 	/**
 	 * The offer the rest of the site makes — the price per piece falling, the
-	 * free towel, the free shipping — has to survive the trip to a product
-	 * page, which is where a customer decides between one towel and three.
+	 * free towel — has to survive the trip to a product page, which is where a
+	 * customer decides between one towel and three.
 	 */
 	public function test_bundle_cta_states_the_package_offer(): void {
 		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
@@ -371,9 +371,37 @@ final class WooCommerceTest extends TestCase {
 		$this->assertStringContainsString( 'Duo paket', $out );
 		$this->assertStringContainsString( 'Trio paket', $out );
 		$this->assertStringContainsString( '2+1 GRATIS', $out );
-		$this->assertStringContainsString( 'Besplatna dostava', $out );
 		// Every row is a way in, with the size it names already chosen.
 		$this->assertStringContainsString( 'package=trio', $out );
+
+		// Free delivery belongs to the threshold, not to a bundle: the seed
+		// Trio (1.580) sits under CheckoutSetup::FREE_SHIPPING_MIN, so the row
+		// has to stay quiet rather than promise what checkout will bill for.
+		$this->assertStringNotContainsString( 'Besplatna dostava', $out );
+	}
+
+	/**
+	 * The free-delivery claim is arithmetic against the threshold, not a flag
+	 * on the Trio. It used to be authored per package, so a reprice that moved
+	 * the Trio under the bar left the card promising delivery the cart would
+	 * still bill for. It now tracks whatever WooCommerce charges.
+	 */
+	public function test_inject_package_ids_derives_free_shipping_from_the_threshold(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'trio' => 42 ) );
+
+		$row = static fn(): array => array(
+			array( 'id' => 'trio', 'name' => 'Trio paket', 'qty' => 3, 'price' => 1580, 'free_ship' => true ),
+		);
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '1900' ) );
+		$under = $wc->inject_package_ids( $row() );
+		$this->assertFalse( $under[0]['free_ship'] );
+
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '2400' ) );
+		$over = $wc->inject_package_ids( $row() );
+		$this->assertTrue( $over[0]['free_ship'] );
 	}
 
 	/**

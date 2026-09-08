@@ -256,12 +256,18 @@ if ( $hero_deal ) {
 			// what does delivery cost, how do I pay, who made this.
 			$trust_items = array();
 
-			if ( ! empty( $selected['free_ship'] ) ) {
+			// Named the selected package until the offer stopped belonging to
+			// one: delivery is free from a cart subtotal now, whichever way the
+			// basket gets there, so the strip states the bar rather than a
+			// bundle that may no longer clear it.
+			$free_min = \Theme\Catalog::free_shipping_min();
+
+			if ( $free_min > 0 ) {
 				$trust_items[] = array(
 					'label' => sprintf(
-						/* translators: %s: package name, e.g. "Trio paket". */
-						__( 'Besplatna dostava na %s', 'cosypaw' ),
-						$selected['name']
+						/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+						__( 'Besplatna dostava preko %s', 'cosypaw' ),
+						\Theme\Catalog::format_price( $free_min )
 					),
 					'icon'  => '<path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/>',
 				);

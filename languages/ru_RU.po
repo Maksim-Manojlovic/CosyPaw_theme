@@ -194,8 +194,8 @@ msgstr "Перейти к оплате"
 msgid "Ručni rad sa puno ljubavi"
 msgstr "Ручная работа с большой любовью"
 
-msgid "Besplatna dostava na Trio paket"
-msgstr "Бесплатная доставка для набора Trio"
+msgid "Besplatna dostava preko %s"
+msgstr "Бесплатная доставка от %s"
 
 msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
 msgstr "Сшитые вручную декоративные полотенца для ванной — мягкая микрофибра, петелька для подвешивания и более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии."
@@ -452,8 +452,8 @@ msgstr "Распаковка набора CosyPaw"
 msgid "Svaki paket je mali poklon"
 msgstr "Каждый набор — маленький подарок"
 
-msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande. Trio paket stiže uz <strong>besplatnu dostavu</strong> — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
-msgstr "Аккуратно упаковано в коробку CosyPaw, с приветственной открыткой и ароматом лаванды. Набор Trio приходит с <strong>бесплатной доставкой</strong> — идеально на день рождения, бэби-шауэр или просто чтобы кого-то побаловать."
+msgid "Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande — idealno za rođendan, bebi šauer ili samo da nekog razmaziš."
+msgstr "Аккуратно упаковано в коробку CosyPaw, с приветственной открыткой и ароматом лаванды — идеально на день рождения, бэби-шауэр или просто чтобы кого-то побаловать."
 
 msgid "Jezik"
 msgstr "Язык"
@@ -548,8 +548,11 @@ msgstr "Машинная стирка при 40°C, без кондиционе�
 msgid "Koliko traje dostava?"
 msgstr "Сколько занимает доставка?"
 
-msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Trio paket stiže uz besplatnu dostavu."
-msgstr "Доставка 2–4 рабочих дня по всей Сербии. Набор Trio — с бесплатной доставкой."
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije. Za porudžbine preko %s dostava je besplatna."
+msgstr "Доставка 2–4 рабочих дня по всей Сербии. Заказы свыше %s доставляются бесплатно."
+
+msgid "Dostava je 2–4 radna dana na teritoriji cele Srbije."
+msgstr "Доставка 2–4 рабочих дня по всей Сербии."
 
 msgid "Kako mogu da platim?"
 msgstr "Как я могу оплатить?"
@@ -589,9 +592,6 @@ msgstr "Возьми %1$d — заплати за %2$d"
 
 msgid "ili pogledaj svih %d peškirića"
 msgstr "или посмотри все %d полотенец"
-
-msgid "Besplatna dostava na %s"
-msgstr "Бесплатная доставка на %s"
 
 msgid "Ušteda na paketima"
 msgstr "Скидка за наборы"

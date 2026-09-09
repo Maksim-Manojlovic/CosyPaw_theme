@@ -369,4 +369,74 @@ final class BundlePricingTest extends TestCase {
 
 		$this->assertSame( array(), $this->fees_for( array( $this->motifs( 4 ) ) ) );
 	}
+
+	/**
+	 * Free delivery is judged on what the cart is worth after this module has
+	 * repriced it.
+	 *
+	 * Three towels clicked one at a time are 2.970 in line items and 1.980 to
+	 * pay. WooCommerce sees only the first number — a fee is neither an item
+	 * nor a coupon, so WC_Shipping_Free_Shipping cannot subtract it — and would
+	 * hand free delivery to a cart that pays the Trio price, while refusing it
+	 * to the identical Trio bought as a package. The rate is withdrawn instead.
+	 */
+	public function test_free_delivery_is_withdrawn_below_the_threshold_after_the_saving(): void {
+		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ) );
+
+		$rates = ( new BundlePricing( 'cosypaw', new Catalog() ) )->require_threshold_after_saving(
+			array(
+				'free_shipping:1' => new \WC_Mock_Shipping_Rate( 'free_shipping' ),
+				'flat_rate:2'     => new \WC_Mock_Shipping_Rate( 'flat_rate' ),
+			)
+		);
+
+		unset( $cart );
+
+		$this->assertArrayNotHasKey( 'free_shipping:1', $rates );
+		// The courier rate has to survive: withdrawing free delivery without it
+		// would leave the order with no way to be delivered at all.
+		$this->assertArrayHasKey( 'flat_rate:2', $rates );
+	}
+
+	/**
+	 * ...and stays where the cart clears the bar on what it actually pays.
+	 */
+	public function test_free_delivery_survives_above_the_threshold(): void {
+		$cart = $this->cart(
+			array(
+				array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ),
+				array( 'id' => self::PACKAGE_IDS['trio'], 'qty' => 1, 'price' => self::LIVE_PRICES['trio'] ),
+			)
+		);
+
+		$rates = ( new BundlePricing( 'cosypaw', new Catalog() ) )->require_threshold_after_saving(
+			array( 'free_shipping:1' => new \WC_Mock_Shipping_Rate( 'free_shipping' ) )
+		);
+
+		unset( $cart );
+
+		$this->assertArrayHasKey( 'free_shipping:1', $rates );
+	}
+
+	/**
+	 * Build a cart of these lines and put it behind WC()->cart.
+	 *
+	 * @param array<int,array{id:int,qty:int,price:int}> $lines Product id, quantity, unit price.
+	 * @return \WC_Cart
+	 */
+	private function cart( array $lines ): \WC_Cart {
+		$contents = array();
+		foreach ( $lines as $line ) {
+			$contents[] = array(
+				'product_id' => $line['id'],
+				'quantity'   => $line['qty'],
+				'data'       => new \WC_Product( 'Žirafa', (string) $line['price'], true, $line['id'] ),
+			);
+		}
+
+		$cart = new \WC_Cart( $contents );
+		Functions\when( 'WC' )->alias( static fn () => new \WC_Mock_WC( $cart ) );
+
+		return $cart;
+	}
 }

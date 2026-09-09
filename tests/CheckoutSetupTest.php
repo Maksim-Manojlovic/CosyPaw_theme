@@ -144,6 +144,25 @@ final class CheckoutSetupTest extends TestCase {
 	}
 
 	/**
+	 * The cart page quotes no postage — it is settled with the courier — so
+	 * WooCommerce's delivery block and its "calculate shipping" form had
+	 * nothing to say there, and sat directly above the row that does. Both are
+	 * suppressed on the cart and left alone everywhere else, checkout included,
+	 * where the method is actually chosen.
+	 */
+	public function test_the_cart_drops_woocommerce_delivery_block(): void {
+		$checkout = new CheckoutSetup();
+
+		Functions\when( 'is_cart' )->justReturn( true );
+		$this->assertFalse( $checkout->hide_cart_delivery_block( true ) );
+		$this->assertSame( 'no', $checkout->hide_cart_shipping_calculator( 'yes' ) );
+
+		Functions\when( 'is_cart' )->justReturn( false );
+		$this->assertTrue( $checkout->hide_cart_delivery_block( true ) );
+		$this->assertSame( 'yes', $checkout->hide_cart_shipping_calculator( 'yes' ) );
+	}
+
+	/**
 	 * A marker written by an older, weaker sync must not silence the new one:
 	 * version 1 recorded "applied" even where it had found no zone, so a shop
 	 * in that state would never retry. The version in the marker forces the

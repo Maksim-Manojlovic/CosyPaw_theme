@@ -12,6 +12,9 @@
 # PHPUnit cache
 .phpunit.result.cache
 
+# Knowledge graph, regenerated from the source by `graphify update .`
+/graphify-out
+
 # Vite dev server marker (written by vite.config.js while `npm run dev` runs)
 /hot
 

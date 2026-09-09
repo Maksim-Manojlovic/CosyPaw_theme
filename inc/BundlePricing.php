@@ -228,6 +228,8 @@ final class BundlePricing {
 			return null;
 		}
 
+		$plan = $this->upgrade_for_free_delivery( $plan, $pool['towels'], $tiers );
+
 		// Rounded to whole RSD before comparing: the shop deals in dinars, and
 		// a sub-dinar "saving" is rounding noise, not a discount.
 		$discount = (int) round( $pool['subtotal'] ) - $plan['total'];
@@ -238,6 +240,74 @@ final class BundlePricing {
 		return array(
 			'discount' => $discount,
 			'lines'    => $plan['lines'],
+		);
+	}
+
+	/**
+	 * Trade the cheapest plan for a bigger package where that wins free
+	 * delivery.
+	 *
+	 * Four towels are two Duos at 1.980 and a Trio plus a single at 2.080. The
+	 * cheaper plan is the cheaper plan, and it stops 20 RSD short of the bar —
+	 * so the shopper pays 100 less and then pays the courier, which is the
+	 * worse of the two outcomes for them. Charging the 100 and carrying the
+	 * delivery is the better basket, and it is also the one the shop's own
+	 * front end offers: the builder sells one package at a time, so "two Duos"
+	 * is an arrangement only this module ever proposed.
+	 *
+	 * Narrow on purpose. It fires only where the cheapest plan skips the
+	 * largest package *and* taking it clears the threshold — otherwise the
+	 * shopper would simply be charged more for nothing, which is what an
+	 * unconditional "always fill with the biggest box" rule does at every
+	 * count that does not happen to land past the bar.
+	 *
+	 * @param array{total:int,lines:array<string,int>}               $plan   Cheapest plan.
+	 * @param int                                                    $towels Towels being priced.
+	 * @param array<int,array{id:string,name:string,qty:int,price:int}> $tiers  Packages, largest first.
+	 * @return array{total:int,lines:array<string,int>}
+	 */
+	private function upgrade_for_free_delivery( array $plan, int $towels, array $tiers ): array {
+		$threshold = CheckoutSetup::free_shipping_threshold();
+
+		if ( $threshold < 1 || $plan['total'] >= $threshold ) {
+			return $plan;
+		}
+
+		$largest = $tiers[0] ?? null;
+		$qty     = (int) ( $largest['qty'] ?? 0 );
+		$price   = (int) ( $largest['price'] ?? 0 );
+
+		// Nothing to upgrade to: too few towels for the largest package, or a
+		// plan that already uses it and still falls short.
+		if ( $qty < 1 || $price < 1 || $qty > $towels || ! empty( $plan['lines'][ $largest['id'] ] ) ) {
+			return $plan;
+		}
+
+		$rest = self::plan( $towels - $qty, $tiers );
+
+		if ( $towels > $qty && $rest['total'] < 1 ) {
+			return $plan;
+		}
+
+		$total = $rest['total'] + $price;
+
+		// Only worth it if it actually clears the bar. It cannot be cheaper —
+		// the DP would have found it — so anything short of the threshold is
+		// the shopper paying more and getting nothing.
+		if ( $total < $threshold ) {
+			return $plan;
+		}
+
+		// The largest package leads, which is the order tiers() is in and how
+		// the breakdown reads on the cart row.
+		$lines = array( (string) $largest['id'] => 1 );
+		foreach ( $rest['lines'] as $id => $count ) {
+			$lines[ $id ] = ( $lines[ $id ] ?? 0 ) + $count;
+		}
+
+		return array(
+			'total' => $total,
+			'lines' => $lines,
 		);
 	}
 
@@ -364,7 +434,7 @@ final class BundlePricing {
 			return null;
 		}
 
-		$marginal = self::plan( $towels + 1, $tiers )['total'] - self::plan( $towels, $tiers )['total'];
+		$marginal = $this->charged_total( $towels + 1, $tiers ) - $this->charged_total( $towels, $tiers );
 
 		if ( $marginal < 1 || $marginal >= $single ) {
 			return null;
@@ -374,6 +444,28 @@ final class BundlePricing {
 			'price'  => $marginal,
 			'saving' => $single - $marginal,
 		);
+	}
+
+	/**
+	 * What this many towels are actually charged.
+	 *
+	 * The cheapest plan, after upgrade_for_free_delivery() has had its say —
+	 * which is the number the cart will bill. next_step() quotes a marginal
+	 * price off two of these, and quoting it off the raw cheapest plan instead
+	 * would advertise a fourth towel at 590 that the cart then charges 690 for.
+	 *
+	 * @param int                                                    $towels Towels to price.
+	 * @param array<int,array{id:string,name:string,qty:int,price:int}> $tiers  Available packages.
+	 * @return int
+	 */
+	private function charged_total( int $towels, array $tiers ): int {
+		$plan = self::plan( $towels, $tiers );
+
+		if ( $plan['total'] < 1 ) {
+			return $plan['total'];
+		}
+
+		return $this->upgrade_for_free_delivery( $plan, $towels, $tiers )['total'];
 	}
 
 	/**

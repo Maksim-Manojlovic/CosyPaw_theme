@@ -50,6 +50,19 @@ final class CheckoutSetup {
 	public const APPLIED_OPTION = 'cosypaw_free_shipping_applied';
 
 	/**
+	 * Bumped whenever the sync itself changes what it is able to do.
+	 *
+	 * The marker records a version alongside the amount, so a shop that stored
+	 * "the threshold is applied" under an older, weaker sync re-runs once under
+	 * the new one. Version 1 trusted ZONE_OPTION and wrote the marker even when
+	 * it had found no zone — which on a shop whose zone it had never recorded
+	 * meant one silent failure disabled every later attempt, permanently.
+	 *
+	 * @var int
+	 */
+	private const SYNC_VERSION = 2;
+
+	/**
 	 * Cart subtotal from which delivery is on the shop (RSD).
 	 *
 	 * A flat amount, not a package price. It used to be read off the live Trio
@@ -102,24 +115,27 @@ final class CheckoutSetup {
 	 *
 	 * Fires on a change to FREE_SHIPPING_MIN, never on a mere difference from
 	 * it: an amount an administrator edited in wp-admin stays edited, because
-	 * what is compared is the last value *this theme* wrote. See APPLIED_OPTION.
+	 * what is compared is the last value *this theme* wrote. See APPLIED_OPTION
+	 * and SYNC_VERSION.
 	 *
 	 * @return void
 	 */
 	public function maybe_sync_free_shipping(): void {
 		$threshold = self::free_shipping_threshold();
-		$applied   = get_option( self::APPLIED_OPTION, null );
+		$marker    = self::SYNC_VERSION . ':' . $threshold;
 
-		if ( null !== $applied && (int) $applied === $threshold ) {
+		if ( (string) get_option( self::APPLIED_OPTION, '' ) === $marker ) {
 			return;
 		}
 
-		// Written whatever the sync manages, including on a shop with no zone
-		// of ours to touch — otherwise every request would retry the same
-		// lookup for a zone that is never coming back.
-		update_option( self::APPLIED_OPTION, $threshold );
-
-		self::sync_free_shipping();
+		// Only on success. Writing it regardless is what let one failed run —
+		// a shop whose zone this theme had never recorded — mark the threshold
+		// as applied and never look again, leaving every page advertising a
+		// bar WooCommerce granted nowhere. A failure is a handful of option
+		// reads, and it stops the moment there is a zone to attach to.
+		if ( self::sync_free_shipping() ) {
+			update_option( self::APPLIED_OPTION, $marker );
+		}
 	}
 
 	/**
@@ -399,8 +415,8 @@ final class CheckoutSetup {
 	 * rebuild: create_shipping_zone() skips the method whenever the threshold
 	 * cannot be resolved, which is how a shop ends up with a Serbia zone, a
 	 * courier rate, and every page promising free delivery that nothing in
-	 * WooCommerce grants. An unmapped or hand-deleted *zone* is still left
-	 * alone — there is nothing to attach to.
+	 * WooCommerce grants. The zone itself is resolved by delivery_zone(),
+	 * which no longer depends on this theme having built it.
 	 *
 	 * Otherwise only min_amount is written; the title and the `requires` mode
 	 * are the shop's to edit in wp-admin.
@@ -412,12 +428,7 @@ final class CheckoutSetup {
 			return false;
 		}
 
-		$zone_id = (int) get_option( self::ZONE_OPTION, 0 );
-		if ( $zone_id < 1 ) {
-			return false;
-		}
-
-		$zone = \WC_Shipping_Zones::get_zone( $zone_id );
+		$zone = self::delivery_zone();
 		if ( null === $zone || ! is_callable( array( $zone, 'get_shipping_methods' ) ) ) {
 			return false;
 		}
@@ -460,6 +471,66 @@ final class CheckoutSetup {
 		}
 
 		return $changed;
+	}
+
+	/**
+	 * The zone that will actually rate an order to the shop's own country.
+	 *
+	 * ZONE_OPTION first, because that is the zone this theme built. It is not
+	 * enough on its own: a shop whose zone was made by hand in wp-admin — or
+	 * seeded before the option existed — records nothing there, and the sync
+	 * then found no zone, attached no free-delivery method, and left the whole
+	 * site advertising a threshold WooCommerce could not honour. That is the
+	 * state cosypaw.rs was in.
+	 *
+	 * The fallback asks WooCommerce the same question it asks itself when it
+	 * rates a cart: which zone covers this destination. The destination is the
+	 * store's base country, since that is who the shop ships to. Zone 0, "rest
+	 * of the world", is the documented answer when nothing else matches and is
+	 * a perfectly good place to hang the method.
+	 *
+	 * A zone found this way is recorded, so the lookup happens once and the
+	 * shop keeps one zone rather than growing another on the next run.
+	 *
+	 * @return \WC_Shipping_Zone|null
+	 */
+	private static function delivery_zone() {
+		$zone_id = (int) get_option( self::ZONE_OPTION, 0 );
+
+		if ( $zone_id > 0 ) {
+			$zone = \WC_Shipping_Zones::get_zone( $zone_id );
+
+			if ( null !== $zone ) {
+				return $zone;
+			}
+		}
+
+		if ( ! is_callable( array( '\WC_Shipping_Zones', 'get_zone_matching_package' ) ) ) {
+			return null;
+		}
+
+		$country = function_exists( 'wc_get_base_location' ) ? (array) wc_get_base_location() : array();
+
+		$zone = \WC_Shipping_Zones::get_zone_matching_package(
+			array(
+				'destination' => array(
+					'country'  => (string) ( $country['country'] ?? '' ),
+					'state'    => (string) ( $country['state'] ?? '' ),
+					'postcode' => '',
+				),
+			)
+		);
+
+		if ( null === $zone || ! is_callable( array( $zone, 'get_id' ) ) ) {
+			return $zone;
+		}
+
+		$found = (int) $zone->get_id();
+		if ( $found > 0 ) {
+			update_option( self::ZONE_OPTION, $found );
+		}
+
+		return $zone;
 	}
 
 	/**

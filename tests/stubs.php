@@ -384,6 +384,23 @@ if ( ! class_exists( 'WC_Shipping_Zone' ) ) {
 		}
 
 		/**
+		 * The zone's id.
+		 *
+		 * @return int
+		 */
+		public function get_id(): int {
+			return self::$id;
+		}
+
+		/**
+		 * Id this stub reports. Static so a test can say which zone was found
+		 * without threading it through every construction.
+		 *
+		 * @var int
+		 */
+		public static int $id = 7;
+
+		/**
 		 * Attach a method, as WC_Shipping_Zone does: the instance row only.
 		 * Its settings live in a separate option the caller writes.
 		 *

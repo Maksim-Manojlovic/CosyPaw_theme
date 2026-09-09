@@ -45,6 +45,7 @@ final class CheckoutSetupTest extends TestCase {
 				'is_admin'     => false,
 				'__'           => static fn( $text ) => $text,
 				'apply_filters' => static fn( $hook, $value = null ) => $value,
+				'wc_get_base_location' => array( 'country' => 'RS', 'state' => '' ),
 			)
 		);
 
@@ -64,6 +65,7 @@ final class CheckoutSetupTest extends TestCase {
 
 	protected function tearDown(): void {
 		\WC_Shipping_Zones::$zone = null;
+		\WC_Shipping_Zone::$id    = 7;
 
 		Monkey\tearDown();
 		parent::tearDown();
@@ -110,8 +112,12 @@ final class CheckoutSetupTest extends TestCase {
 	 * an administrator's deliberate change on the next page load.
 	 */
 	public function test_an_amount_edited_in_wp_admin_survives(): void {
-		$this->options[ CheckoutSetup::APPLIED_OPTION ] = CheckoutSetup::FREE_SHIPPING_MIN;
 		$this->zone_with_free_shipping( '2500' );
+
+		// A first run applies the threshold and records the marker; the edit
+		// lands after it, and the second run has to leave the edit alone.
+		( new CheckoutSetup() )->maybe_sync_free_shipping();
+		$this->options['woocommerce_free_shipping_3_settings']['min_amount'] = '2500';
 
 		( new CheckoutSetup() )->maybe_sync_free_shipping();
 
@@ -138,15 +144,55 @@ final class CheckoutSetupTest extends TestCase {
 	}
 
 	/**
-	 * No zone of ours, nothing to sync — and the marker is still written, so
-	 * the lookup is not repeated on every request for a zone that is never
-	 * coming back.
+	 * A marker written by an older, weaker sync must not silence the new one:
+	 * version 1 recorded "applied" even where it had found no zone, so a shop
+	 * in that state would never retry. The version in the marker forces the
+	 * one re-run that repairs it.
 	 */
-	public function test_no_zone_is_left_alone_and_not_retried(): void {
+	public function test_a_marker_from_the_old_sync_does_not_block_the_new_one(): void {
+		$this->options[ CheckoutSetup::APPLIED_OPTION ] = CheckoutSetup::FREE_SHIPPING_MIN;
+		$this->zone_with_free_shipping( '1390' );
+
+		( new CheckoutSetup() )->maybe_sync_free_shipping();
+
+		$this->assertSame(
+			(string) CheckoutSetup::FREE_SHIPPING_MIN,
+			$this->options['woocommerce_free_shipping_3_settings']['min_amount']
+		);
+	}
+
+	/**
+	 * A shop whose zone this theme never recorded — built by hand in wp-admin,
+	 * or seeded before ZONE_OPTION existed — is the state cosypaw.rs was in:
+	 * the sync found nothing, attached no method, and every page went on
+	 * advertising a threshold WooCommerce granted nowhere. The zone is now
+	 * resolved the way WooCommerce resolves one when it rates a cart, and
+	 * recorded so the lookup happens once.
+	 */
+	public function test_a_zone_this_theme_never_recorded_is_found_and_adopted(): void {
+		$this->options = array();
+		\WC_Shipping_Zone::$id    = 4;
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone();
+
+		( new CheckoutSetup() )->maybe_sync_free_shipping();
+
+		$this->assertSame( 4, $this->options[ CheckoutSetup::ZONE_OPTION ] );
+		$this->assertSame(
+			(string) CheckoutSetup::FREE_SHIPPING_MIN,
+			$this->options['woocommerce_free_shipping_1_settings']['min_amount']
+		);
+	}
+
+	/**
+	 * No zone at all: nothing to attach to, and — crucially — no marker. A run
+	 * that changed nothing must not record the threshold as applied, which is
+	 * exactly how one failed sync used to silence every later one.
+	 */
+	public function test_a_failed_sync_leaves_no_marker_behind(): void {
 		$this->options = array();
 
 		( new CheckoutSetup() )->maybe_sync_free_shipping();
 
-		$this->assertSame( CheckoutSetup::FREE_SHIPPING_MIN, $this->options[ CheckoutSetup::APPLIED_OPTION ] );
+		$this->assertArrayNotHasKey( CheckoutSetup::APPLIED_OPTION, $this->options );
 	}
 }

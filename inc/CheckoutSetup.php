@@ -38,12 +38,31 @@ final class CheckoutSetup {
 	public const ZONE_OPTION = 'cosypaw_shipping_zone_id';
 
 	/**
-	 * Package whose price sets the free-delivery threshold. The landing page
-	 * promises free shipping on the Trio and nothing below it.
+	 * Option key: the threshold this theme last wrote into the shipping zone.
+	 *
+	 * The zone is the shop's to edit, so the sync fires on a change to
+	 * FREE_SHIPPING_MIN and never on a difference from it. Without the marker
+	 * the two rules are indistinguishable, and every page load would undo an
+	 * amount an administrator had deliberately typed in wp-admin.
 	 *
 	 * @var string
 	 */
-	private const FREE_SHIPPING_PACKAGE = 'trio';
+	public const APPLIED_OPTION = 'cosypaw_free_shipping_applied';
+
+	/**
+	 * Cart subtotal from which delivery is on the shop (RSD).
+	 *
+	 * A flat amount, not a package price. It used to be read off the live Trio
+	 * product, which tied the promise to one bundle: reprice the Trio and the
+	 * threshold moved under it, and two towels bought loose for more than the
+	 * Trio still paid postage. The offer is now the same for every basket —
+	 * spend this much, however you reach it, and delivery is free — and the
+	 * Trio card only claims free shipping while its own price clears the bar
+	 * (Catalog::packages() derives that, it is no longer authored).
+	 *
+	 * @var int
+	 */
+	public const FREE_SHIPPING_MIN = 2000;
 
 	/**
 	 * Constructor — registers the runtime label filters.
@@ -68,6 +87,39 @@ final class CheckoutSetup {
 		// Over the free-shipping threshold both the courier rate and the free
 		// rate are zero, and offering the same price twice reads as a bug.
 		add_filter( 'woocommerce_package_rates', array( $this, 'hide_paid_delivery_when_free' ), 10 );
+
+		// A threshold change used to reach checkout only through the seeder,
+		// which meant every page of the site could advertise a bar the cart did
+		// not enforce until someone remembered to click Tools → CosyPaw Seeder.
+		// The copy and the charge have to move together, so the zone catches up
+		// on its own. One option read per request; a write only on the request
+		// that first sees a new amount.
+		add_action( 'init', array( $this, 'maybe_sync_free_shipping' ), 20 );
+	}
+
+	/**
+	 * Push a changed threshold into the shipping zone, once.
+	 *
+	 * Fires on a change to FREE_SHIPPING_MIN, never on a mere difference from
+	 * it: an amount an administrator edited in wp-admin stays edited, because
+	 * what is compared is the last value *this theme* wrote. See APPLIED_OPTION.
+	 *
+	 * @return void
+	 */
+	public function maybe_sync_free_shipping(): void {
+		$threshold = self::free_shipping_threshold();
+		$applied   = get_option( self::APPLIED_OPTION, null );
+
+		if ( null !== $applied && (int) $applied === $threshold ) {
+			return;
+		}
+
+		// Written whatever the sync manages, including on a shop with no zone
+		// of ours to touch — otherwise every request would retry the same
+		// lookup for a zone that is never coming back.
+		update_option( self::APPLIED_OPTION, $threshold );
+
+		self::sync_free_shipping();
 	}
 
 	/**
@@ -203,6 +255,10 @@ final class CheckoutSetup {
 
 		if ( self::create_shipping_zone() ) {
 			$done[] = 'shipping';
+		} elseif ( self::sync_free_shipping() ) {
+			// The zone survives a re-seed, so a threshold changed in the code
+			// only reaches checkout through here.
+			$done[] = 'shipping-threshold';
 		}
 
 		return $done;
@@ -311,30 +367,99 @@ final class CheckoutSetup {
 	/**
 	 * The cart subtotal from which delivery is on the shop.
 	 *
-	 * Read from the live Trio product rather than from Catalog: Catalog holds
-	 * the seed price, and WooCommerce owns the price the moment the product
-	 * exists — the shop has already moved these once. A threshold copied from
-	 * the seed would sooner or later sit under the Duo and hand out free
-	 * delivery the landing page never promised.
+	 * Public because it is quoted, not just enforced: the announcement bar, the
+	 * gift banner, the FAQ and the package cards all print this number, and a
+	 * threshold the copy states from one source while the shipping zone charges
+	 * from another is the exact bug this replaced.
 	 *
-	 * @return int Threshold in store currency, or 0 when it cannot be resolved.
+	 * @return int Threshold in store currency; 0 disables free delivery.
 	 */
-	private static function free_shipping_threshold(): int {
-		$map = (array) get_option( WooCommerce::PACKAGE_MAP_OPTION, array() );
-		$id  = isset( $map[ self::FREE_SHIPPING_PACKAGE ] ) ? (int) $map[ self::FREE_SHIPPING_PACKAGE ] : 0;
+	public static function free_shipping_threshold(): int {
+		/**
+		 * Filter the free-delivery threshold.
+		 *
+		 * @param int $min Cart subtotal from which delivery is free, in RSD.
+		 */
+		$min = (int) apply_filters( 'cosypaw_free_shipping_min', self::FREE_SHIPPING_MIN );
 
-		if ( $id < 1 || ! function_exists( 'wc_get_product' ) ) {
-			return 0;
+		return max( 0, $min );
+	}
+
+	/**
+	 * Point an existing zone's free-delivery rate at the current threshold.
+	 *
+	 * create_shipping_zone() is a one-shot: it writes min_amount when it builds
+	 * the zone and then never touches it again, so the amount stayed at
+	 * whatever the shop was charging on the day it was seeded. Raising the
+	 * threshold in the code alone would have moved every sentence on the site
+	 * and none of the arithmetic at checkout. This re-runs with the seeder and
+	 * closes that gap.
+	 *
+	 * A zone carrying no free-delivery method at all gets one. That is not a
+	 * rebuild: create_shipping_zone() skips the method whenever the threshold
+	 * cannot be resolved, which is how a shop ends up with a Serbia zone, a
+	 * courier rate, and every page promising free delivery that nothing in
+	 * WooCommerce grants. An unmapped or hand-deleted *zone* is still left
+	 * alone — there is nothing to attach to.
+	 *
+	 * Otherwise only min_amount is written; the title and the `requires` mode
+	 * are the shop's to edit in wp-admin.
+	 *
+	 * @return bool True when this call changed the zone.
+	 */
+	private static function sync_free_shipping(): bool {
+		if ( ! class_exists( '\WC_Shipping_Zones' ) ) {
+			return false;
 		}
 
-		$product = wc_get_product( $id );
-		if ( ! $product instanceof \WC_Product ) {
-			return 0;
+		$zone_id = (int) get_option( self::ZONE_OPTION, 0 );
+		if ( $zone_id < 1 ) {
+			return false;
 		}
 
-		$price = $product->get_price();
+		$zone = \WC_Shipping_Zones::get_zone( $zone_id );
+		if ( null === $zone || ! is_callable( array( $zone, 'get_shipping_methods' ) ) ) {
+			return false;
+		}
 
-		return is_numeric( $price ) ? (int) round( (float) $price ) : 0;
+		$threshold = self::free_shipping_threshold();
+		$changed   = false;
+		$found     = false;
+
+		foreach ( (array) $zone->get_shipping_methods() as $instance_id => $method ) {
+			if ( 'free_shipping' !== ( $method->id ?? '' ) ) {
+				continue;
+			}
+
+			$found    = true;
+			$key      = sprintf( 'woocommerce_free_shipping_%d_settings', (int) $instance_id );
+			$settings = (array) get_option( $key, array() );
+
+			if ( (string) ( $settings['min_amount'] ?? '' ) === (string) $threshold ) {
+				continue;
+			}
+
+			$settings['min_amount'] = (string) $threshold;
+			$settings['requires']   = 'min_amount';
+			update_option( $key, $settings );
+			$changed = true;
+		}
+
+		if ( ! $found && $threshold > 0 ) {
+			self::add_method(
+				$zone,
+				'free_shipping',
+				array(
+					'title'            => 'Besplatna dostava',
+					'requires'         => 'min_amount',
+					'min_amount'       => (string) $threshold,
+					'ignore_discounts' => 'no',
+				)
+			);
+			$changed = true;
+		}
+
+		return $changed;
 	}
 
 	/**

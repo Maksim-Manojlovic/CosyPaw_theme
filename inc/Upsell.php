@@ -132,6 +132,101 @@ final class Upsell {
 		add_filter( 'the_content', array( $this, 'append_empty_cart_picks' ), 20 );
 
 		add_action( 'woocommerce_thankyou', array( $this, 'thankyou_picks' ), 15 );
+
+		// Inside the totals table, directly above "Ukupno". The offer panel in
+		// the collaterals already carried the progress bar, but it sits beside
+		// the totals rather than in them — and the one number a shopper reads
+		// is the last row of that table. A cart of 2.080 in towels with a 100
+		// RSD package saving prints "Ukupno 1.980" under a promise that says
+		// "preko 2.000", which reads as a threshold missed by 20 dinars when it
+		// was in fact cleared. The verdict belongs on the same table as the
+		// number that contradicts it.
+		add_action( 'woocommerce_cart_totals_before_order_total', array( $this, 'cart_shipping_row' ) );
+	}
+
+	/**
+	 * The free-delivery verdict, as a row of the cart totals table.
+	 *
+	 * States what the threshold is measured on rather than only how far off it
+	 * is, because those are two different numbers whenever a package saving is
+	 * booked — see qualifying_total(). Silent where free_shipping() cannot
+	 * establish an answer: an unresolved threshold is no row at all, never a
+	 * guess printed next to the money.
+	 *
+	 * @return void
+	 */
+	public function cart_shipping_row(): void {
+		$shipping = $this->free_shipping();
+
+		if ( null === $shipping ) {
+			return;
+		}
+
+		$label = __( 'Besplatna dostava', 'cosypaw' );
+
+		if ( 'earned' === $shipping['state'] ) {
+			$value = __( 'Ostvarena', 'cosypaw' );
+
+			// Only where the two numbers actually differ. Without a package
+			// saving the total already agrees with the threshold, and the
+			// sentence would be explaining a contradiction nobody can see.
+			$note = $this->has_bundle_saving()
+				? sprintf(
+					/* translators: %s: formatted subtotal the threshold is measured on, e.g. "2.080 RSD". */
+					__( 'Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['total'] )
+				)
+				: '';
+		} else {
+			$value = sprintf(
+				/* translators: %s: formatted amount still to spend, e.g. "320 RSD". */
+				__( 'Još %s', 'cosypaw' ),
+				Catalog::format_price( (int) $shipping['gap'] )
+			);
+
+			// One more towel closes it: say so, because that is an instruction
+			// the shopper can act on. Further out it stays an amount, which is
+			// the only honest thing to promise about a basket this module
+			// cannot see the shape of.
+			$note = $shipping['unit'] > 0 && $shipping['gap'] <= $shipping['unit']
+				? sprintf(
+					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+					__( 'Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['min'] )
+				)
+				: sprintf(
+					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+					__( 'Dostava je besplatna preko %s.', 'cosypaw' ),
+					Catalog::format_price( (int) $shipping['min'] )
+				);
+		}
+
+		printf(
+			'<tr class="cosypaw-ship-row cosypaw-ship-row--%1$s">' .
+				'<th>%2$s</th>' .
+				'<td data-title="%2$s"><strong>%3$s</strong>%4$s</td>' .
+			'</tr>',
+			esc_attr( (string) $shipping['state'] ),
+			esc_html( $label ),
+			esc_html( $value ),
+			'' === $note ? '' : '<small>' . esc_html( $note ) . '</small>'
+		);
+	}
+
+	/**
+	 * Whether a package saving is booked against this cart.
+	 *
+	 * BundlePricing books it as a negative fee, so any fee total below zero is
+	 * one. Used only to decide whether the totals row has to explain itself.
+	 *
+	 * @return bool
+	 */
+	private function has_bundle_saving(): bool {
+		$cart = $this->cart();
+
+		return null !== $cart
+			&& is_callable( array( $cart, 'get_fee_total' ) )
+			&& (float) $cart->get_fee_total() < 0.0;
 	}
 
 	/**
@@ -544,10 +639,10 @@ final class Upsell {
 	 * either when it decides whether delivery is free.
 	 *
 	 * Returns null wherever the answer cannot be established — no shipping
-	 * needed, no free-delivery method, an unreadable cart — so a missing
-	 * threshold is silence rather than a guess.
+	 * needed, no free-delivery method anywhere in the shop, an unreadable cart
+	 * — so a missing threshold is silence rather than a guess.
 	 *
-	 * @return array{state:string,gap:int,min:int,pct:int,unit:int}|null
+	 * @return array{state:string,gap:int,min:int,pct:int,unit:int,total:int}|null
 	 */
 	private function free_shipping(): ?array {
 		$cart = $this->cart();
@@ -556,30 +651,21 @@ final class Upsell {
 			return null;
 		}
 
-		if ( ! is_callable( array( WC(), 'shipping' ) ) || ! class_exists( '\WC_Shipping_Zones' ) ) {
+		if ( ! class_exists( '\WC_Shipping_Zones' ) || ! is_callable( array( $cart, 'get_displayed_subtotal' ) ) ) {
 			return null;
 		}
 
-		$packages = (array) WC()->shipping()->get_packages();
-
-		if ( ! $packages ) {
-			return null;
-		}
-
-		$min = 0.0;
+		$min      = 0.0;
+		$offered  = false;
+		$packages = is_callable( array( WC(), 'shipping' ) ) ? (array) WC()->shipping()->get_packages() : array();
 
 		foreach ( $packages as $package ) {
 			foreach ( (array) ( $package['rates'] ?? array() ) as $rate ) {
-				// Already offered free delivery: the threshold is behind them,
-				// and the panel says so instead of asking for more.
+				// Free delivery already on the table for this basket. Whatever
+				// the zone says the bar is, this cart is past it.
 				if ( is_callable( array( $rate, 'get_method_id' ) ) && 'free_shipping' === $rate->get_method_id() ) {
-					return array(
-						'state' => 'earned',
-						'gap'   => 0,
-						'min'   => 0,
-						'pct'   => 100,
-						'unit'  => 0,
-					);
+					$offered = true;
+					break 2;
 				}
 			}
 
@@ -589,27 +675,134 @@ final class Upsell {
 				continue;
 			}
 
-			foreach ( (array) $zone->get_shipping_methods( true ) as $method ) {
-				if ( 'free_shipping' !== ( $method->id ?? '' ) ) {
-					continue;
-				}
+			$min = $this->lowest_free_shipping_min( (array) $zone->get_shipping_methods( true ), $min );
+		}
 
-				// 'both' also wants a coupon, so spending alone cannot promise
-				// anything; 'either' and 'min_amount' are won at the till.
-				if ( ! in_array( (string) ( $method->requires ?? '' ), array( 'min_amount', 'either' ), true ) ) {
-					continue;
-				}
+		// The cart page usually has no rated package at all: WC_Cart::show_shipping()
+		// refuses to calculate one until a shipping country is known, and until
+		// then get_packages() is empty. Reading the bar off a rate was therefore
+		// silence on the one screen where the offer decides a sale — a cart
+		// holding a single Trio said nothing about what another towel would win.
+		// The zones are readable without an address, so the bar comes from the
+		// shop's own configuration when no rate has been asked for yet.
+		if ( $min <= 0.0 ) {
+			$min = $this->configured_threshold();
+		}
 
-				$amount = (float) ( $method->min_amount ?? 0 );
+		$total = $this->qualifying_total( $cart );
 
-				if ( $amount > 0.0 && ( $min <= 0.0 || $amount < $min ) ) {
-					$min = $amount;
-				}
+		if ( $offered || ( $min > 0.0 && $total >= $min ) ) {
+			return array(
+				'state' => 'earned',
+				'gap'   => 0,
+				'min'   => (int) round( $min ),
+				'pct'   => 100,
+				'unit'  => 0,
+				'total' => (int) round( $total ),
+			);
+		}
+
+		if ( $min <= 0.0 ) {
+			return null;
+		}
+
+		return array(
+			'state' => 'gap',
+			'gap'   => (int) ceil( $min - $total ),
+			'min'   => (int) round( $min ),
+			'pct'   => (int) max( 0, min( 100, round( $total / $min * 100 ) ) ),
+			'unit'  => $this->unit_price(),
+			'total' => (int) round( $total ),
+		);
+	}
+
+	/**
+	 * The lowest free-delivery bar among a zone's shipping methods.
+	 *
+	 * @param array<int,object> $methods Shipping methods attached to a zone.
+	 * @param float             $min     Lowest bar found so far; 0 for none.
+	 * @return float
+	 */
+	private function lowest_free_shipping_min( array $methods, float $min ): float {
+		foreach ( $methods as $method ) {
+			if ( 'free_shipping' !== ( $method->id ?? '' ) ) {
+				continue;
+			}
+
+			// get_zones() hands back the disabled methods too, so a bar the
+			// shop has switched off must not be quoted as one it will honour.
+			if ( is_callable( array( $method, 'is_enabled' ) ) && ! $method->is_enabled() ) {
+				continue;
+			}
+
+			// 'both' also wants a coupon, so spending alone cannot promise
+			// anything; 'either' and 'min_amount' are won at the till.
+			if ( ! in_array( (string) ( $method->requires ?? '' ), array( 'min_amount', 'either' ), true ) ) {
+				continue;
+			}
+
+			$amount = (float) ( $method->min_amount ?? 0 );
+
+			if ( $amount > 0.0 && ( $min <= 0.0 || $amount < $min ) ) {
+				$min = $amount;
 			}
 		}
 
-		if ( $min <= 0.0 || ! is_callable( array( $cart, 'get_displayed_subtotal' ) ) ) {
-			return null;
+		return $min;
+	}
+
+	/**
+	 * The lowest free-delivery bar configured anywhere in the shop.
+	 *
+	 * Read off the zones rather than from the theme's own constant: the shop
+	 * can edit the amount in wp-admin, and quoting a number nothing enforces is
+	 * the failure this module exists to avoid. Zone 0 — "rest of the world" —
+	 * is asked for separately because get_zones() never returns it.
+	 *
+	 * @return float Threshold, or 0 when the shop offers no free delivery.
+	 */
+	private function configured_threshold(): float {
+		if ( ! is_callable( array( '\WC_Shipping_Zones', 'get_zones' ) ) ) {
+			return 0.0;
+		}
+
+		$min = 0.0;
+
+		foreach ( (array) \WC_Shipping_Zones::get_zones() as $zone ) {
+			$min = $this->lowest_free_shipping_min( (array) ( $zone['shipping_methods'] ?? array() ), $min );
+		}
+
+		if ( is_callable( array( '\WC_Shipping_Zones', 'get_zone' ) ) ) {
+			$rest = \WC_Shipping_Zones::get_zone( 0 );
+
+			if ( $rest && is_callable( array( $rest, 'get_shipping_methods' ) ) ) {
+				$min = $this->lowest_free_shipping_min( (array) $rest->get_shipping_methods( true ), $min );
+			}
+		}
+
+		return $min;
+	}
+
+	/**
+	 * The number the free-delivery threshold is actually measured against.
+	 *
+	 * WC_Shipping_Free_Shipping::is_available() compares get_displayed_subtotal()
+	 * less the coupon discount — the line items, and nothing else. The package
+	 * saving is a *fee*, so it is not in here and must not be: WooCommerce will
+	 * not subtract it either when it decides whether delivery is free.
+	 *
+	 * That difference is the whole reason the cart needed a row of its own. A
+	 * basket of 2.080 in towels with a 100 RSD package saving prints "Ukupno
+	 * 1.980" beside a promise that reads "preko 2.000 RSD", and a customer who
+	 * has already earned free delivery cannot tell. Quoting this number next to
+	 * the verdict is what makes the two agree on screen.
+	 *
+	 * @param \WC_Cart $cart Cart being measured.
+	 * @return float
+	 */
+	private function qualifying_total( $cart ): float {
+		if ( ! is_callable( array( $cart, 'get_displayed_subtotal' ) ) ) {
+			return 0.0;
 		}
 
 		$total = (float) $cart->get_displayed_subtotal();
@@ -618,19 +811,7 @@ final class Upsell {
 			$total -= (float) $cart->get_discount_total();
 		}
 
-		$gap = (int) ceil( $min - $total );
-
-		if ( $gap < 1 ) {
-			return null;
-		}
-
-		return array(
-			'state' => 'gap',
-			'gap'   => $gap,
-			'min'   => (int) round( $min ),
-			'pct'   => (int) max( 0, min( 100, round( $total / $min * 100 ) ) ),
-			'unit'  => $this->unit_price(),
-		);
+		return $total;
 	}
 
 	/**

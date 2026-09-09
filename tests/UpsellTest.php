@@ -154,6 +154,10 @@ final class UpsellTest extends TestCase {
 	}
 
 	protected function tearDown(): void {
+		// Static, so it would otherwise survive into the next test and hand a
+		// threshold to a case written to have none.
+		\WC_Shipping_Zones::$zone = null;
+
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -185,6 +189,157 @@ final class UpsellTest extends TestCase {
 		$upsell->cart_panel();
 
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Render the free-delivery totals row against a cart holding these lines,
+	 * with a shipping zone that grants free delivery over $min.
+	 *
+	 * @param array<int,array{id:int,qty:int,price:int}> $lines Product id, quantity, unit price.
+	 * @param int                                        $min   Free-delivery threshold.
+	 * @param bool                                       $rated Whether the free rate is already offered.
+	 * @return string
+	 */
+	private function shipping_row( array $lines, int $min, bool $rated = false ): string {
+		$contents = array();
+		foreach ( $lines as $line ) {
+			$contents[] = array(
+				'product_id' => $line['id'],
+				'quantity'   => $line['qty'],
+				'data'       => new \WC_Product( 'Žirafa', (string) $line['price'], true, $line['id'] ),
+			);
+		}
+
+		$this->cart = new \WC_Cart( $contents );
+
+		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
+		$pricing->apply_bundle_discount( $this->cart );
+
+		$method             = new \stdClass();
+		$method->id         = 'free_shipping';
+		$method->requires   = 'min_amount';
+		$method->min_amount = $min;
+
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone( array( $method ) );
+
+		$rates    = $rated ? array( new \WC_Mock_Shipping_Rate( 'free_shipping' ) ) : array();
+		$shipping = new \WC_Mock_Shipping( array( array( 'rates' => $rates ) ) );
+
+		Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );
+
+		$upsell = new Upsell( 'cosypaw', $pricing, new Catalog() );
+
+		ob_start();
+		$upsell->cart_shipping_row();
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * The case the row was written for. Three towels are 2.970 in line items,
+	 * which clears a 2.000 threshold, but the Trio saving is booked as a fee
+	 * and the table's last row therefore reads "Ukupno 1.980" — under the
+	 * amount the promise names. WooCommerce grants free delivery anyway,
+	 * because it measures the line items, so the cart has to say so, and say
+	 * which number it counted.
+	 */
+	public function test_the_totals_row_explains_free_delivery_won_under_the_printed_total(): void {
+		$markup = $this->shipping_row(
+			array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ),
+			2000,
+			true
+		);
+
+		$this->assertStringContainsString( 'cosypaw-ship-row--earned', $markup );
+		$this->assertStringContainsString( 'Ostvarena', $markup );
+		// The subtotal the threshold was measured on, not the 1.980 charged.
+		$this->assertStringContainsString( '2.970 RSD', $markup );
+	}
+
+	/**
+	 * Short of the threshold, the row names the one thing that closes it. Two
+	 * towels are 1.980 in line items against a 2.000 bar — 20 RSD, which a
+	 * towel covers several times over, so the instruction is "add one" rather
+	 * than an amount nobody can spend exactly.
+	 */
+	public function test_the_totals_row_asks_for_one_more_towel(): void {
+		$markup = $this->shipping_row(
+			array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => self::LIVE_PRICES['solo'] ) ),
+			2000
+		);
+
+		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
+		$this->assertStringContainsString( '20 RSD', $markup );
+		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
+	}
+
+	/**
+	 * The cart page has no rated shipping package until a country is known —
+	 * WC_Cart::show_shipping() will not calculate one — so a cart holding a
+	 * single Trio used to say nothing at all about free delivery, on the one
+	 * screen where saying it is worth a sale. The zone is readable without an
+	 * address, so the row still names the bar and what clears it.
+	 */
+	public function test_the_totals_row_speaks_before_shipping_is_rated(): void {
+		$this->cart = new \WC_Cart(
+			array(
+				array(
+					'product_id' => self::MOTIF_ID,
+					'quantity'   => 1,
+					'data'       => new \WC_Product( 'Trio paket', '1390', true, self::MOTIF_ID ),
+				),
+			)
+		);
+
+		$method             = new \stdClass();
+		$method->id         = 'free_shipping';
+		$method->requires   = 'min_amount';
+		$method->min_amount = 2000;
+
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone( array( $method ) );
+
+		// No packages at all: exactly what get_packages() returns on a cart
+		// page the customer has not given an address to.
+		$shipping = new \WC_Mock_Shipping( array() );
+		Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+
+		ob_start();
+		$upsell->cart_shipping_row();
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
+		$this->assertStringContainsString( '610 RSD', $markup );
+		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
+	}
+
+	/**
+	 * No free-delivery method, no row. An offer the checkout cannot keep is
+	 * worse than no offer — the rule the whole module follows.
+	 */
+	public function test_the_totals_row_stays_silent_without_a_threshold(): void {
+		$this->cart = new \WC_Cart(
+			array(
+				array(
+					'product_id' => self::MOTIF_ID,
+					'quantity'   => 3,
+					'data'       => new \WC_Product( 'Žirafa', (string) self::LIVE_PRICES['solo'], true, self::MOTIF_ID ),
+				),
+			)
+		);
+
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone();
+
+		$shipping = new \WC_Mock_Shipping( array( array( 'rates' => array() ) ) );
+		Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+
+		ob_start();
+		$upsell->cart_shipping_row();
+
+		$this->assertSame( '', (string) ob_get_clean() );
 	}
 
 	/**

@@ -76,14 +76,30 @@ $cosypaw_video = (string) apply_filters(
 		<p class="pkg-banner__text">
 			<?php
 			echo wp_kses(
-				__( 'Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande. Trio paket stiže uz <strong>besplatnu dostavu</strong> — idealno za rođendan, bebi šauer ili samo da nekog razmaziš.', 'cosypaw' ),
+				__( 'Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande — idealno za rođendan, bebi šauer ili samo da nekog razmaziš.', 'cosypaw' ),
 				array( 'strong' => array() )
 			);
 			?>
 		</p>
+		<?php
+		// The claim is the threshold, not a package: the banner sat next to a
+		// Trio card that had stopped clearing the bar and still promised free
+		// delivery. Hidden outright when there is no threshold to quote.
+		$cosypaw_free_min = \Theme\Catalog::free_shipping_min();
+		if ( $cosypaw_free_min > 0 ) :
+			?>
 		<span class="pkg-freeship">
 			<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
-			<?php esc_html_e( 'Besplatna dostava na Trio paket', 'cosypaw' ); ?>
+			<?php
+			echo esc_html(
+				sprintf(
+					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+					__( 'Besplatna dostava preko %s', 'cosypaw' ),
+					\Theme\Catalog::format_price( $cosypaw_free_min )
+				)
+			);
+			?>
 		</span>
+		<?php endif; ?>
 	</div>
 </div>

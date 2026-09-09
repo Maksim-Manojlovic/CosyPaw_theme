@@ -245,7 +245,6 @@ final class Catalog {
 				'badge'        => null,
 				'badge_saving' => false,
 				'best'         => false,
-				'free_ship'    => false,
 				'desc'         => __( 'Jedan omiljeni peškirić', 'cosypaw' ),
 			),
 			array(
@@ -259,7 +258,6 @@ final class Catalog {
 				'badge'        => sprintf( __( 'Ušteda %s', 'cosypaw' ), self::format_price( self::UNIT_PRICE * 2 - 1200 ) ),
 				'badge_saving' => true,
 				'best'         => false,
-				'free_ship'    => false,
 				'desc'         => __( 'Dva peškirića po izboru', 'cosypaw' ),
 			),
 			// Priced at exactly two towels so the third is genuinely free — the
@@ -275,13 +273,22 @@ final class Catalog {
 				'badge'        => __( 'Najpopularnije', 'cosypaw' ),
 				'badge_saving' => false,
 				'best'         => true,
-				'free_ship'    => true,
 				'desc'         => __( 'Tri peškirića po izboru', 'cosypaw' ),
 			),
 		);
 
+		$free_ship_min = self::free_shipping_min();
+
 		foreach ( $packages as &$package ) {
 			$package['gratis'] = self::gratis_count( $package['qty'], $package['price'], self::UNIT_PRICE );
+
+			// Free delivery is won by what the basket costs, not by which
+			// bundle it is, so the pill is arithmetic against the threshold.
+			// Authored per package, it survived a reprice that moved the Trio
+			// under the bar and kept promising delivery the cart would charge
+			// for. WooCommerce::inject_package_ids() recomputes it once the
+			// live prices are in.
+			$package['free_ship'] = $free_ship_min > 0 && $package['price'] >= $free_ship_min;
 		}
 		unset( $package );
 
@@ -323,6 +330,20 @@ final class Catalog {
 	 */
 	public function default_package(): string {
 		return (string) apply_filters( 'cosypaw_catalog_default_package', 'trio' );
+	}
+
+	/**
+	 * Cart subtotal from which delivery is free, or 0 when there is no offer.
+	 *
+	 * Delegates to CheckoutSetup, which is what actually configures the
+	 * shipping zone — one number behind both the claim and the charge. Guarded
+	 * so the Catalog stays usable (tests, a theme loaded without the rest of
+	 * inc/) when that class is not present.
+	 *
+	 * @return int
+	 */
+	public static function free_shipping_min(): int {
+		return class_exists( CheckoutSetup::class ) ? CheckoutSetup::free_shipping_threshold() : 0;
 	}
 
 	/**

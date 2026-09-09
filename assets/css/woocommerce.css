@@ -711,6 +711,39 @@
 	display: none;
 }
 
+/* The free-delivery verdict, sitting on the totals table above "Ukupno".
+   Printed by Upsell::cart_shipping_row(); the two states differ only in
+   colour, since both are statements of fact rather than a warning. */
+.woocommerce .cart_totals .cosypaw-ship-row th,
+.woocommerce .cart_totals .cosypaw-ship-row td {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	vertical-align: top;
+	border-top: 1px solid var(--line);
+}
+
+.woocommerce .cart_totals .cosypaw-ship-row strong {
+	display: block;
+	font-weight: 800;
+}
+
+.woocommerce .cart_totals .cosypaw-ship-row--earned strong {
+	color: var(--claydk);
+}
+
+/* The explanation is the point of the row, not a footnote to it — it is what
+   reconciles a total below the threshold with delivery already won — so it
+   wraps at full width instead of being clipped into the value column. */
+.woocommerce .cart_totals .cosypaw-ship-row small {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--muted);
+	opacity: .8;
+}
+
 .woocommerce table.cart img {
 	border-radius: var(--radius-sm);
 }

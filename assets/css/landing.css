@@ -1846,3 +1846,31 @@ a.testimonial__meta:focus-visible {
 		display: none;
 	}
 }
+
+/* The free-delivery bar, under the package cards. Reads as an argument for the
+   next size up, so it sits with the cards rather than in a badge on one. */
+.builder__ship {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin: 14px 0 0;
+	padding: 12px 16px;
+	border-radius: var(--radius-pill);
+	background: var(--cream2);
+	color: var(--claydk);
+	font-size: 15px;
+	font-weight: 800;
+	text-align: center;
+}
+
+.builder__ship svg {
+	flex: none;
+}
+
+@media (max-width: 560px) {
+	.builder__ship {
+		font-size: 14px;
+		padding: 11px 14px;
+	}
+}

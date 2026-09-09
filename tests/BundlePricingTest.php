@@ -31,6 +31,7 @@ require_once __DIR__ . '/stubs.php';
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
+require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';
 require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
 
 final class BundlePricingTest extends TestCase {
@@ -63,6 +64,18 @@ final class BundlePricingTest extends TestCase {
 	 * @var int
 	 */
 	private const MOTIF_ID = 42;
+
+	/**
+	 * Package prices for the test at hand.
+	 *
+	 * Defaults to LIVE_PRICES. A test that needs the shop's real ladder — where
+	 * four towels are cheaper as two Duos than as a Trio and a single — sets
+	 * its own, because that is the arrangement upgrade_for_free_delivery()
+	 * exists for and these prices do not produce it.
+	 *
+	 * @var array<string,int>
+	 */
+	private array $prices = self::LIVE_PRICES;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -104,8 +117,10 @@ final class BundlePricingTest extends TestCase {
 	 * @return void
 	 */
 	private function stub_packages( array $ids ): void {
+		$prices = $this->prices;
+
 		Functions\when( 'apply_filters' )->alias(
-			static function ( string $hook, $value = null ) use ( $ids ) {
+			static function ( string $hook, $value = null ) use ( $ids, $prices ) {
 				if ( 'cosypaw_catalog_packages' !== $hook ) {
 					return $value;
 				}
@@ -113,7 +128,7 @@ final class BundlePricingTest extends TestCase {
 				foreach ( $value as &$package ) {
 					$id = (string) $package['id'];
 
-					$package['price'] = self::LIVE_PRICES[ $id ] ?? $package['price'];
+					$package['price'] = $prices[ $id ] ?? $package['price'];
 
 					if ( isset( $ids[ $id ] ) ) {
 						$package['product_id'] = $ids[ $id ];
@@ -368,6 +383,47 @@ final class BundlePricingTest extends TestCase {
 		Functions\when( 'wp_doing_ajax' )->justReturn( false );
 
 		$this->assertSame( array(), $this->fees_for( array( $this->motifs( 4 ) ) ) );
+	}
+
+	/**
+	 * Four towels take the Trio and a single rather than two Duos, because
+	 * that is what carries the delivery.
+	 *
+	 * On the shop's real ladder (690 / 990 / 1.390) two Duos are 1.980 and a
+	 * Trio plus a single is 2.080. The cheaper plan stops 20 RSD short of the
+	 * bar, so it saves the shopper 100 and then charges them the courier. The
+	 * dearer one is the better basket — and the only one the shop's own front
+	 * end offers, since the builder sells a single package at a time.
+	 */
+	public function test_four_towels_take_the_trio_and_a_single_to_clear_the_bar(): void {
+		$this->prices = array( 'solo' => 690, 'duo' => 990, 'trio' => 1390 );
+		$this->stub_packages( self::PACKAGE_IDS );
+
+		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 4, 'price' => 690 ) ) );
+
+		( new BundlePricing( 'cosypaw', new Catalog() ) )->apply_bundle_discount( $cart );
+
+		// 4 x 690 = 2.760 in line items, charged 2.080: Trio + one single.
+		$this->assertCount( 1, $cart->fees );
+		$this->assertSame( -680.0, $cart->fees[0]['amount'] );
+		$this->assertStringContainsString( 'Trio paket', $cart->fees[0]['name'] );
+	}
+
+	/**
+	 * ...and the upgrade is not a licence to always fill with the biggest box.
+	 * Two towels cannot reach the bar however they are arranged, so they stay
+	 * on the cheapest plan and are charged the Duo price.
+	 */
+	public function test_a_cart_that_cannot_reach_the_bar_keeps_the_cheapest_plan(): void {
+		$this->prices = array( 'solo' => 690, 'duo' => 990, 'trio' => 1390 );
+		$this->stub_packages( self::PACKAGE_IDS );
+
+		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => 690 ) ) );
+
+		( new BundlePricing( 'cosypaw', new Catalog() ) )->apply_bundle_discount( $cart );
+
+		// 2 x 690 = 1.380, charged the 990 Duo.
+		$this->assertSame( -390.0, $cart->fees[0]['amount'] );
 	}
 
 	/**

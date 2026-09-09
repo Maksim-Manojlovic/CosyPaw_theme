@@ -167,16 +167,10 @@ final class Upsell {
 		if ( 'earned' === $shipping['state'] ) {
 			$value = __( 'Ostvarena', 'cosypaw' );
 
-			// Only where the two numbers actually differ. Without a package
-			// saving the total already agrees with the threshold, and the
-			// sentence would be explaining a contradiction nobody can see.
-			$note = $this->has_bundle_saving()
-				? sprintf(
-					/* translators: %s: formatted subtotal the threshold is measured on, e.g. "2.080 RSD". */
-					__( 'Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima.', 'cosypaw' ),
-					Catalog::format_price( (int) $shipping['total'] )
-				)
-				: '';
+			// Nothing left to explain. The threshold is measured on what the
+			// cart is worth after its package saving, which is the number the
+			// row below this one already prints.
+			$note = '';
 		} else {
 			$value = sprintf(
 				/* translators: %s: formatted amount still to spend, e.g. "320 RSD". */
@@ -211,22 +205,6 @@ final class Upsell {
 			esc_html( $value ),
 			'' === $note ? '' : '<small>' . esc_html( $note ) . '</small>'
 		);
-	}
-
-	/**
-	 * Whether a package saving is booked against this cart.
-	 *
-	 * BundlePricing books it as a negative fee, so any fee total below zero is
-	 * one. Used only to decide whether the totals row has to explain itself.
-	 *
-	 * @return bool
-	 */
-	private function has_bundle_saving(): bool {
-		$cart = $this->cart();
-
-		return null !== $cart
-			&& is_callable( array( $cart, 'get_fee_total' ) )
-			&& (float) $cart->get_fee_total() < 0.0;
 	}
 
 	/**
@@ -786,16 +764,12 @@ final class Upsell {
 	/**
 	 * The number the free-delivery threshold is actually measured against.
 	 *
-	 * WC_Shipping_Free_Shipping::is_available() compares get_displayed_subtotal()
-	 * less the coupon discount — the line items, and nothing else. The package
-	 * saving is a *fee*, so it is not in here and must not be: WooCommerce will
-	 * not subtract it either when it decides whether delivery is free.
-	 *
-	 * That difference is the whole reason the cart needed a row of its own. A
-	 * basket of 2.080 in towels with a 100 RSD package saving prints "Ukupno
-	 * 1.980" beside a promise that reads "preko 2.000 RSD", and a customer who
-	 * has already earned free delivery cannot tell. Quoting this number next to
-	 * the verdict is what makes the two agree on screen.
+	 * BundlePricing owns it: line items, less coupons, less the package saving.
+	 * WooCommerce on its own would not subtract that saving — it is booked as a
+	 * fee, and WC_Shipping_Free_Shipping::is_available() reads only the items
+	 * and the coupons — which is why BundlePricing withdraws the free rate from
+	 * a cart that clears the bar on the items alone. This row and that rate
+	 * therefore read one number, and cannot disagree about the same cart.
 	 *
 	 * @param \WC_Cart $cart Cart being measured.
 	 * @return float
@@ -805,13 +779,7 @@ final class Upsell {
 			return 0.0;
 		}
 
-		$total = (float) $cart->get_displayed_subtotal();
-
-		if ( is_callable( array( $cart, 'get_discount_total' ) ) ) {
-			$total -= (float) $cart->get_discount_total();
-		}
-
-		return $total;
+		return $this->pricing->payable_total( $cart );
 	}
 
 	/**

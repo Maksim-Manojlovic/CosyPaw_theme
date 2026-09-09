@@ -236,30 +236,44 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
-	 * The case the row was written for. Three towels are 2.970 in line items,
-	 * which clears a 2.000 threshold, but the Trio saving is booked as a fee
-	 * and the table's last row therefore reads "Ukupno 1.980" — under the
-	 * amount the promise names. WooCommerce grants free delivery anyway,
-	 * because it measures the line items, so the cart has to say so, and say
-	 * which number it counted.
+	 * The row counts the package saving, because the shopper pays it.
+	 *
+	 * Three towels clicked one at a time are 2.970 in line items and 1.980 to
+	 * pay — the Trio price, which is the whole point of the discount. Measuring
+	 * the line items would hand free delivery to three loose towels and refuse
+	 * it to the identical Trio bought as a package, and the discount exists to
+	 * make those two carts the same. So this is a gap of 20, not a win.
 	 */
-	public function test_the_totals_row_explains_free_delivery_won_under_the_printed_total(): void {
+	public function test_the_row_counts_the_package_saving(): void {
 		$markup = $this->shipping_row(
 			array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ),
-			2000,
-			true
+			2000
+		);
+
+		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
+		$this->assertStringContainsString( '20 RSD', $markup );
+		$this->assertStringNotContainsString( 'Ostvarena', $markup );
+	}
+
+	/**
+	 * Past the bar on what is actually payable, the row says so and stops
+	 * explaining itself — there is no discrepancy left to reconcile.
+	 */
+	public function test_the_row_states_a_win_plainly(): void {
+		$markup = $this->shipping_row(
+			array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ),
+			1500
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--earned', $markup );
 		$this->assertStringContainsString( 'Ostvarena', $markup );
-		// The subtotal the threshold was measured on, not the 1.980 charged.
-		$this->assertStringContainsString( '2.970 RSD', $markup );
+		$this->assertStringNotContainsString( '<small>', $markup );
 	}
 
 	/**
 	 * Short of the threshold, the row names the one thing that closes it. Two
-	 * towels are 1.980 in line items against a 2.000 bar — 20 RSD, which a
-	 * towel covers several times over, so the instruction is "add one" rather
+	 * towels are 1.490 to pay — the Duo price — against a 2.000 bar, and a
+	 * towel covers the 510 difference, so the instruction is "add one" rather
 	 * than an amount nobody can spend exactly.
 	 */
 	public function test_the_totals_row_asks_for_one_more_towel(): void {
@@ -269,7 +283,7 @@ final class UpsellTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
-		$this->assertStringContainsString( '20 RSD', $markup );
+		$this->assertStringContainsString( '510 RSD', $markup );
 		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
 	}
 

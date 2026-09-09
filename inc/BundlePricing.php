@@ -74,6 +74,96 @@ final class BundlePricing {
 		$this->catalog     = $catalog;
 
 		add_action( 'woocommerce_cart_calculate_fees', array( $this, 'apply_bundle_discount' ) );
+
+		// Free delivery has to be judged on what the order is worth after this
+		// module has repriced it. Three towels clicked one at a time are 2.070
+		// in line items and 1.390 to pay, and WooCommerce measures only the
+		// first of those — so the same three towels won free delivery bought
+		// loose and lost it bought as the Trio, which is the one thing the
+		// bundle discount exists to make identical.
+		//
+		// Priority 5, ahead of CheckoutSetup::hide_paid_delivery_when_free()
+		// at 10: withdraw the free rate first, so the courier rate it would
+		// otherwise remove is still there to fall back on.
+		add_filter( 'woocommerce_package_rates', array( $this, 'require_threshold_after_saving' ), 5 );
+	}
+
+	/**
+	 * Withdraw free delivery from a cart that only clears the bar before its
+	 * package saving.
+	 *
+	 * WC_Shipping_Free_Shipping::is_available() compares the line items less
+	 * coupons; a fee is neither, so WooCommerce cannot see this discount. It is
+	 * not a coupon by accident — booking it as a fee is what keeps the motif
+	 * lines at their own prices, so the shopper still recognises what they
+	 * clicked. The consequence is that the threshold has to be re-tested here.
+	 *
+	 * @param array<string,object> $rates Shipping rates (\WC_Shipping_Rate at runtime).
+	 * @return array<string,object>
+	 */
+	public function require_threshold_after_saving( array $rates ): array {
+		if ( is_admin() && ! wp_doing_ajax() ) {
+			return $rates;
+		}
+
+		$threshold = CheckoutSetup::free_shipping_threshold();
+
+		if ( $threshold < 1 ) {
+			return $rates;
+		}
+
+		$cart = function_exists( 'WC' ) && WC()->cart ? WC()->cart : null;
+
+		if ( ! $cart instanceof \WC_Cart || ! is_callable( array( $cart, 'get_displayed_subtotal' ) ) ) {
+			return $rates;
+		}
+
+		if ( $this->payable_total( $cart ) >= (float) $threshold ) {
+			return $rates;
+		}
+
+		foreach ( $rates as $key => $rate ) {
+			if ( is_callable( array( $rate, 'get_method_id' ) ) && 'free_shipping' === $rate->get_method_id() ) {
+				unset( $rates[ $key ] );
+			}
+		}
+
+		return $rates;
+	}
+
+	/**
+	 * What the cart is actually worth: line items, less coupons, less the
+	 * package saving this module books.
+	 *
+	 * The saving is recomputed rather than read off the cart. WC_Cart_Totals
+	 * calculates shipping *before* fees, so during a rate filter the cart's own
+	 * fee total is still the previous calculation's — or zero on the first one.
+	 * Asking plan_for() again is the only way to get an answer that belongs to
+	 * the cart being rated.
+	 *
+	 * @param \WC_Cart $cart The cart being measured.
+	 * @return float
+	 */
+	public function payable_total( \WC_Cart $cart ): float {
+		$total = (float) $cart->get_displayed_subtotal();
+
+		if ( is_callable( array( $cart, 'get_discount_total' ) ) ) {
+			$total -= (float) $cart->get_discount_total();
+		}
+
+		return $total - (float) $this->saving( $cart );
+	}
+
+	/**
+	 * The package saving this cart earns, in whole RSD.
+	 *
+	 * @param \WC_Cart $cart The cart being priced.
+	 * @return int Saving, or 0 where the cart earns none.
+	 */
+	public function saving( \WC_Cart $cart ): int {
+		$plan = $this->plan_for( $cart );
+
+		return null === $plan ? 0 : $plan['discount'];
 	}
 
 	/**
@@ -103,29 +193,52 @@ final class BundlePricing {
 			return;
 		}
 
+		$plan = $this->plan_for( $cart );
+
+		if ( null === $plan ) {
+			return;
+		}
+
+		$cart->add_fee( $this->fee_label( $plan['lines'] ), -$plan['discount'], false );
+	}
+
+	/**
+	 * The cheapest package plan for this cart, and what it saves.
+	 *
+	 * Shared by the fee that books the saving and by every reader that has to
+	 * agree with it — the free-delivery threshold above all, which would
+	 * otherwise be answering a different question about the same cart.
+	 *
+	 * @param \WC_Cart $cart The cart being priced.
+	 * @return array{discount:int,lines:array<string,int>}|null Null where the cart earns nothing.
+	 */
+	private function plan_for( \WC_Cart $cart ): ?array {
 		$tiers = $this->tiers();
 		if ( count( $tiers ) < 2 ) {
-			return;
+			return null;
 		}
 
 		$pool = $this->pool( $cart );
 		if ( $pool['towels'] < 2 || $pool['subtotal'] <= 0.0 ) {
-			return;
+			return null;
 		}
 
 		$plan = self::plan( $pool['towels'], $tiers );
 		if ( $plan['total'] < 1 ) {
-			return;
+			return null;
 		}
 
 		// Rounded to whole RSD before comparing: the shop deals in dinars, and
 		// a sub-dinar "saving" is rounding noise, not a discount.
 		$discount = (int) round( $pool['subtotal'] ) - $plan['total'];
 		if ( $discount < 1 ) {
-			return;
+			return null;
 		}
 
-		$cart->add_fee( $this->fee_label( $plan['lines'] ), -$discount, false );
+		return array(
+			'discount' => $discount,
+			'lines'    => $plan['lines'],
+		);
 	}
 
 	/**

@@ -98,6 +98,13 @@ $hero_gratis = (int) ( $selected['gratis'] ?? 0 );
 $hero_pay    = $hero_qty - $hero_gratis;
 $hero_deal   = $hero_qty > 1 && $hero_gratis > 0 && $hero_pay > 0;
 
+/*
+ * The free-delivery bar, read once for the whole page. Three places quote it —
+ * the hero trust strip, the package builder and the gift banner's pill — and
+ * they have to agree, so they read one value rather than each asking again.
+ */
+$free_min = \Theme\Catalog::free_shipping_min();
+
 // The ribbon leads with the free towel and adds the shipping only where the
 // package actually carries it.
 $hero_ribbon = '';
@@ -260,8 +267,6 @@ if ( $hero_deal ) {
 			// one: delivery is free from a cart subtotal now, whichever way the
 			// basket gets there, so the strip states the bar rather than a
 			// bundle that may no longer clear it.
-			$free_min = \Theme\Catalog::free_shipping_min();
-
 			if ( $free_min > 0 ) {
 				$trust_items[] = array(
 					'label' => sprintf(
@@ -696,6 +701,39 @@ if ( $hero_deal ) {
 						</button>
 					<?php endforeach; ?>
 				</div>
+
+				<?php
+				/*
+				 * The free-delivery bar, stated where the size is chosen.
+				 *
+				 * It was a pill on whichever package happened to clear the
+				 * threshold and a line in the trust strip four screens up,
+				 * which is not where the decision is made: a shopper sizing up
+				 * the Duo could not see that one more towel would also carry
+				 * the delivery. Said here it is an argument for the next size,
+				 * not a label on one card.
+				 *
+				 * Threshold-derived like every other claim on the page, so it
+				 * disappears rather than lies when free delivery is switched
+				 * off in wp-admin.
+				 */
+				if ( $free_min > 0 ) :
+					?>
+					<p class="builder__ship">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+						<span>
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+									__( 'Porudžbine preko %s stižu uz besplatnu dostavu.', 'cosypaw' ),
+									\Theme\Catalog::format_price( $free_min )
+								)
+							);
+							?>
+						</span>
+					</p>
+				<?php endif; ?>
 
 				<div class="builder__reveal" data-builder-step2>
 				<div class="builder__step builder__step--row">

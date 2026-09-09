@@ -194,6 +194,9 @@ msgstr "Proceed to checkout"
 msgid "Ručni rad sa puno ljubavi"
 msgstr "Handmade with lots of love"
 
+msgid "Porudžbine preko %s stižu uz besplatnu dostavu."
+msgstr "Orders over %s ship free."
+
 msgid "Besplatna dostava preko %s"
 msgstr "Free shipping over %s"
 

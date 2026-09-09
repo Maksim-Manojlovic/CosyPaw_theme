@@ -38,6 +38,18 @@ final class CheckoutSetup {
 	public const ZONE_OPTION = 'cosypaw_shipping_zone_id';
 
 	/**
+	 * Option key: the threshold this theme last wrote into the shipping zone.
+	 *
+	 * The zone is the shop's to edit, so the sync fires on a change to
+	 * FREE_SHIPPING_MIN and never on a difference from it. Without the marker
+	 * the two rules are indistinguishable, and every page load would undo an
+	 * amount an administrator had deliberately typed in wp-admin.
+	 *
+	 * @var string
+	 */
+	public const APPLIED_OPTION = 'cosypaw_free_shipping_applied';
+
+	/**
 	 * Cart subtotal from which delivery is on the shop (RSD).
 	 *
 	 * A flat amount, not a package price. It used to be read off the live Trio
@@ -75,6 +87,39 @@ final class CheckoutSetup {
 		// Over the free-shipping threshold both the courier rate and the free
 		// rate are zero, and offering the same price twice reads as a bug.
 		add_filter( 'woocommerce_package_rates', array( $this, 'hide_paid_delivery_when_free' ), 10 );
+
+		// A threshold change used to reach checkout only through the seeder,
+		// which meant every page of the site could advertise a bar the cart did
+		// not enforce until someone remembered to click Tools → CosyPaw Seeder.
+		// The copy and the charge have to move together, so the zone catches up
+		// on its own. One option read per request; a write only on the request
+		// that first sees a new amount.
+		add_action( 'init', array( $this, 'maybe_sync_free_shipping' ), 20 );
+	}
+
+	/**
+	 * Push a changed threshold into the shipping zone, once.
+	 *
+	 * Fires on a change to FREE_SHIPPING_MIN, never on a mere difference from
+	 * it: an amount an administrator edited in wp-admin stays edited, because
+	 * what is compared is the last value *this theme* wrote. See APPLIED_OPTION.
+	 *
+	 * @return void
+	 */
+	public function maybe_sync_free_shipping(): void {
+		$threshold = self::free_shipping_threshold();
+		$applied   = get_option( self::APPLIED_OPTION, null );
+
+		if ( null !== $applied && (int) $applied === $threshold ) {
+			return;
+		}
+
+		// Written whatever the sync manages, including on a shop with no zone
+		// of ours to touch — otherwise every request would retry the same
+		// lookup for a zone that is never coming back.
+		update_option( self::APPLIED_OPTION, $threshold );
+
+		self::sync_free_shipping();
 	}
 
 	/**
@@ -350,11 +395,17 @@ final class CheckoutSetup {
 	 * and none of the arithmetic at checkout. This re-runs with the seeder and
 	 * closes that gap.
 	 *
-	 * Only min_amount is written. The title and the `requires` mode are the
-	 * shop's to edit in wp-admin, and an unmapped or hand-deleted zone is left
-	 * alone rather than rebuilt.
+	 * A zone carrying no free-delivery method at all gets one. That is not a
+	 * rebuild: create_shipping_zone() skips the method whenever the threshold
+	 * cannot be resolved, which is how a shop ends up with a Serbia zone, a
+	 * courier rate, and every page promising free delivery that nothing in
+	 * WooCommerce grants. An unmapped or hand-deleted *zone* is still left
+	 * alone — there is nothing to attach to.
 	 *
-	 * @return bool True when this call changed the stored amount.
+	 * Otherwise only min_amount is written; the title and the `requires` mode
+	 * are the shop's to edit in wp-admin.
+	 *
+	 * @return bool True when this call changed the zone.
 	 */
 	private static function sync_free_shipping(): bool {
 		if ( ! class_exists( '\WC_Shipping_Zones' ) ) {
@@ -373,12 +424,14 @@ final class CheckoutSetup {
 
 		$threshold = self::free_shipping_threshold();
 		$changed   = false;
+		$found     = false;
 
 		foreach ( (array) $zone->get_shipping_methods() as $instance_id => $method ) {
 			if ( 'free_shipping' !== ( $method->id ?? '' ) ) {
 				continue;
 			}
 
+			$found    = true;
 			$key      = sprintf( 'woocommerce_free_shipping_%d_settings', (int) $instance_id );
 			$settings = (array) get_option( $key, array() );
 
@@ -389,6 +442,20 @@ final class CheckoutSetup {
 			$settings['min_amount'] = (string) $threshold;
 			$settings['requires']   = 'min_amount';
 			update_option( $key, $settings );
+			$changed = true;
+		}
+
+		if ( ! $found && $threshold > 0 ) {
+			self::add_method(
+				$zone,
+				'free_shipping',
+				array(
+					'title'            => 'Besplatna dostava',
+					'requires'         => 'min_amount',
+					'min_amount'       => (string) $threshold,
+					'ignore_discounts' => 'no',
+				)
+			);
 			$changed = true;
 		}
 

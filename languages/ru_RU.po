@@ -194,6 +194,9 @@ msgstr "Перейти к оплате"
 msgid "Ručni rad sa puno ljubavi"
 msgstr "Ручная работа с большой любовью"
 
+msgid "Porudžbine preko %s stižu uz besplatnu dostavu."
+msgstr "Заказы свыше %s доставляются бесплатно."
+
 msgid "Besplatna dostava preko %s"
 msgstr "Бесплатная доставка от %s"
 

@@ -220,7 +220,7 @@ final class UpsellTest extends TestCase {
 		$method->requires   = 'min_amount';
 		$method->min_amount = $min;
 
-		\WC_Shipping_Zones::$zone = new \WC_Mock_Zone( array( $method ) );
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone( array( $method ) );
 
 		$rates    = $rated ? array( new \WC_Mock_Shipping_Rate( 'free_shipping' ) ) : array();
 		$shipping = new \WC_Mock_Shipping( array( array( 'rates' => $rates ) ) );
@@ -296,7 +296,7 @@ final class UpsellTest extends TestCase {
 		$method->requires   = 'min_amount';
 		$method->min_amount = 2000;
 
-		\WC_Shipping_Zones::$zone = new \WC_Mock_Zone( array( $method ) );
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone( array( $method ) );
 
 		// No packages at all: exactly what get_packages() returns on a cart
 		// page the customer has not given an address to.
@@ -329,7 +329,7 @@ final class UpsellTest extends TestCase {
 			)
 		);
 
-		\WC_Shipping_Zones::$zone = new \WC_Mock_Zone();
+		\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone();
 
 		$shipping = new \WC_Mock_Shipping( array( array( 'rates' => array() ) ) );
 		Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );

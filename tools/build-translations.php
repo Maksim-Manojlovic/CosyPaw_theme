@@ -86,6 +86,7 @@ $sr_source = array(
 	'Ukupno'                                                                                  => array( 'Total', 'Итого' ),
 	'Nastavi ka plaćanju'                                                                     => array( 'Proceed to checkout', 'Перейти к оплате' ),
 	'Ručni rad sa puno ljubavi'                                                               => array( 'Handmade with lots of love', 'Ручная работа с большой любовью' ),
+	'Porudžbine preko %s stižu uz besplatnu dostavu.'                                          => array( 'Orders over %s ship free.', 'Заказы свыше %s доставляются бесплатно.' ),
 	'Besplatna dostava preko %s'                                                              => array( 'Free shipping over %s', 'Бесплатная доставка от %s' ),
 	'Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.' => array( 'Hand-sewn decorative bathroom towels — soft microfiber, a hanging loop and over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia.', 'Сшитые вручную декоративные полотенца для ванной — мягкая микрофибра, петелька для подвешивания и более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии.' ),
 	'Rezultati pretrage za „%s“.'                                                             => array( 'Search results for “%s”.', 'Результаты поиска по запросу «%s».' ),

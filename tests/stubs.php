@@ -348,14 +348,14 @@ if ( ! class_exists( 'WC_Mock_Shipping' ) ) {
 	}
 }
 
-if ( ! class_exists( 'WC_Mock_Zone' ) ) {
+if ( ! class_exists( 'WC_Shipping_Zone' ) ) {
 	/**
 	 * A shipping zone and the methods attached to it.
 	 */
-	class WC_Mock_Zone {
+	class WC_Shipping_Zone {
 
 		/**
-		 * Attached shipping methods.
+		 * Attached shipping methods, keyed by instance id.
 		 *
 		 * @var array<int,object>
 		 */
@@ -371,7 +371,8 @@ if ( ! class_exists( 'WC_Mock_Zone' ) ) {
 		}
 
 		/**
-		 * Attached shipping methods.
+		 * Attached shipping methods, keyed by instance id as WooCommerce keys
+		 * them — CheckoutSetup reads the key to find the settings option.
 		 *
 		 * @param bool $enabled_only Ignored; the stub holds only enabled ones.
 		 * @return array<int,object>
@@ -380,6 +381,23 @@ if ( ! class_exists( 'WC_Mock_Zone' ) ) {
 			unset( $enabled_only );
 
 			return $this->methods;
+		}
+
+		/**
+		 * Attach a method, as WC_Shipping_Zone does: the instance row only.
+		 * Its settings live in a separate option the caller writes.
+		 *
+		 * @param string $method_id Shipping method id.
+		 * @return int New instance id.
+		 */
+		public function add_shipping_method( string $method_id ): int {
+			$instance_id = count( $this->methods ) + 1;
+
+			$method       = new \stdClass();
+			$method->id   = $method_id;
+			$this->methods[ $instance_id ] = $method;
+
+			return $instance_id;
 		}
 	}
 }
@@ -395,7 +413,7 @@ if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
 		/**
 		 * Zone returned for any package, or null for none.
 		 *
-		 * @var \WC_Mock_Zone|null
+		 * @var \WC_Shipping_Zone|null
 		 */
 		public static $zone = null;
 
@@ -403,7 +421,7 @@ if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
 		 * The zone that would rate this package.
 		 *
 		 * @param array<string,mixed> $package Shipping package.
-		 * @return \WC_Mock_Zone|null
+		 * @return \WC_Shipping_Zone|null
 		 */
 		public static function get_zone_matching_package( array $package ) {
 			unset( $package );
@@ -426,12 +444,12 @@ if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
 		 * One zone by id. Zone 0 is "rest of the world"; no test configures it.
 		 *
 		 * @param int $zone_id Zone id.
-		 * @return \WC_Mock_Zone|null
+		 * @return \WC_Shipping_Zone|null
 		 */
 		public static function get_zone( int $zone_id ) {
 			unset( $zone_id );
 
-			return null;
+			return self::$zone;
 		}
 	}
 }

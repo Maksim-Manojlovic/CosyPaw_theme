@@ -744,6 +744,38 @@
 	opacity: .8;
 }
 
+/* Under 768px WooCommerce's own smallscreen sheet rebuilds the totals table:
+   every th is hidden, each td becomes a block with `text-align: right
+   !important`, and the label comes back as a floated ::before carrying the
+   td's data-title. That is right for a row whose value is one number, and
+   wrong for this one — it right-aligned a two-line sentence against a floated
+   label, which is what the row looked broken as on a phone while reading
+   correctly on a desktop.
+
+   Same shape as the desktop row, rebuilt for that markup: label left and
+   verdict right on the first line, explanation below it at full width. */
+@media (max-width: 768px) {
+	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td {
+		/* Contains the floated ::before, so the row cannot collapse behind the
+		   sentence under it. */
+		overflow: hidden;
+		text-align: left !important;
+	}
+
+	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td strong,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td strong {
+		display: block;
+		text-align: right;
+	}
+
+	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td small,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td small {
+		clear: both;
+		text-align: left;
+	}
+}
+
 .woocommerce table.cart img {
 	border-radius: var(--radius-sm);
 }

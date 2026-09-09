@@ -101,6 +101,20 @@ final class CheckoutSetup {
 		// rate are zero, and offering the same price twice reads as a bug.
 		add_filter( 'woocommerce_package_rates', array( $this, 'hide_paid_delivery_when_free' ), 10 );
 
+		// WooCommerce's own delivery block does not belong on this cart. The
+		// shop quotes no postage — it is settled with the courier — so the
+		// block had nothing to say beyond a rate of zero, an instruction to
+		// come back at checkout, and a "calculate shipping" form asking for an
+		// address the cart has no use for. All three sat directly above the
+		// theme's own free-delivery row, which states the one fact that
+		// matters. Cart only: the checkout still shows the method being
+		// chosen, which is where the choice is actually made.
+		add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'hide_cart_delivery_block' ), 20 );
+
+		// ...and with the block gone, cart-totals.php falls through to the
+		// shipping calculator instead. Off for the same reason.
+		add_filter( 'option_woocommerce_enable_shipping_calc', array( $this, 'hide_cart_shipping_calculator' ), 20 );
+
 		// A threshold change used to reach checkout only through the seeder,
 		// which meant every page of the site could advertise a bar the cart did
 		// not enforce until someone remembered to click Tools → CosyPaw Seeder.
@@ -108,6 +122,39 @@ final class CheckoutSetup {
 		// on its own. One option read per request; a write only on the request
 		// that first sees a new amount.
 		add_action( 'init', array( $this, 'maybe_sync_free_shipping' ), 20 );
+	}
+
+	/**
+	 * Keep WooCommerce's delivery block off the cart page.
+	 *
+	 * @param bool $ready Whether WooCommerce would show and calculate delivery.
+	 * @return bool
+	 */
+	public function hide_cart_delivery_block( $ready ): bool {
+		return $this->on_cart() ? false : (bool) $ready;
+	}
+
+	/**
+	 * Keep the "calculate shipping" form off the cart page.
+	 *
+	 * Filters the stored option rather than the setting itself, so wp-admin
+	 * still reads and writes the shop's real choice — the same reasoning that
+	 * keeps translate_cod_settings() off the admin screens.
+	 *
+	 * @param mixed $enabled Stored 'yes'/'no'.
+	 * @return mixed
+	 */
+	public function hide_cart_shipping_calculator( $enabled ) {
+		return $this->on_cart() ? 'no' : $enabled;
+	}
+
+	/**
+	 * Whether this is the cart page being rendered for a visitor.
+	 *
+	 * @return bool
+	 */
+	private function on_cart(): bool {
+		return ! is_admin() && function_exists( 'is_cart' ) && is_cart();
 	}
 
 	/**

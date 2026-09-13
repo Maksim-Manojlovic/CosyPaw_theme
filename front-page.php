@@ -85,7 +85,7 @@ foreach ( $packages as $pkg ) {
 
 /*
  * Every offer claim in the hero is derived from the package the bundle builder
- * opens on, never authored. Reprice the Trio in wp-admin and the "2+1 GRATIS"
+ * opens on, never authored. Reprice the package in wp-admin and the "2+1 GRATIS"
  * ribbon and the "plati 2" button stop making the promise rather than keep
  * making a false one — the same rule the package card follows, and the reason
  * `gratis` is computed rather than typed. See Catalog::gratis_count().
@@ -956,7 +956,7 @@ if ( $hero_deal ) {
 					'meta'  => __( 'Novi Sad', 'cosypaw' ),
 				),
 				array(
-					'quote' => __( 'Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš.', 'cosypaw' ),
+					'quote' => __( 'Kupila sam 2+1 paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš.', 'cosypaw' ),
 					'name'  => __( 'Milica P.', 'cosypaw' ),
 					'meta'  => __( 'Beograd', 'cosypaw' ),
 				),

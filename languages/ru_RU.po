@@ -314,20 +314,14 @@ msgstr "Тюльпан"
 msgid "Javorov list"
 msgstr "Кленовый лист"
 
-msgid "Pojedinačno"
+msgid "Single"
 msgstr "Поштучно"
 
 msgid "Jedan omiljeni peškirić"
 msgstr "Один любимый мотив"
 
-msgid "Duo paket"
-msgstr "Набор Duo"
-
-msgid "Dva peškirića po izboru"
-msgstr "Два мотива на выбор"
-
-msgid "Trio paket"
-msgstr "Набор Trio"
+msgid "2+1 paket"
+msgstr "Набор 2+1"
 
 msgid "Najpopularnije"
 msgstr "Самое популярное"
@@ -488,8 +482,8 @@ msgstr "Маленькие полотенца, большие улыбки"
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
 msgstr "Пришли быстрее, чем я ожидала, и мягче, чем на фото. Дочка сама выбирает, какое использовать каждый день."
 
-msgid "Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
-msgstr "Купила набор Trio в подарок — и это был настоящий хит. Упаковка очаровательна, ничего дополнительно заворачивать не нужно."
+msgid "Kupila sam 2+1 paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
+msgstr "Купила набор 2+1 в подарок — и это был настоящий хит. Упаковка очаровательна, ничего дополнительно заворачивать не нужно."
 
 msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
 msgstr "Петелька — мелочь, которая много значит: полотенце всегда на своём месте и не падает на пол."
@@ -605,6 +599,9 @@ msgstr "Скидка за наборы (%s)"
 msgid "Još 1 peškirić za %s"
 msgstr "Ещё 1 полотенце за %s"
 
+msgid "Još 1 peškirić gratis"
+msgstr "Ещё 1 полотенце бесплатно"
+
 msgid "Još malo, pa povoljnije"
 msgstr "Ещё немного — и выгоднее"
 
@@ -613,6 +610,12 @@ msgstr "Ещё одно полотенце стоит %s — и доставка
 
 msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s."
+
+msgid "Još jedan peškirić je gratis."
+msgstr "Ещё одно полотенце — бесплатно."
+
+msgid "Još jedan peškirić je gratis — i račun ti je manji za %s."
+msgstr "Ещё одно полотенце бесплатно — и счёт уменьшится на %s."
 
 msgid "Dodaj"
 msgstr "Добавить"

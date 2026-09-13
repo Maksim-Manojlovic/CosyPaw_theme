@@ -63,9 +63,8 @@ const CP_MOTIF_NAMES = array(
 );
 
 const CP_PACKAGE_NAMES = array(
-	'solo' => 'Pojedinačno',
-	'duo'  => 'Duo paket',
-	'trio' => 'Trio paket',
+	'solo' => 'Single',
+	'duo'  => '2+1 paket',
 );
 
 /**

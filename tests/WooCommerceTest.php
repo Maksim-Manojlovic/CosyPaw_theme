@@ -368,15 +368,14 @@ final class WooCommerceTest extends TestCase {
 		$wc->bundle_cta();
 		$out = (string) ob_get_clean();
 
-		$this->assertStringContainsString( 'Duo paket', $out );
-		$this->assertStringContainsString( 'Trio paket', $out );
+		$this->assertStringContainsString( '2+1 paket', $out );
 		$this->assertStringContainsString( '2+1 GRATIS', $out );
 		// Every row is a way in, with the size it names already chosen.
-		$this->assertStringContainsString( 'package=trio', $out );
+		$this->assertStringContainsString( 'package=duo', $out );
 
 		// Free delivery belongs to the threshold, not to a bundle: the seed
-		// Trio (1.580) sits under CheckoutSetup::FREE_SHIPPING_MIN, so the row
-		// has to stay quiet rather than promise what checkout will bill for.
+		// package (1.490) sits under CheckoutSetup::FREE_SHIPPING_MIN, so the
+		// row has to stay quiet rather than promise what checkout will bill for.
 		$this->assertStringNotContainsString( 'Besplatna dostava', $out );
 	}
 
@@ -423,7 +422,7 @@ final class WooCommerceTest extends TestCase {
 		$this->assertStringContainsString( 'Žirafa', $out );
 		$this->assertStringContainsString( 'Napravi paket', $out );
 		$this->assertStringContainsString( 'Nastavi kupovinu', $out );
-		$this->assertStringContainsString( 'Trio paket', $out );
+		$this->assertStringContainsString( '2+1 paket', $out );
 	}
 
 	/**

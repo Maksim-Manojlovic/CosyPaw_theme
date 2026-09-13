@@ -1024,13 +1024,23 @@
    (woocommerce_coupons_enabled is filtered to false), so nothing else lives in
    that cell.
 
-   The button stays in the DOM, hidden: it is what the script clicks. */
-.woocommerce-cart .woocommerce-cart-form .actions {
+   The button stays in the DOM, hidden: it is what the script submits with.
+
+   Hidden at the cell rather than at its children, and with the table in the
+   selector. Hiding `.actions > *` was enough on a desktop and lost under
+   768px, where WooCommerce's smallscreen sheet restyles `td.actions .button`
+   through a longer selector than the one hiding it — so the button came back
+   on exactly the screen where a stray full-width button does the most damage.
+   A hidden cell renders no children whatever their own display is.
+
+   The row goes too, or the table draws a border across an empty one. */
+.woocommerce-cart .woocommerce-cart-form table.shop_table td.actions {
+	display: none;
 	padding: 0 !important;
 	border: 0;
 }
 
-.woocommerce-cart .woocommerce-cart-form .actions > * {
+.woocommerce-cart .woocommerce-cart-form table.shop_table tr:has(> td.actions) {
 	display: none;
 }
 

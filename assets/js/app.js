@@ -16,6 +16,7 @@ import { Marquee } from './components/Marquee.js';
 import { CartDrawer } from './components/CartDrawer.js';
 import { InViewVideo } from './components/InViewVideo.js';
 import { CartUpsell } from './components/CartUpsell.js';
+import { CartQuantity } from './components/CartQuantity.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -58,6 +59,11 @@ const boot = () => {
 	document.querySelectorAll('[data-upsell-panel]').forEach((slot) => {
 		new CartUpsell(slot);
 	});
+
+	// The cart's quantity fields, which post themselves now that the update
+	// button is hidden.
+	const cartForm = document.querySelector('.woocommerce-cart-form');
+	if (cartForm) new CartQuantity(cartForm);
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

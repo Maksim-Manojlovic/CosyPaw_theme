@@ -31,6 +31,23 @@ final class Catalog {
 	public const UNIT_PRICE = 790;
 
 	/**
+	 * Towels in the one package the shop sells, and what it costs (RSD).
+	 *
+	 * Three for the price of two, near enough that gratis_count() will print
+	 * the claim: 1.490 is under two singles, so the third towel really is
+	 * given away. The pair used to be sold as a Duo alongside a dearer Trio,
+	 * which nobody had reason to buy once the Trio was priced as 2+1 — one
+	 * package is the whole ladder now, and two towels are simply two singles.
+	 *
+	 * Seed values, like every other price here: WooCommerce::inject_package_ids()
+	 * replaces them with what the shop charges the moment the package is mapped.
+	 *
+	 * @var int
+	 */
+	public const PACK_QTY   = 3;
+	public const PACK_PRICE = 1490;
+
+	/**
 	 * Directory (under the theme root) holding the motif photography.
 	 *
 	 * @var string
@@ -237,7 +254,7 @@ final class Catalog {
 		$packages = array(
 			array(
 				'id'           => 'solo',
-				'name'         => __( 'Pojedinačno', 'cosypaw' ),
+				'name'         => __( 'Single', 'cosypaw' ),
 				'qty'          => 1,
 				'price'        => self::UNIT_PRICE,
 				'old'          => null,
@@ -247,31 +264,23 @@ final class Catalog {
 				'best'         => false,
 				'desc'         => __( 'Jedan omiljeni peškirić', 'cosypaw' ),
 			),
+			// Priced under two towels so the third is genuinely free — the
+			// card's "2+1 GRATIS" only renders while that holds, and anything
+			// from 1.580 up is enough to lose the claim.
+			//
+			// The id stays 'duo': it is the key cosypaw_package_map stores the
+			// WooCommerce product under, and renaming it would orphan the
+			// package a live shop is already selling. Only the offer changed.
 			array(
 				'id'           => 'duo',
-				'name'         => __( 'Duo paket', 'cosypaw' ),
-				'qty'          => 2,
-				'price'        => 1200,
-				'old'          => self::UNIT_PRICE * 2,
-				'per'          => 600,
-				/* translators: %s: formatted amount saved, e.g. "380 RSD". */
-				'badge'        => sprintf( __( 'Ušteda %s', 'cosypaw' ), self::format_price( self::UNIT_PRICE * 2 - 1200 ) ),
+				'name'         => __( '2+1 paket', 'cosypaw' ),
+				'qty'          => self::PACK_QTY,
+				'price'        => self::PACK_PRICE,
+				'old'          => self::UNIT_PRICE * self::PACK_QTY,
+				'per'          => (int) round( self::PACK_PRICE / self::PACK_QTY ),
+				/* translators: %s: formatted amount saved, e.g. "880 RSD". */
+				'badge'        => sprintf( __( 'Ušteda %s', 'cosypaw' ), self::format_price( self::UNIT_PRICE * self::PACK_QTY - self::PACK_PRICE ) ),
 				'badge_saving' => true,
-				'best'         => false,
-				'desc'         => __( 'Dva peškirića po izboru', 'cosypaw' ),
-			),
-			// Priced at exactly two towels so the third is genuinely free — the
-			// card's "2+1 GRATIS" only renders while that holds, and 20 RSD
-			// above it (the old 1600) was enough to lose the claim.
-			array(
-				'id'           => 'trio',
-				'name'         => __( 'Trio paket', 'cosypaw' ),
-				'qty'          => 3,
-				'price'        => self::UNIT_PRICE * 2,
-				'old'          => self::UNIT_PRICE * 3,
-				'per'          => (int) round( self::UNIT_PRICE * 2 / 3 ),
-				'badge'        => __( 'Najpopularnije', 'cosypaw' ),
-				'badge_saving' => false,
 				'best'         => true,
 				'desc'         => __( 'Tri peškirića po izboru', 'cosypaw' ),
 			),
@@ -284,10 +293,10 @@ final class Catalog {
 
 			// Free delivery is won by what the basket costs, not by which
 			// bundle it is, so the pill is arithmetic against the threshold.
-			// Authored per package, it survived a reprice that moved the Trio
-			// under the bar and kept promising delivery the cart would charge
-			// for. WooCommerce::inject_package_ids() recomputes it once the
-			// live prices are in.
+			// Authored per package, it survived a reprice that moved the
+			// package under the bar and kept promising delivery the cart would
+			// charge for. WooCommerce::inject_package_ids() recomputes it once
+			// the live prices are in.
 			$package['free_ship'] = $free_ship_min > 0 && $package['price'] >= $free_ship_min;
 		}
 		unset( $package );
@@ -329,7 +338,7 @@ final class Catalog {
 	 * @return string
 	 */
 	public function default_package(): string {
-		return (string) apply_filters( 'cosypaw_catalog_default_package', 'trio' );
+		return (string) apply_filters( 'cosypaw_catalog_default_package', 'duo' );
 	}
 
 	/**

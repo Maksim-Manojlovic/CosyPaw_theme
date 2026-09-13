@@ -794,7 +794,7 @@ final class WooCommerce {
 	 * The package offer, printed as a row per bundle.
 	 *
 	 * The shop's argument is on every other page — "2+1 GRATIS", free shipping
-	 * on the Trio, the per-piece price falling with each towel — and the
+	 * over the threshold, the per-piece price falling with each towel — and the
 	 * product page was the one place making none of it. The numbers come from
 	 * the catalogue, which reads the live WooCommerce prices, so a reprice
 	 * cannot leave a stale claim behind here.

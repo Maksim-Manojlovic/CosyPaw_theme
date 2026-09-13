@@ -711,30 +711,44 @@
 	display: none;
 }
 
-/* The free-delivery verdict, sitting on the totals table above "Ukupno".
-   Printed by Upsell::cart_shipping_row(); the two states differ only in
-   colour, since both are statements of fact rather than a warning. */
-.woocommerce .cart_totals .cosypaw-ship-row th,
-.woocommerce .cart_totals .cosypaw-ship-row td {
+/* The two verdict rows the theme adds to the totals table above "Ukupno" —
+   the free towel (Upsell::cart_free_towel_row()) and the free-delivery state
+   (Upsell::cart_shipping_row()). Both are statements of fact rather than
+   warnings, so they share a shape and differ only in colour. */
+.woocommerce .cart_totals .cosypaw-note-row th,
+.woocommerce .cart_totals .cosypaw-note-row td {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	vertical-align: top;
 	border-top: 1px solid var(--line);
 }
 
-.woocommerce .cart_totals .cosypaw-ship-row strong {
+.woocommerce .cart_totals .cosypaw-note-row strong {
 	display: block;
 	font-weight: 800;
 }
 
-.woocommerce .cart_totals .cosypaw-ship-row--earned strong {
+.woocommerce .cart_totals .cosypaw-ship-row--earned strong,
+.woocommerce .cart_totals .cosypaw-free-row strong {
 	color: var(--claydk);
+}
+
+/* The one row that is an instruction rather than a status. It is the reason
+   the shopper adds a fourth towel, so it is allowed to look like something. */
+.woocommerce .cart_totals .cosypaw-free-row th,
+.woocommerce .cart_totals .cosypaw-free-row td {
+	background: var(--cream2, #f7efe7);
+}
+
+.woocommerce .cart_totals .cosypaw-free-row strong {
+	text-transform: uppercase;
+	letter-spacing: .04em;
 }
 
 /* The explanation is the point of the row, not a footnote to it — it is what
    reconciles a total below the threshold with delivery already won — so it
    wraps at full width instead of being clipped into the value column. */
-.woocommerce .cart_totals .cosypaw-ship-row small {
+.woocommerce .cart_totals .cosypaw-note-row small {
 	display: block;
 	margin-top: 4px;
 	font-size: 12px;
@@ -755,22 +769,22 @@
    Same shape as the desktop row, rebuilt for that markup: label left and
    verdict right on the first line, explanation below it at full width. */
 @media (max-width: 768px) {
-	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td,
-	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td {
+	.woocommerce table.shop_table_responsive tr.cosypaw-note-row td,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-note-row td {
 		/* Contains the floated ::before, so the row cannot collapse behind the
 		   sentence under it. */
 		overflow: hidden;
 		text-align: left !important;
 	}
 
-	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td strong,
-	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td strong {
+	.woocommerce table.shop_table_responsive tr.cosypaw-note-row td strong,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-note-row td strong {
 		display: block;
 		text-align: right;
 	}
 
-	.woocommerce table.shop_table_responsive tr.cosypaw-ship-row td small,
-	.woocommerce-page table.shop_table_responsive tr.cosypaw-ship-row td small {
+	.woocommerce table.shop_table_responsive tr.cosypaw-note-row td small,
+	.woocommerce-page table.shop_table_responsive tr.cosypaw-note-row td small {
 		clear: both;
 		text-align: left;
 	}
@@ -947,6 +961,77 @@
 
 .woocommerce-cart .cart-collaterals .cosypaw-upsell {
 	margin: 0;
+}
+
+/* ---------- Cart page layout ---------- */
+
+/* The totals beside the towels, not a screen below them. Stacked, the summary
+   sat under a table that is already tall on a laptop, so the total — and the
+   "next one is free" row that goes with it — was below the fold on the one
+   page where the decision is made. WooCommerce prints the form and the
+   collaterals as siblings; `display: contents` lets the totals out of the
+   collaterals wrapper and into the same grid, so the strip underneath can
+   still have the full width.
+
+   The stacked layout stays on anything narrower: two columns of this on a
+   tablet is a 300px table.
+
+   Matched with :has() on the form rather than on a page wrapper: the cart is a
+   plain page holding [woocommerce_cart], so the only thing that can be relied
+   on is that WooCommerce's own shortcode wrapper is the element containing the
+   form. A wrapper class from page.php would break the day that template is
+   touched, silently and only on this one screen. */
+@media (min-width: 981px) {
+	.woocommerce-cart .woocommerce:has(> .woocommerce-cart-form) {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+		gap: 26px;
+		align-items: start;
+	}
+
+	/* Notices speak for the whole page, and the cross-sells are a rail like the
+	   strip is — neither belongs in a 400px column. */
+	.woocommerce-cart .woocommerce > .woocommerce-notices-wrapper,
+	.woocommerce-cart .cart-collaterals .cross-sells,
+	.woocommerce-cart .cart-collaterals .cosypaw-upsell-slot {
+		grid-column: 1 / -1;
+	}
+
+	.woocommerce-cart .cart-collaterals {
+		display: contents;
+	}
+
+	.woocommerce-cart .cart-collaterals .cart_totals {
+		grid-column: 2;
+		grid-row: 2;
+		max-width: none;
+		margin: 0;
+	}
+
+	/* Row 2 as well, so the totals sit level with the table rather than with
+	   whatever notice happens to be above it. */
+	.woocommerce-cart .woocommerce-cart-form {
+		grid-column: 1;
+		grid-row: 2;
+	}
+}
+
+/* "Ažuriranje korpe" is a button that exists because the quantity field could
+   not talk to the server on its own. CartQuantity.js now submits the form when
+   a quantity changes, so the button is a step the shopper has to learn, and a
+   trap for anyone who does not: they change a number, leave it unsaved and
+   check out at the old one. The row goes with it — coupons are off
+   (woocommerce_coupons_enabled is filtered to false), so nothing else lives in
+   that cell.
+
+   The button stays in the DOM, hidden: it is what the script clicks. */
+.woocommerce-cart .woocommerce-cart-form .actions {
+	padding: 0 !important;
+	border: 0;
+}
+
+.woocommerce-cart .woocommerce-cart-form .actions > * {
+	display: none;
 }
 
 /* The slot is printed on every cart, offer or no offer — it is the anchor

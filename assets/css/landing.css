@@ -437,9 +437,12 @@
 	padding: 0 22px;
 }
 
+/* auto-fit, not a fixed three: the shop sells a Single and a 2+1 package, and
+   a hardcoded third column left the pair hugging the left edge with a hole
+   beside them. Tracks follow however many tiers Catalog::packages() prints. */
 .pkg-grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: 20px;
 	align-items: stretch;
 }

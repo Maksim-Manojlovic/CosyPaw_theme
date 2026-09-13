@@ -314,20 +314,14 @@ msgstr "Tulip"
 msgid "Javorov list"
 msgstr "Maple leaf"
 
-msgid "Pojedinačno"
+msgid "Single"
 msgstr "Single"
 
 msgid "Jedan omiljeni peškirić"
 msgstr "One favorite design"
 
-msgid "Duo paket"
-msgstr "Duo package"
-
-msgid "Dva peškirića po izboru"
-msgstr "Two designs of your choice"
-
-msgid "Trio paket"
-msgstr "Trio package"
+msgid "2+1 paket"
+msgstr "2+1 package"
 
 msgid "Najpopularnije"
 msgstr "Most popular"
@@ -488,8 +482,8 @@ msgstr "Little towels, big smiles"
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
 msgstr "They arrived faster than I expected and are softer than in the photos. My daughter picks which one to use every day."
 
-msgid "Kupila sam Trio paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
-msgstr "I bought the Trio package as a gift and it was a real hit. The packaging is adorable, no extra wrapping needed."
+msgid "Kupila sam 2+1 paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
+msgstr "I bought the 2+1 package as a gift and it was a real hit. The packaging is adorable, no extra wrapping needed."
 
 msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
 msgstr "The hanging loop is a small thing that means a lot — the towel is always in its place and never ends up on the floor."
@@ -605,6 +599,9 @@ msgstr "Package saving (%s)"
 msgid "Još 1 peškirić za %s"
 msgstr "1 more towel for %s"
 
+msgid "Još 1 peškirić gratis"
+msgstr "1 more towel free"
+
 msgid "Još malo, pa povoljnije"
 msgstr "A little more, a little cheaper"
 
@@ -613,6 +610,18 @@ msgstr "One more towel costs %s — and delivery is on us."
 
 msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "One more towel costs %1$s instead of full price — you save %2$s."
+
+msgid "Još jedan peškirić je gratis — ukupna cena se ne menja."
+msgstr "One more towel is free — the total does not change."
+
+msgid "Sledeći peškirić"
+msgstr "Next towel"
+
+msgid "Gratis"
+msgstr "Free"
+
+msgid "Dodaj još jedan — ukupna cena ostaje ista."
+msgstr "Add one more — the total stays the same."
 
 msgid "Dodaj"
 msgstr "Add"

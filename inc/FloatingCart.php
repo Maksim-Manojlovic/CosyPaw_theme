@@ -118,16 +118,20 @@ final class FloatingCart {
 
 		$nudge = '';
 		if ( null !== $step ) {
-			$nudge = sprintf(
-				'<span class="cart-fab__nudge">%s</span>',
-				esc_html(
-					sprintf(
-						/* translators: %s: formatted price of one more towel, e.g. "500 RSD". */
-						__( 'Još 1 peškirić za %s', 'cosypaw' ),
-						Catalog::format_price( $step['price'] )
-					)
-				)
-			);
+			// A free towel is stated as free. The pill is three words wide, so
+			// the rebate that can come with it — the package costing less than
+			// the singles it replaces — is left to the cart panel, which has
+			// the room to explain a bill that goes down when something is
+			// added to it.
+			$copy = (int) $step['price'] < 1
+				? __( 'Još 1 peškirić gratis', 'cosypaw' )
+				: sprintf(
+					/* translators: %s: formatted price of one more towel, e.g. "500 RSD". */
+					__( 'Još 1 peškirić za %s', 'cosypaw' ),
+					Catalog::format_price( $step['price'] )
+				);
+
+			$nudge = sprintf( '<span class="cart-fab__nudge">%s</span>', esc_html( $copy ) );
 		}
 
 		return sprintf(

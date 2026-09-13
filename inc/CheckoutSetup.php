@@ -65,13 +65,17 @@ final class CheckoutSetup {
 	/**
 	 * Cart subtotal from which delivery is on the shop (RSD).
 	 *
-	 * A flat amount, not a package price. It used to be read off the live Trio
-	 * product, which tied the promise to one bundle: reprice the Trio and the
-	 * threshold moved under it, and two towels bought loose for more than the
-	 * Trio still paid postage. The offer is now the same for every basket —
-	 * spend this much, however you reach it, and delivery is free — and the
-	 * Trio card only claims free shipping while its own price clears the bar
+	 * A flat amount, not a package price. It used to be read off the live
+	 * bundle product, which tied the promise to one package: reprice that and
+	 * the threshold moved with it, while towels bought loose for more than the
+	 * bundle still paid postage. The offer is now the same for every basket —
+	 * spend this much, however you reach it, and delivery is free — and a
+	 * package card only claims free shipping while its own price clears the bar
 	 * (Catalog::packages() derives that, it is no longer authored).
+	 *
+	 * The 2+1 package is 1.490 and does not clear it on its own; four towels —
+	 * the package plus a single, 2.280 — do. That is deliberate: the bar sits
+	 * one towel past the package so it still has something to ask for.
 	 *
 	 * @var int
 	 */

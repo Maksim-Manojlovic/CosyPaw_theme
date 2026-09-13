@@ -38,9 +38,8 @@ final class FloatingCartTest extends TestCase {
 	 * @var array<string,int>
 	 */
 	private const LIVE_PRICES = array(
-		'solo' => 990,
+		'solo' => 790,
 		'duo'  => 1490,
-		'trio' => 1980,
 	);
 
 	/**
@@ -178,7 +177,7 @@ final class FloatingCartTest extends TestCase {
 		// aria-hidden that a bare substring search would trip over.
 		$this->assertStringContainsString( 'class="cart-fab">', $markup );
 		$this->assertStringContainsString( 'cart-fab__count">2<', $markup );
-		// Two towels at 990, less the 490 the Duo saves.
+		// Two towels at 790, less the 90 the part-filled package saves.
 		$this->assertStringContainsString( '1.490 RSD', $markup );
 	}
 
@@ -187,7 +186,7 @@ final class FloatingCartTest extends TestCase {
 	 *
 	 * This is the regression that shipped: WooCommerce's get_cart_total() is
 	 * the cart *contents* total and excludes fees, so the pill advertised
-	 * 2.970 for three towels the shop was charging 1.980 for — the exact
+	 * 2.370 for three towels the shop was charging 1.490 for — the exact
 	 * number the package pricing exists to replace. It passed review because
 	 * the WC_Cart stub folded fees into its own get_cart_total(); the stub
 	 * mirrors WooCommerce now, and this asserts the undiscounted figure is
@@ -196,22 +195,23 @@ final class FloatingCartTest extends TestCase {
 	public function test_the_pill_never_quotes_the_undiscounted_price(): void {
 		$markup = $this->pill( 3 );
 
-		$this->assertStringContainsString( '1.980 RSD', $markup );
-		$this->assertStringNotContainsString( '2.970', $markup );
+		$this->assertStringContainsString( '1.490 RSD', $markup );
+		$this->assertStringNotContainsString( '2.370', $markup );
 	}
 
 	/**
-	 * Two towels are one short of a Trio, and the pill says what that costs.
+	 * Two towels are one short of the package, and the third one is free — the
+	 * pill says so rather than quoting it at 0 RSD.
 	 */
 	public function test_the_nudge_quotes_the_next_towel(): void {
 		$markup = $this->pill( 2 );
 
 		$this->assertStringContainsString( 'cart-fab__nudge', $markup );
-		$this->assertStringContainsString( '490 RSD', $markup );
+		$this->assertStringContainsString( 'Još 1 peškirić gratis', $markup );
 	}
 
 	/**
-	 * A whole Trio is already at an optimum: the fourth towel is full price,
+	 * A whole package is already at an optimum: the fourth towel is full price,
 	 * so the pill offers nothing rather than dressing it up.
 	 */
 	public function test_a_complete_package_gets_no_nudge(): void {

@@ -191,9 +191,9 @@ final class BundlePricingTest extends TestCase {
 
 	/**
 	 * The plan the shop asked for, towel by towel: every third towel opens a
-	 * package and the leftovers are charged singly. Two towels are two singles,
-	 * which is dearer than the three-towel package beside them — the shop's own
-	 * offer, and the reason next_step() has something to say there.
+	 * package and the leftovers are charged singly. Two towels already pay the
+	 * package price — plan() part-fills it rather than charging two singles at
+	 * 1.580 — so the third towel does not move the total at all.
 	 *
 	 * @dataProvider plan_provider
 	 *
@@ -216,11 +216,11 @@ final class BundlePricingTest extends TestCase {
 	public static function plan_provider(): array {
 		return array(
 			'one is a single'              => array( 1, 790, array( 'solo' => 1 ) ),
-			'two are two singles'          => array( 2, 1580, array( 'solo' => 2 ) ),
-			'three make a package'         => array( 3, 1490, array( 'duo' => 1 ) ),
+			'two open a package'           => array( 2, 1490, array( 'duo' => 1 ) ),
+			'three fill it'                => array( 3, 1490, array( 'duo' => 1 ) ),
 			'four are a package + single'  => array( 4, 2280, array( 'duo' => 1, 'solo' => 1 ) ),
-			'five are a package + two'     => array( 5, 3070, array( 'duo' => 1, 'solo' => 2 ) ),
-			'six are two packages'         => array( 6, 2980, array( 'duo' => 2 ) ),
+			'five open a second package'   => array( 5, 2980, array( 'duo' => 2 ) ),
+			'six fill it'                  => array( 6, 2980, array( 'duo' => 2 ) ),
 			'seven are two packages + one' => array( 7, 3770, array( 'duo' => 2, 'solo' => 1 ) ),
 		);
 	}
@@ -288,12 +288,31 @@ final class BundlePricingTest extends TestCase {
 	}
 
 	/**
-	 * Two towels are two singles. There is no two-towel package to fall back
-	 * on, so the cart is charged what the lines say and gets no saving row —
-	 * the offer there is the third towel, which next_step() makes.
+	 * Two towels pay the package price, part-filled. It saves 90 against the
+	 * two singles they were clicked as, and it is what makes the third towel
+	 * free in the only way a shopper reads without being told: the total does
+	 * not move when they add it.
 	 */
-	public function test_two_towels_are_not_a_package(): void {
-		$this->assertSame( array(), $this->fees_for( array( $this->motifs( 2 ) ) ) );
+	public function test_two_towels_already_pay_the_package_price(): void {
+		$fees = $this->fees_for( array( $this->motifs( 2 ) ) );
+
+		$this->assertCount( 1, $fees );
+		// 2 x 790 = 1.580 charged, 1.490 owed.
+		$this->assertSame( -90.0, $fees[0]['amount'] );
+		$this->assertStringContainsString( '2+1 paket', $fees[0]['name'] );
+	}
+
+	/**
+	 * ...and the third towel is then genuinely free: the same cart with one
+	 * more towel in it owes exactly the same money.
+	 */
+	public function test_the_third_towel_does_not_move_the_total(): void {
+		$tiers = $this->tiers();
+
+		$this->assertSame(
+			BundlePricing::plan( 2, $tiers )['total'],
+			BundlePricing::plan( 3, $tiers )['total']
+		);
 	}
 
 	/**
@@ -325,7 +344,7 @@ final class BundlePricingTest extends TestCase {
 	 * still explains itself months later.
 	 */
 	public function test_the_fee_label_names_the_packages(): void {
-		$fees = $this->fees_for( array( $this->motifs( 5 ) ) );
+		$fees = $this->fees_for( array( $this->motifs( 4 ) ) );
 
 		$this->assertCount( 1, $fees );
 		$this->assertStringContainsString( '2+1 paket', $fees[0]['name'] );
@@ -340,9 +359,8 @@ final class BundlePricingTest extends TestCase {
 	 *
 	 * @param int      $towels Towels in the cart.
 	 * @param int|null $price  Expected marginal price, or null for no nudge.
-	 * @param int      $rebate Expected drop in the bill, where the towel is free.
 	 */
-	public function test_next_step_only_speaks_when_the_next_towel_is_cheap( int $towels, ?int $price, int $rebate = 0 ): void {
+	public function test_next_step_only_speaks_when_the_next_towel_is_cheap( int $towels, ?int $price ): void {
 		$step = ( new BundlePricing( 'cosypaw', new Catalog() ) )->next_step( $towels );
 
 		if ( null === $price ) {
@@ -353,26 +371,24 @@ final class BundlePricingTest extends TestCase {
 
 		$this->assertNotNull( $step );
 		$this->assertSame( $price, $step['price'] );
-		$this->assertSame( $rebate, $step['rebate'] );
-		$this->assertSame( 790 - ( $price - $rebate ), $step['saving'] );
+		$this->assertSame( 790 - $price, $step['saving'] );
 	}
 
 	/**
 	 * Towel count => what one more costs, or null when it costs full price.
 	 *
-	 * The third towel is the offer: two singles are 1.580 and the package that
-	 * holds three is 1.490, so it is free and takes 90 off the bill as well.
-	 * Silence everywhere the next towel is simply a towel.
+	 * The second towel opens the package at 700, and the third fills it for
+	 * nothing. Silence at three, where the fourth is a towel like any other.
 	 *
-	 * @return array<string,array{0:int,1:int|null,2?:int}>
+	 * @return array<string,array{0:int,1:int|null}>
 	 */
 	public static function next_step_provider(): array {
 		return array(
-			'one towel is not there yet'    => array( 1, null ),
-			'two towels open a package'     => array( 2, 0, 90 ),
+			'one towel opens a package'     => array( 1, 700 ),
+			'two towels fill it for free'   => array( 2, 0 ),
 			'three towels are complete'     => array( 3, null ),
-			'four towels are mid-package'   => array( 4, null ),
-			'five towels open a second one' => array( 5, 0, 90 ),
+			'four towels open the next one' => array( 4, 700 ),
+			'five towels fill it for free'  => array( 5, 0 ),
 			'six towels are complete'       => array( 6, null ),
 		);
 	}

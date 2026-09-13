@@ -251,6 +251,18 @@ final class BundlePricing {
 	 * O(towels x tiers) over a cart-sized number, so correctness costs nothing
 	 * worth counting.
 	 *
+	 * A package may be bought part-filled, which is what `min( $qty, $n )`
+	 * below is for. Two towels are then the 1.490 package rather than two 790
+	 * singles at 1.580, and the shopper is 90 RSD better off for buying two
+	 * than the price list alone would make them. That is deliberate: the third
+	 * towel is now free in the plainest possible sense — the total does not
+	 * move when it is added — and nobody has to read a sentence to find that
+	 * out. The shop only ever gains from the shopper taking the slot.
+	 *
+	 * It can never overcharge: an under-filled package is one more option the
+	 * DP may take, and it takes it only where it beats every other way of
+	 * paying for the same towels.
+	 *
 	 * Ties keep the plan found first, and tiers() hands the list over sorted
 	 * largest-package-first, so an even split is described with the biggest
 	 * packages that produce it.
@@ -277,11 +289,14 @@ final class BundlePricing {
 				$qty   = (int) $tier['qty'];
 				$price = (int) $tier['price'];
 
-				if ( $qty < 1 || $price < 1 || $qty > $n ) {
+				if ( $qty < 1 || $price < 1 ) {
 					continue;
 				}
 
-				$prev = $best[ $n - $qty ];
+				// Part-filled where the count runs out mid-package: the price
+				// is the package's either way, and the empty slots are what
+				// the next towel goes into for nothing.
+				$prev = $best[ $n - min( $qty, $n ) ];
 				if ( null === $prev ) {
 					continue;
 				}
@@ -343,15 +358,16 @@ final class BundlePricing {
 	 * an optimum, and the next saving is three towels away, which is a bigger
 	 * ask than a floating pill should make.
 	 *
-	 * The marginal price can be *negative*, and that is the loudest offer the
-	 * shop has: two towels are two singles at 1.580 while three are the 1.490
-	 * package, so the third towel is free and hands 90 RSD back. Silence there
-	 * was a bug — the one cart with an unarguable next step said nothing —
-	 * which is why a drop is reported as a zero price and a `rebate` rather
-	 * than filtered out with the full-price steps.
+	 * The marginal price can be *zero*, and that is the loudest offer the shop
+	 * has: two towels already pay the package price, so the third one does not
+	 * move the total at all. Silence there was a bug — the one cart with an
+	 * unarguable next step said nothing — so a free towel is reported as a
+	 * zero price rather than filtered out with the full-price steps. It can
+	 * never go below zero: plan() may part-fill a package, so a plan for one
+	 * more towel is always a plan for the towels already there.
 	 *
 	 * @param int $towels Towels currently in the cart.
-	 * @return array{price:int,saving:int,rebate:int}|null Marginal price, what it saves against a single, and what it takes off the bill.
+	 * @return array{price:int,saving:int}|null Marginal price and what it saves against a single, or null.
 	 */
 	public function next_step( int $towels ): ?array {
 		$tiers = $this->tiers();
@@ -389,7 +405,6 @@ final class BundlePricing {
 		return array(
 			'price'  => max( 0, $marginal ),
 			'saving' => $single - $marginal,
-			'rebate' => max( 0, -$marginal ),
 		);
 	}
 

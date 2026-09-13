@@ -177,8 +177,8 @@ final class FloatingCartTest extends TestCase {
 		// aria-hidden that a bare substring search would trip over.
 		$this->assertStringContainsString( 'class="cart-fab">', $markup );
 		$this->assertStringContainsString( 'cart-fab__count">2<', $markup );
-		// Two towels at 790, and no package saving to take off them.
-		$this->assertStringContainsString( '1.580 RSD', $markup );
+		// Two towels at 790, less the 90 the part-filled package saves.
+		$this->assertStringContainsString( '1.490 RSD', $markup );
 	}
 
 	/**

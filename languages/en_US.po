@@ -611,11 +611,17 @@ msgstr "One more towel costs %s — and delivery is on us."
 msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "One more towel costs %1$s instead of full price — you save %2$s."
 
-msgid "Još jedan peškirić je gratis."
-msgstr "One more towel is free."
+msgid "Još jedan peškirić je gratis — ukupna cena se ne menja."
+msgstr "One more towel is free — the total does not change."
 
-msgid "Još jedan peškirić je gratis — i račun ti je manji za %s."
-msgstr "One more towel is free — and your total drops by %s."
+msgid "Sledeći peškirić"
+msgstr "Next towel"
+
+msgid "Gratis"
+msgstr "Free"
+
+msgid "Dodaj još jedan — ukupna cena ostaje ista."
+msgstr "Add one more — the total stays the same."
 
 msgid "Dodaj"
 msgstr "Add"

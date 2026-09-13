@@ -285,10 +285,9 @@ final class UpsellTest extends TestCase {
 
 	/**
 	 * Short of the threshold, the row names the one thing that closes it. Two
-	 * towels are 1.580 to pay — two singles, since the shop has no two-towel
-	 * package — against a 2.000 bar, and a towel covers the 420 difference, so
-	 * the instruction is "add one" rather than an amount nobody can spend
-	 * exactly.
+	 * towels are 1.490 to pay — the package price, part-filled — against a
+	 * 2.000 bar, and a towel covers the 510 difference, so the instruction is
+	 * "add one" rather than an amount nobody can spend exactly.
 	 */
 	public function test_the_totals_row_asks_for_one_more_towel(): void {
 		$markup = $this->shipping_row(
@@ -297,7 +296,7 @@ final class UpsellTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
-		$this->assertStringContainsString( '420 RSD', $markup );
+		$this->assertStringContainsString( '510 RSD', $markup );
 		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
 	}
 
@@ -343,6 +342,55 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
+	 * Two towels have already paid for three, and the totals table says so on
+	 * its own row — beside the number it does not change, for the shopper who
+	 * reads nothing else on the page.
+	 */
+	public function test_the_totals_table_offers_the_free_towel(): void {
+		$markup = $this->totals_row( 2, 'cart_free_towel_row' );
+
+		$this->assertStringContainsString( 'cosypaw-free-row', $markup );
+		$this->assertStringContainsString( 'Sledeći peškirić', $markup );
+		$this->assertStringContainsString( 'Gratis', $markup );
+	}
+
+	/**
+	 * ...and stays quiet on a full package, where the next towel is a towel at
+	 * full price. A "free" row that is not free is the one thing this must
+	 * never print.
+	 */
+	public function test_the_free_towel_row_is_silent_on_a_full_package(): void {
+		$this->assertSame( '', $this->totals_row( 3, 'cart_free_towel_row' ) );
+	}
+
+	/**
+	 * Render one of the theme's totals rows against a cart of this many towels.
+	 *
+	 * @param int    $towels How many motifs the cart holds.
+	 * @param string $method Upsell method printing the row.
+	 * @return string
+	 */
+	private function totals_row( int $towels, string $method ): string {
+		$this->cart = new \WC_Cart(
+			array(
+				array(
+					'product_id' => self::MOTIF_ID,
+					'quantity'   => $towels,
+					'data'       => new \WC_Product( 'Žirafa', (string) self::LIVE_PRICES['solo'], true, self::MOTIF_ID ),
+				),
+			)
+		);
+
+		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
+		$pricing->apply_bundle_discount( $this->cart );
+
+		ob_start();
+		( new Upsell( 'cosypaw', $pricing, new Catalog() ) )->$method();
+
+		return (string) ob_get_clean();
+	}
+
+	/**
 	 * No free-delivery method, no row. An offer the checkout cannot keep is
 	 * worse than no offer — the rule the whole module follows.
 	 */
@@ -378,9 +426,10 @@ final class UpsellTest extends TestCase {
 		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
 		$this->assertStringContainsString( 'cosypaw-upsell', $markup );
-		// Two singles are 1.580; the package that holds three is 1.490.
-		$this->assertStringContainsString( 'gratis', $markup );
-		$this->assertStringContainsString( '90 RSD', $markup );
+		// Stated as free, never as "0 RSD" — and with the reason a shopper can
+		// check against the total beside it.
+		$this->assertStringContainsString( 'Još jedan peškirić je gratis', $markup );
+		$this->assertStringContainsString( 'ukupna cena se ne menja', $markup );
 	}
 
 	/**

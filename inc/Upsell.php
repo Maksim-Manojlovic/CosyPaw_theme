@@ -133,6 +133,14 @@ final class Upsell {
 
 		add_action( 'woocommerce_thankyou', array( $this, 'thankyou_picks' ), 15 );
 
+		// The free towel, on the totals table and above the delivery row at 10.
+		// The panel under the totals has said it since the marginal price
+		// learned to be zero, but the panel is a paragraph beside a strip of
+		// twenty photographs, and this is a shopper who has already decided to
+		// pay. The one table they are certainly reading gets the sentence too,
+		// in three words, next to the number it does not change.
+		add_action( 'woocommerce_cart_totals_before_order_total', array( $this, 'cart_free_towel_row' ), 5 );
+
 		// Inside the totals table, directly above "Ukupno". The offer panel in
 		// the collaterals already carried the progress bar, but it sits beside
 		// the totals rather than in them — and the one number a shopper reads
@@ -142,6 +150,35 @@ final class Upsell {
 		// was in fact cleared. The verdict belongs on the same table as the
 		// number that contradicts it.
 		add_action( 'woocommerce_cart_totals_before_order_total', array( $this, 'cart_shipping_row' ) );
+	}
+
+	/**
+	 * "The next towel is free", as a row of the cart totals table.
+	 *
+	 * Printed only where the marginal price really is zero — BundlePricing
+	 * answers that off the same plan the fee is booked from, so the row cannot
+	 * promise a towel the cart then charges for. Everything else the next towel
+	 * might be (cheap, full price) stays in the panel below: this row exists to
+	 * be read without being read, and a price on it would defeat that.
+	 *
+	 * @return void
+	 */
+	public function cart_free_towel_row(): void {
+		$towel = $this->next_towel();
+
+		if ( null === $towel || $towel['price'] > 0 ) {
+			return;
+		}
+
+		printf(
+			'<tr class="cosypaw-note-row cosypaw-free-row">' .
+				'<th>%1$s</th>' .
+				'<td data-title="%1$s"><strong>%2$s</strong><small>%3$s</small></td>' .
+			'</tr>',
+			esc_html__( 'Sledeći peškirić', 'cosypaw' ),
+			esc_html__( 'Gratis', 'cosypaw' ),
+			esc_html__( 'Dodaj još jedan — ukupna cena ostaje ista.', 'cosypaw' )
+		);
 	}
 
 	/**
@@ -196,7 +233,7 @@ final class Upsell {
 		}
 
 		printf(
-			'<tr class="cosypaw-ship-row cosypaw-ship-row--%1$s">' .
+			'<tr class="cosypaw-note-row cosypaw-ship-row cosypaw-ship-row--%1$s">' .
 				'<th>%2$s</th>' .
 				'<td data-title="%2$s"><strong>%3$s</strong>%4$s</td>' .
 			'</tr>',
@@ -344,27 +381,20 @@ final class Upsell {
 	/**
 	 * The "one more towel" line: what the next towel costs and what it saves.
 	 *
-	 * A free towel is stated as free rather than as "0 RSD", and where the
-	 * package is cheaper than the towels already in the cart — two singles at
-	 * 1.580 against the 1.490 package — the line says the bill goes down. That
-	 * is the whole offer in one sentence, and the cart it appears on is the one
-	 * cart where nobody has to be talked into anything.
+	 * A free towel is stated as free rather than as "0 RSD" — which is the whole
+	 * offer in one sentence, on the one cart where nobody has to be talked into
+	 * anything. The totals table says it again on its own row; this is the same
+	 * fact where the towels are, so neither screenful has to be read to find it.
 	 *
-	 * @param array{price:int,saving:int,rebate:int} $towel  Marginal towel.
-	 * @param bool                                   $closes Whether it also wins free delivery.
+	 * @param array{price:int,saving:int} $towel  Marginal towel.
+	 * @param bool                        $closes Whether it also wins free delivery.
 	 * @return void
 	 */
 	private function towel_line( array $towel, bool $closes ): void {
 		$price = Catalog::format_price( $towel['price'] );
 
 		if ( $towel['price'] < 1 ) {
-			$copy = $towel['rebate'] > 0
-				? sprintf(
-					/* translators: %s: formatted amount the bill drops by, e.g. "90 RSD". */
-					__( 'Još jedan peškirić je gratis — i račun ti je manji za %s.', 'cosypaw' ),
-					Catalog::format_price( $towel['rebate'] )
-				)
-				: __( 'Još jedan peškirić je gratis.', 'cosypaw' );
+			$copy = __( 'Još jedan peškirić je gratis — ukupna cena se ne menja.', 'cosypaw' );
 		} elseif ( $closes ) {
 			/* translators: %s: formatted price of one more towel, e.g. "490 RSD". */
 			$copy = sprintf( __( 'Još jedan peškirić košta %s — i dostava je na nama.', 'cosypaw' ), $price );
@@ -576,7 +606,7 @@ final class Upsell {
 	/**
 	 * What one more towel costs.
 	 *
-	 * @return array{price:int,saving:int,rebate:int}|null
+	 * @return array{price:int,saving:int}|null
 	 */
 	private function next_towel(): ?array {
 		$cart = $this->cart();
@@ -594,7 +624,6 @@ final class Upsell {
 		return array(
 			'price'  => (int) $step['price'],
 			'saving' => (int) $step['saving'],
-			'rebate' => (int) $step['rebate'],
 		);
 	}
 

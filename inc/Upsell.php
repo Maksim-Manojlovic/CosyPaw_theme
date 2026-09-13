@@ -276,8 +276,8 @@ final class Upsell {
 	 * replacing exactly two nodes of the re-rendered page: the cart form and
 	 * `.cart_totals` (see update_wc_div() in cart.js). Everything else in the
 	 * collaterals, this offer included, keeps whatever it said before the
-	 * change — so a cart that dropped from three towels back to two kept the
-	 * silence a whole Trio had earned. CartUpsell re-renders this slot from the
+	 * change — so a cart that dropped from four towels back to three kept the
+	 * silence a whole package had earned. CartUpsell re-renders this slot from the
 	 * same response WooCommerce is already holding, which needs the slot to be
 	 * on the page in both states: it is the anchor an offer comes back into.
 	 *
@@ -314,8 +314,12 @@ final class Upsell {
 		}
 
 		// One towel away from free delivery is a single sentence, not two
-		// competing ones — see towel_line().
-		$closes = null !== $towel && null !== $shipping && 'gap' === $shipping['state'] && $shipping['gap'] <= $shipping['unit'];
+		// competing ones — see towel_line(). Not where the towel is free: that
+		// line is already carrying the better news, and folding the delivery
+		// into it would cost the shopper the progress bar as well.
+		$closes = null !== $towel && $towel['price'] > 0
+			&& null !== $shipping && 'gap' === $shipping['state']
+			&& $shipping['gap'] <= $shipping['unit'];
 
 		echo '<div class="cosypaw-upsell">';
 
@@ -340,22 +344,38 @@ final class Upsell {
 	/**
 	 * The "one more towel" line: what the next towel costs and what it saves.
 	 *
-	 * @param array{price:int,saving:int} $towel  Marginal towel.
-	 * @param bool                        $closes Whether it also wins free delivery.
+	 * A free towel is stated as free rather than as "0 RSD", and where the
+	 * package is cheaper than the towels already in the cart — two singles at
+	 * 1.580 against the 1.490 package — the line says the bill goes down. That
+	 * is the whole offer in one sentence, and the cart it appears on is the one
+	 * cart where nobody has to be talked into anything.
+	 *
+	 * @param array{price:int,saving:int,rebate:int} $towel  Marginal towel.
+	 * @param bool                                   $closes Whether it also wins free delivery.
 	 * @return void
 	 */
 	private function towel_line( array $towel, bool $closes ): void {
 		$price = Catalog::format_price( $towel['price'] );
 
-		$copy = $closes
+		if ( $towel['price'] < 1 ) {
+			$copy = $towel['rebate'] > 0
+				? sprintf(
+					/* translators: %s: formatted amount the bill drops by, e.g. "90 RSD". */
+					__( 'Još jedan peškirić je gratis — i račun ti je manji za %s.', 'cosypaw' ),
+					Catalog::format_price( $towel['rebate'] )
+				)
+				: __( 'Još jedan peškirić je gratis.', 'cosypaw' );
+		} elseif ( $closes ) {
 			/* translators: %s: formatted price of one more towel, e.g. "490 RSD". */
-			? sprintf( __( 'Još jedan peškirić košta %s — i dostava je na nama.', 'cosypaw' ), $price )
-			: sprintf(
+			$copy = sprintf( __( 'Još jedan peškirić košta %s — i dostava je na nama.', 'cosypaw' ), $price );
+		} else {
+			$copy = sprintf(
 				/* translators: 1: formatted price of one more towel, 2: formatted saving against the single price. */
 				__( 'Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s.', 'cosypaw' ),
 				$price,
 				Catalog::format_price( $towel['saving'] )
 			);
+		}
 
 		printf( '<p class="cosypaw-upsell__copy">%s</p>', esc_html( $copy ) );
 	}
@@ -556,7 +576,7 @@ final class Upsell {
 	/**
 	 * What one more towel costs.
 	 *
-	 * @return array{price:int,saving:int}|null
+	 * @return array{price:int,saving:int,rebate:int}|null
 	 */
 	private function next_towel(): ?array {
 		$cart = $this->cart();
@@ -574,6 +594,7 @@ final class Upsell {
 		return array(
 			'price'  => (int) $step['price'],
 			'saving' => (int) $step['saving'],
+			'rebate' => (int) $step['rebate'],
 		);
 	}
 
@@ -581,8 +602,8 @@ final class Upsell {
 	 * The motifs the cart already holds.
 	 *
 	 * What the strip leaves out. A package counts for none of them: its motifs
-	 * are item data rather than products, and the Trio a buyer assembled says
-	 * nothing about which single towels they have seen.
+	 * are item data rather than products, and the package a buyer assembled
+	 * says nothing about which single towels they have seen.
 	 *
 	 * @return int[]
 	 */
@@ -660,7 +681,7 @@ final class Upsell {
 		// refuses to calculate one until a shipping country is known, and until
 		// then get_packages() is empty. Reading the bar off a rate was therefore
 		// silence on the one screen where the offer decides a sale — a cart
-		// holding a single Trio said nothing about what another towel would win.
+		// holding one package said nothing about what another towel would win.
 		// The zones are readable without an address, so the bar comes from the
 		// shop's own configuration when no rate has been asked for yet.
 		if ( $min <= 0.0 ) {

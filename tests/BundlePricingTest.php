@@ -2,10 +2,10 @@
 /**
  * Unit tests for cart-level package pricing.
  *
- * The prices exercised here are the live shop's (990 / 1.490 / 1.980), not
- * Catalog's seed, because that is what the class actually prices against —
- * inject_package_ids() replaces the seed with WooCommerce's numbers before
- * BundlePricing ever sees a package.
+ * The prices exercised here are the live shop's (790 single, 1.490 for the 2+1
+ * package), not Catalog's seed, because that is what the class actually prices
+ * against — inject_package_ids() replaces the seed with WooCommerce's numbers
+ * before BundlePricing ever sees a package.
  *
  * @package CosyPaw\Tests
  */
@@ -42,9 +42,8 @@ final class BundlePricingTest extends TestCase {
 	 * @var array<string,int>
 	 */
 	private const LIVE_PRICES = array(
-		'solo' => 990,
+		'solo' => 790,
 		'duo'  => 1490,
-		'trio' => 1980,
 	);
 
 	/**
@@ -55,7 +54,6 @@ final class BundlePricingTest extends TestCase {
 	private const PACKAGE_IDS = array(
 		'solo' => 101,
 		'duo'  => 102,
-		'trio' => 103,
 	);
 
 	/**
@@ -68,10 +66,8 @@ final class BundlePricingTest extends TestCase {
 	/**
 	 * Package prices for the test at hand.
 	 *
-	 * Defaults to LIVE_PRICES. A test that needs the shop's real ladder — where
-	 * four towels are cheaper as two Duos than as a Trio and a single — sets
-	 * its own, because that is the arrangement upgrade_for_free_delivery()
-	 * exists for and these prices do not produce it.
+	 * Defaults to LIVE_PRICES; a test that needs a different ladder sets its
+	 * own before calling stub_packages().
 	 *
 	 * @var array<string,int>
 	 */
@@ -188,16 +184,16 @@ final class BundlePricingTest extends TestCase {
 	 */
 	private function tiers(): array {
 		return array(
-			array( 'id' => 'trio', 'name' => 'Trio paket', 'qty' => 3, 'price' => self::LIVE_PRICES['trio'] ),
-			array( 'id' => 'duo', 'name' => 'Duo paket', 'qty' => 2, 'price' => self::LIVE_PRICES['duo'] ),
-			array( 'id' => 'solo', 'name' => 'Pojedinačno', 'qty' => 1, 'price' => self::LIVE_PRICES['solo'] ),
+			array( 'id' => 'duo', 'name' => '2+1 paket', 'qty' => 3, 'price' => self::LIVE_PRICES['duo'] ),
+			array( 'id' => 'solo', 'name' => 'Single', 'qty' => 1, 'price' => self::LIVE_PRICES['solo'] ),
 		);
 	}
 
 	/**
-	 * The plan the shop asked for, towel by towel: pairs become a Duo, threes a
-	 * Trio, the fourth towel is charged singly, and the fifth reopens a Duo
-	 * alongside the Trio rather than splitting into two pairs.
+	 * The plan the shop asked for, towel by towel: every third towel opens a
+	 * package and the leftovers are charged singly. Two towels are two singles,
+	 * which is dearer than the three-towel package beside them — the shop's own
+	 * offer, and the reason next_step() has something to say there.
 	 *
 	 * @dataProvider plan_provider
 	 *
@@ -219,18 +215,18 @@ final class BundlePricingTest extends TestCase {
 	 */
 	public static function plan_provider(): array {
 		return array(
-			'one is a single'           => array( 1, 990, array( 'solo' => 1 ) ),
-			'two make a duo'            => array( 2, 1490, array( 'duo' => 1 ) ),
-			'three make a trio'         => array( 3, 1980, array( 'trio' => 1 ) ),
-			'four are a trio + single'  => array( 4, 2970, array( 'trio' => 1, 'solo' => 1 ) ),
-			'five are a trio + duo'     => array( 5, 3470, array( 'trio' => 1, 'duo' => 1 ) ),
-			'six are two trios'         => array( 6, 3960, array( 'trio' => 2 ) ),
-			'seven are two trios + one' => array( 7, 4950, array( 'trio' => 2, 'solo' => 1 ) ),
+			'one is a single'              => array( 1, 790, array( 'solo' => 1 ) ),
+			'two are two singles'          => array( 2, 1580, array( 'solo' => 2 ) ),
+			'three make a package'         => array( 3, 1490, array( 'duo' => 1 ) ),
+			'four are a package + single'  => array( 4, 2280, array( 'duo' => 1, 'solo' => 1 ) ),
+			'five are a package + two'     => array( 5, 3070, array( 'duo' => 1, 'solo' => 2 ) ),
+			'six are two packages'         => array( 6, 2980, array( 'duo' => 2 ) ),
+			'seven are two packages + one' => array( 7, 3770, array( 'duo' => 2, 'solo' => 1 ) ),
 		);
 	}
 
 	/**
-	 * Four motifs clicked one at a time are charged as a Trio plus a single,
+	 * Four motifs clicked one at a time are charged as a package plus a single,
 	 * which is the whole point: the shopper never had to find the bundle
 	 * builder to get the bundle price.
 	 */
@@ -238,8 +234,8 @@ final class BundlePricingTest extends TestCase {
 		$fees = $this->fees_for( array( $this->motifs( 4 ) ) );
 
 		$this->assertCount( 1, $fees );
-		// 4 x 990 = 3.960 charged, 2.970 owed.
-		$this->assertSame( -990.0, $fees[0]['amount'] );
+		// 4 x 790 = 3.160 charged, 2.280 owed.
+		$this->assertSame( -880.0, $fees[0]['amount'] );
 		$this->assertFalse( $fees[0]['taxable'] );
 	}
 
@@ -250,32 +246,33 @@ final class BundlePricingTest extends TestCase {
 	public function test_separate_lines_count_as_one_pool(): void {
 		$fees = $this->fees_for(
 			array(
-				$this->line( self::MOTIF_ID, 990 ),
-				$this->line( self::MOTIF_ID, 990 ),
-				$this->line( self::MOTIF_ID, 990 ),
-				$this->line( self::MOTIF_ID, 990 ),
+				$this->line( self::MOTIF_ID, 790 ),
+				$this->line( self::MOTIF_ID, 790 ),
+				$this->line( self::MOTIF_ID, 790 ),
+				$this->line( self::MOTIF_ID, 790 ),
 			)
 		);
 
 		$this->assertCount( 1, $fees );
-		$this->assertSame( -990.0, $fees[0]['amount'] );
+		$this->assertSame( -880.0, $fees[0]['amount'] );
 	}
 
 	/**
-	 * A package bought in the bundle builder joins the same count: a Duo plus
-	 * one loose motif is three towels, so it owes the Trio price.
+	 * A package bought in the bundle builder joins the same count: a package
+	 * plus three loose motifs is six towels, so it owes two package prices
+	 * rather than one package and three singles.
 	 */
 	public function test_an_existing_package_joins_the_count(): void {
 		$fees = $this->fees_for(
 			array(
 				$this->line( self::PACKAGE_IDS['duo'], self::LIVE_PRICES['duo'] ),
-				$this->motifs( 1 ),
+				$this->motifs( 3 ),
 			)
 		);
 
 		$this->assertCount( 1, $fees );
-		// 1.490 + 990 = 2.480 charged, 1.980 owed.
-		$this->assertSame( -500.0, $fees[0]['amount'] );
+		// 1.490 + 3 x 790 = 3.860 charged, 2.980 owed.
+		$this->assertSame( -880.0, $fees[0]['amount'] );
 	}
 
 	/**
@@ -284,10 +281,19 @@ final class BundlePricingTest extends TestCase {
 	 */
 	public function test_an_optimal_cart_gets_no_fee(): void {
 		$fees = $this->fees_for(
-			array( $this->line( self::PACKAGE_IDS['trio'], self::LIVE_PRICES['trio'] ) )
+			array( $this->line( self::PACKAGE_IDS['duo'], self::LIVE_PRICES['duo'] ) )
 		);
 
 		$this->assertSame( array(), $fees );
+	}
+
+	/**
+	 * Two towels are two singles. There is no two-towel package to fall back
+	 * on, so the cart is charged what the lines say and gets no saving row —
+	 * the offer there is the third towel, which next_step() makes.
+	 */
+	public function test_two_towels_are_not_a_package(): void {
+		$this->assertSame( array(), $this->fees_for( array( $this->motifs( 2 ) ) ) );
 	}
 
 	/**
@@ -322,8 +328,8 @@ final class BundlePricingTest extends TestCase {
 		$fees = $this->fees_for( array( $this->motifs( 5 ) ) );
 
 		$this->assertCount( 1, $fees );
-		$this->assertStringContainsString( 'Trio paket', $fees[0]['name'] );
-		$this->assertStringContainsString( 'Duo paket', $fees[0]['name'] );
+		$this->assertStringContainsString( '2+1 paket', $fees[0]['name'] );
+		$this->assertStringContainsString( 'Single', $fees[0]['name'] );
 	}
 
 	/**
@@ -334,8 +340,9 @@ final class BundlePricingTest extends TestCase {
 	 *
 	 * @param int      $towels Towels in the cart.
 	 * @param int|null $price  Expected marginal price, or null for no nudge.
+	 * @param int      $rebate Expected drop in the bill, where the towel is free.
 	 */
-	public function test_next_step_only_speaks_when_the_next_towel_is_cheap( int $towels, ?int $price ): void {
+	public function test_next_step_only_speaks_when_the_next_towel_is_cheap( int $towels, ?int $price, int $rebate = 0 ): void {
 		$step = ( new BundlePricing( 'cosypaw', new Catalog() ) )->next_step( $towels );
 
 		if ( null === $price ) {
@@ -346,22 +353,27 @@ final class BundlePricingTest extends TestCase {
 
 		$this->assertNotNull( $step );
 		$this->assertSame( $price, $step['price'] );
-		$this->assertSame( 990 - $price, $step['saving'] );
+		$this->assertSame( $rebate, $step['rebate'] );
+		$this->assertSame( 790 - ( $price - $rebate ), $step['saving'] );
 	}
 
 	/**
 	 * Towel count => what one more costs, or null when it costs full price.
 	 *
-	 * @return array<string,array{0:int,1:int|null}>
+	 * The third towel is the offer: two singles are 1.580 and the package that
+	 * holds three is 1.490, so it is free and takes 90 off the bill as well.
+	 * Silence everywhere the next towel is simply a towel.
+	 *
+	 * @return array<string,array{0:int,1:int|null,2?:int}>
 	 */
 	public static function next_step_provider(): array {
 		return array(
-			'one towel opens a duo'      => array( 1, 500 ),
-			'two towels open a trio'     => array( 2, 490 ),
-			'three towels are complete'  => array( 3, null ),
-			'four towels reopen a duo'   => array( 4, 500 ),
-			'five towels open a trio'    => array( 5, 490 ),
-			'six towels are complete'    => array( 6, null ),
+			'one towel is not there yet'    => array( 1, null ),
+			'two towels open a package'     => array( 2, 0, 90 ),
+			'three towels are complete'     => array( 3, null ),
+			'four towels are mid-package'   => array( 4, null ),
+			'five towels open a second one' => array( 5, 0, 90 ),
+			'six towels are complete'       => array( 6, null ),
 		);
 	}
 
@@ -386,55 +398,38 @@ final class BundlePricingTest extends TestCase {
 	}
 
 	/**
-	 * Four towels take the Trio and a single rather than two Duos, because
-	 * that is what carries the delivery.
+	 * Four towels clear the free-delivery bar, which is what the ladder is
+	 * shaped for: the package alone is 1.490 and stops short of the 2.000, and
+	 * one more towel takes the basket to 2.280.
 	 *
-	 * On the shop's real ladder (690 / 990 / 1.390) two Duos are 1.980 and a
-	 * Trio plus a single is 2.080. The cheaper plan stops 20 RSD short of the
-	 * bar, so it saves the shopper 100 and then charges them the courier. The
-	 * dearer one is the better basket — and the only one the shop's own front
-	 * end offers, since the builder sells a single package at a time.
+	 * The rate is checked rather than the fee, because the fee is only half the
+	 * answer — the cart pays 3.160 in line items and the threshold is judged on
+	 * the 2.280 that is left after the saving.
 	 */
-	public function test_four_towels_take_the_trio_and_a_single_to_clear_the_bar(): void {
-		$this->prices = array( 'solo' => 690, 'duo' => 990, 'trio' => 1390 );
-		$this->stub_packages( self::PACKAGE_IDS );
+	public function test_four_towels_clear_the_free_delivery_bar(): void {
+		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 4, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
-		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 4, 'price' => 690 ) ) );
+		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
+		$pricing->apply_bundle_discount( $cart );
 
-		( new BundlePricing( 'cosypaw', new Catalog() ) )->apply_bundle_discount( $cart );
+		$this->assertSame( 2280.0, $pricing->payable_total( $cart ) );
 
-		// 4 x 690 = 2.760 in line items, charged 2.080: Trio + one single.
-		$this->assertCount( 1, $cart->fees );
-		$this->assertSame( -680.0, $cart->fees[0]['amount'] );
-		$this->assertStringContainsString( 'Trio paket', $cart->fees[0]['name'] );
-	}
+		$rates = $pricing->require_threshold_after_saving(
+			array( 'free_shipping:1' => new \WC_Mock_Shipping_Rate( 'free_shipping' ) )
+		);
 
-	/**
-	 * ...and the upgrade is not a licence to always fill with the biggest box.
-	 * Two towels cannot reach the bar however they are arranged, so they stay
-	 * on the cheapest plan and are charged the Duo price.
-	 */
-	public function test_a_cart_that_cannot_reach_the_bar_keeps_the_cheapest_plan(): void {
-		$this->prices = array( 'solo' => 690, 'duo' => 990, 'trio' => 1390 );
-		$this->stub_packages( self::PACKAGE_IDS );
-
-		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => 690 ) ) );
-
-		( new BundlePricing( 'cosypaw', new Catalog() ) )->apply_bundle_discount( $cart );
-
-		// 2 x 690 = 1.380, charged the 990 Duo.
-		$this->assertSame( -390.0, $cart->fees[0]['amount'] );
+		$this->assertArrayHasKey( 'free_shipping:1', $rates );
 	}
 
 	/**
 	 * Free delivery is judged on what the cart is worth after this module has
 	 * repriced it.
 	 *
-	 * Three towels clicked one at a time are 2.970 in line items and 1.980 to
+	 * Three towels clicked one at a time are 2.370 in line items and 1.490 to
 	 * pay. WooCommerce sees only the first number — a fee is neither an item
 	 * nor a coupon, so WC_Shipping_Free_Shipping cannot subtract it — and would
-	 * hand free delivery to a cart that pays the Trio price, while refusing it
-	 * to the identical Trio bought as a package. The rate is withdrawn instead.
+	 * hand free delivery to a cart that pays the package price, while refusing
+	 * it to the identical package bought as one. The rate is withdrawn instead.
 	 */
 	public function test_free_delivery_is_withdrawn_below_the_threshold_after_the_saving(): void {
 		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ) );
@@ -461,7 +456,7 @@ final class BundlePricingTest extends TestCase {
 		$cart = $this->cart(
 			array(
 				array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ),
-				array( 'id' => self::PACKAGE_IDS['trio'], 'qty' => 1, 'price' => self::LIVE_PRICES['trio'] ),
+				array( 'id' => self::PACKAGE_IDS['duo'], 'qty' => 1, 'price' => self::LIVE_PRICES['duo'] ),
 			)
 		);
 

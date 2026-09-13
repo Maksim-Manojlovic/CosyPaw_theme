@@ -3,9 +3,9 @@
  * BundlePricing — cart-level package pricing for loose towels.
  *
  * The shop sells the same towel two ways: as a motif product bought on its own
- * from the grid, and as a Duo/Trio package assembled in the bundle builder.
- * Nothing connected the two, so a shopper who clicked "Kupi" three times paid
- * three single prices while the identical three towels cost a Trio price next
+ * from the grid, and as a 2+1 package assembled in the bundle builder. Nothing
+ * connected the two, so a shopper who clicked "Kupi" three times paid three
+ * single prices while the identical three towels cost the package price next
  * to it. This module closes that gap: it counts every towel in the cart, works
  * out the cheapest way the shop itself would sell that many, and books the
  * difference as a negative fee.
@@ -76,10 +76,10 @@ final class BundlePricing {
 		add_action( 'woocommerce_cart_calculate_fees', array( $this, 'apply_bundle_discount' ) );
 
 		// Free delivery has to be judged on what the order is worth after this
-		// module has repriced it. Three towels clicked one at a time are 2.070
-		// in line items and 1.390 to pay, and WooCommerce measures only the
+		// module has repriced it. Three towels clicked one at a time are 2.370
+		// in line items and 1.490 to pay, and WooCommerce measures only the
 		// first of those — so the same three towels won free delivery bought
-		// loose and lost it bought as the Trio, which is the one thing the
+		// loose and lost it bought as the package, which is the one thing the
 		// bundle discount exists to make identical.
 		//
 		// Priority 5, ahead of CheckoutSetup::hide_paid_delivery_when_free()
@@ -228,8 +228,6 @@ final class BundlePricing {
 			return null;
 		}
 
-		$plan = $this->upgrade_for_free_delivery( $plan, $pool['towels'], $tiers );
-
 		// Rounded to whole RSD before comparing: the shop deals in dinars, and
 		// a sub-dinar "saving" is rounding noise, not a discount.
 		$discount = (int) round( $pool['subtotal'] ) - $plan['total'];
@@ -244,82 +242,14 @@ final class BundlePricing {
 	}
 
 	/**
-	 * Trade the cheapest plan for a bigger package where that wins free
-	 * delivery.
-	 *
-	 * Four towels are two Duos at 1.980 and a Trio plus a single at 2.080. The
-	 * cheaper plan is the cheaper plan, and it stops 20 RSD short of the bar —
-	 * so the shopper pays 100 less and then pays the courier, which is the
-	 * worse of the two outcomes for them. Charging the 100 and carrying the
-	 * delivery is the better basket, and it is also the one the shop's own
-	 * front end offers: the builder sells one package at a time, so "two Duos"
-	 * is an arrangement only this module ever proposed.
-	 *
-	 * Narrow on purpose. It fires only where the cheapest plan skips the
-	 * largest package *and* taking it clears the threshold — otherwise the
-	 * shopper would simply be charged more for nothing, which is what an
-	 * unconditional "always fill with the biggest box" rule does at every
-	 * count that does not happen to land past the bar.
-	 *
-	 * @param array{total:int,lines:array<string,int>}               $plan   Cheapest plan.
-	 * @param int                                                    $towels Towels being priced.
-	 * @param array<int,array{id:string,name:string,qty:int,price:int}> $tiers  Packages, largest first.
-	 * @return array{total:int,lines:array<string,int>}
-	 */
-	private function upgrade_for_free_delivery( array $plan, int $towels, array $tiers ): array {
-		$threshold = CheckoutSetup::free_shipping_threshold();
-
-		if ( $threshold < 1 || $plan['total'] >= $threshold ) {
-			return $plan;
-		}
-
-		$largest = $tiers[0] ?? null;
-		$qty     = (int) ( $largest['qty'] ?? 0 );
-		$price   = (int) ( $largest['price'] ?? 0 );
-
-		// Nothing to upgrade to: too few towels for the largest package, or a
-		// plan that already uses it and still falls short.
-		if ( $qty < 1 || $price < 1 || $qty > $towels || ! empty( $plan['lines'][ $largest['id'] ] ) ) {
-			return $plan;
-		}
-
-		$rest = self::plan( $towels - $qty, $tiers );
-
-		if ( $towels > $qty && $rest['total'] < 1 ) {
-			return $plan;
-		}
-
-		$total = $rest['total'] + $price;
-
-		// Only worth it if it actually clears the bar. It cannot be cheaper —
-		// the DP would have found it — so anything short of the threshold is
-		// the shopper paying more and getting nothing.
-		if ( $total < $threshold ) {
-			return $plan;
-		}
-
-		// The largest package leads, which is the order tiers() is in and how
-		// the breakdown reads on the cart row.
-		$lines = array( (string) $largest['id'] => 1 );
-		foreach ( $rest['lines'] as $id => $count ) {
-			$lines[ $id ] = ( $lines[ $id ] ?? 0 ) + $count;
-		}
-
-		return array(
-			'total' => $total,
-			'lines' => $lines,
-		);
-	}
-
-	/**
 	 * Cheapest way the shop itself would sell this many towels.
 	 *
-	 * Exact, not greedy. Greedy — fill with the largest package, then the
-	 * remainder — happens to be optimal at today's prices, but only by 10 RSD
-	 * at four towels (Trio + single 2.970 against two Duos 2.980). One price
-	 * edit in wp-admin flips that, and a greedy plan would then quietly
-	 * overcharge. The DP below is O(towels x tiers) over a cart-sized number,
-	 * so correctness costs nothing worth counting.
+	 * Exact, not greedy. With one package and a single towel the two agree at
+	 * every count, but the tiers are the shop's to edit: a second package, or
+	 * a price moved in wp-admin, is all it takes for "fill with the largest
+	 * box first" to overcharge — and it would do it quietly. The DP below is
+	 * O(towels x tiers) over a cart-sized number, so correctness costs nothing
+	 * worth counting.
 	 *
 	 * Ties keep the plan found first, and tiers() hands the list over sorted
 	 * largest-package-first, so an even split is described with the biggest
@@ -373,9 +303,9 @@ final class BundlePricing {
 		$plan = $best[ $towels ] ?? $empty;
 
 		// The DP fills the small counts first, so a plan's lines come out in
-		// the order the leftovers were settled — "1x Pojedinačno + 1x Trio
-		// paket". Reorder largest package first, which is how the breakdown
-		// reads on the cart row and how the packages page lists them.
+		// the order the leftovers were settled — "1x Single + 1x 2+1 paket".
+		// Reorder largest package first, which is how the breakdown reads on
+		// the cart row and how the packages page lists them.
 		$sizes = array();
 		foreach ( $tiers as $tier ) {
 			$sizes[ (string) $tier['id'] ] = (int) $tier['qty'];
@@ -409,12 +339,19 @@ final class BundlePricing {
 	 * The pill's nudge. It is the marginal price of the next towel under the
 	 * best plan, not an invitation: at three towels the fourth costs full
 	 * price, so nothing is offered rather than dressing a single up as a deal.
-	 * That silence is correct — a cart sitting on a whole Trio is already at an
-	 * optimum, and the next saving is two towels away, which is a bigger ask
-	 * than a floating pill should make.
+	 * That silence is correct — a cart sitting on a whole package is already at
+	 * an optimum, and the next saving is three towels away, which is a bigger
+	 * ask than a floating pill should make.
+	 *
+	 * The marginal price can be *negative*, and that is the loudest offer the
+	 * shop has: two towels are two singles at 1.580 while three are the 1.490
+	 * package, so the third towel is free and hands 90 RSD back. Silence there
+	 * was a bug — the one cart with an unarguable next step said nothing —
+	 * which is why a drop is reported as a zero price and a `rebate` rather
+	 * than filtered out with the full-price steps.
 	 *
 	 * @param int $towels Towels currently in the cart.
-	 * @return array{price:int,saving:int}|null Marginal price and what it saves, or null.
+	 * @return array{price:int,saving:int,rebate:int}|null Marginal price, what it saves against a single, and what it takes off the bill.
 	 */
 	public function next_step( int $towels ): ?array {
 		$tiers = $this->tiers();
@@ -434,38 +371,41 @@ final class BundlePricing {
 			return null;
 		}
 
-		$marginal = $this->charged_total( $towels + 1, $tiers ) - $this->charged_total( $towels, $tiers );
+		$next = $this->charged_total( $towels + 1, $tiers );
+		$now  = $this->charged_total( $towels, $tiers );
 
-		if ( $marginal < 1 || $marginal >= $single ) {
+		// An unpriceable count is not a step. Only the single tier makes every
+		// count reachable, and tiers() drops the whole list without one.
+		if ( $next < 1 || $now < 1 ) {
+			return null;
+		}
+
+		$marginal = $next - $now;
+
+		if ( $marginal >= $single ) {
 			return null;
 		}
 
 		return array(
-			'price'  => $marginal,
+			'price'  => max( 0, $marginal ),
 			'saving' => $single - $marginal,
+			'rebate' => max( 0, -$marginal ),
 		);
 	}
 
 	/**
 	 * What this many towels are actually charged.
 	 *
-	 * The cheapest plan, after upgrade_for_free_delivery() has had its say —
-	 * which is the number the cart will bill. next_step() quotes a marginal
-	 * price off two of these, and quoting it off the raw cheapest plan instead
-	 * would advertise a fourth towel at 590 that the cart then charges 690 for.
+	 * The cheapest plan, which is the number the cart will bill — plan_for()
+	 * prices the fee off the same call, so a quoted marginal price and the
+	 * charge that follows it cannot disagree.
 	 *
 	 * @param int                                                    $towels Towels to price.
 	 * @param array<int,array{id:string,name:string,qty:int,price:int}> $tiers  Available packages.
 	 * @return int
 	 */
 	private function charged_total( int $towels, array $tiers ): int {
-		$plan = self::plan( $towels, $tiers );
-
-		if ( $plan['total'] < 1 ) {
-			return $plan['total'];
-		}
-
-		return $this->upgrade_for_free_delivery( $plan, $towels, $tiers )['total'];
+		return self::plan( $towels, $tiers )['total'];
 	}
 
 	/**
@@ -572,8 +512,9 @@ final class BundlePricing {
 	 * Product id => how many towels one of it puts in the cart.
 	 *
 	 * Motif products are one towel each; a package product is worth its own
-	 * quantity, which is what lets a Duo already in the cart combine with a
-	 * loose motif into Trio pricing instead of sitting outside the count.
+	 * quantity, which is what lets a package already in the cart combine with
+	 * three loose motifs into a second package price instead of sitting
+	 * outside the count.
 	 *
 	 * @return array<int,int>
 	 */
@@ -628,7 +569,7 @@ final class BundlePricing {
 
 		$parts = array();
 		foreach ( $lines as $id => $count ) {
-			// Not translated: "2x Trio paket" is a count against a name the
+			// Not translated: "2x 2+1 paket" is a count against a name the
 			// shop already stores per locale, and build-translations.php has
 			// no msgctxt to keep a format this generic apart from other uses.
 			$parts[] = sprintf( '%1$dx %2$s', $count, $names[ $id ] ?? $id );
@@ -638,7 +579,7 @@ final class BundlePricing {
 			return __( 'Ušteda na paketima', 'cosypaw' );
 		}
 
-		/* translators: %s: the package breakdown, e.g. "1x Trio paket + 1x Pojedinačno". */
+		/* translators: %s: the package breakdown, e.g. "1x 2+1 paket + 1x Single". */
 		return sprintf( __( 'Ušteda na paketima (%s)', 'cosypaw' ), implode( ' + ', $parts ) );
 	}
 }

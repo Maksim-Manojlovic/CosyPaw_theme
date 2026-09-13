@@ -83,7 +83,7 @@ $cosypaw_video = (string) apply_filters(
 		</p>
 		<?php
 		// The claim is the threshold, not a package: the banner sat next to a
-		// Trio card that had stopped clearing the bar and still promised free
+		// package card that had stopped clearing the bar and still promised free
 		// delivery. Hidden outright when there is no threshold to quote.
 		$cosypaw_free_min = \Theme\Catalog::free_shipping_min();
 		if ( $cosypaw_free_min > 0 ) :

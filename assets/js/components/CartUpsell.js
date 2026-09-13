@@ -11,7 +11,7 @@ import { UpsellSlider } from './UpsellSlider.js';
  * cart.js takes only two nodes out of it, the cart form and `.cart_totals`
  * (update_wc_div). The offer sits beside the totals rather than inside them,
  * so it was left saying whatever it said before the change: a cart that went
- * up to a whole Trio, where there is deliberately nothing to offer, stayed
+ * up to a whole package, where there is deliberately nothing to offer, stayed
  * silent after a towel was taken back out of it.
  *
  * The fresh markup is already in that response, so this reads the offer out of

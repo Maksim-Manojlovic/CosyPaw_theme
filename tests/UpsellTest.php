@@ -38,9 +38,8 @@ final class UpsellTest extends TestCase {
 	 * @var array<string,int>
 	 */
 	private const LIVE_PRICES = array(
-		'solo' => 990,
+		'solo' => 790,
 		'duo'  => 1490,
-		'trio' => 1980,
 	);
 
 	/**
@@ -51,7 +50,7 @@ final class UpsellTest extends TestCase {
 	private const MOTIF_ID = 501;
 
 	/**
-	 * Product id of the Duo package (two towels).
+	 * Product id of the 2+1 package (three towels).
 	 *
 	 * @var int
 	 */
@@ -166,9 +165,10 @@ final class UpsellTest extends TestCase {
 	 * Render the cart panel against a cart holding these lines.
 	 *
 	 * @param array<int,array{id:int,qty:int,price:int}> $lines Product id, quantity, unit price.
+	 * @param int                                        $min   Free-delivery threshold to configure, or 0 for a shop with none.
 	 * @return string
 	 */
-	private function panel( array $lines ): string {
+	private function panel( array $lines, int $min = 0 ): string {
 		$contents = array();
 		foreach ( $lines as $line ) {
 			$contents[] = array(
@@ -182,6 +182,18 @@ final class UpsellTest extends TestCase {
 
 		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
 		$pricing->apply_bundle_discount( $this->cart );
+
+		if ( $min > 0 ) {
+			$method             = new \stdClass();
+			$method->id         = 'free_shipping';
+			$method->requires   = 'min_amount';
+			$method->min_amount = $min;
+
+			\WC_Shipping_Zones::$zone = new \WC_Shipping_Zone( array( $method ) );
+
+			$shipping = new \WC_Mock_Shipping( array( array( 'rates' => array() ) ) );
+			Functions\when( 'WC' )->alias( fn () => new \WC_Mock_WC( $this->cart, $shipping ) );
+		}
 
 		$upsell = new Upsell( 'cosypaw', $pricing, new Catalog() );
 
@@ -238,11 +250,12 @@ final class UpsellTest extends TestCase {
 	/**
 	 * The row counts the package saving, because the shopper pays it.
 	 *
-	 * Three towels clicked one at a time are 2.970 in line items and 1.980 to
-	 * pay — the Trio price, which is the whole point of the discount. Measuring
-	 * the line items would hand free delivery to three loose towels and refuse
-	 * it to the identical Trio bought as a package, and the discount exists to
-	 * make those two carts the same. So this is a gap of 20, not a win.
+	 * Three towels clicked one at a time are 2.370 in line items and 1.490 to
+	 * pay — the package price, which is the whole point of the discount.
+	 * Measuring the line items would hand free delivery to three loose towels
+	 * and refuse it to the identical package bought as one, and the discount
+	 * exists to make those two carts the same. So this is a gap of 510, not a
+	 * win.
 	 */
 	public function test_the_row_counts_the_package_saving(): void {
 		$markup = $this->shipping_row(
@@ -251,7 +264,7 @@ final class UpsellTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
-		$this->assertStringContainsString( '20 RSD', $markup );
+		$this->assertStringContainsString( '510 RSD', $markup );
 		$this->assertStringNotContainsString( 'Ostvarena', $markup );
 	}
 
@@ -262,7 +275,7 @@ final class UpsellTest extends TestCase {
 	public function test_the_row_states_a_win_plainly(): void {
 		$markup = $this->shipping_row(
 			array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ),
-			1500
+			1400
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--earned', $markup );
@@ -272,9 +285,10 @@ final class UpsellTest extends TestCase {
 
 	/**
 	 * Short of the threshold, the row names the one thing that closes it. Two
-	 * towels are 1.490 to pay — the Duo price — against a 2.000 bar, and a
-	 * towel covers the 510 difference, so the instruction is "add one" rather
-	 * than an amount nobody can spend exactly.
+	 * towels are 1.580 to pay — two singles, since the shop has no two-towel
+	 * package — against a 2.000 bar, and a towel covers the 420 difference, so
+	 * the instruction is "add one" rather than an amount nobody can spend
+	 * exactly.
 	 */
 	public function test_the_totals_row_asks_for_one_more_towel(): void {
 		$markup = $this->shipping_row(
@@ -283,14 +297,14 @@ final class UpsellTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
-		$this->assertStringContainsString( '510 RSD', $markup );
+		$this->assertStringContainsString( '420 RSD', $markup );
 		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
 	}
 
 	/**
 	 * The cart page has no rated shipping package until a country is known —
 	 * WC_Cart::show_shipping() will not calculate one — so a cart holding a
-	 * single Trio used to say nothing at all about free delivery, on the one
+	 * single package used to say nothing at all about free delivery, on the one
 	 * screen where saying it is worth a sale. The zone is readable without an
 	 * address, so the row still names the bar and what clears it.
 	 */
@@ -300,7 +314,7 @@ final class UpsellTest extends TestCase {
 				array(
 					'product_id' => self::MOTIF_ID,
 					'quantity'   => 1,
-					'data'       => new \WC_Product( 'Trio paket', '1390', true, self::MOTIF_ID ),
+					'data'       => new \WC_Product( '2+1 paket', '1490', true, self::MOTIF_ID ),
 				),
 			)
 		);
@@ -324,7 +338,7 @@ final class UpsellTest extends TestCase {
 		$markup = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
-		$this->assertStringContainsString( '610 RSD', $markup );
+		$this->assertStringContainsString( '510 RSD', $markup );
 		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
 	}
 
@@ -357,16 +371,16 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
-	 * Two towels are one short of a Trio, and the cart says what that costs.
+	 * Two towels are one short of the package, and the cart says so — the third
+	 * towel is free, and the bill goes down as well.
 	 */
 	public function test_the_cart_quotes_the_next_towel(): void {
 		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 2, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
 		$this->assertStringContainsString( 'cosypaw-upsell', $markup );
-		// The third towel closes a 2.970 Trio down to 1.980: 490 for the towel,
-		// 500 saved against buying it on its own.
-		$this->assertStringContainsString( '490 RSD', $markup );
-		$this->assertStringContainsString( '500 RSD', $markup );
+		// Two singles are 1.580; the package that holds three is 1.490.
+		$this->assertStringContainsString( 'gratis', $markup );
+		$this->assertStringContainsString( '90 RSD', $markup );
 	}
 
 	/**
@@ -400,16 +414,21 @@ final class UpsellTest extends TestCase {
 	 * seen: the strip offers the whole catalogue.
 	 */
 	public function test_a_package_only_cart_gets_the_whole_strip(): void {
-		$markup = $this->panel( array( array( 'id' => self::DUO_ID, 'qty' => 1, 'price' => self::LIVE_PRICES['duo'] ) ) );
+		// A whole package has no cheap next towel, so the panel is there on the
+		// strength of the delivery bar alone — which is what this cart is for:
+		// the strip, not the offer above it.
+		$markup = $this->panel(
+			array( array( 'id' => self::DUO_ID, 'qty' => 1, 'price' => self::LIVE_PRICES['duo'] ) ),
+			2000
+		);
 
-		// A Duo is two towels, so the third is still the cheap one.
 		$this->assertStringContainsString( 'cosypaw-upsell', $markup );
 		$this->assertStringContainsString( 'add-to-cart=' . self::MOTIF_ID . '&', $markup );
 		$this->assertSame( 20, substr_count( $markup, 'class="cosypaw-upsell__slide"' ) );
 	}
 
 	/**
-	 * A whole Trio is already at an optimum — the fourth towel is full price.
+	 * A whole package is already at an optimum — the fourth towel is full price.
 	 * With no threshold to quote either, there is nothing to say and no box is
 	 * printed to say it in.
 	 *

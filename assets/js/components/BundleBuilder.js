@@ -1,7 +1,7 @@
 /**
  * BundleBuilder
  *
- * Interactive "Napravi svoj paket" section: pick a package tier (solo/duo/trio),
+ * Interactive "Napravi svoj paket" section: pick a package tier (solo/duo),
  * fill its motif slots from the gallery, then add the assembled bundle to the
  * cart. Mirrors the design prototype's UX (slots, used-count badges, "Iznenadi
  * me", "Očisti", CTA states, warn toasts).
@@ -90,7 +90,7 @@ export class BundleBuilder {
 
 	/**
 	 * Drop a motif carried in from a product page (?motif=id) into the bundle,
-	 * on the size that page was arguing for (?package=trio) when it names one.
+	 * on the size that page was arguing for (?package=duo) when it names one.
 	 * A tier is already selected by then, so the towel just lands in slot 1.
 	 */
 	_applyDeepLink() {
@@ -262,7 +262,7 @@ export class BundleBuilder {
 	 * Fill the remaining slots at random.
 	 *
 	 * Draws without replacement while distinct motifs remain, so "Iznenadi me"
-	 * cannot hand back a Trio of three identical towels — the surprise is meant
+	 * cannot hand back a package of three identical towels — the surprise is meant
 	 * to be a variety pack. Falls back to repeats only if the catalogue is
 	 * smaller than the package.
 	 */

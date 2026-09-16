@@ -31,7 +31,7 @@ const boot = () => {
 	});
 
 	// Motif grid "show all" gate. The grid ships collapsed; the CSS decides
-	// where the cut falls (nine cards, six on a phone) and this only flips the
+	// where the cut falls (nine cards, six on a tablet, four on a phone) and this only flips the
 	// attribute the cut hangs off.
 	const motifGrid = document.querySelector('[data-motif-grid]');
 	const motifToggle = document.querySelector('[data-motifs-toggle]');

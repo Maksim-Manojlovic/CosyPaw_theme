@@ -1747,8 +1747,23 @@ a.testimonial__meta:focus-visible {
 		gap: 14px;
 	}
 
+	/* Four on a phone: two rows is a screen, and the builder is the next
+	   thing a visitor needs to reach. The rest stay one tap away. */
+	.motifs[data-collapsed] .motif-card:nth-child(n+5) {
+		display: none;
+	}
+
 	.motif-card {
 		padding: 10px;
+	}
+
+	/* On a phone the unboxing clip makes the gift point on its own, and the
+	   copy under it pushed the builder a full screen further down. The banner
+	   keeps its bottom margin, so the builder sits the same distance below the
+	   clip as it did below the text. Landing only: the product page shows the
+	   same banner and keeps its copy. */
+	.packages .pkg-banner__body {
+		display: none;
 	}
 
 	/* Square rather than 1:1.18. The catalogue ships a 1:1 crop for exactly

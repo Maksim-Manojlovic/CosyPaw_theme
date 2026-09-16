@@ -256,6 +256,11 @@ final class ProductSeeder {
 			$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
 
 			foreach ( $this->catalog->products() as $motif ) {
+				// A towel added in wp-admin has no theme image to restore.
+				if ( 'shop' === ( $motif['source'] ?? '' ) ) {
+					continue;
+				}
+
 				$product_id = isset( $product_map[ $motif['id'] ] ) ? (int) $product_map[ $motif['id'] ] : 0;
 				if ( $product_id < 1 || ! get_post( $product_id ) ) {
 					continue;
@@ -317,6 +322,12 @@ final class ProductSeeder {
 			// Motifs.
 			$product_map = (array) get_option( WooCommerce::PRODUCT_MAP_OPTION, array() );
 			foreach ( $this->catalog->products() as $motif ) {
+				// Added in wp-admin: it already is a product, and its picture
+				// lives in the media library rather than under the theme.
+				if ( 'shop' === ( $motif['source'] ?? '' ) ) {
+					continue;
+				}
+
 				if ( isset( $product_map[ $motif['id'] ] ) && get_post( (int) $product_map[ $motif['id'] ] ) ) {
 					// Already created — re-attach the image if it went missing,
 					// and fill any image meta still blank either way.

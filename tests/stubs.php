@@ -106,6 +106,22 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
+		 * Featured image attachment ID.
+		 *
+		 * @var int
+		 */
+		public int $image_id = 0;
+
+		/**
+		 * Featured image attachment ID.
+		 *
+		 * @return int
+		 */
+		public function get_image_id(): int {
+			return $this->image_id;
+		}
+
+		/**
 		 * How many approved reviews the product carries.
 		 *
 		 * @return int

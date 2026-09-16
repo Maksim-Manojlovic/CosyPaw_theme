@@ -268,11 +268,24 @@ final class Assets {
 	 * it bought nothing and cost 90 KB — that single mis-pick was the front
 	 * page's largest transfer.
 	 *
-	 * @param array{image_md:string,image_lg:string} $motif Motif record from Catalog.
+	 * A towel added in wp-admin carries WordPress's generated sizes rather than
+	 * the pre-cut 600/900 pair, and states their widths in `image_md_w` and
+	 * `image_lg_w`; a candidate labelled wider than it is gets upscaled.
+	 *
+	 * @param array{image_md:string,image_lg:string,image_md_w?:int,image_lg_w?:int} $motif Motif record from Catalog.
 	 * @return string
 	 */
 	public static function motif_srcset( array $motif ): string {
-		return $motif['image_md'] . ' 600w, ' . $motif['image_lg'] . ' 900w';
+		$md = (int) ( $motif['image_md_w'] ?? 0 );
+		$lg = (int) ( $motif['image_lg_w'] ?? 0 );
+
+		// A small upload leaves both sizes on the original; two candidates at
+		// one width make the whole srcset invalid.
+		if ( $md > 0 && $md === $lg ) {
+			return $motif['image_md'] . ' ' . $md . 'w';
+		}
+
+		return $motif['image_md'] . ' ' . ( $md > 0 ? $md : 600 ) . 'w, ' . $motif['image_lg'] . ' ' . ( $lg > 0 ? $lg : 900 ) . 'w';
 	}
 
 	/**

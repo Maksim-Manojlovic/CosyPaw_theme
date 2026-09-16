@@ -83,10 +83,59 @@ final class Catalog {
 	 * seven motifs. ProductSeeder writes them into any field still empty and
 	 * never over an edit made in wp-admin.
 	 *
+	 * These are only the motifs the theme was built with. A towel the shop adds
+	 * in wp-admin afterwards is appended by WooCommerce::append_shop_motifs()
+	 * through the filter below, with its pictures taken from the media library.
+	 *
 	 * @return array<int,array{id:string,name:string,price:int,alt:string,caption:string,image:string,image_lg:string,image_md:string,image_sm:string,image_th:string,image_xs:string}>
 	 */
 	public function products(): array {
-		$motifs = array(
+		$base = get_template_directory_uri() . '/' . self::IMAGE_DIR;
+		$out  = array();
+		foreach ( $this->seed_motifs() as $m ) {
+			$out[] = array(
+				'id'       => $m['id'],
+				'name'     => $m['name'],
+				'price'    => self::UNIT_PRICE,
+				'alt'      => $m['alt'],
+				'caption'  => $m['caption'],
+				'image'    => $base . $m['id'] . '.avif',
+				'image_lg' => $base . $m['id'] . '-lg.avif',
+				'image_md' => $base . $m['id'] . '-md.avif',
+				'image_sm' => $base . $m['id'] . '-sm.avif',
+				'image_th' => $base . $m['id'] . '-th.avif',
+				'image_xs' => $base . $m['id'] . '-xs.avif',
+			);
+		}
+
+		/**
+		 * Filter the towel motif list (e.g. to map real WC product IDs).
+		 *
+		 * @param array $out The motif data.
+		 */
+		return (array) apply_filters( 'cosypaw_catalog_products', $out );
+	}
+
+	/**
+	 * Ids of the motifs this file ships, before any filter adds to them.
+	 *
+	 * WooCommerce::register_towel() needs these to keep a product added in
+	 * wp-admin from claiming an id the theme already uses. products() cannot
+	 * answer that: its filter is where the shop's own products are appended.
+	 *
+	 * @return string[]
+	 */
+	public function seed_ids(): array {
+		return array_column( $this->seed_motifs(), 'id' );
+	}
+
+	/**
+	 * The motifs photographed for the theme itself, with their copy.
+	 *
+	 * @return array<int,array{id:string,name:string,alt:string,caption:string}>
+	 */
+	private function seed_motifs(): array {
+		return array(
 			array(
 				'id'      => 'zirafa',
 				'name'    => __( 'Žirafa', 'cosypaw' ),
@@ -208,31 +257,6 @@ final class Catalog {
 				'caption' => __( 'Javorov list — komadić jeseni pored lavaboa.', 'cosypaw' ),
 			),
 		);
-
-		$base = get_template_directory_uri() . '/' . self::IMAGE_DIR;
-		$out  = array();
-		foreach ( $motifs as $m ) {
-			$out[] = array(
-				'id'       => $m['id'],
-				'name'     => $m['name'],
-				'price'    => self::UNIT_PRICE,
-				'alt'      => $m['alt'],
-				'caption'  => $m['caption'],
-				'image'    => $base . $m['id'] . '.avif',
-				'image_lg' => $base . $m['id'] . '-lg.avif',
-				'image_md' => $base . $m['id'] . '-md.avif',
-				'image_sm' => $base . $m['id'] . '-sm.avif',
-				'image_th' => $base . $m['id'] . '-th.avif',
-				'image_xs' => $base . $m['id'] . '-xs.avif',
-			);
-		}
-
-		/**
-		 * Filter the towel motif list (e.g. to map real WC product IDs).
-		 *
-		 * @param array $out The motif data.
-		 */
-		return (array) apply_filters( 'cosypaw_catalog_products', $out );
 	}
 
 	/**

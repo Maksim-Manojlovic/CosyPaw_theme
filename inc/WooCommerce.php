@@ -59,6 +59,28 @@ final class WooCommerce {
 	private const ORDER_MOTIFS_META = 'cosypaw_motifs';
 
 	/**
+	 * Product category slug that makes a product a towel motif.
+	 *
+	 * @var string
+	 */
+	public const TOWEL_CATEGORY = 'peskirici';
+
+	/**
+	 * Option key: the version of the one-off sweep that maps towels which were
+	 * already published before register_towel() existed.
+	 *
+	 * @var string
+	 */
+	private const TOWEL_SYNC_OPTION = 'cosypaw_towel_sync';
+
+	/**
+	 * Bump to sweep the shop again on the next request.
+	 *
+	 * @var int
+	 */
+	private const TOWEL_SYNC_VERSION = 1;
+
+	/**
 	 * Theme text domain.
 	 *
 	 * @var string
@@ -124,6 +146,17 @@ final class WooCommerce {
 	 * @return void
 	 */
 	private function register_commerce_hooks(): void {
+		// A towel published in wp-admin joins the catalogue on its own: it is
+		// written into the product map when saved, and the map is what every
+		// part of the site — landing, builder, cart pricing, upsell, reviews —
+		// reads. Priority 5 appends its row before inject_product_ids() fills
+		// in the live name, price and availability like any seeded motif.
+		add_filter( 'cosypaw_catalog_products', array( $this, 'append_shop_motifs' ), 5 );
+		add_action( 'woocommerce_new_product', array( $this, 'register_towel' ) );
+		add_action( 'woocommerce_update_product', array( $this, 'register_towel' ) );
+		add_action( 'save_post_product', array( $this, 'register_towel' ), 20 );
+		add_action( 'init', array( $this, 'maybe_sync_towels' ), 20 );
+
 		add_filter( 'cosypaw_catalog_products', array( $this, 'inject_product_ids' ) );
 		add_filter( 'cosypaw_catalog_packages', array( $this, 'inject_package_ids' ) );
 
@@ -478,6 +511,176 @@ final class WooCommerce {
 		}
 
 		return (string) $name;
+	}
+
+	/**
+	 * Map a towel the shop published in wp-admin, so the whole site sells it.
+	 *
+	 * The product map used to be written only by the seeder, so a towel added
+	 * by hand existed in WooCommerce and nowhere else: not on the landing, not
+	 * in the builder, not counted by the bundle pricing. Filing a product under
+	 * the towel category is now all it takes. Runs on every product save and
+	 * is idempotent; anything already mapped, a package, a draft or a product
+	 * in another category is left alone. A product that is later unpublished
+	 * keeps its entry, and inject_ids() hides it, so old orders still resolve
+	 * the name.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return void
+	 */
+	public function register_towel( $product_id ): void {
+		$product_id = (int) $product_id;
+
+		if ( $product_id < 1 || 'publish' !== get_post_status( $product_id ) ) {
+			return;
+		}
+
+		if ( ! has_term( self::TOWEL_CATEGORY, 'product_cat', $product_id ) ) {
+			return;
+		}
+
+		$map    = (array) get_option( self::PRODUCT_MAP_OPTION, array() );
+		$mapped = array_merge(
+			array_map( 'intval', array_values( $map ) ),
+			array_map( 'intval', array_values( (array) get_option( self::PACKAGE_MAP_OPTION, array() ) ) )
+		);
+
+		if ( in_array( $product_id, $mapped, true ) ) {
+			return;
+		}
+
+		$map[ $this->towel_key( $product_id, $map ) ] = $product_id;
+		update_option( self::PRODUCT_MAP_OPTION, $map );
+
+		$this->our_ids = null;
+	}
+
+	/**
+	 * Map the towels published before register_towel() existed. Once per
+	 * TOWEL_SYNC_VERSION; every later towel is caught when it is saved.
+	 *
+	 * @return void
+	 */
+	public function maybe_sync_towels(): void {
+		if ( (int) get_option( self::TOWEL_SYNC_OPTION, 0 ) >= self::TOWEL_SYNC_VERSION || ! function_exists( 'wc_get_products' ) ) {
+			return;
+		}
+
+		$ids = wc_get_products(
+			array(
+				'status'   => 'publish',
+				'category' => array( self::TOWEL_CATEGORY ),
+				'limit'    => -1,
+				'orderby'  => 'ID',
+				'order'    => 'ASC',
+				'return'   => 'ids',
+			)
+		);
+
+		foreach ( (array) $ids as $id ) {
+			$this->register_towel( (int) $id );
+		}
+
+		update_option( self::TOWEL_SYNC_OPTION, self::TOWEL_SYNC_VERSION );
+	}
+
+	/**
+	 * The motif id a newly mapped towel is stored under.
+	 *
+	 * Taken from the product slug, less the "peskiric-" every towel slug starts
+	 * with, since it ends up in the builder link (?motif=konjic). An id the
+	 * theme or the map already uses gets the product id appended instead: a
+	 * second "Panda" must not take over the first one's orders.
+	 *
+	 * @param int               $product_id Product ID.
+	 * @param array<string,int> $map        Current product map.
+	 * @return string
+	 */
+	private function towel_key( int $product_id, array $map ): string {
+		$slug = sanitize_title( (string) get_post_field( 'post_name', $product_id ) );
+		$base = (string) preg_replace( '/^peskiric-/', '', $slug );
+		$base = '' !== $base ? $base : 'motif';
+
+		$taken = array_merge( array_map( 'strval', array_keys( $map ) ), $this->catalog->seed_ids() );
+
+		return in_array( $base, $taken, true ) ? $base . '-' . $product_id : $base;
+	}
+
+	/**
+	 * Append a catalogue row for every mapped towel the theme has no row for.
+	 *
+	 * Such a towel has no pre-cut pictures in assets/motifs/, so its image
+	 * fields come from the sizes WordPress generated for its product image. The
+	 * widths travel with them (`image_md_w`, `image_lg_w`) because the grid's
+	 * srcset has to state the real ones. Name, price and availability are
+	 * filled in afterwards by inject_product_ids(), exactly as for a seeded
+	 * motif. `source` => 'shop' tells the seeder the row has no theme image to
+	 * sideload.
+	 *
+	 * @param array<int,array<string,mixed>> $products Catalog products.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public function append_shop_motifs( array $products ): array {
+		$known = array_flip( array_map( 'strval', array_column( $products, 'id' ) ) );
+
+		foreach ( (array) get_option( self::PRODUCT_MAP_OPTION, array() ) as $key => $product_id ) {
+			$key = (string) $key;
+			if ( '' === $key || isset( $known[ $key ] ) ) {
+				continue;
+			}
+
+			$products[]    = $this->shop_motif_row( $key, (int) $product_id );
+			$known[ $key ] = true;
+		}
+
+		return $products;
+	}
+
+	/**
+	 * Catalogue row for a towel added in wp-admin.
+	 *
+	 * @param string $key        Motif id.
+	 * @param int    $product_id Product ID.
+	 * @return array<string,mixed>
+	 */
+	private function shop_motif_row( string $key, int $product_id ): array {
+		$product  = $product_id > 0 ? wc_get_product( $product_id ) : null;
+		$is_known = $product instanceof \WC_Product;
+		$image_id = $is_known ? (int) $product->get_image_id() : 0;
+
+		$row = array(
+			'id'      => $key,
+			'name'    => $is_known ? (string) $product->get_name() : $key,
+			'price'   => Catalog::UNIT_PRICE,
+			'alt'     => '',
+			'caption' => '',
+			'source'  => 'shop',
+		);
+
+		// The same 3:4 and square cuts the theme's own motifs ship in, from the
+		// sizes WordPress and WooCommerce generate on upload.
+		$sizes = array(
+			'image'    => 'full',
+			'image_lg' => 'medium_large',
+			'image_md' => 'woocommerce_single',
+			'image_sm' => 'woocommerce_thumbnail',
+			'image_th' => 'woocommerce_thumbnail',
+			'image_xs' => 'thumbnail',
+		);
+
+		foreach ( $sizes as $field => $size ) {
+			$src = $image_id > 0 ? wp_get_attachment_image_src( $image_id, $size ) : false;
+
+			if ( is_array( $src ) && ! empty( $src[0] ) ) {
+				$row[ $field ]        = (string) $src[0];
+				$row[ $field . '_w' ] = (int) ( $src[1] ?? 0 );
+				continue;
+			}
+
+			$row[ $field ] = function_exists( 'wc_placeholder_img_src' ) ? (string) wc_placeholder_img_src( $size ) : '';
+		}
+
+		return $row;
 	}
 
 	/**

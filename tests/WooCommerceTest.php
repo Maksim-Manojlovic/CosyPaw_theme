@@ -620,4 +620,124 @@ final class WooCommerceTest extends TestCase {
 			$wc->translate_short_description( 'Žirafa duga vrata.' )
 		);
 	}
+
+	/**
+	 * A towel published in wp-admin under the towel category is written into
+	 * the product map, under its slug, so the whole site picks it up.
+	 */
+	public function test_register_towel_maps_a_published_towel_under_its_slug(): void {
+		$written = null;
+		Functions\when( 'get_option' )->alias(
+			static fn( $key, $default = false ) => WooCommerce::PRODUCT_MAP_OPTION === $key ? array( 'zirafa' => 16 ) : array( 'duo' => 35 )
+		);
+		Functions\when( 'has_term' )->justReturn( true );
+		Functions\when( 'get_post_field' )->justReturn( 'peskiric-konjic' );
+		Functions\when( 'sanitize_title' )->returnArg();
+		Functions\when( 'update_option' )->alias(
+			static function ( $key, $value ) use ( &$written ) {
+				$written = $value;
+				return true;
+			}
+		);
+
+		( new WooCommerce( 'cosypaw', new Catalog() ) )->register_towel( 108 );
+
+		$this->assertSame( array( 'zirafa' => 16, 'konjic' => 108 ), $written );
+	}
+
+	/**
+	 * A second towel named after a motif the theme already ships must not take
+	 * over that motif's id, or its orders would start naming the wrong towel.
+	 */
+	public function test_register_towel_suffixes_an_id_the_theme_already_uses(): void {
+		$written = null;
+		Functions\when( 'get_option' )->justReturn( array() );
+		Functions\when( 'has_term' )->justReturn( true );
+		Functions\when( 'get_post_field' )->justReturn( 'peskiric-panda' );
+		Functions\when( 'sanitize_title' )->returnArg();
+		Functions\when( 'update_option' )->alias(
+			static function ( $key, $value ) use ( &$written ) {
+				$written = $value;
+				return true;
+			}
+		);
+
+		( new WooCommerce( 'cosypaw', new Catalog() ) )->register_towel( 107 );
+
+		$this->assertSame( array( 'panda-107' => 107 ), $written );
+	}
+
+	/**
+	 * Drafts, other categories, packages and towels already mapped leave the
+	 * map untouched.
+	 */
+	public function test_register_towel_leaves_everything_else_alone(): void {
+		Functions\when( 'get_option' )->alias(
+			static fn( $key, $default = false ) => WooCommerce::PRODUCT_MAP_OPTION === $key ? array( 'zirafa' => 16 ) : array( 'duo' => 35 )
+		);
+		Functions\when( 'get_post_field' )->justReturn( 'x' );
+		Functions\when( 'sanitize_title' )->returnArg();
+		Functions\expect( 'update_option' )->never();
+
+		$wc = new WooCommerce( 'cosypaw', new Catalog() );
+
+		Functions\when( 'has_term' )->justReturn( false );
+		$wc->register_towel( 200 );
+
+		Functions\when( 'has_term' )->justReturn( true );
+		$wc->register_towel( 16 );
+		$wc->register_towel( 35 );
+
+		Functions\when( 'get_post_status' )->justReturn( 'draft' );
+		$wc->register_towel( 201 );
+
+		$this->addToAssertionCount( 1 );
+	}
+
+	/**
+	 * A mapped towel the theme has no row for gets one, pictured from the
+	 * sizes WordPress generated, with the real widths for the srcset.
+	 */
+	public function test_append_shop_motifs_builds_a_row_from_the_media_library(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 16, 'konjic' => 108 ) );
+		$product           = new \WC_Product( 'Konjić', '790', true, 108 );
+		$product->image_id = 104;
+		Functions\when( 'wc_get_product' )->justReturn( $product );
+		Functions\when( 'wp_get_attachment_image_src' )->alias(
+			static function ( $id, $size ) {
+				$widths = array(
+					'full'                  => 1086,
+					'medium_large'          => 768,
+					'woocommerce_single'    => 600,
+					'woocommerce_thumbnail' => 300,
+					'thumbnail'             => 150,
+				);
+				return array( 'http://example.test/Konjic-' . $size . '.webp', $widths[ $size ], 0 );
+			}
+		);
+
+		$wc  = new WooCommerce( 'cosypaw', new Catalog() );
+		$out = $wc->append_shop_motifs( array( array( 'id' => 'zirafa', 'name' => 'Žirafa' ) ) );
+
+		$this->assertCount( 2, $out );
+		$this->assertSame( 'konjic', $out[1]['id'] );
+		$this->assertSame( 'Konjić', $out[1]['name'] );
+		$this->assertSame( 'shop', $out[1]['source'] );
+		$this->assertSame( 'http://example.test/Konjic-woocommerce_single.webp', $out[1]['image_md'] );
+		$this->assertSame( 'http://example.test/Konjic-thumbnail.webp', $out[1]['image_xs'] );
+		$this->assertSame(
+			'http://example.test/Konjic-woocommerce_single.webp 600w, http://example.test/Konjic-medium_large.webp 768w',
+			\Theme\Assets::motif_srcset( $out[1] )
+		);
+	}
+
+	/**
+	 * The theme's own motifs keep their pre-cut 600/900 pair.
+	 */
+	public function test_motif_srcset_keeps_the_theme_widths(): void {
+		$this->assertSame(
+			'a-md.avif 600w, a-lg.avif 900w',
+			\Theme\Assets::motif_srcset( array( 'image_md' => 'a-md.avif', 'image_lg' => 'a-lg.avif' ) )
+		);
+	}
 }

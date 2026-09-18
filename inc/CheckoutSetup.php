@@ -101,6 +101,28 @@ final class CheckoutSetup {
 	public const FALLBACK_RATE_ID = 'cosypaw_delivery';
 
 	/**
+	 * Option key: the rate-cache flush this theme has already performed.
+	 *
+	 * @var string
+	 */
+	public const FLUSHED_OPTION = 'cosypaw_rates_flushed';
+
+	/**
+	 * Bumped whenever a change here alters what a package is rated at.
+	 *
+	 * WooCommerce stores a package's rates in the buyer's session, keyed by a
+	 * hash of the package, and re-reads them until that hash changes — the
+	 * filters never run again in between. So a shop whose baskets were rated
+	 * before a fix went out keeps serving the old answer: every buyer already
+	 * mid-order stays stuck on "delivery is not possible" until they happen to
+	 * edit their cart. One bump of the shipping transient version invalidates
+	 * every stored hash at once, for every session.
+	 *
+	 * @var int
+	 */
+	private const RATES_VERSION = 1;
+
+	/**
 	 * Constructor — registers the runtime label filters.
 	 */
 	public function __construct() {
@@ -155,6 +177,10 @@ final class CheckoutSetup {
 		// on its own. One option read per request; a write only on the request
 		// that first sees a new amount.
 		add_action( 'init', array( $this, 'maybe_sync_free_shipping' ), 20 );
+
+		// A deploy that changes how a package is rated has to reach the baskets
+		// that were rated before it. Once per version, then never again.
+		add_action( 'init', array( $this, 'maybe_flush_rate_cache' ), 21 );
 	}
 
 	/**
@@ -300,6 +326,27 @@ final class CheckoutSetup {
 
 		// translators: dynamic label stored by CheckoutSetup::configure().
 		return __( $text, 'cosypaw' ); // phpcs:ignore WordPress.WP.I18n
+	}
+
+	/**
+	 * Drop WooCommerce's cached package rates, once per RATES_VERSION.
+	 *
+	 * @return void
+	 */
+	public function maybe_flush_rate_cache(): void {
+		if ( (int) get_option( self::FLUSHED_OPTION, 0 ) === self::RATES_VERSION ) {
+			return;
+		}
+
+		if ( ! is_callable( array( '\WC_Cache_Helper', 'get_transient_version' ) ) ) {
+			return;
+		}
+
+		// The `true` refreshes the version, which is what every stored package
+		// hash was built against — they all miss from here on.
+		\WC_Cache_Helper::get_transient_version( 'shipping', true );
+
+		update_option( self::FLUSHED_OPTION, self::RATES_VERSION );
 	}
 
 	/**

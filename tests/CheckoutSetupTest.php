@@ -66,6 +66,7 @@ final class CheckoutSetupTest extends TestCase {
 	protected function tearDown(): void {
 		\WC_Shipping_Zones::$zone = null;
 		\WC_Shipping_Zone::$id    = 7;
+		\WC_Cache_Helper::$refreshed = array();
 
 		Monkey\tearDown();
 		parent::tearDown();
@@ -241,5 +242,29 @@ final class CheckoutSetupTest extends TestCase {
 		$rates = ( new CheckoutSetup() )->ensure_a_rate_exists( array( 'free_shipping:3' => $free ) );
 
 		$this->assertSame( array( 'free_shipping:3' => $free ), $rates );
+	}
+
+	/**
+	 * Rates live in the buyer's session, keyed by a hash of the package, and
+	 * the filters above never run again while that hash holds. A basket rated
+	 * before this fix shipped would therefore keep its old answer — "delivery
+	 * is not possible" — however correct the code now is. The version bump
+	 * invalidates every stored hash, once.
+	 */
+	public function test_the_fix_reaches_baskets_rated_before_it(): void {
+		( new CheckoutSetup() )->maybe_flush_rate_cache();
+
+		$this->assertSame( array( 'shipping' ), \WC_Cache_Helper::$refreshed );
+	}
+
+	/**
+	 * ...and only once. Bumping it per request would make every page load
+	 * recalculate every package.
+	 */
+	public function test_the_cache_is_not_flushed_twice(): void {
+		( new CheckoutSetup() )->maybe_flush_rate_cache();
+		( new CheckoutSetup() )->maybe_flush_rate_cache();
+
+		$this->assertCount( 1, \WC_Cache_Helper::$refreshed );
 	}
 }

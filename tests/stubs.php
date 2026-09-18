@@ -364,6 +364,37 @@ if ( ! class_exists( 'WC_Mock_Shipping' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WC_Cache_Helper' ) ) {
+	/**
+	 * WooCommerce's cache versioning, as far as the theme uses it: the one
+	 * call that invalidates every stored package hash.
+	 */
+	class WC_Cache_Helper {
+
+		/**
+		 * Groups whose version this test run has refreshed.
+		 *
+		 * @var array<int,string>
+		 */
+		public static array $refreshed = array();
+
+		/**
+		 * Read — or, with $refresh, bump — a cache group's version.
+		 *
+		 * @param string $group   Cache group.
+		 * @param bool   $refresh Whether to issue a new version.
+		 * @return string
+		 */
+		public static function get_transient_version( string $group, bool $refresh = false ): string {
+			if ( $refresh ) {
+				self::$refreshed[] = $group;
+			}
+
+			return '1';
+		}
+	}
+}
+
 if ( ! class_exists( 'WC_Shipping_Rate' ) ) {
 	/**
 	 * One rate WooCommerce offers for a package, in the real class's shape —

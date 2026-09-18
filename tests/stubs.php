@@ -364,6 +364,98 @@ if ( ! class_exists( 'WC_Mock_Shipping' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WC_Shipping_Rate' ) ) {
+	/**
+	 * One rate WooCommerce offers for a package, in the real class's shape —
+	 * CheckoutSetup constructs one itself when a package would otherwise be
+	 * left with nothing.
+	 */
+	class WC_Shipping_Rate {
+
+		/**
+		 * Rate id.
+		 *
+		 * @var string
+		 */
+		private string $id;
+
+		/**
+		 * Label shown to the buyer.
+		 *
+		 * @var string
+		 */
+		private string $label;
+
+		/**
+		 * Cost.
+		 *
+		 * @var float
+		 */
+		private float $cost;
+
+		/**
+		 * Shipping method id.
+		 *
+		 * @var string
+		 */
+		private string $method_id;
+
+		/**
+		 * Constructor, taking WooCommerce's own argument order.
+		 *
+		 * @param string             $id        Rate id.
+		 * @param string             $label     Buyer-facing label.
+		 * @param float|int          $cost      Cost.
+		 * @param array<int,mixed>   $taxes     Taxes; unused here.
+		 * @param string             $method_id Shipping method id.
+		 */
+		public function __construct( string $id = '', string $label = '', $cost = 0, array $taxes = array(), string $method_id = '' ) {
+			unset( $taxes );
+
+			$this->id        = $id;
+			$this->label     = $label;
+			$this->cost      = (float) $cost;
+			$this->method_id = $method_id;
+		}
+
+		/**
+		 * Rate id.
+		 *
+		 * @return string
+		 */
+		public function get_id(): string {
+			return $this->id;
+		}
+
+		/**
+		 * Buyer-facing label.
+		 *
+		 * @return string
+		 */
+		public function get_label(): string {
+			return $this->label;
+		}
+
+		/**
+		 * Cost.
+		 *
+		 * @return float
+		 */
+		public function get_cost(): float {
+			return $this->cost;
+		}
+
+		/**
+		 * Shipping method id.
+		 *
+		 * @return string
+		 */
+		public function get_method_id(): string {
+			return $this->method_id;
+		}
+	}
+}
+
 if ( ! class_exists( 'WC_Shipping_Zone' ) ) {
 	/**
 	 * A shipping zone and the methods attached to it.

@@ -82,6 +82,25 @@ final class CheckoutSetup {
 	public const FREE_SHIPPING_MIN = 2000;
 
 	/**
+	 * Label of the courier rate, in the source language.
+	 *
+	 * Stored on the seeded flat rate and carried by the fallback rate, so the
+	 * buyer reads the same sentence whichever of the two priced their order.
+	 * It is a msgid in /languages — see translate_shipping_label().
+	 *
+	 * @var string
+	 */
+	public const COURIER_LABEL = 'Dostava kurirskom službom (poštarina se plaća kuriru)';
+
+	/**
+	 * Rate id of the last-resort courier rate. Stable across requests, because
+	 * WooCommerce stores the buyer's chosen method by id in the session.
+	 *
+	 * @var string
+	 */
+	public const FALLBACK_RATE_ID = 'cosypaw_delivery';
+
+	/**
 	 * Constructor — registers the runtime label filters.
 	 */
 	public function __construct() {
@@ -104,6 +123,16 @@ final class CheckoutSetup {
 		// Over the free-shipping threshold both the courier rate and the free
 		// rate are zero, and offering the same price twice reads as a bug.
 		add_filter( 'woocommerce_package_rates', array( $this, 'hide_paid_delivery_when_free' ), 10 );
+
+		// ...and a package that ends up with no rate at all refuses the order
+		// outright: "Nije odabrana nijedna metoda isporuke." A shop that quotes
+		// postage has something to refuse over; this one does not — delivery is
+		// settled with the courier, so the rate is zero whatever happens. The
+		// empty package is reached more easily than it looks: an address
+		// outside the zone, a zone holding only the free-delivery method with
+		// the cart below its bar, a zone deleted or never seeded. Last, after
+		// every other filter, and only when nothing else answered.
+		add_filter( 'woocommerce_package_rates', array( $this, 'ensure_a_rate_exists' ), 100 );
 
 		// WooCommerce's own delivery block does not belong on this cart. The
 		// shop quotes no postage — it is settled with the courier — so the
@@ -274,6 +303,39 @@ final class CheckoutSetup {
 	}
 
 	/**
+	 * Offer courier delivery at no charge wherever nothing else is on offer.
+	 *
+	 * WooCommerce treats a package with no rates as a checkout it must block,
+	 * which for this shop is the wrong answer: there is no postage to agree on
+	 * before the order — the buyer settles it with the courier — so an order
+	 * that cannot be rated is still an order that can be shipped. Rather than
+	 * send the buyer back to re-check an address that was never the problem,
+	 * the courier is offered at zero and the order goes through.
+	 *
+	 * Only ever fires on an empty package, so a shop that has configured its
+	 * own zone keeps its own rates, and the free-delivery rate above the
+	 * threshold is untouched.
+	 *
+	 * @param array<string,object> $rates Shipping rates (\WC_Shipping_Rate at runtime).
+	 * @return array<string,object>
+	 */
+	public function ensure_a_rate_exists( array $rates ): array {
+		if ( ! empty( $rates ) || ! class_exists( '\WC_Shipping_Rate' ) ) {
+			return $rates;
+		}
+
+		$rates[ self::FALLBACK_RATE_ID ] = new \WC_Shipping_Rate(
+			self::FALLBACK_RATE_ID,
+			self::COURIER_LABEL,
+			0,
+			array(),
+			self::FALLBACK_RATE_ID
+		);
+
+		return $rates;
+	}
+
+	/**
 	 * Drop the paid courier rate from a package that already qualifies for free
 	 * delivery.
 	 *
@@ -406,7 +468,7 @@ final class CheckoutSetup {
 			$zone,
 			'flat_rate',
 			array(
-				'title'      => 'Dostava kurirskom službom (poštarina se plaća kuriru)',
+				'title'      => self::COURIER_LABEL,
 				'tax_status' => 'none',
 				'cost'       => '0',
 			)

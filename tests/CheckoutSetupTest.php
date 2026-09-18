@@ -214,4 +214,32 @@ final class CheckoutSetupTest extends TestCase {
 
 		$this->assertArrayNotHasKey( CheckoutSetup::APPLIED_OPTION, $this->options );
 	}
+
+	/**
+	 * A package nothing could rate used to end the order: WooCommerce answers
+	 * an empty package with "no shipping method has been selected", and sends
+	 * the buyer back to an address that was never the problem. This shop quotes
+	 * no postage, so there is nothing to refuse over — the courier is offered
+	 * at zero and the order goes through.
+	 */
+	public function test_an_unrated_package_still_gets_a_rate(): void {
+		$rates = ( new CheckoutSetup() )->ensure_a_rate_exists( array() );
+
+		$this->assertCount( 1, $rates );
+
+		$rate = $rates[ CheckoutSetup::FALLBACK_RATE_ID ];
+		$this->assertSame( CheckoutSetup::COURIER_LABEL, $rate->get_label() );
+		$this->assertSame( 0.0, $rate->get_cost() );
+	}
+
+	/**
+	 * ...and only then. A shop whose zone does rate the package keeps its own
+	 * rates, free delivery above the threshold included.
+	 */
+	public function test_a_rated_package_is_left_alone(): void {
+		$free  = new \WC_Shipping_Rate( 'free_shipping:3', 'Besplatna dostava', 0, array(), 'free_shipping' );
+		$rates = ( new CheckoutSetup() )->ensure_a_rate_exists( array( 'free_shipping:3' => $free ) );
+
+		$this->assertSame( array( 'free_shipping:3' => $free ), $rates );
+	}
 }

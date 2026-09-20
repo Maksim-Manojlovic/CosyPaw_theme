@@ -33,6 +33,7 @@ require_once __DIR__ . '/stubs.php';
 require_once dirname( __DIR__ ) . '/inc/Setup.php';
 require_once dirname( __DIR__ ) . '/inc/Assets.php';
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
+require_once dirname( __DIR__ ) . '/inc/ProductCategories.php';
 require_once dirname( __DIR__ ) . '/inc/ProductSeeder.php';
 require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';

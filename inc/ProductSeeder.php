@@ -27,6 +27,8 @@ final class ProductSeeder {
 
 	private const REPAIR_ACTION = 'cosypaw_repair_images';
 
+	private const CATEGORIES_ACTION = 'cosypaw_create_categories';
+
 	/**
 	 * Catalog data source.
 	 *
@@ -35,16 +37,25 @@ final class ProductSeeder {
 	private Catalog $catalog;
 
 	/**
+	 * The towel category tree, and what files a towel under it.
+	 *
+	 * @var ProductCategories
+	 */
+	private ProductCategories $categories;
+
+	/**
 	 * Constructor — registers the admin page and form handler.
 	 *
 	 * @param Catalog $catalog Catalog data source.
 	 */
 	public function __construct( Catalog $catalog ) {
-		$this->catalog = $catalog;
+		$this->catalog    = $catalog;
+		$this->categories = new ProductCategories();
 
 		add_action( 'admin_menu', array( $this, 'register_page' ) );
 		add_action( 'admin_post_' . self::NONCE_ACTION, array( $this, 'handle' ) );
 		add_action( 'admin_post_' . self::REPAIR_ACTION, array( $this, 'handle_repair' ) );
+		add_action( 'admin_post_' . self::CATEGORIES_ACTION, array( $this, 'handle_categories' ) );
 
 		// Headless: `wp cosypaw seed`.
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -65,6 +76,14 @@ final class ProductSeeder {
 				function (): void {
 					$repaired = $this->repair_images();
 					\WP_CLI::success( sprintf( 'CosyPaw: %d product image(s) restored.', $repaired ) );
+				}
+			);
+
+			// Headless: `wp cosypaw categories`.
+			\WP_CLI::add_command(
+				'cosypaw categories',
+				function (): void {
+					\WP_CLI::success( sprintf( 'CosyPaw: %d product category/categories created.', $this->categories->ensure_terms() ) );
 				}
 			);
 		}
@@ -95,6 +114,7 @@ final class ProductSeeder {
 		$package_map = (array) get_option( WooCommerce::PACKAGE_MAP_OPTION, array() );
 		$seeded      = isset( $_GET['seeded'] ) ? absint( wp_unslash( $_GET['seeded'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$repaired    = isset( $_GET['repaired'] ) ? absint( wp_unslash( $_GET['repaired'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$categories  = isset( $_GET['categories'] ) ? absint( wp_unslash( $_GET['categories'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'CosyPaw Seeder', 'cosypaw' ); ?></h1>
@@ -121,6 +141,20 @@ final class ProductSeeder {
 							/* translators: %d: number of product images restored. */
 							esc_html__( 'Done — %d product image(s) restored.', 'cosypaw' ),
 							(int) $repaired
+						);
+						?>
+					</p>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( null !== $categories ) : ?>
+				<div class="notice notice-success is-dismissible">
+					<p>
+						<?php
+						printf(
+							/* translators: %d: number of product categories created. */
+							esc_html__( 'Done — %d category/categories created. The rest were already there.', 'cosypaw' ),
+							(int) $categories
 						);
 						?>
 					</p>
@@ -168,6 +202,28 @@ final class ProductSeeder {
 				echo '.';
 				?>
 			</p>
+
+			<hr>
+
+			<h2><?php esc_html_e( 'Create the towel categories', 'cosypaw' ); ?></h2>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="<?php echo esc_attr( self::CATEGORIES_ACTION ); ?>" />
+				<?php wp_nonce_field( self::CATEGORIES_ACTION ); ?>
+				<p>
+					<button type="submit" class="button button-primary">
+						<?php esc_html_e( 'Create the towel categories', 'cosypaw' ); ?>
+					</button>
+				</p>
+				<p class="description">
+					<?php
+					printf(
+						/* translators: %s: comma-separated subcategory names. */
+						esc_html__( 'Creates the subcategories under Peškirići: %s. It files no products — tick the one you want on the product screen, and leave Peškirići ticked alongside it, because that category is what makes a product a towel. Safe to run repeatedly; existing categories are left untouched.', 'cosypaw' ),
+						esc_html( implode( ', ', ProductCategories::SUBCATEGORIES ) )
+					);
+					?>
+				</p>
+			</form>
 
 			<hr>
 
@@ -278,6 +334,33 @@ final class ProductSeeder {
 	}
 
 	/**
+	 * Handle the create-categories form submission.
+	 *
+	 * @return void
+	 */
+	public function handle_categories(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'cosypaw' ) );
+		}
+		check_admin_referer( self::CATEGORIES_ACTION );
+
+		if ( ! class_exists( '\WC_Product_Simple' ) ) {
+			wp_die( esc_html__( 'WooCommerce is not active.', 'cosypaw' ) );
+		}
+
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'page'       => 'cosypaw-seeder',
+					'categories' => $this->categories->ensure_terms(),
+				),
+				admin_url( 'tools.php' )
+			)
+		);
+		exit;
+	}
+
+	/**
 	 * Handle the image-repair form submission.
 	 *
 	 * @return void
@@ -360,6 +443,11 @@ final class ProductSeeder {
 			// starts with every gateway off and no shipping zone, so going
 			// live means configuring both — see CheckoutSetup. Idempotent.
 			CheckoutSetup::configure();
+
+			// The tree the shop files its towels into by hand. Creating the
+			// terms costs nothing and saves typing four names with the right
+			// parent and the right slugs; nothing is filed into them here.
+			$this->categories->ensure_terms();
 
 			$this->seed_site_logo();
 		} finally {

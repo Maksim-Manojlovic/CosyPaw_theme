@@ -299,6 +299,81 @@ msgstr "How our %s are made, and everything that arrives in the package, is on t
 msgid "ručno rađeni peškiri"
 msgstr "handmade towels"
 
+msgid "Tražiš poklon za bebu ili dete? Pogledaj naše %s — spakovane u CosyPaw kutiju, spremne za predaju."
+msgstr "Looking for a gift for a baby or a child? See our %s — packed in a CosyPaw box, ready to hand over."
+
+msgid "poklon setove peškira"
+msgstr "towel gift sets"
+
+msgid "Poklon setovi peškira za decu i bebe"
+msgstr "Towel gift sets for children and babies"
+
+msgid "Pokloni"
+msgstr "Gifts"
+
+msgid "Ručno rađeni dečiji peškiri od mikrofibre, složeni u set po tvom izboru i spakovani u CosyPaw kutiju — poklon za bebu i decu koji se otvara uz osmeh i koristi svaki dan."
+msgstr "Handmade children’s microfiber towels, put together into a set of your choosing and packed in a CosyPaw box — a gift for babies and children that is opened with a smile and used every day."
+
+msgid "Poklon za svaku priliku"
+msgstr "A gift for every occasion"
+
+msgid "Za rođenje bebe"
+msgstr "For a new baby"
+
+msgid "Devojčica ili dečak — mekani drugar za dečiju sobu ili kupatilo, spreman da dočeka bebu."
+msgstr "A girl or a boy — a soft friend for the nursery or the bathroom, ready to welcome the baby."
+
+msgid "Za krštenje"
+msgstr "For a christening"
+
+msgid "Nežan poklon set za bebu koji ostaje u upotrebi i dugo posle slavlja."
+msgstr "A gentle baby gift set that stays in use long after the celebration."
+
+msgid "Za prvi rođendan"
+msgstr "For a first birthday"
+
+msgid "Peškiri koje dete prepoznaje i uz koje uči da samo briše ruke."
+msgstr "Towels a child recognises, and learns to dry their own hands with."
+
+msgid "Za bebi šauer"
+msgstr "For a baby shower"
+
+msgid "Poklon koji se otvara uz osmeh i koji roditelji zaista koriste svaki dan."
+msgstr "A gift opened with a smile, that parents really do use every day."
+
+msgid "Zašto CosyPaw poklon"
+msgstr "Why a CosyPaw gift"
+
+msgid "Unikatni pokloni za bebu i decu"
+msgstr "Unique gifts for babies and children"
+
+msgid "Pronaći unikatan poklon nije lako, ali poklon set peškira za bebu to rešava jednostavno: praktičan je, lep i pamti se. Svaki set stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, spreman da se preda bez dodatnog pakovanja."
+msgstr "Finding a unique gift is not easy, but a baby towel gift set makes it simple: it is practical, lovely and remembered. Every set arrives in a CosyPaw box, with a welcome note and a hint of lavender, ready to hand over without any extra wrapping."
+
+msgid "Bilo da biraš poklon set za bebu za krštenje, poklon za rođenje bebe — devojčica ili dečak — ili poklone za prvi rođendan, roditelji će peškire koristiti svaki dan. Svaki put kad vide drugara na kuki, na dečijoj visini, setiće se tvog gesta. Kao poklon za baby shower naši setovi su posebno omiljeni, jer spajaju lepo i korisno."
+msgstr "Whether you are choosing a baby gift set for a christening, a gift for a new baby — girl or boy — or first-birthday gifts, the parents will use the towels every day. Every time they see the friend on the hook, at a child’s height, they will remember your gesture. As a baby shower gift our sets are especially loved, because they are both lovely and useful."
+
+msgid "dečijih peškira sa motivima životinja"
+msgstr "children’s towels with animal designs"
+
+msgid "Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi motive po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića."
+msgstr "If you are looking for personalised gifts for children, you put the set together yourself: choose designs to the child’s taste from our collection of %s, treats and flowers."
+
+msgid "U paketu od %1$d peškira plaćaš %2$d — pokloni za decu ne moraju biti skupi da bi bili nezaboravni."
+msgstr "In a package of %1$d towels you pay for %2$d — gifts for children do not have to be expensive to be unforgettable."
+
+msgid "Za porudžbine preko %s dostava je besplatna, a plaćaš pouzećem."
+msgstr "Orders over %s ship free, and you pay cash on delivery."
+
+msgid "Pokloni za bebu širom Srbije stižu za 2–4 radna dana. Više o tome kako nastaju CosyPaw peškiri pročitaj na %s."
+msgstr "Baby gifts arrive anywhere in Serbia in 2–4 business days. Read more about how CosyPaw towels are made on the %s."
+
+msgid "početnoj strani"
+msgstr "home page"
+
+msgid "Naruči poklon set"
+msgstr "Order a gift set"
+
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 

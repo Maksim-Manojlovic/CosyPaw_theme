@@ -151,6 +151,26 @@ $cosypaw_home_link = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html_
 				);
 				?>
 			</p>
+
+			<?php
+			// The plan's one link to the gift-set page. Left out, rather than
+			// pointed elsewhere, while that page does not exist.
+			$cosypaw_gifts_href = \Theme\Pages::url( 'pokloni' );
+			if ( '' !== $cosypaw_gifts_href ) :
+				?>
+				<p>
+					<?php
+					echo wp_kses(
+						sprintf(
+							/* translators: %s: link "poklon setove peškira", to the gift-set page. */
+							__( 'Tražiš poklon za bebu ili dete? Pogledaj naše %s — spakovane u CosyPaw kutiju, spremne za predaju.', 'cosypaw' ),
+							'<a href="' . esc_url( $cosypaw_gifts_href ) . '">' . esc_html__( 'poklon setove peškira', 'cosypaw' ) . '</a>'
+						),
+						array( 'a' => array( 'href' => array() ) )
+					);
+					?>
+				</p>
+			<?php endif; ?>
 		</div>
 
 		<div class="seo-copy__cta">

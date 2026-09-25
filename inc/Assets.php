@@ -304,7 +304,7 @@ final class Assets {
 		$app_styles = $this->enqueue_entry( 'cosypaw-app', self::ENTRY_APP );
 		$this->localize( 'cosypaw-app' );
 
-		if ( is_front_page() ) {
+		if ( Pages::is_storefront() ) {
 			$this->enqueue_entry( 'cosypaw-landing', self::ENTRY_LANDING, $app_styles, array( 'cosypaw-app' ) );
 		} elseif ( $this->is_wc_page() ) {
 			$this->enqueue_entry( 'cosypaw-wc', self::ENTRY_WC, $app_styles );
@@ -346,17 +346,18 @@ final class Assets {
 	 * only `wp_print_styles` catches it. Filtering the tag is downstream of all
 	 * of that and does not depend on winning an ordering race.
 	 *
-	 * Deliberately the front page and nowhere else: `is_wc_page()` cannot see a
-	 * `[products]` shortcode or a WooCommerce block dropped into an ordinary
-	 * page, and those would lose their styling. The front page is a hand-built
-	 * template, so there is nothing there to break.
+	 * Deliberately the storefront pages and nowhere else: `is_wc_page()` cannot
+	 * see a `[products]` shortcode or a WooCommerce block dropped into an
+	 * ordinary page, and those would lose their styling. The front page and the
+	 * registered landing pages (Pages::REGISTRY) are hand-built templates, so
+	 * there is nothing there to break.
 	 *
 	 * @param string $tag    The full `<link>` tag.
 	 * @param string $handle The stylesheet handle.
 	 * @return string The tag, or an empty string to drop it.
 	 */
 	public function suppress_woocommerce_styles( string $tag, string $handle ): string {
-		if ( is_admin() || $this->is_dev_server() || ! is_front_page() ) {
+		if ( is_admin() || $this->is_dev_server() || ! Pages::is_storefront() ) {
 			return $tag;
 		}
 

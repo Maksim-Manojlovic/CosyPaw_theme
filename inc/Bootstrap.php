@@ -104,6 +104,13 @@ final class Bootstrap {
 	private Seo $seo;
 
 	/**
+	 * Landing pages (the SEO plan's fixed-address pages).
+	 *
+	 * @var Pages
+	 */
+	private Pages $pages;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -115,6 +122,7 @@ final class Bootstrap {
 		$this->setup  = new Setup( $this->text_domain );
 		$this->assets = new Assets( $this->text_domain, get_template_directory(), get_template_directory_uri() );
 		$this->seo    = new Seo( new Catalog() );
+		$this->pages  = new Pages();
 
 		// Conditional WooCommerce module.
 		if ( class_exists( 'WooCommerce' ) ) {

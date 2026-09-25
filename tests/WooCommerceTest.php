@@ -43,6 +43,7 @@ require_once dirname( __DIR__ ) . '/inc/FloatingCart.php';
 require_once dirname( __DIR__ ) . '/inc/Upsell.php';
 require_once dirname( __DIR__ ) . '/inc/ShopStrings.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
+require_once dirname( __DIR__ ) . '/inc/Pages.php';
 require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';
 require_once dirname( __DIR__ ) . '/inc/Reviews.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';

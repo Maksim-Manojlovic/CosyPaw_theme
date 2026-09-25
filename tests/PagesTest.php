@@ -98,7 +98,7 @@ final class PagesTest extends TestCase {
 	 * @return void
 	 */
 	public function test_it_creates_the_collection_page_with_its_seo_fields(): void {
-		$this->assertSame( 1, ( new Pages() )->ensure() );
+		$this->assertSame( count( Pages::REGISTRY ), ( new Pages() )->ensure() );
 
 		$page = $this->pages['deciji-peskiri-sa-motivima-zivotinja'];
 		$this->assertSame( 'page', $page->post_type );
@@ -119,7 +119,7 @@ final class PagesTest extends TestCase {
 	public function test_it_leaves_an_existing_page_alone(): void {
 		$this->pages['deciji-peskiri-sa-motivima-zivotinja'] = (object) array( 'ID' => 7, 'post_title' => 'Naš naslov' );
 
-		$this->assertSame( 0, ( new Pages() )->ensure() );
+		$this->assertSame( count( Pages::REGISTRY ) - 1, ( new Pages() )->ensure() );
 		$this->assertSame( 'Naš naslov', $this->pages['deciji-peskiri-sa-motivima-zivotinja']->post_title );
 		$this->assertArrayNotHasKey( 7, $this->meta );
 	}

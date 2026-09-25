@@ -299,6 +299,81 @@ msgstr "Как создаются наши %s и что приходит в по
 msgid "ručno rađeni peškiri"
 msgstr "полотенца ручной работы"
 
+msgid "Tražiš poklon za bebu ili dete? Pogledaj naše %s — spakovane u CosyPaw kutiju, spremne za predaju."
+msgstr "Ищешь подарок для малыша или ребёнка? Посмотри наши %s — в коробке CosyPaw, готовые к вручению."
+
+msgid "poklon setove peškira"
+msgstr "подарочные наборы полотенец"
+
+msgid "Poklon setovi peškira za decu i bebe"
+msgstr "Подарочные наборы полотенец для детей и малышей"
+
+msgid "Pokloni"
+msgstr "Подарки"
+
+msgid "Ručno rađeni dečiji peškiri od mikrofibre, složeni u set po tvom izboru i spakovani u CosyPaw kutiju — poklon za bebu i decu koji se otvara uz osmeh i koristi svaki dan."
+msgstr "Детские полотенца ручной работы из микрофибры, собранные в набор на твой выбор и упакованные в коробку CosyPaw, — подарок для малышей и детей, который открывают с улыбкой и используют каждый день."
+
+msgid "Poklon za svaku priliku"
+msgstr "Подарок для любого случая"
+
+msgid "Za rođenje bebe"
+msgstr "На рождение малыша"
+
+msgid "Devojčica ili dečak — mekani drugar za dečiju sobu ili kupatilo, spreman da dočeka bebu."
+msgstr "Девочка или мальчик — мягкий друг для детской или ванной, готовый встретить малыша."
+
+msgid "Za krštenje"
+msgstr "На крестины"
+
+msgid "Nežan poklon set za bebu koji ostaje u upotrebi i dugo posle slavlja."
+msgstr "Нежный подарочный набор для малыша, которым пользуются ещё долго после праздника."
+
+msgid "Za prvi rođendan"
+msgstr "На первый день рождения"
+
+msgid "Peškiri koje dete prepoznaje i uz koje uči da samo briše ruke."
+msgstr "Полотенца, которые ребёнок узнаёт и с которыми учится сам вытирать руки."
+
+msgid "Za bebi šauer"
+msgstr "На бэби шауэр"
+
+msgid "Poklon koji se otvara uz osmeh i koji roditelji zaista koriste svaki dan."
+msgstr "Подарок, который открывают с улыбкой и которым родители действительно пользуются каждый день."
+
+msgid "Zašto CosyPaw poklon"
+msgstr "Почему подарок CosyPaw"
+
+msgid "Unikatni pokloni za bebu i decu"
+msgstr "Уникальные подарки для малышей и детей"
+
+msgid "Pronaći unikatan poklon nije lako, ali poklon set peškira za bebu to rešava jednostavno: praktičan je, lep i pamti se. Svaki set stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, spreman da se preda bez dodatnog pakovanja."
+msgstr "Найти уникальный подарок непросто, но подарочный набор полотенец для малыша решает это легко: он практичный, красивый и запоминается. Каждый набор приходит в коробке CosyPaw, с приветственной запиской и ароматом лаванды, готовый к вручению без дополнительной упаковки."
+
+msgid "Bilo da biraš poklon set za bebu za krštenje, poklon za rođenje bebe — devojčica ili dečak — ili poklone za prvi rođendan, roditelji će peškire koristiti svaki dan. Svaki put kad vide drugara na kuki, na dečijoj visini, setiće se tvog gesta. Kao poklon za baby shower naši setovi su posebno omiljeni, jer spajaju lepo i korisno."
+msgstr "Выбираешь ли ты подарочный набор на крестины, подарок на рождение малыша — девочки или мальчика — или подарки на первый день рождения, родители будут пользоваться полотенцами каждый день. Каждый раз, видя друга на крючке на высоте ребёнка, они вспомнят о твоём внимании. Как подарок на бэби шауэр наши наборы особенно любимы, потому что сочетают красивое и полезное."
+
+msgid "dečijih peškira sa motivima životinja"
+msgstr "детских полотенец с мотивами животных"
+
+msgid "Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi motive po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića."
+msgstr "Если ищешь персонализированные подарки для детей, набор собираешь сам: выбери мотивы по вкусу ребёнка из нашей коллекции %s, вкусняшек и цветочков."
+
+msgid "U paketu od %1$d peškira plaćaš %2$d — pokloni za decu ne moraju biti skupi da bi bili nezaboravni."
+msgstr "В наборе из %1$d полотенец ты платишь за %2$d — подарки для детей не обязаны быть дорогими, чтобы быть незабываемыми."
+
+msgid "Za porudžbine preko %s dostava je besplatna, a plaćaš pouzećem."
+msgstr "Для заказов свыше %s доставка бесплатная, а оплата — при получении."
+
+msgid "Pokloni za bebu širom Srbije stižu za 2–4 radna dana. Više o tome kako nastaju CosyPaw peškiri pročitaj na %s."
+msgstr "Подарки для малышей приходят по всей Сербии за 2–4 рабочих дня. Подробнее о том, как создаются полотенца CosyPaw, читай на %s."
+
+msgid "početnoj strani"
+msgstr "главной странице"
+
+msgid "Naruči poklon set"
+msgstr "Заказать подарочный набор"
+
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 

@@ -715,14 +715,15 @@ if ( $hero_deal ) {
 	 * people search for, and sits low enough not to slow a buyer down.
 	 *
 	 * The two links are the SEO plan's internal links, one each: to the motif
-	 * collection page, and to the builder on this page until the gift-set page
-	 * exists. Each falls back to its section here while its page is missing,
-	 * so a fresh install never links to a 404.
+	 * collection page and to the gift-set page. Each falls back to its section
+	 * here while its page is missing, so a fresh install never links to a 404.
 	 */
 	$cosypaw_link        = static fn( string $href, string $text ): string => '<a href="' . esc_url( $href ) . '">' . esc_html( $text ) . '</a>';
 	$cosypaw_kses        = array( 'a' => array( 'href' => array() ) );
 	$cosypaw_motifs_href = \Theme\Pages::url( 'motivi' );
 	$cosypaw_motifs_href = '' !== $cosypaw_motifs_href ? $cosypaw_motifs_href : '#galerija';
+	$cosypaw_gifts_href  = \Theme\Pages::url( 'pokloni' );
+	$cosypaw_gifts_href  = '' !== $cosypaw_gifts_href ? $cosypaw_gifts_href : '#napravi-paket';
 	?>
 	<section id="o-peskirima" class="section seo-copy">
 		<div class="section__head">
@@ -757,9 +758,9 @@ if ( $hero_deal ) {
 				<?php
 				echo wp_kses(
 					sprintf(
-						/* translators: 1: link "praktičan i lep poklon", to the package builder. */
+						/* translators: 1: link "praktičan i lep poklon", to the gift-set page. */
 						__( 'CosyPaw peškiri su i %1$s — za rođenje bebe, krštenje, prvi rođendan ili bebi šauer. Svaki paket stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, a ručno rađene peškire šaljemo širom Srbije.', 'cosypaw' ),
-						$cosypaw_link( '#napravi-paket', __( 'praktičan i lep poklon', 'cosypaw' ) )
+						$cosypaw_link( $cosypaw_gifts_href, __( 'praktičan i lep poklon', 'cosypaw' ) )
 					),
 					$cosypaw_kses
 				);

@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY, so installs that already ran
 	 * ensure() look again.
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -57,6 +57,12 @@ final class Pages {
 			'title'           => 'Dečiji peškiri sa motivima životinja',
 			'seo_title'       => 'Dečiji Peškiri sa Motivima Životinja | Najlepši Peškiri za Decu',
 			'seo_description' => 'Dečiji peškiri sa motivima životinja čine pranje ruku zabavnim! Peškir za ruke zeka, sovica ili panda, ručno rađen od mikrofibre. Pogledaj kolekciju!',
+		),
+		'pokloni' => array(
+			'slug'            => 'poklon-setovi-za-bebu-i-decu',
+			'title'           => 'Poklon setovi peškira za bebu i decu',
+			'seo_title'       => 'Poklon Setovi Peškira za Bebu i Decu | Unikatni Pokloni Srbija',
+			'seo_description' => 'Naši poklon setovi peškira za bebu i decu su ručno rađeni, lepo upakovani i idealni za krštenje, rođenje ili baby shower. Naruči unikatni poklon danas!',
 		),
 	);
 

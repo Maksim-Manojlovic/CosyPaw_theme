@@ -13,9 +13,14 @@
  *     via ?lang=. Search engines saw three different pages at one address with
  *     nothing to say they were translations of each other.
  *
- * Deliberately narrow: this is not a replacement for an SEO plugin. If Yoast or
- * Rank Math is ever activated, `cosypaw_seo_enabled` can be filtered to false
- * to stand this down rather than emit competing tags.
+ * Deliberately narrow: this is not a replacement for an SEO plugin. The live
+ * shop runs Yoast, and for months both emitted a description, a set of og:*
+ * tags and an Organization/WebSite graph — two of each on every page, with the
+ * theme's description contradicting the one typed into Yoast. When an SEO
+ * plugin is active it now owns all of that; the theme keeps only what Yoast
+ * (free) does not do: hreflang for the ?lang= variants, and the ProductGroup
+ * and FAQPage nodes for the front page. `cosypaw_seo_enabled` still stands the
+ * whole module down.
  *
  * @package CosyPaw
  */
@@ -72,10 +77,33 @@ final class Seo {
 			return;
 		}
 
-		$this->render_description();
-		$this->render_social();
+		$plugin = $this->plugin_active();
+
+		if ( ! $plugin ) {
+			$this->render_description();
+			$this->render_social();
+		}
+
 		$this->render_hreflang();
-		$this->render_schema();
+		$this->render_schema( $plugin );
+	}
+
+	/**
+	 * Whether a dedicated SEO plugin is writing the head.
+	 *
+	 * @return bool
+	 */
+	private function plugin_active(): bool {
+		/**
+		 * Whether an SEO plugin owns the description, social cards and the
+		 * Organization/WebSite graph.
+		 *
+		 * @param bool $active Detected from Yoast's or Rank Math's version constant.
+		 */
+		return (bool) apply_filters(
+			'cosypaw_seo_plugin_active',
+			defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' )
+		);
 	}
 
 	/* ---------------------------------------------------------------------
@@ -265,19 +293,30 @@ final class Seo {
 	/**
 	 * JSON-LD for the current view.
 	 *
+	 * With a plugin active its graph already carries the Organization and
+	 * WebSite, under the same #organization and #website ids this file uses,
+	 * so the ProductGroup's brand still resolves to the plugin's node.
+	 *
+	 * @param bool $plugin Whether an SEO plugin owns the site-wide nodes.
 	 * @return void
 	 */
-	private function render_schema(): void {
-		$graph = array( $this->schema_organization() );
+	private function render_schema( bool $plugin ): void {
+		$graph = $plugin ? array() : array( $this->schema_organization() );
 
 		if ( is_front_page() ) {
-			$graph[] = $this->schema_website();
+			if ( ! $plugin ) {
+				$graph[] = $this->schema_website();
+			}
 			$graph[] = $this->schema_product_group();
 
 			$faq = $this->schema_faq();
 			if ( null !== $faq ) {
 				$graph[] = $faq;
 			}
+		}
+
+		if ( ! $graph ) {
+			return;
 		}
 
 		$payload = array(

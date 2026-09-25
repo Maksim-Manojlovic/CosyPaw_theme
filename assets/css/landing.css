@@ -1576,6 +1576,45 @@ a.testimonial__meta:focus-visible {
 	margin-top: 26px;
 }
 
+/* ---------- Motif collection page ----------
+   The same cards and builder as the front page; only the page's own frame
+   is new. Groups sit closer together than full sections — they are one list
+   cut into chapters, not separate arguments. */
+.collection__intro {
+	padding-bottom: 10px;
+}
+
+.collection__intro .section__head {
+	margin-bottom: 0;
+}
+
+.collection__crumbs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin-bottom: 22px;
+	font-size: 14px;
+	color: var(--muted);
+}
+
+.collection__crumbs a {
+	color: var(--claydk);
+	font-weight: 700;
+}
+
+.collection__group {
+	padding-block: 28px;
+}
+
+.collection__group .section__head {
+	margin-bottom: 26px;
+}
+
+.collection__group .section__title {
+	font-size: 32px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	/* One column, and it owns the opening screen. Stacked, the card pushed the

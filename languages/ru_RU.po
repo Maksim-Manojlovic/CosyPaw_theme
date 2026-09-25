@@ -239,6 +239,66 @@ msgstr "практичный и красивый подарок"
 msgid "A kako ime CosyPaw kaže, nisu samo za decu: mnogi ih drže pored vrata kao peškir za pse, za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu i blato, a peškir se pere u mašini na 40°C."
 msgstr "А как подсказывает название CosyPaw, они не только для детей: многие держат их у двери как полотенце для собаки — вытирать лапы после прогулки. Микрофибра быстро впитывает влагу и грязь, а полотенце стирается в машине при 40°C."
 
+msgid "Putanja"
+msgstr "Навигационная цепочка"
+
+msgid "Početna"
+msgstr "Главная"
+
+msgid "Kolekcija"
+msgstr "Коллекция"
+
+msgid "Dečiji peškiri sa motivima životinja"
+msgstr "Детские полотенца с мотивами животных"
+
+msgid "%1$d ručno rađenih peškira od mikrofibre, sa alkom za kačenje, od %2$s po komadu. Izaberi drugara za svoje dete — kupi jedan ili ih spoji u paket i uštedi."
+msgstr "%1$d полотенец ручной работы из микрофибры, с петелькой, от %2$s за штуку. Выбери друга для своего ребёнка — купи одно или собери набор и сэкономь."
+
+msgid "Peškiri sa životinjicama"
+msgstr "Полотенца со зверятами"
+
+msgid "Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku."
+msgstr "Мягкие друзья ждут на крючке — ребёнок сам выбирает своего и радуется ему после каждого мытья рук."
+
+msgid "Zalogajčići"
+msgstr "Вкусняшки"
+
+msgid "Voće i poslastice od mikrofibre — vesela sitnica za kupatilo ili kuhinju."
+msgstr "Фрукты и сладости из микрофибры — весёлая мелочь для ванной или кухни."
+
+msgid "Cvetići i listići"
+msgstr "Цветочки и листочки"
+
+msgid "Nežni cvetni motivi za mirniji, prirodni kutak."
+msgstr "Нежные цветочные мотивы для спокойного, природного уголка."
+
+msgid "Peškirići u torbi"
+msgstr "Полотенчики в сумочке"
+
+msgid "Još peškira"
+msgstr "Ещё полотенца"
+
+msgid "Zašto motivi"
+msgstr "Зачем мотивы"
+
+msgid "Dečija higijena kroz igru"
+msgstr "Детская гигиена через игру"
+
+msgid "Dečiji peškiri sa motivima životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra."
+msgstr "Детские полотенца с мотивами животных — это гораздо больше, чем обычный текстиль для ванной. Когда ребёнок видит любимого друга, который ждёт его на крючке прямо на его высоте, мытьё рук перестаёт быть обязанностью и становится игрой."
+
+msgid "Zato je peškir za ruke zeka jedan od najomiljenijih: mekan je, prijateljski i deca ga odmah prepoznaju. Sovica podseća na mirne večernje rutine, a panda i kapibarica unose malo smeha u svako jutro."
+msgstr "Поэтому полотенце для рук «зайчик» — одно из самых любимых: мягкое, дружелюбное, и дети сразу его узнают. Совушка напоминает о спокойных вечерних ритуалах, а панда и капибара приносят немного смеха в каждое утро."
+
+msgid "Svi peškiri su od plišane mikrofibre, nežne prema koži, koja se brzo suši i ostaje meka i posle mnogo pranja. Alka za kačenje drži peškir uvek nadohvat ruke, pa dete samo briše ruke i gradi higijenske navike koje ostaju. Svaki je šiven ručno, pa nema dva potpuno ista — baš kao ni dece."
+msgstr "Все полотенца из плюшевой микрофибры, нежной к коже, которая быстро сохнет и остаётся мягкой после многих стирок. Петелька держит полотенце всегда под рукой, поэтому ребёнок сам вытирает руки и вырабатывает гигиенические привычки, которые остаются. Каждое сшито вручную, поэтому нет двух совершенно одинаковых — как и детей."
+
+msgid "Kako nastaju naši %s i šta sve stiže u paketu, pročitaj na početnoj strani."
+msgstr "Как создаются наши %s и что приходит в посылке — читай на главной странице."
+
+msgid "ručno rađeni peškiri"
+msgstr "полотенца ручной работы"
+
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 

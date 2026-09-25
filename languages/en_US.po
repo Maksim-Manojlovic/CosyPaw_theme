@@ -239,6 +239,66 @@ msgstr "a practical, lovely gift"
 msgid "A kako ime CosyPaw kaže, nisu samo za decu: mnogi ih drže pored vrata kao peškir za pse, za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu i blato, a peškir se pere u mašini na 40°C."
 msgstr "And as the name CosyPaw says, they are not just for children: many people keep one by the door as a dog towel, for wiping paws after a walk. Microfiber soaks up damp and mud quickly, and the towel goes in the washing machine at 40°C."
 
+msgid "Putanja"
+msgstr "Breadcrumb"
+
+msgid "Početna"
+msgstr "Home"
+
+msgid "Kolekcija"
+msgstr "Collection"
+
+msgid "Dečiji peškiri sa motivima životinja"
+msgstr "Children’s towels with animal designs"
+
+msgid "%1$d ručno rađenih peškira od mikrofibre, sa alkom za kačenje, od %2$s po komadu. Izaberi drugara za svoje dete — kupi jedan ili ih spoji u paket i uštedi."
+msgstr "%1$d handmade microfiber towels with a hanging loop, from %2$s each. Pick a friend for your child — buy one, or bundle them and save."
+
+msgid "Peškiri sa životinjicama"
+msgstr "Towels with little animals"
+
+msgid "Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku."
+msgstr "Soft friends waiting on the hook — a child picks their own and looks forward to it after every hand wash."
+
+msgid "Zalogajčići"
+msgstr "Little treats"
+
+msgid "Voće i poslastice od mikrofibre — vesela sitnica za kupatilo ili kuhinju."
+msgstr "Fruit and sweets in microfiber — a cheerful little thing for the bathroom or the kitchen."
+
+msgid "Cvetići i listići"
+msgstr "Flowers and leaves"
+
+msgid "Nežni cvetni motivi za mirniji, prirodni kutak."
+msgstr "Gentle floral designs for a calmer, natural corner."
+
+msgid "Peškirići u torbi"
+msgstr "Towels in a bag"
+
+msgid "Još peškira"
+msgstr "More towels"
+
+msgid "Zašto motivi"
+msgstr "Why designs"
+
+msgid "Dečija higijena kroz igru"
+msgstr "Children’s hygiene through play"
+
+msgid "Dečiji peškiri sa motivima životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra."
+msgstr "Children’s towels with animal designs are much more than ordinary bathroom textiles. When a child sees a favourite friend waiting on the hook, right at their height, washing hands stops being a chore and becomes a game."
+
+msgid "Zato je peškir za ruke zeka jedan od najomiljenijih: mekan je, prijateljski i deca ga odmah prepoznaju. Sovica podseća na mirne večernje rutine, a panda i kapibarica unose malo smeha u svako jutro."
+msgstr "That is why the bunny hand towel is one of the favourites: it is soft, friendly and children recognise it at once. The little owl is a reminder of calm evening routines, while the panda and the capybara bring a little laughter to every morning."
+
+msgid "Svi peškiri su od plišane mikrofibre, nežne prema koži, koja se brzo suši i ostaje meka i posle mnogo pranja. Alka za kačenje drži peškir uvek nadohvat ruke, pa dete samo briše ruke i gradi higijenske navike koje ostaju. Svaki je šiven ručno, pa nema dva potpuno ista — baš kao ni dece."
+msgstr "Every towel is made of plush microfiber that is gentle on skin, dries quickly and stays soft wash after wash. The hanging loop keeps the towel always within reach, so the child dries their own hands and builds hygiene habits that last. Each one is sewn by hand, so no two are exactly alike — just like children."
+
+msgid "Kako nastaju naši %s i šta sve stiže u paketu, pročitaj na početnoj strani."
+msgstr "How our %s are made, and everything that arrives in the package, is on the home page."
+
+msgid "ručno rađeni peškiri"
+msgstr "handmade towels"
+
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 

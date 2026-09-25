@@ -116,10 +116,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'#paketi'   => __( 'Paketi', 'cosypaw' ),
 					'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
 				);
+				// Off the front page, "Peškirići" goes to the motif collection
+				// rather than back to the homepage gallery: it is the same list,
+				// on a page of its own, and the link is the page's main way in.
+				$cosypaw_collection = class_exists( '\Theme\Pages' ) ? \Theme\Pages::url( 'motivi' ) : '';
+
 				foreach ( $cosypaw_anchors as $anchor => $label ) {
+					$cosypaw_href = ( is_front_page() ? '' : $cosypaw_home ) . $anchor;
+					if ( '#galerija' === $anchor && '' !== $cosypaw_collection && ! is_front_page() ) {
+						$cosypaw_href = $cosypaw_collection;
+					}
+
 					printf(
 						'<a href="%1$s" class="nav__link">%2$s</a>',
-						esc_url( ( is_front_page() ? '' : $cosypaw_home ) . $anchor ),
+						esc_url( $cosypaw_href ),
 						esc_html( $label )
 					);
 				}

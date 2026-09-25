@@ -48,6 +48,13 @@ foreach ($f in $files) {
 	if (Test-Path $src) { Copy-Item $src (Join-Path $stage $f) -Force }
 }
 
+# Per-page templates (page-{slug}.php) for the landing pages in inc/Pages.php.
+# Matched by pattern rather than listed, so a new landing page cannot be left
+# out of the deploy by forgetting to add it here.
+Get-ChildItem -Path $root -Filter 'page-*.php' -File | ForEach-Object {
+	Copy-Item $_.FullName (Join-Path $stage $_.Name) -Force
+}
+
 # Directories that ship as-is.
 foreach ($d in 'inc','template-parts','dist','languages') {
 	$src = Join-Path $root $d

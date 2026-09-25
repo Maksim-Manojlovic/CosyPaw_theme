@@ -32,6 +32,18 @@ $catalog       = new \Theme\Catalog();
  */
 $in_stock = static fn( array $row ): bool => (bool) ( $row['available'] ?? true );
 
+/*
+ * Alt text for a motif photo that stands on its own. A bare "Zeka" told a
+ * search engine nothing about what the picture is; this names the product and
+ * the motif. Only for images whose name is not printed beside them — the
+ * gallery and builder tiles keep alt="" because their caption already says it.
+ */
+$motif_alt = static fn( array $row ): string => sprintf(
+	/* translators: %s: motif name, e.g. "Zeka". */
+	__( 'Dečiji peškir od mikrofibera, motiv %s', 'cosypaw' ),
+	$row['name']
+);
+
 $products      = array_values( array_filter( $catalog->products(), $in_stock ) );
 $featured      = array_values( array_filter( $catalog->featured(), $in_stock ) );
 
@@ -46,10 +58,11 @@ $default_pkg   = $catalog->default_package();
 // The hero lead used to carry four facts — material, hanging loop, catalogue
 // size and an instruction — two of which are repeated verbatim in the benefits
 // section. It is one line now; the offer does the selling, from the ribbon and
-// the button.
+// the button. The headline now names the product the way people search for it
+// ("dečiji peškiri od mikrofibera"), so the brand's own line moved down here.
 $tagline = sprintf(
 	/* translators: %d: how many motifs are on sale. */
-	__( '%d motiva od mekane mikrofibre, sa alkom za kačenje.', 'cosypaw' ),
+	__( 'Ručno rađeni peškiri sa alkom za kačenje — %d motiva koji grle tvoje kupatilo.', 'cosypaw' ),
 	count( $products )
 );
 
@@ -200,12 +213,17 @@ if ( $hero_deal ) {
 					<?php echo esc_html( $hero_ribbon ); ?>
 				</span>
 			<?php endif; ?>
+			<?php
+			// The page's main search phrase, verbatim: the Yoast title and the
+			// SEO plan both lead with it, and an H1 that says something else
+			// splits the page's signal between two topics.
+			?>
 			<h1 class="hero__title">
 				<?php
 				printf(
-					/* translators: %s: highlighted phrase "tvoje kupatilo". */
-					esc_html__( 'Ručno šiveni peškirići koji grle %s', 'cosypaw' ),
-					'<em>' . esc_html__( 'tvoje kupatilo', 'cosypaw' ) . '</em>'
+					/* translators: %s: highlighted word "mikrofibera". */
+					esc_html__( 'Dečiji peškiri od %s', 'cosypaw' ),
+					'<em>' . esc_html__( 'mikrofibera', 'cosypaw' ) . '</em>'
 				);
 				?>
 			</h1>
@@ -360,7 +378,7 @@ if ( $hero_deal ) {
 										src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
 										width="600"
 										height="800"
-										alt="<?php echo esc_attr( $f['name'] ); ?>"
+										alt="<?php echo esc_attr( $motif_alt( $f ) ); ?>"
 										decoding="async"
 										<?php
 										// The first slide is the hero image; the rest sit
@@ -413,7 +431,7 @@ if ( $hero_deal ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve peškiriće', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
+			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
 		<?php
@@ -921,7 +939,7 @@ if ( $hero_deal ) {
 						src="<?php echo esc_url( $motif['image_th'] ); ?>"
 						width="192"
 						height="192"
-						alt="<?php echo esc_attr( $motif['name'] ); ?>"
+						alt="<?php echo esc_attr( $motif_alt( $motif ) ); ?>"
 						loading="lazy"
 						decoding="async"
 					>
@@ -1061,6 +1079,71 @@ if ( $hero_deal ) {
 					</details>
 				</div>
 			<?php endif; ?>
+		</div>
+	</section>
+
+	<!-- O PEŠKIRIMA (search copy) -->
+	<?php
+	/*
+	 * The one block of running prose on the page. Everything above is written
+	 * to sell in a glance, which leaves a search engine almost nothing to read
+	 * about what the shop is; this says it in full sentences, with the phrases
+	 * people search for, and sits low enough not to slow a buyer down.
+	 *
+	 * The two links are the SEO plan's internal links. They point at the
+	 * gallery and the builder on this page until the collection and gift-set
+	 * pages exist — swap the hrefs then, keep the anchor text.
+	 */
+	$cosypaw_link = static fn( string $href, string $text ): string => '<a href="' . esc_url( $href ) . '">' . esc_html( $text ) . '</a>';
+	$cosypaw_kses = array( 'a' => array( 'href' => array() ) );
+	?>
+	<section id="o-peskirima" class="section seo-copy">
+		<div class="section__head">
+			<span class="eyebrow"><?php esc_html_e( 'O našim peškirima', 'cosypaw' ); ?></span>
+			<h2 class="section__title"><?php esc_html_e( 'Ručno rađeni peškiri za decu — i za šape', 'cosypaw' ); ?></h2>
+		</div>
+
+		<div class="seo-copy__body">
+			<p><?php esc_html_e( 'Tražiš dečije peškire koji su mekani, upijajući i dovoljno slatki da dete samo poželi da obriše ruke? CosyPaw peškiri od mikrofibera šiju se ručno, jedan po jedan. Plišana mikrofibra je nežna prema dečijoj koži, upija u trenu, brzo se suši i ostaje meka i posle mnogo pranja.', 'cosypaw' ); ?></p>
+
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: 1: link "N jedinstvenih motiva", to the motif gallery. */
+						__( 'Svaki peškir ima alku za kačenje, pa visi na dečijoj visini — pored lavaboa, na kuki ili na vratima. Kad na kuki čeka drugar, pranje ruku postaje igra, a dete samo bira svoj peškir i samo ga koristi. Izaberi između %1$s: životinjice poput zeke, sove, pande i kapibare, zalogajčići i cvetići.', 'cosypaw' ),
+						$cosypaw_link(
+							'#galerija',
+							sprintf(
+								/* translators: %d: how many motifs are on sale. */
+								__( '%d jedinstvenih motiva', 'cosypaw' ),
+								count( $products )
+							)
+						)
+					),
+					$cosypaw_kses
+				);
+				?>
+			</p>
+
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: 1: link "praktičan i lep poklon", to the package builder. */
+						__( 'CosyPaw peškiri su i %1$s — za rođenje bebe, krštenje, prvi rođendan ili bebi šauer. Svaki paket stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, a ručno rađene peškire šaljemo širom Srbije.', 'cosypaw' ),
+						$cosypaw_link( '#napravi-paket', __( 'praktičan i lep poklon', 'cosypaw' ) )
+					),
+					$cosypaw_kses
+				);
+				?>
+			</p>
+
+			<p><?php esc_html_e( 'A kako ime CosyPaw kaže, nisu samo za decu: mnogi ih drže pored vrata kao peškir za pse, za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu i blato, a peškir se pere u mašini na 40°C.', 'cosypaw' ); ?></p>
+		</div>
+
+		<div class="seo-copy__cta">
+			<a href="#napravi-paket" class="btn btn--primary"><?php esc_html_e( 'Izaberi paket', 'cosypaw' ); ?></a>
 		</div>
 	</section>
 

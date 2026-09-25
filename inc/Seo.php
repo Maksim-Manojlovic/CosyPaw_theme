@@ -119,7 +119,7 @@ final class Seo {
 		$text = '';
 
 		if ( is_front_page() ) {
-			$text = __( 'Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
+			$text = __( 'Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
 		} elseif ( is_singular() ) {
 			$post = get_queried_object();
 			if ( $post instanceof \WP_Post ) {
@@ -401,8 +401,8 @@ final class Seo {
 		return array(
 			'@type'       => 'ProductGroup',
 			'@id'         => home_url( '/#motifs' ),
-			'name'        => __( 'CosyPaw ukrasni peškirići', 'cosypaw' ),
-			'description' => __( 'Ručno šiveni ukrasni peškirići od plišane mikrofibre, sa alkom za kačenje.', 'cosypaw' ),
+			'name'        => __( 'CosyPaw dečiji peškiri od mikrofibera', 'cosypaw' ),
+			'description' => __( 'Ručno rađeni dečiji peškiri od plišane mikrofibre, sa alkom za kačenje.', 'cosypaw' ),
 			'brand'       => array( '@id' => home_url( '/#organization' ) ),
 			'offers'      => array(
 				'@type'         => 'AggregateOffer',
@@ -469,6 +469,13 @@ final class Seo {
 			array(
 				'q' => __( 'Kako se peru?', 'cosypaw' ),
 				'a' => __( 'Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik.', 'cosypaw' ),
+			),
+			// People search for towels for their dogs' paws, and the shop is
+			// called CosyPaw; the answer puts that use into words, and into the
+			// FAQPage node.
+			array(
+				'q' => __( 'Mogu li da ih koristim i za ljubimce?', 'cosypaw' ),
+				'a' => __( 'Mogu. Mnogi ih koriste kao peškir za pse — za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu, a peškir se lako opere u mašini.', 'cosypaw' ),
 			),
 			array(
 				'q' => __( 'Koliko traje dostava?', 'cosypaw' ),

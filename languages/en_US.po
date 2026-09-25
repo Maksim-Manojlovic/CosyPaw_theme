@@ -35,11 +35,11 @@ msgstr "Search"
 msgid "Mekani svet peškirića"
 msgstr "A soft world of little towels"
 
-msgid "Ručno šiveni peškirići koji grle %s"
-msgstr "Hand-sewn towels that hug %s"
+msgid "Dečiji peškiri od %s"
+msgstr "Children’s towels made of %s"
 
-msgid "tvoje kupatilo"
-msgstr "your bathroom"
+msgid "mikrofibera"
+msgstr "microfiber"
 
 msgid "Izaberi paket"
 msgstr "Choose a package"
@@ -116,8 +116,8 @@ msgstr "The whole crew"
 msgid "Upoznaj sve peškiriće"
 msgstr "Meet all the designs"
 
-msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
-msgstr "Decorative bathroom towels, from %s each — or bundle them and save."
+msgid "Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "Children’s towels with little animals, treats and flowers, from %s each — or bundle them and save."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 pc"
@@ -200,17 +200,44 @@ msgstr "Orders over %s ship free."
 msgid "Besplatna dostava preko %s"
 msgstr "Free shipping over %s"
 
-msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
-msgstr "Hand-sewn decorative bathroom towels — soft microfiber, a hanging loop and over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
+msgid "Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgstr "Handmade children’s microfiber towels with a hanging loop, in over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
 
 msgid "Rezultati pretrage za „%s“."
 msgstr "Search results for “%s”."
 
-msgid "CosyPaw ukrasni peškirići"
-msgstr "CosyPaw decorative towels"
+msgid "CosyPaw dečiji peškiri od mikrofibera"
+msgstr "CosyPaw children’s microfiber towels"
 
-msgid "Ručno šiveni ukrasni peškirići od plišane mikrofibre, sa alkom za kačenje."
-msgstr "Hand-sewn decorative towels in plush microfiber, with a hanging loop."
+msgid "Ručno rađeni dečiji peškiri od plišane mikrofibre, sa alkom za kačenje."
+msgstr "Handmade children’s towels in plush microfiber, with a hanging loop."
+
+msgid "Dečiji peškir od mikrofibera, motiv %s"
+msgstr "Children’s microfiber towel, %s design"
+
+msgid "O našim peškirima"
+msgstr "About our towels"
+
+msgid "Ručno rađeni peškiri za decu — i za šape"
+msgstr "Handmade towels for children — and for paws"
+
+msgid "Tražiš dečije peškire koji su mekani, upijajući i dovoljno slatki da dete samo poželi da obriše ruke? CosyPaw peškiri od mikrofibera šiju se ručno, jedan po jedan. Plišana mikrofibra je nežna prema dečijoj koži, upija u trenu, brzo se suši i ostaje meka i posle mnogo pranja."
+msgstr "Looking for children’s towels that are soft, absorbent and cute enough that a child wants to dry their hands? CosyPaw microfiber towels are sewn by hand, one at a time. Plush microfiber is gentle on a child’s skin, absorbs in an instant, dries fast and stays soft wash after wash."
+
+msgid "Svaki peškir ima alku za kačenje, pa visi na dečijoj visini — pored lavaboa, na kuki ili na vratima. Kad na kuki čeka drugar, pranje ruku postaje igra, a dete samo bira svoj peškir i samo ga koristi. Izaberi između %1$s: životinjice poput zeke, sove, pande i kapibare, zalogajčići i cvetići."
+msgstr "Every towel has a hanging loop, so it hangs at a child’s height — by the sink, on a hook or on a door. When a friend is waiting on the hook, washing hands becomes a game, and the child picks and uses their own towel. Choose from %1$s: little animals like the bunny, owl, panda and capybara, treats and flowers."
+
+msgid "%d jedinstvenih motiva"
+msgstr "%d unique designs"
+
+msgid "CosyPaw peškiri su i %1$s — za rođenje bebe, krštenje, prvi rođendan ili bebi šauer. Svaki paket stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, a ručno rađene peškire šaljemo širom Srbije."
+msgstr "CosyPaw towels are also %1$s — for a new baby, a christening, a first birthday or a baby shower. Every package arrives in a CosyPaw box, with a welcome note and a hint of lavender, and we ship our handmade towels all across Serbia."
+
+msgid "praktičan i lep poklon"
+msgstr "a practical, lovely gift"
+
+msgid "A kako ime CosyPaw kaže, nisu samo za decu: mnogi ih drže pored vrata kao peškir za pse, za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu i blato, a peškir se pere u mašini na 40°C."
+msgstr "And as the name CosyPaw says, they are not just for children: many people keep one by the door as a dog towel, for wiping paws after a walk. Microfiber soaks up damp and mud quickly, and the towel goes in the washing machine at 40°C."
 
 msgid "Glavna navigacija"
 msgstr "Main navigation"
@@ -542,6 +569,12 @@ msgstr "How are they washed?"
 msgid "Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik."
 msgstr "Machine wash at 40°C, without fabric softener so they stay absorbent. They dry fast and keep their shape."
 
+msgid "Mogu li da ih koristim i za ljubimce?"
+msgstr "Can I use them for pets too?"
+
+msgid "Mogu. Mnogi ih koriste kao peškir za pse — za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu, a peškir se lako opere u mašini."
+msgstr "Yes. Many people use them as a dog towel — for wiping paws after a walk. Microfiber soaks up damp quickly, and the towel is easy to machine-wash."
+
 msgid "Koliko traje dostava?"
 msgstr "How long does delivery take?"
 
@@ -578,8 +611,8 @@ msgstr "Local pickup"
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Courier delivery (postage paid to the courier)"
 
-msgid "%d motiva od mekane mikrofibre, sa alkom za kačenje."
-msgstr "%d designs in soft microfiber, with a hanging loop."
+msgid "Ručno rađeni peškiri sa alkom za kačenje — %d motiva koji grle tvoje kupatilo."
+msgstr "Handmade towels with a hanging loop — %d designs that hug your bathroom."
 
 msgid "besplatna dostava"
 msgstr "free shipping"

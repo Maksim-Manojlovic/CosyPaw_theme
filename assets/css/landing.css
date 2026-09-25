@@ -1544,6 +1544,38 @@ a.testimonial__meta:focus-visible {
 	outline-offset: 2px;
 }
 
+/* ---------- O peškirima (search copy) ----------
+   Four paragraphs of prose on a page otherwise built from cards, so it reads
+   as a quiet column at a comfortable measure rather than a card of its own. */
+.seo-copy__body {
+	max-width: 68ch;
+	margin: 0 auto;
+	color: var(--muted);
+	font-size: 16px;
+	line-height: 1.7;
+}
+
+.seo-copy__body p {
+	margin: 0 0 16px;
+}
+
+.seo-copy__body a {
+	color: var(--claydk);
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.seo-copy__body a:hover {
+	color: var(--clay);
+}
+
+.seo-copy__cta {
+	display: flex;
+	justify-content: center;
+	margin-top: 26px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	/* One column, and it owns the opening screen. Stacked, the card pushed the

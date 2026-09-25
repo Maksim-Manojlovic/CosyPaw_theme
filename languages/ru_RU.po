@@ -35,11 +35,11 @@ msgstr "Найти"
 msgid "Mekani svet peškirića"
 msgstr "Мягкий мир полотенчиков"
 
-msgid "Ručno šiveni peškirići koji grle %s"
-msgstr "Сшитые вручную полотенца, что обнимают %s"
+msgid "Dečiji peškiri od %s"
+msgstr "Детские полотенца из %s"
 
-msgid "tvoje kupatilo"
-msgstr "твою ванную"
+msgid "mikrofibera"
+msgstr "микрофибры"
 
 msgid "Izaberi paket"
 msgstr "Выбери набор"
@@ -116,8 +116,8 @@ msgstr "Вся компания"
 msgid "Upoznaj sve peškiriće"
 msgstr "Познакомься со всеми мотивами"
 
-msgid "Ukrasni peškirići za kupatilo, od %s po komadu — ili ih spoji u paket i uštedi."
-msgstr "Декоративные полотенца для ванной, от %s за штуку — или собери в набор и сэкономь."
+msgid "Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi."
+msgstr "Детские полотенца со зверятами, вкусняшками и цветочками, от %s за штуку — или собери в набор и сэкономь."
 
 msgid "%s • 1 kom"
 msgstr "%s • 1 шт"
@@ -200,17 +200,44 @@ msgstr "Заказы свыше %s доставляются бесплатно."
 msgid "Besplatna dostava preko %s"
 msgstr "Бесплатная доставка от %s"
 
-msgid "Ručno šiveni ukrasni peškirići za kupatilo — mekana mikrofibra, alka za kačenje i preko 20 peškirića. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
-msgstr "Сшитые вручную декоративные полотенца для ванной — мягкая микрофибра, петелька для подвешивания и более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии."
+msgid "Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgstr "Детские полотенца из микрофибры ручной работы, с петелькой, более 20 мотивов. Собери свой набор, оплата при получении, доставка 2–4 дня по всей Сербии."
 
 msgid "Rezultati pretrage za „%s“."
 msgstr "Результаты поиска по запросу «%s»."
 
-msgid "CosyPaw ukrasni peškirići"
-msgstr "Декоративные полотенца CosyPaw"
+msgid "CosyPaw dečiji peškiri od mikrofibera"
+msgstr "Детские полотенца CosyPaw из микрофибры"
 
-msgid "Ručno šiveni ukrasni peškirići od plišane mikrofibre, sa alkom za kačenje."
-msgstr "Сшитые вручную декоративные полотенца из плюшевой микрофибры, с петелькой для подвешивания."
+msgid "Ručno rađeni dečiji peškiri od plišane mikrofibre, sa alkom za kačenje."
+msgstr "Детские полотенца ручной работы из плюшевой микрофибры, с петелькой для подвешивания."
+
+msgid "Dečiji peškir od mikrofibera, motiv %s"
+msgstr "Детское полотенце из микрофибры, мотив «%s»"
+
+msgid "O našim peškirima"
+msgstr "О наших полотенцах"
+
+msgid "Ručno rađeni peškiri za decu — i za šape"
+msgstr "Полотенца ручной работы для детей — и для лапок"
+
+msgid "Tražiš dečije peškire koji su mekani, upijajući i dovoljno slatki da dete samo poželi da obriše ruke? CosyPaw peškiri od mikrofibera šiju se ručno, jedan po jedan. Plišana mikrofibra je nežna prema dečijoj koži, upija u trenu, brzo se suši i ostaje meka i posle mnogo pranja."
+msgstr "Ищешь детские полотенца — мягкие, впитывающие и настолько милые, что ребёнок сам захочет вытереть руки? Полотенца CosyPaw из микрофибры шьются вручную, по одному. Плюшевая микрофибра нежна к детской коже, мгновенно впитывает, быстро сохнет и остаётся мягкой после многих стирок."
+
+msgid "Svaki peškir ima alku za kačenje, pa visi na dečijoj visini — pored lavaboa, na kuki ili na vratima. Kad na kuki čeka drugar, pranje ruku postaje igra, a dete samo bira svoj peškir i samo ga koristi. Izaberi između %1$s: životinjice poput zeke, sove, pande i kapibare, zalogajčići i cvetići."
+msgstr "У каждого полотенца есть петелька, поэтому оно висит на высоте ребёнка — у раковины, на крючке или на двери. Когда на крючке ждёт друг, мытьё рук становится игрой, а ребёнок сам выбирает своё полотенце и сам им пользуется. Выбирай из %1$s: зверята — зайчик, сова, панда и капибара, вкусняшки и цветочки."
+
+msgid "%d jedinstvenih motiva"
+msgstr "%d уникальных мотивов"
+
+msgid "CosyPaw peškiri su i %1$s — za rođenje bebe, krštenje, prvi rođendan ili bebi šauer. Svaki paket stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, a ručno rađene peškire šaljemo širom Srbije."
+msgstr "Полотенца CosyPaw — это ещё и %1$s: на рождение малыша, крестины, первый день рождения или бэби шауэр. Каждая посылка приходит в коробке CosyPaw, с приветственной запиской и ароматом лаванды, а наши полотенца ручной работы мы отправляем по всей Сербии."
+
+msgid "praktičan i lep poklon"
+msgstr "практичный и красивый подарок"
+
+msgid "A kako ime CosyPaw kaže, nisu samo za decu: mnogi ih drže pored vrata kao peškir za pse, za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu i blato, a peškir se pere u mašini na 40°C."
+msgstr "А как подсказывает название CosyPaw, они не только для детей: многие держат их у двери как полотенце для собаки — вытирать лапы после прогулки. Микрофибра быстро впитывает влагу и грязь, а полотенце стирается в машине при 40°C."
 
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
@@ -542,6 +569,12 @@ msgstr "Как их стирать?"
 msgid "Mašinsko pranje na 40°C, bez omekšivača da ostanu upijajući. Suše se brzo i ne gube oblik."
 msgstr "Машинная стирка при 40°C, без кондиционера, чтобы сохранить впитываемость. Быстро сохнут и держат форму."
 
+msgid "Mogu li da ih koristim i za ljubimce?"
+msgstr "Можно ли использовать их для питомцев?"
+
+msgid "Mogu. Mnogi ih koriste kao peškir za pse — za brisanje šapa posle šetnje. Mikrofibra brzo upije vlagu, a peškir se lako opere u mašini."
+msgstr "Да. Многие используют их как полотенце для собаки — вытирать лапы после прогулки. Микрофибра быстро впитывает влагу, а полотенце легко стирается в машине."
+
 msgid "Koliko traje dostava?"
 msgstr "Сколько занимает доставка?"
 
@@ -578,8 +611,8 @@ msgstr "Самовывоз"
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Доставка курьером (почтовые расходы оплачиваются курьеру)"
 
-msgid "%d motiva od mekane mikrofibre, sa alkom za kačenje."
-msgstr "%d мотивов из мягкой микрофибры, с петелькой для подвешивания."
+msgid "Ručno rađeni peškiri sa alkom za kačenje — %d motiva koji grle tvoje kupatilo."
+msgstr "Полотенца ручной работы с петелькой — %d мотивов, что обнимают твою ванную."
 
 msgid "besplatna dostava"
 msgstr "бесплатная доставка"

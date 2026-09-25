@@ -61,9 +61,14 @@ final class WooCommerce {
 	/**
 	 * Product category slug that makes a product a towel motif.
 	 *
+	 * Was 'peskirici' until the shop renamed the category "Peškiri" in
+	 * wp-admin, which renamed the slug with it. Renaming it again there moves
+	 * the slug again, and a towel published afterwards stops joining the shop
+	 * by itself until this matches.
+	 *
 	 * @var string
 	 */
-	public const TOWEL_CATEGORY = 'peskirici';
+	public const TOWEL_CATEGORY = 'peskiri';
 
 	/**
 	 * Option key: the version of the one-off sweep that maps towels which were

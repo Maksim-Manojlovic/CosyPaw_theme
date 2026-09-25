@@ -254,8 +254,8 @@ msgstr "Children’s towels with animal designs"
 msgid "%1$d ručno rađenih peškira od mikrofibre, sa alkom za kačenje, od %2$s po komadu. Izaberi drugara za svoje dete — kupi jedan ili ih spoji u paket i uštedi."
 msgstr "%1$d handmade microfiber towels with a hanging loop, from %2$s each. Pick a friend for your child — buy one, or bundle them and save."
 
-msgid "Peškiri sa životinjicama"
-msgstr "Towels with little animals"
+msgid "Peškiri životinjice"
+msgstr "Little animal towels"
 
 msgid "Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku."
 msgstr "Soft friends waiting on the hook — a child picks their own and looks forward to it after every hand wash."
@@ -272,7 +272,7 @@ msgstr "Flowers and leaves"
 msgid "Nežni cvetni motivi za mirniji, prirodni kutak."
 msgstr "Gentle floral designs for a calmer, natural corner."
 
-msgid "Peškirići u torbi"
+msgid "Peškiri u torbi"
 msgstr "Towels in a bag"
 
 msgid "Još peškira"

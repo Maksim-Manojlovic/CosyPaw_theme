@@ -29,12 +29,12 @@ $products   = $storefront['products'];
  * Heading and lead per subcategory, in the order the page shows them —
  * animals first, since that is what the page is named for. Written here rather
  * than read from the term, because a term name is a Serbian database value and
- * this page is served in three languages. "Peškirići u torbi" gets no lead:
+ * this page is served in three languages. "Peškiri u torbi" gets no lead:
  * what is in the bag is the product page's to describe.
  */
 $cosypaw_group_copy = array(
 	'zivotinjice'       => array(
-		'title' => __( 'Peškiri sa životinjicama', 'cosypaw' ),
+		'title' => __( 'Peškiri životinjice', 'cosypaw' ),
 		'lead'  => __( 'Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku.', 'cosypaw' ),
 	),
 	'zalogajcici'       => array(
@@ -45,8 +45,8 @@ $cosypaw_group_copy = array(
 		'title' => __( 'Cvetići i listići', 'cosypaw' ),
 		'lead'  => __( 'Nežni cvetni motivi za mirniji, prirodni kutak.', 'cosypaw' ),
 	),
-	'peskirici-u-torbi' => array(
-		'title' => __( 'Peškirići u torbi', 'cosypaw' ),
+	'peskiri-u-torbi' => array(
+		'title' => __( 'Peškiri u torbi', 'cosypaw' ),
 		'lead'  => '',
 	),
 );

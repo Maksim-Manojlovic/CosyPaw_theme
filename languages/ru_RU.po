@@ -254,8 +254,8 @@ msgstr "Детские полотенца с мотивами животных"
 msgid "%1$d ručno rađenih peškira od mikrofibre, sa alkom za kačenje, od %2$s po komadu. Izaberi drugara za svoje dete — kupi jedan ili ih spoji u paket i uštedi."
 msgstr "%1$d полотенец ручной работы из микрофибры, с петелькой, от %2$s за штуку. Выбери друга для своего ребёнка — купи одно или собери набор и сэкономь."
 
-msgid "Peškiri sa životinjicama"
-msgstr "Полотенца со зверятами"
+msgid "Peškiri životinjice"
+msgstr "Полотенца-зверята"
 
 msgid "Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku."
 msgstr "Мягкие друзья ждут на крючке — ребёнок сам выбирает своего и радуется ему после каждого мытья рук."
@@ -272,8 +272,8 @@ msgstr "Цветочки и листочки"
 msgid "Nežni cvetni motivi za mirniji, prirodni kutak."
 msgstr "Нежные цветочные мотивы для спокойного, природного уголка."
 
-msgid "Peškirići u torbi"
-msgstr "Полотенчики в сумочке"
+msgid "Peškiri u torbi"
+msgstr "Полотенца в сумочке"
 
 msgid "Još peškira"
 msgstr "Ещё полотенца"

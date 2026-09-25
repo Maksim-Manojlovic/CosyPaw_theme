@@ -12,7 +12,7 @@
  * not look at child terms — a towel moved down into a subcategory alone would
  * stop being part of the catalogue, and would vanish from the landing page, the
  * bundle builder and the pricing. Tick the subcategory in wp-admin, and leave
- * "Peškirići" ticked with it.
+ * "Peškiri" ticked with it.
  *
  * @package CosyPaw
  */
@@ -41,14 +41,14 @@ final class ProductCategories {
 	 * Subcategory slug => name, all children of WooCommerce::TOWEL_CATEGORY.
 	 *
 	 * The names are Serbian on purpose. A term name is a database value, not a
-	 * msgid: the shop's existing categories ("Peškirići", "Paketi") are stored
+	 * msgid: the shop's existing categories ("Peškiri", "Paketi") are stored
 	 * in the source language and WooCommerce prints them as they are, so these
 	 * match rather than inventing a second convention.
 	 *
 	 * @var array<string,string>
 	 */
 	public const SUBCATEGORIES = array(
-		'peskirici-u-torbi' => 'Peškirići u torbi',
+		'peskiri-u-torbi'   => 'Peškiri u torbi',
 		'zivotinjice'       => 'Životinjice',
 		'zalogajcici'       => 'Zalogajčići',
 		'cvetici-i-listici' => 'Cvetići i listići',
@@ -124,7 +124,7 @@ final class ProductCategories {
 			return (int) $term->term_id;
 		}
 
-		$created = wp_insert_term( 'Peškirići', self::TAXONOMY, array( 'slug' => WooCommerce::TOWEL_CATEGORY ) );
+		$created = wp_insert_term( 'Peškiri', self::TAXONOMY, array( 'slug' => WooCommerce::TOWEL_CATEGORY ) );
 
 		return is_wp_error( $created ) ? 0 : (int) $created['term_id'];
 	}

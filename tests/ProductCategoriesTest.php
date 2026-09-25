@@ -83,9 +83,9 @@ final class ProductCategoriesTest extends TestCase {
 
 		// Four children, plus the parent this shop did not have.
 		$this->assertSame( 4, $created );
-		$this->assertArrayHasKey( 'peskirici', $this->terms );
+		$this->assertArrayHasKey( 'peskiri', $this->terms );
 
-		$parent = $this->terms['peskirici']->term_id;
+		$parent = $this->terms['peskiri']->term_id;
 		foreach ( ProductCategories::SUBCATEGORIES as $slug => $name ) {
 			$this->assertArrayHasKey( $slug, $this->terms, "missing: $slug" );
 			$this->assertSame( $name, $this->terms[ $slug ]->name );
@@ -101,16 +101,16 @@ final class ProductCategoriesTest extends TestCase {
 	 * @return void
 	 */
 	public function test_it_hangs_the_tree_off_the_towel_category_the_shop_already_has(): void {
-		$this->terms['peskirici'] = (object) array(
+		$this->terms['peskiri'] = (object) array(
 			'term_id' => 16,
-			'name'    => 'Peškirići',
-			'slug'    => 'peskirici',
+			'name'    => 'Peškiri',
+			'slug'    => 'peskiri',
 			'parent'  => 0,
 		);
 
 		( new ProductCategories() )->ensure_terms();
 
-		$this->assertSame( 16, $this->terms['peskirici']->term_id );
+		$this->assertSame( 16, $this->terms['peskiri']->term_id );
 		foreach ( array_keys( ProductCategories::SUBCATEGORIES ) as $slug ) {
 			$this->assertSame( 16, $this->terms[ $slug ]->parent );
 		}
@@ -164,7 +164,7 @@ final class ProductCategoriesTest extends TestCase {
 		unset( $this->terms['cvetici-i-listici'] );
 
 		$this->assertSame(
-			array( 'peskirici-u-torbi', 'zivotinjice', 'zalogajcici' ),
+			array( 'peskiri-u-torbi', 'zivotinjice', 'zalogajcici' ),
 			array_keys( $categories->existing_terms() )
 		);
 	}
@@ -177,6 +177,6 @@ final class ProductCategoriesTest extends TestCase {
 	 */
 	public function test_the_parent_is_not_one_of_the_children(): void {
 		$this->assertCount( 4, ProductCategories::SUBCATEGORIES );
-		$this->assertArrayNotHasKey( 'peskirici', ProductCategories::SUBCATEGORIES );
+		$this->assertArrayNotHasKey( 'peskiri', ProductCategories::SUBCATEGORIES );
 	}
 }

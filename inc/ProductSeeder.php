@@ -218,7 +218,7 @@ final class ProductSeeder {
 					<?php
 					printf(
 						/* translators: %s: comma-separated subcategory names. */
-						esc_html__( 'Creates the subcategories under Peškirići: %s. It files no products — tick the one you want on the product screen, and leave Peškirići ticked alongside it, because that category is what makes a product a towel. Safe to run repeatedly; existing categories are left untouched.', 'cosypaw' ),
+						esc_html__( 'Creates the subcategories under Peškiri: %s. It files no products — tick the one you want on the product screen, and leave Peškiri ticked alongside it, because that category is what makes a product a towel. Safe to run repeatedly; existing categories are left untouched.', 'cosypaw' ),
 						esc_html( implode( ', ', ProductCategories::SUBCATEGORIES ) )
 					);
 					?>

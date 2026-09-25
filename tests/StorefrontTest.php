@@ -105,13 +105,13 @@ final class StorefrontTest extends TestCase {
 	 * @return void
 	 */
 	public function test_a_motif_in_two_subcategories_is_shown_once(): void {
-		$this->filed = array( 1 => array( 'peskirici-u-torbi', 'zivotinjice' ) );
+		$this->filed = array( 1 => array( 'peskiri-u-torbi', 'zivotinjice' ) );
 		$rows        = array( $this->row( 'zirafa-torba', 1 ) );
 
-		$this->assertSame( array( 'peskirici-u-torbi' ), array_keys( Storefront::by_subcategory( $rows ) ) );
+		$this->assertSame( array( 'peskiri-u-torbi' ), array_keys( Storefront::by_subcategory( $rows ) ) );
 		$this->assertSame(
 			array( 'zivotinjice' ),
-			array_keys( Storefront::by_subcategory( $rows, array( 'zivotinjice', 'peskirici-u-torbi' ) ) )
+			array_keys( Storefront::by_subcategory( $rows, array( 'zivotinjice', 'peskiri-u-torbi' ) ) )
 		);
 	}
 

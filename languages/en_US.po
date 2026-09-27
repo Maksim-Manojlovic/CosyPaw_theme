@@ -374,6 +374,81 @@ msgstr "home page"
 msgid "Naruči poklon set"
 msgstr "Order a gift set"
 
+msgid "Magična krpica Avokado, limeta"
+msgstr "Avocado magic cloth, lime"
+
+msgid "Magična krpica Avokado, žalfija"
+msgstr "Avocado magic cloth, sage"
+
+msgid "Magična krpa od mikrofibera u jarkoj limeta zelenoj boji, sa vezenim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
+msgstr "A microfiber magic cloth in bright lime green, with an embroidered avocado. It soaks up water, traps dust and wipes glass without streaks — for the kitchen, the bathroom and mirrors."
+
+msgid "Magična krpa od mikrofibera u nežnoj žalfija zelenoj boji, sa vezenim nasmejanim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
+msgstr "A microfiber magic cloth in soft sage green, with an embroidered smiling avocado. It soaks up water, traps dust and wipes glass without streaks — for the kitchen, the bathroom and mirrors."
+
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Ribbed microfiber soaks up water and traps dust instead of smearing it, so the same cloth is just as good as a kitchen cloth for worktops and dishes as it is as a glass cloth for windows, mirrors and shower screens. It wipes without streaks or lint, and without harsh cleaners. It is reusable and machine-washable at 40°C, without fabric softener so it keeps absorbing — and it replaces a pile of paper towels."
+
+msgid "Namena"
+msgstr "Use"
+
+msgid "Rebrasta mikrofibra — upija vodu i hvata prašinu."
+msgstr "Ribbed microfiber — soaks up water and traps dust."
+
+msgid "Kuhinja, staklo, ogledala, tuš kabine i radne površine."
+msgstr "Kitchen, glass, mirrors, shower screens and worktops."
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača."
+msgstr "Machine wash at 40°C, without fabric softener."
+
+msgid "Dodaj %s u korpu"
+msgstr "Add %s to cart"
+
+msgid "Novo"
+msgstr "New"
+
+msgid "Magične krpice"
+msgstr "Magic cloths"
+
+msgid "Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira."
+msgstr "Microfiber cloths with an embroidered avocado — they soak up water, trap dust and wipe glass without streaks. %s each, outside the towel packages."
+
+msgid "Sve o magičnim krpama"
+msgstr "All about the magic cloths"
+
+msgid "Magične krpe"
+msgstr "Magic cloths"
+
+msgid "Magična krpa za savršeno čist dom"
+msgstr "A magic cloth for a spotless home"
+
+msgid "Mikrofiber krpa sa vezenim avokadom koja upija vodu, hvata prašinu i briše staklo bez tragova. Kuhinjska krpa i krpa za staklo u jednoj, za %s."
+msgstr "A microfiber cloth with an embroidered avocado that soaks up water, traps dust and wipes glass without streaks. A kitchen cloth and a glass cloth in one, for %s."
+
+msgid "Čišćenje bez tragova"
+msgstr "Streak-free cleaning"
+
+msgid "Kuhinjske krpe i krpe za staklo u jednoj"
+msgstr "Kitchen cloths and glass cloths in one"
+
+msgid "Želiš li da čišćenje bude brže, lakše i potpuno bez tragova? Magična krpa je upravo to. Ova mikrofiber krpa spaja mekoću, izdržljivost i praktičnost: kao kuhinjska krpa upija vodu sa radnih površina i sudova, a kao krpa za prašinu zadržava čestice umesto da ih razbacuje po vazduhu."
+msgstr "Have you ever wished cleaning were quicker, easier and completely streak-free? The magic cloth is exactly that. This microfiber cloth combines softness, durability and practicality: as a kitchen cloth it soaks up water from worktops and dishes, and as a dust cloth it holds on to particles instead of scattering them into the air."
+
+msgid "Posebno je dobra na staklu. Magične krpe za stakla ostavljaju blistav sjaj bez mrlja, tragova i dlačica, bez agresivnih hemijskih sredstava. Nisu samo za prozore: ista krpa za staklo briše ogledala u kupatilu, staklene vitrine, tuš kabine, pa i ekran televizora."
+msgstr "It is especially good on glass. Magic glass cloths leave a brilliant shine with no smudges, streaks or lint, and no harsh chemicals. They are not only for windows: the same glass cloth wipes bathroom mirrors, glass cabinets, shower screens and even a TV screen."
+
+msgid "Ako tražiš najbolju krpu za staklo, onu kakvu očekuješ od profesionalnih krpa za stakla, a da ostane i u kuhinji, ovo je ta. Krpe su višekratne, peru se u mašini na 40°C i zamenjuju gomilu papirnih ubrusa."
+msgstr "If you are looking for the best glass cloth — the kind you expect from professional glass cloths, that also earns its place in the kitchen — this is it. The cloths are reusable, machine-washable at 40°C and replace a pile of paper towels."
+
+msgid "Magične krpice šaljemo kao i %s peškire — u CosyPaw paketu, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "We send the magic cloths just like %s towels — in a CosyPaw package, cash on delivery, delivered across Serbia in 2–4 days."
+
+msgid "Dodaj ih uz paket peškira i lakše stigni do besplatne dostave preko %s."
+msgstr "Add them to a towel package and reach free delivery over %s more easily."
+
+msgid "Poruči magične krpe"
+msgstr "Order magic cloths"
+
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 

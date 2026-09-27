@@ -461,6 +461,48 @@ if ( $hero_deal ) {
 	<!-- PAKETI -->
 	<?php get_template_part( 'template-parts/packages', null, $storefront ); ?>
 
+	<!-- MAGIČNE KRPICE -->
+	<?php
+	/*
+	 * Right after the builder, and before the objection handling: the visitor
+	 * has just decided on towels, and a 299 RSD cloth is the add-on that sits
+	 * beside that decision — often the step that clears the free-delivery bar.
+	 * Printed only once the cloths exist and are on sale (\Theme\Cloths
+	 * creates them on the first wp-admin visit), so the page never offers a
+	 * button that cannot sell.
+	 */
+	$cosypaw_cloths = class_exists( '\Theme\Cloths' ) ? \Theme\Cloths::products() : array();
+	if ( $cosypaw_cloths ) :
+		$cosypaw_cloths_page = \Theme\Pages::url( 'krpe' );
+		?>
+		<section id="magicne-krpice" class="section cloths-section">
+			<div class="section__head">
+				<span class="eyebrow"><?php esc_html_e( 'Novo', 'cosypaw' ); ?></span>
+				<h2 class="section__title"><?php esc_html_e( 'Magične krpice', 'cosypaw' ); ?></h2>
+				<p class="section__lead">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: %s: formatted price of one cloth. */
+							__( 'Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira.', 'cosypaw' ),
+							\Theme\Catalog::format_price( \Theme\Cloths::from_price( $cosypaw_cloths ) )
+						)
+					);
+					?>
+				</p>
+			</div>
+
+			<?php get_template_part( 'template-parts/cloth-cards', null, array( 'cloths' => $cosypaw_cloths ) ); ?>
+
+			<?php if ( '' !== $cosypaw_cloths_page ) : ?>
+				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_cloths_page ); ?>">
+					<span><?php esc_html_e( 'Sve o magičnim krpama', 'cosypaw' ); ?></span>
+					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</a>
+			<?php endif; ?>
+		</section>
+	<?php endif; ?>
+
 	<!-- U TVOM DOMU (lifestyle) -->
 	<section id="dom" class="section">
 		<div class="section__head">

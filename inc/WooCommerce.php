@@ -875,12 +875,14 @@ final class WooCommerce {
 	}
 
 	/**
-	 * Ensure WC AJAX add-to-cart + cart-fragments scripts load on the front page.
+	 * Ensure WC AJAX add-to-cart + cart-fragments scripts load on every page
+	 * that sells from cards — the front page and the landing pages. Without
+	 * fragments there, a card's AJAX add left the header's cart count stale.
 	 *
 	 * @return void
 	 */
 	public function enqueue_cart_scripts(): void {
-		if ( is_front_page() ) {
+		if ( Pages::is_storefront() ) {
 			wp_enqueue_script( 'wc-add-to-cart' );
 			wp_enqueue_script( 'wc-cart-fragments' );
 		}

@@ -1615,6 +1615,85 @@ a.testimonial__meta:focus-visible {
 	font-size: 32px;
 }
 
+/* ---------- Magične krpice ----------
+   Two products, so two wide cards side by side rather than the motif grid's
+   four-across — a grid that size would leave two cards stranded on the left
+   and read as a section that failed to load. */
+.cloths {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px;
+	max-width: 760px;
+	margin: 0 auto;
+}
+
+.cloth-card {
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	border-radius: var(--radius-lg);
+	padding: 14px;
+	box-shadow: var(--shadow-sm);
+	border: 1px solid var(--line);
+}
+
+.cloth-card__media {
+	display: block;
+}
+
+.cloth-card__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 3 / 4;
+	border-radius: 18px;
+	background-color: var(--cream2);
+	object-fit: cover;
+	object-position: center;
+}
+
+.cloth-card__body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	padding: 14px 4px 2px;
+}
+
+.cloth-card__name {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 1.3;
+	color: var(--ink);
+	text-decoration: none;
+}
+
+.cloth-card__name:hover {
+	color: var(--claydk);
+}
+
+.cloth-card__price {
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--clay);
+}
+
+.cloth-card__buy {
+	margin-top: auto;
+	align-self: stretch;
+	justify-content: center;
+}
+
+.cloths-section .motif-handoff {
+	margin-top: 22px;
+}
+
+@media (max-width: 420px) {
+	.cloths { grid-template-columns: 1fr; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	/* One column, and it owns the opening screen. Stacked, the card pushed the

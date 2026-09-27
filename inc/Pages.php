@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY, so installs that already ran
 	 * ensure() look again.
 	 */
-	public const VERSION = 2;
+	public const VERSION = 3;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -63,6 +63,12 @@ final class Pages {
 			'title'           => 'Poklon setovi peškira za bebu i decu',
 			'seo_title'       => 'Poklon Setovi Peškira za Bebu i Decu | Unikatni Pokloni Srbija',
 			'seo_description' => 'Naši poklon setovi peškira za bebu i decu su ručno rađeni, lepo upakovani i idealni za krštenje, rođenje ili baby shower. Naruči unikatni poklon danas!',
+		),
+		'krpe'    => array(
+			'slug'            => 'magicne-krpe',
+			'title'           => 'Magične krpe',
+			'seo_title'       => 'Magična Krpa od Mikrofibera | Najbolja Krpa za Staklo i Kuhinju',
+			'seo_description' => 'Magična krpa od mikrofibera za čišćenje bez tragova — kuhinjska krpa i krpa za staklo u jednom. Višekratna, pere se u mašini. Poruči odmah!',
 		),
 	);
 

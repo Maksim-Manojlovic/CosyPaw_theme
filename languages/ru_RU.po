@@ -374,6 +374,81 @@ msgstr "главной странице"
 msgid "Naruči poklon set"
 msgstr "Заказать подарочный набор"
 
+msgid "Magična krpica Avokado, limeta"
+msgstr "Волшебная салфетка «Авокадо», лайм"
+
+msgid "Magična krpica Avokado, žalfija"
+msgstr "Волшебная салфетка «Авокадо», шалфей"
+
+msgid "Magična krpa od mikrofibera u jarkoj limeta zelenoj boji, sa vezenim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
+msgstr "Волшебная салфетка из микрофибры ярко-лаймового цвета с вышитым авокадо. Впитывает воду, собирает пыль и вытирает стекло без разводов — для кухни, ванной и зеркал."
+
+msgid "Magična krpa od mikrofibera u nežnoj žalfija zelenoj boji, sa vezenim nasmejanim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
+msgstr "Волшебная салфетка из микрофибры нежного шалфейно-зелёного цвета с вышитым улыбающимся авокадо. Впитывает воду, собирает пыль и вытирает стекло без разводов — для кухни, ванной и зеркал."
+
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Рельефная микрофибра впитывает воду и собирает пыль, а не размазывает её, поэтому одна и та же салфетка одинаково хороша и как кухонная — для столешниц и посуды, — и как салфетка для стекла, зеркал и душевых кабин. Вытирает без разводов и ворса, без агрессивных средств. Многоразовая, стирается в машине при 40°C без кондиционера, чтобы сохранить впитываемость, — и заменяет гору бумажных полотенец."
+
+msgid "Namena"
+msgstr "Назначение"
+
+msgid "Rebrasta mikrofibra — upija vodu i hvata prašinu."
+msgstr "Рельефная микрофибра — впитывает воду и собирает пыль."
+
+msgid "Kuhinja, staklo, ogledala, tuš kabine i radne površine."
+msgstr "Кухня, стекло, зеркала, душевые кабины и столешницы."
+
+msgid "Mašinsko pranje na 40°C, bez omekšivača."
+msgstr "Машинная стирка при 40°C, без кондиционера."
+
+msgid "Dodaj %s u korpu"
+msgstr "Добавить «%s» в корзину"
+
+msgid "Novo"
+msgstr "Новинка"
+
+msgid "Magične krpice"
+msgstr "Волшебные салфетки"
+
+msgid "Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira."
+msgstr "Салфетки из микрофибры с вышитым авокадо — впитывают воду, собирают пыль и вытирают стекло без разводов. %s за штуку, вне наборов полотенец."
+
+msgid "Sve o magičnim krpama"
+msgstr "Всё о волшебных салфетках"
+
+msgid "Magične krpe"
+msgstr "Волшебные салфетки"
+
+msgid "Magična krpa za savršeno čist dom"
+msgstr "Волшебная салфетка для идеально чистого дома"
+
+msgid "Mikrofiber krpa sa vezenim avokadom koja upija vodu, hvata prašinu i briše staklo bez tragova. Kuhinjska krpa i krpa za staklo u jednoj, za %s."
+msgstr "Салфетка из микрофибры с вышитым авокадо, которая впитывает воду, собирает пыль и вытирает стекло без разводов. Кухонная салфетка и салфетка для стекла в одной — за %s."
+
+msgid "Čišćenje bez tragova"
+msgstr "Уборка без разводов"
+
+msgid "Kuhinjske krpe i krpe za staklo u jednoj"
+msgstr "Кухонные салфетки и салфетки для стекла в одной"
+
+msgid "Želiš li da čišćenje bude brže, lakše i potpuno bez tragova? Magična krpa je upravo to. Ova mikrofiber krpa spaja mekoću, izdržljivost i praktičnost: kao kuhinjska krpa upija vodu sa radnih površina i sudova, a kao krpa za prašinu zadržava čestice umesto da ih razbacuje po vazduhu."
+msgstr "Хотелось ли тебе, чтобы уборка была быстрее, проще и совсем без разводов? Волшебная салфетка — именно это. Эта салфетка из микрофибры сочетает мягкость, прочность и практичность: как кухонная она впитывает воду со столешниц и посуды, а как салфетка для пыли удерживает частицы, а не разбрасывает их в воздух."
+
+msgid "Posebno je dobra na staklu. Magične krpe za stakla ostavljaju blistav sjaj bez mrlja, tragova i dlačica, bez agresivnih hemijskih sredstava. Nisu samo za prozore: ista krpa za staklo briše ogledala u kupatilu, staklene vitrine, tuš kabine, pa i ekran televizora."
+msgstr "Особенно хороша на стекле. Волшебные салфетки для стекла оставляют яркий блеск без пятен, разводов и ворса, без агрессивной химии. Они не только для окон: та же салфетка для стекла протирает зеркала в ванной, стеклянные витрины, душевые кабины и даже экран телевизора."
+
+msgid "Ako tražiš najbolju krpu za staklo, onu kakvu očekuješ od profesionalnih krpa za stakla, a da ostane i u kuhinji, ovo je ta. Krpe su višekratne, peru se u mašini na 40°C i zamenjuju gomilu papirnih ubrusa."
+msgstr "Если ищешь лучшую салфетку для стекла — такую, какой ждёшь от профессиональных салфеток для стёкол, и чтобы она пригодилась и на кухне, — это она. Салфетки многоразовые, стираются в машине при 40°C и заменяют гору бумажных полотенец."
+
+msgid "Magične krpice šaljemo kao i %s peškire — u CosyPaw paketu, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "Волшебные салфетки мы отправляем так же, как полотенца %s, — в посылке CosyPaw, с оплатой при получении и доставкой по всей Сербии за 2–4 дня."
+
+msgid "Dodaj ih uz paket peškira i lakše stigni do besplatne dostave preko %s."
+msgstr "Добавь их к набору полотенец — и легче дойдёшь до бесплатной доставки от %s."
+
+msgid "Poruči magične krpe"
+msgstr "Заказать волшебные салфетки"
+
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 

@@ -111,6 +111,13 @@ final class Bootstrap {
 	private Pages $pages;
 
 	/**
+	 * Magične krpice (WooCommerce only).
+	 *
+	 * @var Cloths|null
+	 */
+	private ?Cloths $cloths = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -138,6 +145,10 @@ final class Bootstrap {
 			$this->upsell = new Upsell( $this->text_domain, $this->bundle_pricing, new Catalog() );
 
 			$this->shop_strings = new ShopStrings();
+
+			// The magične krpice: their own category and price, outside the
+			// towel packages.
+			$this->cloths = new Cloths();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

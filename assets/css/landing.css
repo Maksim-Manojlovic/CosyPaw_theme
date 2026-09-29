@@ -959,6 +959,57 @@
 	font-weight: 700;
 }
 
+.builder-cta__info {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* Free delivery beside the total it is measured against. Cream while there
+   is still a gap to close, sage once the bundle clears it. */
+.builder-cta__ship {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 8px;
+	padding: 5px 12px;
+	border-radius: var(--radius-pill);
+	background: var(--cream2);
+	color: var(--ink);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.builder-cta__ship svg {
+	flex: none;
+}
+
+.builder-cta__ship.is-free {
+	background: var(--sagelt);
+	color: var(--sage);
+}
+
+/* The slot a full package unlocks: same dashed tile, in sage, so it reads as
+   an offer rather than a gap still to be filled. */
+.builder-slot.is-extra .builder-slot__placeholder {
+	border-color: var(--sage);
+	color: var(--sage);
+	background: #fff;
+}
+
+.builder-slot.is-extra .builder-slot__name {
+	color: var(--sage);
+}
+
+.builder-slot.is-free .builder-slot__placeholder {
+	background: var(--sagelt);
+	border-style: solid;
+}
+
+.builder-slot.is-free .builder-slot__name {
+	font-weight: 800;
+}
+
 .builder-cta__btn {
 	display: inline-flex;
 	align-items: center;

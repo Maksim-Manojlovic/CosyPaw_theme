@@ -51,7 +51,7 @@ if ( ! $packages ) {
 			<style>.builder__reveal { display: none; }</style>
 		</noscript>
 
-		<div class="builder" id="napravi-paket" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>">
+		<div class="builder" id="napravi-paket" data-bundle-builder data-default-package="<?php echo esc_attr( $default_pkg ); ?>" data-free-min="<?php echo esc_attr( (string) $free_min ); ?>">
 
 			<div class="builder__step">
 				<span class="builder__num">1</span>
@@ -186,6 +186,33 @@ if ( ! $packages ) {
 								<span class="pkg-old" data-sel-old<?php echo empty( $selected['old'] ) ? ' hidden' : ''; ?>><?php echo esc_html( empty( $selected['old'] ) ? '' : \Theme\Catalog::format_price( (int) $selected['old'] ) ); ?></span>
 							</div>
 							<span class="builder-cta__meta"><span data-sel-name><?php echo esc_html( $selected['name'] ); ?></span> • <span data-sel-per><?php echo esc_html( \Theme\Catalog::format_price( $selected['per'] ) . ' / ' . __( 'kom', 'cosypaw' ) ); ?></span></span>
+							<?php
+							// Free delivery, measured against the total beside it:
+							// how much is missing, or that this bundle already
+							// ships free. BundleBuilder keeps it current as the
+							// bundle grows; this is the opening state.
+							if ( $free_min > 0 ) :
+								$cosypaw_sel_price = (int) $selected['price'];
+								$cosypaw_ship_free = $cosypaw_sel_price >= $free_min;
+								?>
+								<span class="builder-cta__ship<?php echo $cosypaw_ship_free ? ' is-free' : ''; ?>" data-sel-ship>
+									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+									<span data-ship-text>
+										<?php
+										echo esc_html(
+											$cosypaw_ship_free
+												? __( 'Besplatna dostava', 'cosypaw' )
+												: sprintf(
+													/* translators: 1: formatted amount still missing, 2: formatted free-delivery threshold. */
+													__( 'Još %1$s do besplatne dostave (preko %2$s)', 'cosypaw' ),
+													\Theme\Catalog::format_price( $free_min - $cosypaw_sel_price ),
+													\Theme\Catalog::format_price( $free_min )
+												)
+										);
+										?>
+									</span>
+								</span>
+							<?php endif; ?>
 						</div>
 						<button type="button" class="pkg-cta builder-cta__btn" data-add-bundle>
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.2 8.4a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></svg>
@@ -202,6 +229,9 @@ if ( ! $packages ) {
 							data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
 							data-name="<?php echo esc_attr( $p['name'] ); ?>"
 							data-image="<?php echo esc_url( $p['image_sm'] ); ?>"
+							<?php if ( ! empty( $p['product_id'] ) ) : ?>
+							data-product-id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
+							<?php endif; ?>
 						>
 							<?php
 							// alt="" — the tile's name is already the button's

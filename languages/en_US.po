@@ -641,8 +641,8 @@ msgstr "design"
 msgid "peškirića"
 msgstr "designs"
 
-msgid "Paket je pun — ukloni peškirić da dodaš drugi"
-msgstr "The package is full — remove a design to add another"
+msgid "Najviše %d peškirića odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
+msgstr "At most %d designs at once — add this package to the cart, then build the next"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Choose %d more — the package isn't full"
@@ -653,8 +653,17 @@ msgstr "Remove design"
 msgid "Dodato u paket — izaberi još %d"
 msgstr "Added to the package — choose %d more"
 
-msgid "Paket je pun — dodaj u korpu"
-msgstr "The package is full — add it to the cart"
+msgid "Paket je pun — dodaj u korpu ili izaberi još"
+msgstr "The package is full — add it to the cart or choose more"
+
+msgid "Dodato — u paketu je %d peškirića"
+msgstr "Added — %d designs in the package"
+
+msgid "+ %s"
+msgstr "+ %s"
+
+msgid "Još %1$s do besplatne dostave (preko %2$s)"
+msgstr "%1$s more for free delivery (over %2$s)"
 
 msgid "U paket"
 msgstr "Add to pack"

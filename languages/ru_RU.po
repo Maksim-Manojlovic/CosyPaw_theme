@@ -641,8 +641,8 @@ msgstr "мотив"
 msgid "peškirića"
 msgstr "мотива"
 
-msgid "Paket je pun — ukloni peškirić da dodaš drugi"
-msgstr "Набор заполнен — удали мотив, чтобы добавить другой"
+msgid "Najviše %d peškirića odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
+msgstr "Не больше %d мотивов за раз — добавь этот набор в корзину и собери следующий"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Выбери ещё %d — набор не заполнен"
@@ -653,8 +653,17 @@ msgstr "Удалить мотив"
 msgid "Dodato u paket — izaberi još %d"
 msgstr "Добавлено в набор — выбери ещё %d"
 
-msgid "Paket je pun — dodaj u korpu"
-msgstr "Набор собран — добавь в корзину"
+msgid "Paket je pun — dodaj u korpu ili izaberi još"
+msgstr "Набор собран — добавь в корзину или выбери ещё"
+
+msgid "Dodato — u paketu je %d peškirića"
+msgstr "Добавлено — в наборе %d мотивов"
+
+msgid "+ %s"
+msgstr "+ %s"
+
+msgid "Još %1$s do besplatne dostave (preko %2$s)"
+msgstr "Ещё %1$s до бесплатной доставки (от %2$s)"
 
 msgid "U paket"
 msgstr "В набор"

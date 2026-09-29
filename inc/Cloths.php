@@ -15,6 +15,11 @@
  * then. A product that already exists is never touched: price, text and
  * stock are the shop's to edit in wp-admin afterwards.
  *
+ * Besides the two colours there is a set of both, a product of its own at its
+ * own price (SET_PRICE). It is a plain simple product rather than a cart rule:
+ * it has its own page and card, and — unlike a discount booked as a fee — the
+ * free-delivery threshold sees the price it is actually sold at.
+ *
  * @package CosyPaw
  */
 
@@ -34,7 +39,7 @@ final class Cloths {
 	/**
 	 * Bump when a product is added to ITEMS.
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -63,6 +68,17 @@ final class Cloths {
 	public const PRICE = 299;
 
 	/**
+	 * ITEMS key of the set of both colours.
+	 */
+	public const SET = 'set-avokado';
+
+	/**
+	 * Launch price of the set (RSD) — both cloths for the price of one.
+	 * Written once, at creation, like PRICE.
+	 */
+	public const SET_PRICE = 299;
+
+	/**
 	 * Theme directory the photographs ship in.
 	 */
 	private const IMAGE_DIR = 'assets/cloths/';
@@ -72,7 +88,10 @@ final class Cloths {
 	 * that also serve as msgids, so the storefront can translate them while
 	 * they are unedited (see translate()).
 	 *
-	 * @var array<string,array{name:string,slug:string,image:string,alt:string,short:string,seo_title:string,seo_description:string}>
+	 * The set comes last: it has no photograph of its own and reuses the ones
+	 * the cloths it holds (`holds`) were given, so they have to exist first.
+	 *
+	 * @var array<string,array{name:string,slug:string,image:string,alt:string,short:string,seo_title:string,seo_description:string,price?:int,holds?:array<int,string>}>
 	 */
 	public const ITEMS = array(
 		'avokado-limeta'  => array(
@@ -92,6 +111,17 @@ final class Cloths {
 			'short'           => 'Magična krpa od mikrofibera u nežnoj žalfija zelenoj boji, sa vezenim nasmejanim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala.',
 			'seo_title'       => 'Magična Krpica Avokado, Žalfija | Krpa za Staklo i Kuhinju',
 			'seo_description' => 'Magična krpa od mikrofibera u žalfija zelenoj boji: upija vodu, hvata prašinu i briše staklo bez tragova. Za kuhinju i kupatilo. Poruči odmah!',
+		),
+		self::SET         => array(
+			'name'            => 'Set od 2 magične krpice Avokado',
+			'slug'            => 'set-2-magicne-krpice-avokado',
+			'image'           => 'krpica-avokado-limeta.webp',
+			'alt'             => 'Magična krpa od mikrofibera u limeta zelenoj boji sa vezenim avokadom, na pultu u kupatilu',
+			'short'           => 'Obe magične krpice Avokado u jednom setu — limeta i žalfija zelena. Upijaju vodu, hvataju prašinu i brišu staklo bez tragova: jedna za kuhinju, druga za staklo i ogledala.',
+			'seo_title'       => 'Set 2 Magične Krpice Avokado | Krpe za Staklo i Kuhinju',
+			'seo_description' => 'Dve magične krpe od mikrofibera sa vezenim avokadom, limeta i žalfija, u jednom setu: upijaju vodu i brišu staklo bez tragova. Poruči set odmah!',
+			'price'           => self::SET_PRICE,
+			'holds'           => array( 'avokado-limeta', 'avokado-zalfija' ),
 		),
 	);
 
@@ -146,6 +176,7 @@ final class Cloths {
 		}
 
 		$map     = (array) get_option( self::MAP_OPTION, array() );
+		$images  = array();
 		$created = 0;
 
 		foreach ( self::ITEMS as $key => $item ) {
@@ -158,7 +189,8 @@ final class Cloths {
 			}
 
 			if ( $existing > 0 ) {
-				$map[ $key ] = $existing;
+				$map[ $key ]    = $existing;
+				$images[ $key ] = (int) get_post_thumbnail_id( $existing );
 				continue;
 			}
 
@@ -167,7 +199,7 @@ final class Cloths {
 			$product->set_slug( $item['slug'] );
 			$product->set_status( 'publish' );
 			$product->set_catalog_visibility( 'visible' );
-			$product->set_regular_price( (string) self::PRICE );
+			$product->set_regular_price( (string) ( $item['price'] ?? self::PRICE ) );
 			$product->set_short_description( $item['short'] );
 			$product->set_description( self::DESCRIPTION );
 			$product->set_category_ids( array( $category ) );
@@ -177,11 +209,19 @@ final class Cloths {
 				continue;
 			}
 
-			$image = $this->import_image( $item['image'], $id, $item['name'], $item['alt'] );
+			// The set shows the photographs of the cloths it holds, the first
+			// as its image and the rest in its gallery, instead of importing a
+			// second copy of the same file. Imported only when none is there.
+			$held  = array_values( array_filter( array_map( static fn( string $held ): int => $images[ $held ] ?? 0, $item['holds'] ?? array() ) ) );
+			$image = $held ? array_shift( $held ) : $this->import_image( $item['image'], $id, $item['name'], $item['alt'] );
 			if ( $image > 0 ) {
 				$product->set_image_id( $image );
+				if ( $held ) {
+					$product->set_gallery_image_ids( $held );
+				}
 				$product->save();
 			}
+			$images[ $key ] = $image;
 
 			// Yoast's own post meta, written once like the landing pages'.
 			update_post_meta( $id, '_yoast_wpseo_title', $item['seo_title'] );
@@ -263,42 +303,98 @@ final class Cloths {
 	 * ------------------------------------------------------------------ */
 
 	/**
-	 * The cloths on sale, for the landing section and the cloth page.
+	 * The single cloths on sale, for the landing section and the cloth page.
 	 *
 	 * Empty until ensure() has run, and without anything unpublished or
 	 * unpurchasable — the section is not printed at all then, rather than
-	 * offering a button that cannot sell.
+	 * offering a button that cannot sell. The set is not among them; set()
+	 * answers for it.
 	 *
-	 * @return array<int,array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int}>
+	 * @return array<int,array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>}>
 	 */
 	public static function products(): array {
-		if ( ! function_exists( 'wc_get_product' ) ) {
-			return array();
-		}
-
-		$map = (array) get_option( self::MAP_OPTION, array() );
 		$out = array();
 
 		foreach ( array_keys( self::ITEMS ) as $key ) {
-			$id      = (int) ( $map[ $key ] ?? 0 );
-			$product = $id > 0 ? wc_get_product( $id ) : null;
-
-			if ( ! $product instanceof \WC_Product || 'publish' !== $product->get_status() || ! $product->is_purchasable() ) {
+			if ( self::SET === $key ) {
 				continue;
 			}
 
-			$out[] = array(
-				'key'             => $key,
-				'id'              => $id,
-				'name'            => (string) $product->get_name(),
-				'price'           => (int) round( (float) $product->get_price() ),
-				'permalink'       => (string) get_permalink( $id ),
-				'add_to_cart_url' => (string) $product->add_to_cart_url(),
-				'image_id'        => (int) $product->get_image_id(),
-			);
+			$row = self::row( $key );
+			if ( null !== $row ) {
+				$out[] = $row;
+			}
 		}
 
 		return $out;
+	}
+
+	/**
+	 * The set of both colours, when it is on sale and actually saves something.
+	 *
+	 * `separately` is what the cloths it holds cost bought one by one, and
+	 * `saving` the difference. A set that is not cheaper than its cloths —
+	 * a price moved in wp-admin, or a cloth it holds no longer on sale — is
+	 * not offered as a deal at all, so the card never shows a saving the cart
+	 * would not give.
+	 *
+	 * @param array<int,array<string,mixed>> $cloths products() output.
+	 * @return array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>,separately:int,saving:int}|null
+	 */
+	public static function set( array $cloths ): ?array {
+		$row = self::row( self::SET );
+		if ( null === $row ) {
+			return null;
+		}
+
+		$prices     = array_column( $cloths, 'price', 'key' );
+		$separately = 0;
+		foreach ( self::ITEMS[ self::SET ]['holds'] ?? array() as $held ) {
+			if ( empty( $prices[ $held ] ) ) {
+				return null;
+			}
+			$separately += (int) $prices[ $held ];
+		}
+
+		if ( $row['price'] < 1 || $separately <= $row['price'] ) {
+			return null;
+		}
+
+		$row['separately'] = $separately;
+		$row['saving']     = $separately - $row['price'];
+
+		return $row;
+	}
+
+	/**
+	 * One ITEMS entry as a storefront row, or null while it cannot be sold.
+	 *
+	 * @param string $key ITEMS key.
+	 * @return array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>}|null
+	 */
+	private static function row( string $key ): ?array {
+		if ( ! function_exists( 'wc_get_product' ) ) {
+			return null;
+		}
+
+		$map     = (array) get_option( self::MAP_OPTION, array() );
+		$id      = (int) ( $map[ $key ] ?? 0 );
+		$product = $id > 0 ? wc_get_product( $id ) : null;
+
+		if ( ! $product instanceof \WC_Product || 'publish' !== $product->get_status() || ! $product->is_purchasable() ) {
+			return null;
+		}
+
+		return array(
+			'key'             => $key,
+			'id'              => $id,
+			'name'            => (string) $product->get_name(),
+			'price'           => (int) round( (float) $product->get_price() ),
+			'permalink'       => (string) get_permalink( $id ),
+			'add_to_cart_url' => (string) $product->add_to_cart_url(),
+			'image_id'        => (int) $product->get_image_id(),
+			'gallery_ids'     => is_callable( array( $product, 'get_gallery_image_ids' ) ) ? array_map( 'intval', (array) $product->get_gallery_image_ids() ) : array(),
+		);
 	}
 
 	/**
@@ -402,7 +498,14 @@ final class Cloths {
 			return;
 		}
 
-		$specs = array(
+		$specs = array();
+
+		$map = (array) get_option( self::MAP_OPTION, array() );
+		if ( (int) $product->get_id() === (int) ( $map[ self::SET ] ?? 0 ) ) {
+			$specs[ __( 'U setu', 'cosypaw' ) ] = __( '2 krpice: limeta i žalfija zelena.', 'cosypaw' );
+		}
+
+		$specs += array(
 			__( 'Materijal', 'cosypaw' )  => __( 'Rebrasta mikrofibra — upija vodu i hvata prašinu.', 'cosypaw' ),
 			__( 'Namena', 'cosypaw' )     => __( 'Kuhinja, staklo, ogledala, tuš kabine i radne površine.', 'cosypaw' ),
 			__( 'Održavanje', 'cosypaw' ) => __( 'Mašinsko pranje na 40°C, bez omekšivača.', 'cosypaw' ),

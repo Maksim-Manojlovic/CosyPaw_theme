@@ -492,7 +492,16 @@ if ( $hero_deal ) {
 				</p>
 			</div>
 
-			<?php get_template_part( 'template-parts/cloth-cards', null, array( 'cloths' => $cosypaw_cloths ) ); ?>
+			<?php
+			get_template_part(
+				'template-parts/cloth-cards',
+				null,
+				array(
+					'cloths' => $cosypaw_cloths,
+					'set'    => \Theme\Cloths::set( $cosypaw_cloths ),
+				)
+			);
+			?>
 
 			<?php if ( '' !== $cosypaw_cloths_page ) : ?>
 				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_cloths_page ); ?>">

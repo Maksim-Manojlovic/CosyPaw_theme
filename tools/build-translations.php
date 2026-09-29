@@ -170,6 +170,13 @@ $sr_source = array(
 	'Magične krpice'                                                                          => array( 'Magic cloths', 'Волшебные салфетки' ),
 	'Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira.' => array( 'Microfiber cloths with an embroidered avocado — they soak up water, trap dust and wipe glass without streaks. %s each, outside the towel packages.', 'Салфетки из микрофибры с вышитым авокадо — впитывают воду, собирают пыль и вытирают стекло без разводов. %s за штуку, вне наборов полотенец.' ),
 	'Sve o magičnim krpama'                                                                   => array( 'All about the magic cloths', 'Всё о волшебных салфетках' ),
+	'Set od 2 magične krpice Avokado'                                                         => array( 'Set of 2 Avocado magic cloths', 'Набор из 2 волшебных салфеток «Авокадо»' ),
+	'Obe magične krpice Avokado u jednom setu — limeta i žalfija zelena. Upijaju vodu, hvataju prašinu i brišu staklo bez tragova: jedna za kuhinju, druga za staklo i ogledala.' => array( 'Both Avocado magic cloths in one set — lime and sage green. They soak up water, trap dust and wipe glass without streaks: one for the kitchen, the other for glass and mirrors.', 'Обе волшебные салфетки «Авокадо» в одном наборе — лайм и шалфейно-зелёная. Впитывают воду, собирают пыль и вытирают стекло без разводов: одна для кухни, другая для стекла и зеркал.' ),
+	'U setu'                                                                                  => array( 'In the set', 'В наборе' ),
+	'2 krpice: limeta i žalfija zelena.'                                                      => array( '2 cloths: lime and sage green.', '2 салфетки: лайм и шалфейно-зелёная.' ),
+	'Uštedi %s'                                                                               => array( 'Save %s', 'Экономия %s' ),
+	'Pojedinačno:'                                                                            => array( 'Separately:', 'По отдельности:' ),
+	'Dodaj set u korpu'                                                                       => array( 'Add the set to cart', 'Добавить набор в корзину' ),
 
 	// Magične krpe page (page-magicne-krpe.php).
 	'Magične krpe'                                                                            => array( 'Magic cloths', 'Волшебные салфетки' ),

@@ -100,6 +100,7 @@ namespace Theme\Tests {
 					'current_user_can'       => true,
 					'get_template_directory' => '/nonexistent-theme',
 					'get_post'               => null,
+					'get_post_thumbnail_id'  => 0,
 				)
 			);
 
@@ -126,24 +127,46 @@ namespace Theme\Tests {
 		}
 
 		/**
-		 * Both cloths are created in their own category at the launch price,
-		 * with the Yoast fields, and never in the towel category.
+		 * Both cloths and the set are created in their own category at their
+		 * launch prices, with the Yoast fields, and never in the towel category.
 		 *
 		 * @return void
 		 */
-		public function test_it_creates_both_cloths_outside_the_towel_category(): void {
-			$this->assertSame( 2, ( new Cloths() )->ensure() );
+		public function test_it_creates_both_cloths_and_the_set_outside_the_towel_category(): void {
+			$this->assertSame( 3, ( new Cloths() )->ensure() );
 
-			$this->assertCount( 2, \WC_Product_Simple::$saved );
+			$this->assertCount( 3, \WC_Product_Simple::$saved );
 			foreach ( \WC_Product_Simple::$saved as $id => $props ) {
 				$this->assertSame( array( 42 ), $props['category_ids'] );
-				$this->assertSame( (string) Cloths::PRICE, $props['regular_price'] );
 				$this->assertSame( 'publish', $props['status'] );
 				$this->assertNotSame( '', $this->meta[ $id ]['_yoast_wpseo_title'] );
 				$this->assertNotSame( '', $this->meta[ $id ]['_yoast_wpseo_metadesc'] );
 			}
 
-			$this->assertSame( array( 'avokado-limeta', 'avokado-zalfija' ), array_keys( $this->options[ Cloths::MAP_OPTION ] ) );
+			$map = $this->options[ Cloths::MAP_OPTION ];
+			$this->assertSame( array( 'avokado-limeta', 'avokado-zalfija', Cloths::SET ), array_keys( $map ) );
+			$this->assertSame( (string) Cloths::PRICE, \WC_Product_Simple::$saved[ $map['avokado-limeta'] ]['regular_price'] );
+			$this->assertSame( (string) Cloths::PRICE, \WC_Product_Simple::$saved[ $map['avokado-zalfija'] ]['regular_price'] );
+			$this->assertSame( (string) Cloths::SET_PRICE, \WC_Product_Simple::$saved[ $map[ Cloths::SET ] ]['regular_price'] );
+		}
+
+		/**
+		 * The set shows the photographs the cloths it holds already have — the
+		 * first as its image, the other in its gallery — rather than importing
+		 * another copy.
+		 *
+		 * @return void
+		 */
+		public function test_the_set_reuses_the_photographs_of_the_cloths_it_holds(): void {
+			$this->by_slug['magicna-krpica-avokado-limeta']  = new \WP_Post( 77 );
+			$this->by_slug['magicna-krpica-avokado-zalfija'] = new \WP_Post( 78 );
+			Functions\when( 'get_post_thumbnail_id' )->alias( static fn( int $id ): int => array( 77 => 11, 78 => 12 )[ $id ] ?? 0 );
+
+			$this->assertSame( 1, ( new Cloths() )->ensure() );
+
+			$set = \WC_Product_Simple::$saved[ $this->options[ Cloths::MAP_OPTION ][ Cloths::SET ] ];
+			$this->assertSame( 11, $set['image_id'] );
+			$this->assertSame( array( 12 ), $set['gallery_image_ids'] );
 		}
 
 		/**
@@ -155,7 +178,7 @@ namespace Theme\Tests {
 		public function test_it_adopts_a_product_that_already_has_the_slug(): void {
 			$this->by_slug['magicna-krpica-avokado-limeta'] = new \WP_Post( 77 );
 
-			$this->assertSame( 1, ( new Cloths() )->ensure() );
+			$this->assertSame( 2, ( new Cloths() )->ensure() );
 			$this->assertSame( 77, $this->options[ Cloths::MAP_OPTION ]['avokado-limeta'] );
 		}
 
@@ -168,7 +191,7 @@ namespace Theme\Tests {
 		public function test_it_runs_once_per_version(): void {
 			$cloths = new Cloths();
 			$cloths->maybe_ensure();
-			$this->assertCount( 2, \WC_Product_Simple::$saved );
+			$this->assertCount( 3, \WC_Product_Simple::$saved );
 
 			\WC_Product_Simple::$saved = array();
 			$cloths->maybe_ensure();
@@ -213,6 +236,53 @@ namespace Theme\Tests {
 			$this->assertSame( 1, $rows[0]['id'] );
 			$this->assertSame( 299, $rows[0]['price'] );
 			$this->assertSame( 299, Cloths::from_price( $rows ) );
+		}
+
+		/**
+		 * The set is kept out of the single cloths and offered with what it
+		 * saves against buying both — and only while it saves anything.
+		 *
+		 * @return void
+		 */
+		public function test_the_set_is_offered_only_while_it_saves(): void {
+			$this->options[ Cloths::MAP_OPTION ] = array(
+				'avokado-limeta'  => 1,
+				'avokado-zalfija' => 2,
+				Cloths::SET       => 3,
+			);
+
+			$set_price = '299';
+			$make      = static fn( int $id, string $price ) => new class( 'Krpica', $price, true, $id ) extends \WC_Product {
+				public function get_status(): string {
+					return 'publish';
+				}
+
+				public function add_to_cart_url(): string {
+					return '?add-to-cart=' . $this->get_id();
+				}
+			};
+
+			Functions\when( 'wc_get_product' )->alias( function ( int $id ) use ( $make, &$set_price ) {
+				return $make( $id, 3 === $id ? $set_price : '299' );
+			} );
+			Functions\when( 'get_permalink' )->alias( fn( int $id ) => 'https://cosypaw.test/p/' . $id );
+
+			$cloths = Cloths::products();
+			$this->assertSame( array( 1, 2 ), array_column( $cloths, 'id' ) );
+
+			$set = Cloths::set( $cloths );
+			$this->assertNotNull( $set );
+			$this->assertSame( 3, $set['id'] );
+			$this->assertSame( 299, $set['price'] );
+			$this->assertSame( 598, $set['separately'] );
+			$this->assertSame( 299, $set['saving'] );
+
+			// A cloth it holds is off sale: nothing to compare it with.
+			$this->assertNull( Cloths::set( array_slice( $cloths, 0, 1 ) ) );
+
+			// Priced up to both cloths in wp-admin: no longer a deal.
+			$set_price = '598';
+			$this->assertNull( Cloths::set( $cloths ) );
 		}
 
 		/**

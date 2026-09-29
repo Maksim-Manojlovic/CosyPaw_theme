@@ -55,7 +55,16 @@ $cosypaw_home   = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 
 
 	<?php if ( $cosypaw_cloths ) : ?>
 		<section class="section collection__group cloths-section" id="krpe">
-			<?php get_template_part( 'template-parts/cloth-cards', null, array( 'cloths' => $cosypaw_cloths ) ); ?>
+			<?php
+			get_template_part(
+				'template-parts/cloth-cards',
+				null,
+				array(
+					'cloths' => $cosypaw_cloths,
+					'set'    => \Theme\Cloths::set( $cosypaw_cloths ),
+				)
+			);
+			?>
 		</section>
 	<?php endif; ?>
 

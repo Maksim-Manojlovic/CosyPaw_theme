@@ -416,6 +416,27 @@ msgstr "Салфетки из микрофибры с вышитым авока�
 msgid "Sve o magičnim krpama"
 msgstr "Всё о волшебных салфетках"
 
+msgid "Set od 2 magične krpice Avokado"
+msgstr "Набор из 2 волшебных салфеток «Авокадо»"
+
+msgid "Obe magične krpice Avokado u jednom setu — limeta i žalfija zelena. Upijaju vodu, hvataju prašinu i brišu staklo bez tragova: jedna za kuhinju, druga za staklo i ogledala."
+msgstr "Обе волшебные салфетки «Авокадо» в одном наборе — лайм и шалфейно-зелёная. Впитывают воду, собирают пыль и вытирают стекло без разводов: одна для кухни, другая для стекла и зеркал."
+
+msgid "U setu"
+msgstr "В наборе"
+
+msgid "2 krpice: limeta i žalfija zelena."
+msgstr "2 салфетки: лайм и шалфейно-зелёная."
+
+msgid "Uštedi %s"
+msgstr "Экономия %s"
+
+msgid "Pojedinačno:"
+msgstr "По отдельности:"
+
+msgid "Dodaj set u korpu"
+msgstr "Добавить набор в корзину"
+
 msgid "Magične krpe"
 msgstr "Волшебные салфетки"
 

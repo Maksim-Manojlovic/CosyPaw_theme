@@ -416,6 +416,27 @@ msgstr "Microfiber cloths with an embroidered avocado — they soak up water, tr
 msgid "Sve o magičnim krpama"
 msgstr "All about the magic cloths"
 
+msgid "Set od 2 magične krpice Avokado"
+msgstr "Set of 2 Avocado magic cloths"
+
+msgid "Obe magične krpice Avokado u jednom setu — limeta i žalfija zelena. Upijaju vodu, hvataju prašinu i brišu staklo bez tragova: jedna za kuhinju, druga za staklo i ogledala."
+msgstr "Both Avocado magic cloths in one set — lime and sage green. They soak up water, trap dust and wipe glass without streaks: one for the kitchen, the other for glass and mirrors."
+
+msgid "U setu"
+msgstr "In the set"
+
+msgid "2 krpice: limeta i žalfija zelena."
+msgstr "2 cloths: lime and sage green."
+
+msgid "Uštedi %s"
+msgstr "Save %s"
+
+msgid "Pojedinačno:"
+msgstr "Separately:"
+
+msgid "Dodaj set u korpu"
+msgstr "Add the set to cart"
+
 msgid "Magične krpe"
 msgstr "Magic cloths"
 

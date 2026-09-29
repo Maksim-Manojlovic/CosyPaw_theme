@@ -2,13 +2,15 @@
 /**
  * The magične krpice as cards: photo, name, price and an AJAX add-to-cart.
  *
- * Shared by the front page section and the /magicne-krpe/ page. A cloth has
- * one way to buy it — it is not a towel, so there is no package to drop it in.
+ * Shared by the front page section and the /magicne-krpe/ page. A cloth is
+ * not a towel, so there is no towel package to drop it in; its own deal is the
+ * set of both colours, a wide card under the two.
  *
  * @package CosyPaw
  *
  * @var array $args {
- *     @type array $cloths \Theme\Cloths::products() rows.
+ *     @type array      $cloths \Theme\Cloths::products() rows.
+ *     @type array|null $set    \Theme\Cloths::set() row, or null.
  * }
  */
 
@@ -19,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $cosypaw_cloths = (array) ( $args['cloths'] ?? array() );
+$cosypaw_set    = is_array( $args['set'] ?? null ) ? $args['set'] : null;
 
 if ( ! $cosypaw_cloths ) {
 	return;
@@ -65,3 +68,56 @@ if ( ! $cosypaw_cloths ) {
 		</div>
 	<?php endforeach; ?>
 </div>
+
+<?php if ( $cosypaw_set ) : ?>
+	<div class="cloth-set">
+		<a class="cloth-set__media" href="<?php echo esc_url( $cosypaw_set['permalink'] ); ?>" aria-hidden="true" tabindex="-1">
+			<?php
+			// Both photographs side by side: the set is the two cloths above,
+			// and showing one of them would read as a single cloth.
+			foreach ( array_slice( array_filter( array_merge( array( (int) $cosypaw_set['image_id'] ), $cosypaw_set['gallery_ids'] ) ), 0, 2 ) as $cosypaw_img ) {
+				echo wp_get_attachment_image(
+					(int) $cosypaw_img,
+					'woocommerce_thumbnail',
+					false,
+					array(
+						'class'    => 'cloth-set__img',
+						'loading'  => 'lazy',
+						'decoding' => 'async',
+						'sizes'    => '(max-width: 560px) calc(50vw - 40px), 170px',
+					)
+				);
+			}
+			?>
+		</a>
+		<div class="cloth-set__body">
+			<span class="cloth-set__badge">
+				<?php
+				echo esc_html(
+					sprintf(
+						/* translators: %s: formatted saving, e.g. "299 RSD". */
+						__( 'Uštedi %s', 'cosypaw' ),
+						\Theme\Catalog::format_price( (int) $cosypaw_set['saving'] )
+					)
+				);
+				?>
+			</span>
+			<a class="cloth-card__name" href="<?php echo esc_url( $cosypaw_set['permalink'] ); ?>"><?php echo esc_html( $cosypaw_set['name'] ); ?></a>
+			<span class="cloth-set__prices">
+				<span class="cloth-card__price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_set['price'] ) ); ?></span>
+				<del class="cloth-set__old">
+					<span class="screen-reader-text"><?php esc_html_e( 'Pojedinačno:', 'cosypaw' ); ?></span>
+					<?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_set['separately'] ) ); ?>
+				</del>
+			</span>
+			<a
+				href="<?php echo esc_url( $cosypaw_set['add_to_cart_url'] ); ?>"
+				class="btn btn--primary cloth-card__buy add_to_cart_button ajax_add_to_cart"
+				data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_set['id'] ); ?>"
+				data-quantity="1"
+				rel="nofollow"
+				aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_set['name'] ) ); ?>"
+			><?php esc_html_e( 'Dodaj set u korpu', 'cosypaw' ); ?></a>
+		</div>
+	</div>
+<?php endif; ?>

@@ -75,9 +75,15 @@ final class NavMenuTest extends TestCase {
 
 		Functions\when( 'get_page_by_path' )->alias( fn( string $slug ) => $this->pages[ $slug ] ?? null );
 		Functions\when( 'get_permalink' )->alias( static fn( $page ) => 'https://cosypaw.rs/' . $page->post_name . '/' );
-		Functions\when( 'has_nav_menu' )->alias( fn( string $location ) => ! empty( $this->mods['nav_menu_locations'][ $location ] ) );
 		Functions\when( 'wp_get_nav_menu_object' )->alias(
-			fn( string $name ) => isset( $this->menus[ $name ] ) ? (object) array( 'term_id' => $this->menus[ $name ] ) : false
+			function ( $menu ) {
+				$id = is_int( $menu ) ? ( in_array( $menu, $this->menus, true ) ? $menu : 0 ) : ( $this->menus[ $menu ] ?? 0 );
+
+				return $id > 0 ? (object) array( 'term_id' => $id ) : false;
+			}
+		);
+		Functions\when( 'wp_get_nav_menu_items' )->alias(
+			fn( int $menu_id ) => array_values( array_filter( $this->items, static fn( array $item ) => $item['menu'] === $menu_id ) )
 		);
 		Functions\when( 'wp_create_nav_menu' )->alias(
 			function ( string $name ): int {
@@ -158,28 +164,57 @@ final class NavMenuTest extends TestCase {
 	}
 
 	/**
-	 * A header that already has a menu keeps it.
+	 * A header menu the shop has filled keeps its items and its place.
 	 *
 	 * @return void
 	 */
-	public function test_seed_leaves_an_assigned_menu_alone(): void {
+	public function test_seed_leaves_a_filled_menu_alone(): void {
+		$this->menus['Moj meni']          = 7;
+		$this->items[]                    = array( 'menu' => 7, 'menu-item-title' => 'Moj link' );
 		$this->mods['nav_menu_locations'] = array( NavMenu::LOCATION => 7 );
 
 		$this->assertSame( 0, ( new NavMenu() )->seed() );
-		$this->assertSame( array(), $this->items );
+		$this->assertCount( 1, $this->items );
 		$this->assertSame( 7, $this->mods['nav_menu_locations'][ NavMenu::LOCATION ] );
 	}
 
 	/**
-	 * An existing "Glavni meni" is assigned as it is, not filled twice.
+	 * A header menu left empty is filled where it is, not replaced.
+	 *
+	 * @return void
+	 */
+	public function test_seed_fills_an_empty_assigned_menu(): void {
+		$this->menus['Moj meni']          = 7;
+		$this->mods['nav_menu_locations'] = array( NavMenu::LOCATION => 7 );
+
+		$this->assertSame( 3, ( new NavMenu() )->seed() );
+		$this->assertSame( array( 7, 7, 7 ), array_column( $this->items, 'menu' ) );
+		$this->assertSame( 7, $this->mods['nav_menu_locations'][ NavMenu::LOCATION ] );
+	}
+
+	/**
+	 * A header pointing at a deleted menu gets "Glavni meni" instead.
+	 *
+	 * @return void
+	 */
+	public function test_seed_replaces_a_deleted_menu(): void {
+		$this->mods['nav_menu_locations'] = array( NavMenu::LOCATION => 99 );
+
+		$this->assertSame( 3, ( new NavMenu() )->seed() );
+		$this->assertSame( 42, $this->mods['nav_menu_locations'][ NavMenu::LOCATION ] );
+	}
+
+	/**
+	 * An existing, filled "Glavni meni" is assigned as it is, not filled twice.
 	 *
 	 * @return void
 	 */
 	public function test_seed_assigns_an_existing_menu_without_adding(): void {
 		$this->menus[ NavMenu::MENU_NAME ] = 9;
+		$this->items[]                     = array( 'menu' => 9, 'menu-item-title' => 'Peškiri' );
 
 		$this->assertSame( 0, ( new NavMenu() )->seed() );
-		$this->assertSame( array(), $this->items );
+		$this->assertCount( 1, $this->items );
 		$this->assertSame( 9, $this->mods['nav_menu_locations'][ NavMenu::LOCATION ] );
 	}
 

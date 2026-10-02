@@ -6,7 +6,8 @@
  * (Izgled → Meniji), and falls back to ITEMS while none is. So the shop can
  * edit the header by hand, this builds a "Glavni meni" from the same ITEMS
  * once, the first time an administrator opens wp-admin, and assigns it. A
- * location that already has a menu is never touched: that menu is the shop's.
+ * menu that already has items is never touched: that menu is the shop's. One
+ * left empty is filled, since an empty menu leaves the header with no links.
  *
  * A menu item's title is a database value in one language, while the header
  * speaks three. Titles are therefore run through the theme's translations
@@ -40,9 +41,9 @@ final class NavMenu {
 	public const MENU_NAME = 'Glavni meni';
 
 	/**
-	 * Bump to build the menu again on installs where the location is empty.
+	 * Bump to run seed() again. 2: fills a header menu left empty.
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which version this install has been brought up to.
@@ -142,19 +143,22 @@ final class NavMenu {
 	}
 
 	/**
-	 * Build "Glavni meni" from ITEMS and assign it to the header, unless the
-	 * header already has a menu. A "Glavni meni" that already exists is
-	 * assigned as it is.
+	 * Make sure the header has a menu with links in it.
+	 *
+	 * The menu assigned to the header is kept; with none assigned, or one
+	 * that was deleted since, "Glavni meni" is (created and) assigned. Only a
+	 * menu with no items gets ITEMS added — one the shop has filled is its own.
 	 *
 	 * @return int Number of menu items added.
 	 */
 	public function seed(): int {
-		if ( has_nav_menu( self::LOCATION ) ) {
-			return 0;
-		}
+		$locations = (array) get_theme_mod( 'nav_menu_locations', array() );
+		$assigned  = (int) ( $locations[ self::LOCATION ] ?? 0 );
 
-		$added = 0;
-		$menu  = wp_get_nav_menu_object( self::MENU_NAME );
+		$menu = $assigned > 0 ? wp_get_nav_menu_object( $assigned ) : false;
+		if ( ! is_object( $menu ) || empty( $menu->term_id ) ) {
+			$menu = wp_get_nav_menu_object( self::MENU_NAME );
+		}
 
 		if ( is_object( $menu ) && ! empty( $menu->term_id ) ) {
 			$menu_id = (int) $menu->term_id;
@@ -164,12 +168,14 @@ final class NavMenu {
 				return 0;
 			}
 			$menu_id = (int) $menu_id;
-			$added   = $this->add_items( $menu_id );
 		}
 
-		$locations                   = (array) get_theme_mod( 'nav_menu_locations', array() );
-		$locations[ self::LOCATION ] = $menu_id;
-		set_theme_mod( 'nav_menu_locations', $locations );
+		$added = wp_get_nav_menu_items( $menu_id ) ? 0 : $this->add_items( $menu_id );
+
+		if ( $assigned !== $menu_id ) {
+			$locations[ self::LOCATION ] = $menu_id;
+			set_theme_mod( 'nav_menu_locations', $locations );
+		}
 
 		return $added;
 	}

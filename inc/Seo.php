@@ -119,7 +119,7 @@ final class Seo {
 		$text = '';
 
 		if ( is_front_page() ) {
-			$text = __( 'Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
+			$text = __( 'Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 oblika. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije.', 'cosypaw' );
 		} elseif ( is_singular() ) {
 			$post = get_queried_object();
 			if ( $post instanceof \WP_Post ) {

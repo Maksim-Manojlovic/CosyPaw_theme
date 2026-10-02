@@ -121,7 +121,7 @@ final class Storefront {
 	public static function motif_alt( array $row ): string {
 		return sprintf(
 			/* translators: %s: motif name, e.g. "Zeka". */
-			__( 'Dečiji peškir od mikrofibera, motiv %s', 'cosypaw' ),
+			__( 'Dečiji peškir od mikrofibera, oblik %s', 'cosypaw' ),
 			(string) ( $row['name'] ?? '' )
 		);
 	}

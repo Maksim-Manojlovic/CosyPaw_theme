@@ -146,11 +146,11 @@ $cosypaw_motifs_href = \Theme\Pages::url( 'motivi' );
 
 			<p>
 				<?php
-				$cosypaw_motifs_text = __( 'dečijih peškira sa motivima životinja', 'cosypaw' );
+				$cosypaw_motifs_text = __( 'dečijih peškira u obliku životinja', 'cosypaw' );
 				echo wp_kses(
 					sprintf(
-						/* translators: %s: link "dečijih peškira sa motivima životinja", to the motif collection. */
-						__( 'Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi motive po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića.', 'cosypaw' ),
+						/* translators: %s: link "dečijih peškira u obliku životinja", to the motif collection. */
+						__( 'Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi oblike po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića.', 'cosypaw' ),
 						'' !== $cosypaw_motifs_href ? $cosypaw_link( $cosypaw_motifs_href, $cosypaw_motifs_text ) : esc_html( $cosypaw_motifs_text )
 					),
 					$cosypaw_kses

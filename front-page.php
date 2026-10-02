@@ -45,7 +45,7 @@ $featured = array_values( array_filter( $catalog->featured(), array( \Theme\Stor
 // ("dečiji peškiri od mikrofibera"), so the brand's own line moved down here.
 $tagline = sprintf(
 	/* translators: %d: how many motifs are on sale. */
-	__( 'Ručno rađeni peškiri sa alkom za kačenje — %d motiva koji grle tvoje kupatilo.', 'cosypaw' ),
+	__( 'Ručno rađeni peškiri sa alkom za kačenje — %d oblika koji grle tvoje kupatilo.', 'cosypaw' ),
 	count( $products )
 );
 
@@ -885,13 +885,13 @@ if ( $hero_deal ) {
 				<?php
 				echo wp_kses(
 					sprintf(
-						/* translators: 1: link "N jedinstvenih motiva", to the motif gallery. */
+						/* translators: 1: link "N jedinstvenih oblika", to the motif gallery. */
 						__( 'Svaki peškir ima alku za kačenje, pa visi na dečijoj visini — pored lavaboa, na kuki ili na vratima. Kad na kuki čeka drugar, pranje ruku postaje igra, a dete samo bira svoj peškir i samo ga koristi. Izaberi između %1$s: životinjice poput zeke, sove, pande i kapibare, zalogajčići i cvetići.', 'cosypaw' ),
 						$cosypaw_link(
 							$cosypaw_motifs_href,
 							sprintf(
 								/* translators: %d: how many motifs are on sale. */
-								__( '%d jedinstvenih motiva', 'cosypaw' ),
+								__( '%d jedinstvenih oblika', 'cosypaw' ),
 								count( $products )
 							)
 						)

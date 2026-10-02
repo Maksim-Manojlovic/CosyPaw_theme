@@ -107,34 +107,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					)
 				);
 			} else {
-				// Default links: every product line's own page first, then the
-				// homepage sections (resolved from any page back to the homepage).
-				$cosypaw_home = is_front_page() ? '' : home_url( '/' );
-
-				// Each product goes to its own page — that page is the line's
-				// main way in, and the link is what tells search engines it
-				// matters. A page that does not exist yet drops out, except the
-				// towels, which fall back to the homepage gallery.
-				$cosypaw_page = static fn( string $key ): string => class_exists( '\Theme\Pages' ) ? \Theme\Pages::url( $key ) : '';
-				$cosypaw_motifs = $cosypaw_page( 'motivi' );
-
-				$cosypaw_links = array(
-					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Cosy peškiri', 'cosypaw' ) ),
-					array( $cosypaw_page( 'dugi' ), __( 'Peškiri', 'cosypaw' ) ),
-					array( $cosypaw_page( 'jastuci' ), __( 'Jastuci', 'cosypaw' ) ),
-					array( $cosypaw_page( 'krpe' ), __( 'Magične krpe', 'cosypaw' ) ),
-					array( $cosypaw_page( 'paketi' ), __( 'Pokloni', 'cosypaw' ) ),
-					array( $cosypaw_home . '#paketi', __( 'Paketi', 'cosypaw' ) ),
-					array( $cosypaw_home . '#zasto', __( 'Zašto CosyPaw', 'cosypaw' ) ),
-				);
-
-				$cosypaw_here = is_singular() ? (string) get_permalink() : '';
+				// Default links while no menu is assigned: every product line's
+				// own page first, then the homepage sections. Each product goes
+				// to its own page — that page is the line's main way in, and the
+				// link is what tells search engines it matters. The same list
+				// seeds "Glavni meni" in wp-admin (NavMenu).
+				$cosypaw_links = class_exists( '\Theme\NavMenu' ) ? \Theme\NavMenu::default_links() : array();
+				$cosypaw_here  = is_singular() ? (string) get_permalink() : '';
 
 				foreach ( $cosypaw_links as $cosypaw_link ) {
 					list( $cosypaw_href, $cosypaw_label ) = $cosypaw_link;
-					if ( '' === $cosypaw_href ) {
-						continue;
-					}
 
 					printf(
 						'<a href="%1$s" class="nav__link"%3$s>%2$s</a>',

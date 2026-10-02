@@ -94,18 +94,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="nav__links" id="cosypaw-nav-menu" data-nav-panel>
 			<?php
-			if ( has_nav_menu( 'primary' ) ) {
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'container'      => false,
-						'menu_class'     => 'nav__menu',
-						'depth'          => 1,
-						'fallback_cb'    => false,
-						'link_before'    => '<span class="nav__link">',
-						'link_after'     => '</span>',
-					)
-				);
+			// A menu assigned in wp-admin that is empty, or was deleted, prints
+			// nothing at all — fall back to the default links rather than leave
+			// the header (and the phone menu) without a single link.
+			$cosypaw_menu = has_nav_menu( 'primary' ) ? wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'container'      => false,
+					'menu_class'     => 'nav__menu',
+					'depth'          => 1,
+					'fallback_cb'    => false,
+					'link_before'    => '<span class="nav__link">',
+					'link_after'     => '</span>',
+					'echo'           => false,
+				)
+			) : '';
+
+			if ( is_string( $cosypaw_menu ) && false !== strpos( $cosypaw_menu, '<li' ) ) {
+				echo $cosypaw_menu; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nav_menu() markup.
 			} else {
 				// Default links while no menu is assigned: every product line's
 				// own page first, then the homepage sections. Each product goes

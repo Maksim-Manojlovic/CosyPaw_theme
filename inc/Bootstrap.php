@@ -111,6 +111,13 @@ final class Bootstrap {
 	private Pages $pages;
 
 	/**
+	 * The header menu built in wp-admin, and its titles' translation.
+	 *
+	 * @var NavMenu
+	 */
+	private NavMenu $nav_menu;
+
+	/**
 	 * Magične krpice (WooCommerce only).
 	 *
 	 * @var Cloths|null
@@ -158,6 +165,9 @@ final class Bootstrap {
 		$this->assets = new Assets( $this->text_domain, get_template_directory(), get_template_directory_uri() );
 		$this->seo    = new Seo( new Catalog() );
 		$this->pages  = new Pages();
+
+		// After Pages: the menu it seeds points at those pages.
+		$this->nav_menu = new NavMenu();
 
 		// Conditional WooCommerce module.
 		if ( class_exists( 'WooCommerce' ) ) {

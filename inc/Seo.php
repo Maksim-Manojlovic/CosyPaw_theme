@@ -463,7 +463,7 @@ final class Seo {
 
 		return array(
 			array(
-				'q' => __( 'Od čega su peškirići napravljeni?', 'cosypaw' ),
+				'q' => __( 'Od čega su peškiri napravljeni?', 'cosypaw' ),
 				'a' => __( 'Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži.', 'cosypaw' ),
 			),
 			array(
@@ -500,7 +500,7 @@ final class Seo {
 			 */
 			array(
 				'q' => __( 'Gde mogu da ostavim utisak?', 'cosypaw' ),
-				'a' => __( 'Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“.', 'cosypaw' ),
+				'a' => __( 'Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškir koji imaš. Isto možeš i sa stranice svakog peškira, u tabu „Recenzije“.', 'cosypaw' ),
 			),
 		);
 	}

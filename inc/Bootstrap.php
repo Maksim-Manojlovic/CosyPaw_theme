@@ -132,6 +132,13 @@ final class Bootstrap {
 	private ?LongTowels $long_towels = null;
 
 	/**
+	 * Vocabulary changes carried into seeded database text (WooCommerce only).
+	 *
+	 * @var Wording|null
+	 */
+	private ?Wording $wording = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -168,6 +175,10 @@ final class Bootstrap {
 			// its own category, none of them a motif or part of a 2+1.
 			$this->pillows     = new Pillows();
 			$this->long_towels = new LongTowels();
+
+			// "Peškirići" became "peškiri": the same swap, once, in the alt
+			// text and descriptions the seeders wrote to the database.
+			$this->wording = new Wording();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

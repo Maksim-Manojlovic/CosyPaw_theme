@@ -262,12 +262,12 @@ final class ReviewRequest {
 
 		$heading = '' !== $first_name
 			/* translators: %s: customer's first name. */
-			? sprintf( __( 'Kako su peškirići, %s?', 'cosypaw' ), $first_name )
-			: __( 'Kako su peškirići?', 'cosypaw' );
+			? sprintf( __( 'Kako su peškiri, %s?', 'cosypaw' ), $first_name )
+			: __( 'Kako su peškiri?', 'cosypaw' );
 
-		$subject = __( 'Reci nam par reči o svojim peškirićima', 'cosypaw' );
+		$subject = __( 'Reci nam par reči o svojim peškirima', 'cosypaw' );
 
-		$body  = '<p>' . esc_html__( 'Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom.', 'cosypaw' ) . '</p>';
+		$body  = '<p>' . esc_html__( 'Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškiri okače, isprobaju i operu bar jednom.', 'cosypaw' ) . '</p>';
 		$body .= '<p>' . esc_html__( 'Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće.', 'cosypaw' ) . '</p>';
 		$body .= '<ul>';
 

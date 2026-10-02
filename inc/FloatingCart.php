@@ -124,10 +124,10 @@ final class FloatingCart {
 			// the room to explain a bill that goes down when something is
 			// added to it.
 			$copy = (int) $step['price'] < 1
-				? __( 'Još 1 peškirić gratis', 'cosypaw' )
+				? __( 'Još 1 peškir gratis', 'cosypaw' )
 				: sprintf(
 					/* translators: %s: formatted price of one more towel, e.g. "500 RSD". */
-					__( 'Još 1 peškirić za %s', 'cosypaw' ),
+					__( 'Još 1 peškir za %s', 'cosypaw' ),
 					Catalog::format_price( $step['price'] )
 				);
 

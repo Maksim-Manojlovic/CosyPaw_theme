@@ -33,8 +33,8 @@ if ( ! $packages ) {
 	<div class="packages__inner">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Napravi svoj paket', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Što više peškirića, veća ušteda', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
+			<h2 class="section__title"><?php esc_html_e( 'Što više peškira, veća ušteda', 'cosypaw' ); ?></h2>
+			<p class="section__lead"><?php esc_html_e( 'Izaberi veličinu paketa, pa ubaci omiljene peškire. Cena po komadu pada sa svakim sledećim.', 'cosypaw' ); ?></p>
 		</div>
 
 		<?php get_template_part( 'template-parts/gift-banner' ); ?>
@@ -154,7 +154,7 @@ if ( ! $packages ) {
 			<div class="builder__step builder__step--row">
 				<div class="builder__step-head">
 					<span class="builder__num">2</span>
-					<span class="builder__step-title"><?php esc_html_e( 'Ubaci svoje peškiriće', 'cosypaw' ); ?></span>
+					<span class="builder__step-title"><?php esc_html_e( 'Ubaci svoje peškire', 'cosypaw' ); ?></span>
 				</div>
 				<div class="builder__tools">
 					<?php

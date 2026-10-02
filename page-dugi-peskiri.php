@@ -83,9 +83,9 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 				if ( '' !== $cosypaw_collection ) {
 					echo wp_kses(
 						sprintf(
-							/* translators: %s: link "dečije peškire sa motivima životinja", to the motif collection. */
+							/* translators: %s: link "dečije peškire u obliku životinja", to the motif collection. */
 							__( 'Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje.', 'cosypaw' ),
-							'<a href="' . esc_url( $cosypaw_collection ) . '">' . esc_html__( 'dečije peškire sa motivima životinja', 'cosypaw' ) . '</a>'
+							'<a href="' . esc_url( $cosypaw_collection ) . '">' . esc_html__( 'dečije peškire u obliku životinja', 'cosypaw' ) . '</a>'
 						),
 						array( 'a' => array( 'href' => array() ) )
 					);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Motif collection — "Dečiji peškiri sa motivima životinja".
+ * Motif collection — "Dečiji peškiri u obliku životinja".
  *
  * The SEO plan's category page: every towel on one page, grouped the way the
  * shop files them, with the hygiene-through-play copy the plan asks for and the
@@ -43,7 +43,7 @@ $cosypaw_group_copy = array(
 	),
 	'cvetici-i-listici' => array(
 		'title' => __( 'Cvetići i listići', 'cosypaw' ),
-		'lead'  => __( 'Nežni cvetni motivi za mirniji, prirodni kutak.', 'cosypaw' ),
+		'lead'  => __( 'Nežni cvetni oblici za mirniji, prirodni kutak.', 'cosypaw' ),
 	),
 	'peskiri-u-torbi' => array(
 		'title' => __( 'Peškiri u torbi', 'cosypaw' ),
@@ -67,12 +67,12 @@ $cosypaw_home_link = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html_
 		<nav class="collection__crumbs" aria-label="<?php esc_attr_e( 'Putanja', 'cosypaw' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Početna', 'cosypaw' ); ?></a>
 			<span aria-hidden="true">›</span>
-			<span aria-current="page"><?php esc_html_e( 'Dečiji peškiri sa motivima životinja', 'cosypaw' ); ?></span>
+			<span aria-current="page"><?php esc_html_e( 'Dečiji peškiri u obliku životinja', 'cosypaw' ); ?></span>
 		</nav>
 
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Kolekcija', 'cosypaw' ); ?></span>
-			<h1 class="section__title"><?php esc_html_e( 'Dečiji peškiri sa motivima životinja', 'cosypaw' ); ?></h1>
+			<h1 class="section__title"><?php esc_html_e( 'Dečiji peškiri u obliku životinja', 'cosypaw' ); ?></h1>
 			<p class="section__lead">
 				<?php
 				echo esc_html(
@@ -128,12 +128,12 @@ $cosypaw_home_link = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html_
 	?>
 	<section id="higijena-kroz-igru" class="section seo-copy">
 		<div class="section__head">
-			<span class="eyebrow"><?php esc_html_e( 'Zašto motivi', 'cosypaw' ); ?></span>
+			<span class="eyebrow"><?php esc_html_e( 'Zašto oblici', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Dečija higijena kroz igru', 'cosypaw' ); ?></h2>
 		</div>
 
 		<div class="seo-copy__body">
-			<p><?php esc_html_e( 'Dečiji peškiri sa motivima životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Dečiji peškiri u obliku životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Zato je peškir za ruke zeka jedan od najomiljenijih: mekan je, prijateljski i deca ga odmah prepoznaju. Sovica podseća na mirne večernje rutine, a panda i kapibarica unose malo smeha u svako jutro.', 'cosypaw' ); ?></p>
 

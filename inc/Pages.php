@@ -33,10 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Pages {
 
 	/**
-	 * Bump when a page is added to REGISTRY, so installs that already ran
-	 * ensure() look again.
+	 * Bump when a page is added to REGISTRY or reworded (REWORDED), so
+	 * installs that already ran ensure() look again.
 	 */
-	public const VERSION = 4;
+	public const VERSION = 5;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -54,9 +54,9 @@ final class Pages {
 	public const REGISTRY = array(
 		'motivi' => array(
 			'slug'            => 'deciji-peskiri-sa-motivima-zivotinja',
-			'title'           => 'Dečiji peškiri sa motivima životinja',
-			'seo_title'       => 'Dečiji Peškiri sa Motivima Životinja | Najlepši Peškiri za Decu',
-			'seo_description' => 'Dečiji peškiri sa motivima životinja čine pranje ruku zabavnim! Peškir za ruke zeka, sovica ili panda, ručno rađen od mikrofibre. Pogledaj kolekciju!',
+			'title'           => 'Dečiji peškiri u obliku životinja',
+			'seo_title'       => 'Dečiji Peškiri u Obliku Životinja | Najlepši Peškiri za Decu',
+			'seo_description' => 'Dečiji peškiri u obliku životinja čine pranje ruku zabavnim! Peškir za ruke zeka, sovica ili panda, ručno rađen od mikrofibre. Pogledaj kolekciju!',
 		),
 		'pokloni' => array(
 			'slug'            => 'poklon-setovi-za-bebu-i-decu',
@@ -102,7 +102,75 @@ final class Pages {
 		}
 
 		$this->ensure();
+		$this->reword();
 		update_option( self::OPTION, self::VERSION );
+	}
+
+	/**
+	 * What a registered page said before its REGISTRY copy was reworded:
+	 * key => the title, Yoast title and description the theme wrote then.
+	 *
+	 * The collection's towels are "oblici", no longer "motivi"; its address
+	 * stays, so it keeps what it ranks for.
+	 *
+	 * @var array<string,array{title:string,seo_title:string,seo_description:string}>
+	 */
+	private const REWORDED = array(
+		'motivi' => array(
+			'title'           => 'Dečiji peškiri sa motivima životinja',
+			'seo_title'       => 'Dečiji Peškiri sa Motivima Životinja | Najlepši Peškiri za Decu',
+			'seo_description' => 'Dečiji peškiri sa motivima životinja čine pranje ruku zabavnim! Peškir za ruke zeka, sovica ili panda, ručno rađen od mikrofibre. Pogledaj kolekciju!',
+		),
+	);
+
+	/**
+	 * Bring existing pages up to their reworded REGISTRY copy.
+	 *
+	 * The one exception to "a page that exists is never touched", and a
+	 * narrow one: a field is replaced only while it still holds exactly what
+	 * the theme wrote (REWORDED). Anything the shop has edited since is its
+	 * own and stays. Runs once, with the version bump that carried it.
+	 *
+	 * @return int Number of fields updated.
+	 */
+	public function reword(): int {
+		$updated = 0;
+
+		foreach ( self::REWORDED as $key => $old ) {
+			$new  = self::REGISTRY[ $key ];
+			$page = get_page_by_path( $new['slug'] );
+			if ( ! is_object( $page ) || empty( $page->ID ) ) {
+				continue;
+			}
+
+			$id   = (int) $page->ID;
+			$post = array();
+
+			if ( $old['title'] === (string) ( $page->post_title ?? '' ) ) {
+				$post['post_title'] = $new['title'];
+			}
+			// The excerpt carries the description for the theme's own meta tag.
+			if ( $old['seo_description'] === (string) ( $page->post_excerpt ?? '' ) ) {
+				$post['post_excerpt'] = $new['seo_description'];
+			}
+			if ( $post ) {
+				wp_update_post( array( 'ID' => $id ) + $post );
+				$updated += count( $post );
+			}
+
+			$yoast = array(
+				'_yoast_wpseo_title'    => 'seo_title',
+				'_yoast_wpseo_metadesc' => 'seo_description',
+			);
+			foreach ( $yoast as $meta => $field ) {
+				if ( $old[ $field ] === (string) get_post_meta( $id, $meta, true ) ) {
+					update_post_meta( $id, $meta, $new[ $field ] );
+					++$updated;
+				}
+			}
+		}
+
+		return $updated;
 	}
 
 	/**

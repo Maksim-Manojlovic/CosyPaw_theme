@@ -76,6 +76,18 @@ final class PagesTest extends TestCase {
 				return true;
 			}
 		);
+		Functions\when( 'get_post_meta' )->alias( fn( int $id, string $key ) => $this->meta[ $id ][ $key ] ?? '' );
+		Functions\when( 'wp_update_post' )->alias(
+			function ( array $post ): int {
+				foreach ( $this->pages as $slug => $page ) {
+					if ( $page->ID === $post['ID'] ) {
+						$this->pages[ $slug ] = (object) array_merge( (array) $page, $post );
+					}
+				}
+
+				return $post['ID'];
+			}
+		);
 		Functions\when( 'get_option' )->alias( fn( string $name, $fallback = false ) => $this->options[ $name ] ?? $fallback );
 		Functions\when( 'update_option' )->alias(
 			function ( string $name, $value ): bool {
@@ -166,5 +178,36 @@ final class PagesTest extends TestCase {
 	public function test_url_is_empty_until_the_page_is_published(): void {
 		$this->assertSame( '', Pages::url( 'motivi' ) );
 		$this->assertSame( '', Pages::url( 'nepostojeca' ) );
+	}
+
+	/**
+	 * The collection page that was created as "motivi" is reworded to
+	 * "oblici" — but only the fields still exactly as the theme wrote them.
+	 *
+	 * @return void
+	 */
+	public function test_reword_replaces_only_untouched_fields(): void {
+		$slug = Pages::REGISTRY['motivi']['slug'];
+
+		$this->pages[ $slug ] = (object) array(
+			'ID'           => 7,
+			'post_title'   => 'Dečiji peškiri sa motivima životinja',
+			'post_excerpt' => 'Naš opis',
+		);
+		$this->meta[7] = array(
+			'_yoast_wpseo_title'    => 'Dečiji Peškiri sa Motivima Životinja | Najlepši Peškiri za Decu',
+			'_yoast_wpseo_metadesc' => 'Naš Yoast opis',
+		);
+
+		$this->assertSame( 2, ( new Pages() )->reword() );
+
+		$this->assertSame( Pages::REGISTRY['motivi']['title'], $this->pages[ $slug ]->post_title );
+		$this->assertSame( 'Naš opis', $this->pages[ $slug ]->post_excerpt );
+		$this->assertSame( Pages::REGISTRY['motivi']['seo_title'], $this->meta[7]['_yoast_wpseo_title'] );
+		$this->assertSame( 'Naš Yoast opis', $this->meta[7]['_yoast_wpseo_metadesc'] );
+		$this->assertStringContainsString( 'oblik', Pages::REGISTRY['motivi']['title'] );
+
+		// Already reworded: nothing left to do.
+		$this->assertSame( 0, ( new Pages() )->reword() );
 	}
 }

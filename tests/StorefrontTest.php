@@ -144,7 +144,7 @@ final class StorefrontTest extends TestCase {
 	 */
 	public function test_motif_alt_names_the_product(): void {
 		$this->assertSame(
-			'Dečiji peškir od mikrofibera, motiv Zeka',
+			'Dečiji peškir od mikrofibera, oblik Zeka',
 			Storefront::motif_alt( array( 'name' => 'Zeka' ) )
 		);
 	}

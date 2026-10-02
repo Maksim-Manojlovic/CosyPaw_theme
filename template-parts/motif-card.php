@@ -93,7 +93,7 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 						echo esc_attr(
 							sprintf(
 								/* translators: 1: towels in the package, 2: formatted per-piece price, 3: motif name. */
-								__( 'Napravi paket od %1$d peškirića po %2$s, počni sa motivom %3$s', 'cosypaw' ),
+								__( 'Napravi paket od %1$d peškirića po %2$s, počni sa oblikom %3$s', 'cosypaw' ),
 								(int) $cosypaw_ladder['qty'],
 								\Theme\Catalog::format_price( (int) $cosypaw_ladder['per'] ),
 								$p['name']

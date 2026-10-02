@@ -200,8 +200,8 @@ msgstr "Orders over %s ship free."
 msgid "Besplatna dostava preko %s"
 msgstr "Free shipping over %s"
 
-msgid "Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 motiva. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
-msgstr "Handmade children’s microfiber towels with a hanging loop, in over 20 designs. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
+msgid "Dečiji peškiri od mikrofibera, ručno rađeni, sa alkom za kačenje i preko 20 oblika. Sastavi svoj paket, plaćanje pouzećem, dostava 2–4 dana širom Srbije."
+msgstr "Handmade children’s microfiber towels with a hanging loop, in over 20 shapes. Build your own bundle, cash on delivery, 2–4 day shipping across Serbia."
 
 msgid "Rezultati pretrage za „%s“."
 msgstr "Search results for “%s”."
@@ -212,8 +212,8 @@ msgstr "CosyPaw children’s microfiber towels"
 msgid "Ručno rađeni dečiji peškiri od plišane mikrofibre, sa alkom za kačenje."
 msgstr "Handmade children’s towels in plush microfiber, with a hanging loop."
 
-msgid "Dečiji peškir od mikrofibera, motiv %s"
-msgstr "Children’s microfiber towel, %s design"
+msgid "Dečiji peškir od mikrofibera, oblik %s"
+msgstr "Children’s microfiber towel, %s shape"
 
 msgid "O našim peškirima"
 msgstr "About our towels"
@@ -227,8 +227,8 @@ msgstr "Looking for children’s towels that are soft, absorbent and cute enough
 msgid "Svaki peškir ima alku za kačenje, pa visi na dečijoj visini — pored lavaboa, na kuki ili na vratima. Kad na kuki čeka drugar, pranje ruku postaje igra, a dete samo bira svoj peškir i samo ga koristi. Izaberi između %1$s: životinjice poput zeke, sove, pande i kapibare, zalogajčići i cvetići."
 msgstr "Every towel has a hanging loop, so it hangs at a child’s height — by the sink, on a hook or on a door. When a friend is waiting on the hook, washing hands becomes a game, and the child picks and uses their own towel. Choose from %1$s: little animals like the bunny, owl, panda and capybara, treats and flowers."
 
-msgid "%d jedinstvenih motiva"
-msgstr "%d unique designs"
+msgid "%d jedinstvenih oblika"
+msgstr "%d unique shapes"
 
 msgid "CosyPaw peškiri su i %1$s — za rođenje bebe, krštenje, prvi rođendan ili bebi šauer. Svaki paket stiže u CosyPaw kutiji, sa porukom dobrodošlice i mirisom lavande, a ručno rađene peškire šaljemo širom Srbije."
 msgstr "CosyPaw towels are also %1$s — for a new baby, a christening, a first birthday or a baby shower. Every package arrives in a CosyPaw box, with a welcome note and a hint of lavender, and we ship our handmade towels all across Serbia."
@@ -248,8 +248,8 @@ msgstr "Home"
 msgid "Kolekcija"
 msgstr "Collection"
 
-msgid "Dečiji peškiri sa motivima životinja"
-msgstr "Children’s towels with animal designs"
+msgid "Dečiji peškiri u obliku životinja"
+msgstr "Children’s towels in animal shapes"
 
 msgid "%1$d ručno rađenih peškira od mikrofibre, sa alkom za kačenje, od %2$s po komadu. Izaberi drugara za svoje dete — kupi jedan ili ih spoji u paket i uštedi."
 msgstr "%1$d handmade microfiber towels with a hanging loop, from %2$s each. Pick a friend for your child — buy one, or bundle them and save."
@@ -269,8 +269,8 @@ msgstr "Fruit and sweets in microfiber — a cheerful little thing for the bathr
 msgid "Cvetići i listići"
 msgstr "Flowers and leaves"
 
-msgid "Nežni cvetni motivi za mirniji, prirodni kutak."
-msgstr "Gentle floral designs for a calmer, natural corner."
+msgid "Nežni cvetni oblici za mirniji, prirodni kutak."
+msgstr "Gentle floral shapes for a calmer, natural corner."
 
 msgid "Peškiri u torbi"
 msgstr "Towels in a bag"
@@ -278,14 +278,14 @@ msgstr "Towels in a bag"
 msgid "Još peškira"
 msgstr "More towels"
 
-msgid "Zašto motivi"
-msgstr "Why designs"
+msgid "Zašto oblici"
+msgstr "Why shapes"
 
 msgid "Dečija higijena kroz igru"
 msgstr "Children’s hygiene through play"
 
-msgid "Dečiji peškiri sa motivima životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra."
-msgstr "Children’s towels with animal designs are much more than ordinary bathroom textiles. When a child sees a favourite friend waiting on the hook, right at their height, washing hands stops being a chore and becomes a game."
+msgid "Dečiji peškiri u obliku životinja su mnogo više od običnog tekstila za kupatilo. Kad dete vidi omiljenog drugara kako ga čeka na kuki, baš na njegovoj visini, pranje ruku prestaje da bude obaveza i postaje igra."
+msgstr "Children’s towels in animal shapes are much more than ordinary bathroom textiles. When a child sees a favourite friend waiting on the hook, right at their height, washing hands stops being a chore and becomes a game."
 
 msgid "Zato je peškir za ruke zeka jedan od najomiljenijih: mekan je, prijateljski i deca ga odmah prepoznaju. Sovica podseća na mirne večernje rutine, a panda i kapibarica unose malo smeha u svako jutro."
 msgstr "That is why the bunny hand towel is one of the favourites: it is soft, friendly and children recognise it at once. The little owl is a reminder of calm evening routines, while the panda and the capybara bring a little laughter to every morning."
@@ -353,11 +353,11 @@ msgstr "Finding a unique gift is not easy, but a baby towel gift set makes it si
 msgid "Bilo da biraš poklon set za bebu za krštenje, poklon za rođenje bebe — devojčica ili dečak — ili poklone za prvi rođendan, roditelji će peškire koristiti svaki dan. Svaki put kad vide drugara na kuki, na dečijoj visini, setiće se tvog gesta. Kao poklon za baby shower naši setovi su posebno omiljeni, jer spajaju lepo i korisno."
 msgstr "Whether you are choosing a baby gift set for a christening, a gift for a new baby — girl or boy — or first-birthday gifts, the parents will use the towels every day. Every time they see the friend on the hook, at a child’s height, they will remember your gesture. As a baby shower gift our sets are especially loved, because they are both lovely and useful."
 
-msgid "dečijih peškira sa motivima životinja"
-msgstr "children’s towels with animal designs"
+msgid "dečijih peškira u obliku životinja"
+msgstr "children’s towels in animal shapes"
 
-msgid "Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi motive po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića."
-msgstr "If you are looking for personalised gifts for children, you put the set together yourself: choose designs to the child’s taste from our collection of %s, treats and flowers."
+msgid "Ako tražiš personalizovane poklone za decu, set sastavljaš sam: izaberi oblike po ukusu deteta iz naše kolekcije %s, zalogajčića i cvetića."
+msgstr "If you are looking for personalised gifts for children, you put the set together yourself: choose shapes to the child’s taste from our collection of %s, treats and flowers."
 
 msgid "U paketu od %1$d peškira plaćaš %2$d — pokloni za decu ne moraju biti skupi da bi bili nezaboravni."
 msgstr "In a package of %1$d towels you pay for %2$d — gifts for children do not have to be expensive to be unforgettable."
@@ -650,8 +650,8 @@ msgstr "If you are looking for a face towel or hand towel that looks good on the
 msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj."
 msgstr "If you are looking for a face towel or hand towel that looks good on the rail and on a towel ladder alike, this is it."
 
-msgid "dečije peškire sa motivima životinja"
-msgstr "children’s towels with animal designs"
+msgid "dečije peškire u obliku životinja"
+msgstr "children’s towels in animal shapes"
 
 msgid "Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
 msgstr "The long towels arrive like every CosyPaw product — cash on delivery, delivered across Serbia in 2–4 days."
@@ -1079,8 +1079,8 @@ msgstr "Local pickup"
 msgid "Dostava kurirskom službom (poštarina se plaća kuriru)"
 msgstr "Courier delivery (postage paid to the courier)"
 
-msgid "Ručno rađeni peškiri sa alkom za kačenje — %d motiva koji grle tvoje kupatilo."
-msgstr "Handmade towels with a hanging loop — %d designs that hug your bathroom."
+msgid "Ručno rađeni peškiri sa alkom za kačenje — %d oblika koji grle tvoje kupatilo."
+msgstr "Handmade towels with a hanging loop — %d shapes that hug your bathroom."
 
 msgid "besplatna dostava"
 msgstr "free shipping"
@@ -1160,7 +1160,7 @@ msgstr "The rest of the crew is waiting"
 msgid "%1$d kom · %2$s / kom"
 msgstr "%1$d pcs · %2$s / pc"
 
-msgid "Napravi paket od %1$d peškirića po %2$s, počni sa motivom %3$s"
+msgid "Napravi paket od %1$d peškirića po %2$s, počni sa oblikom %3$s"
 msgstr "Build a package of %1$d towels at %2$s each, starting with %3$s"
 
 msgid "Kako su peškirići, %s?"

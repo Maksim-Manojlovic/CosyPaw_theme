@@ -75,7 +75,7 @@ msgid "Short description (%s)"
 msgstr "Kratak opis (%s)"
 
 msgid "Descriptions have no language-file fallback: an empty field shows the Serbian short description above. Write two or three sentences about this motif — the shared facts (fabric, hanging loop, washing) are printed under every product automatically, so there is no need to repeat them."
-msgstr "Opisi nemaju rezervu u jezičkim fajlovima: prazno polje prikazuje srpski kratak opis iznad. Napiši dve-tri rečenice o ovom motivu — zajedničke činjenice (materijal, alka, pranje) štampaju se ispod svakog proizvoda automatski, pa ih ne treba ponavljati."
+msgstr "Opisi nemaju rezervu u jezičkim fajlovima: prazno polje prikazuje srpski kratak opis iznad. Napiši dve-tri rečenice o ovom obliku — zajedničke činjenice (materijal, alka, pranje) štampaju se ispod svakog proizvoda automatski, pa ih ne treba ponavljati."
 
 msgid "Cart"
 msgstr "Korpa"

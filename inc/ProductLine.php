@@ -347,7 +347,7 @@ abstract class ProductLine {
 	 * @param string $key ITEMS key.
 	 * @return array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>}|null
 	 */
-	protected static function row( string $key ): ?array {
+	public static function row( string $key ): ?array {
 		if ( ! function_exists( 'wc_get_product' ) ) {
 			return null;
 		}

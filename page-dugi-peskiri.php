@@ -67,6 +67,19 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 		</section>
 	<?php endif; ?>
 
+	<?php
+	get_template_part(
+		'template-parts/bundle-section',
+		null,
+		array(
+			'keys'  => array( 'kupatilo-za-porodicu', 'novi-dom', 'za-dvoje' ),
+			'id'    => 'poklon-paketi',
+			'title' => __( 'Dugi peškiri u poklon paketu', 'cosypaw' ),
+			'lead'  => __( 'Uz dečije peškire, jastuke ili krpice — jeftinije nego posebno.', 'cosypaw' ),
+		)
+	);
+	?>
+
 	<section id="peskiri-za-kupatilo" class="section seo-copy">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Peškiri za kupatilo', 'cosypaw' ); ?></span>

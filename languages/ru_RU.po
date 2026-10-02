@@ -695,6 +695,219 @@ msgstr "Добавь подушку к набору полотенец — и л
 msgid "Poruči Cuddle Puff jastuk"
 msgstr "Заказать подушку Cuddle Puff"
 
+msgid "Poklon paket Dobrodošlica za bebu"
+msgstr "Подарочный набор «Добро пожаловать, малыш»"
+
+msgid "Poklon paket Kutak za dečiju sobu"
+msgstr "Подарочный набор «Уголок детской»"
+
+msgid "Poklon paket Za vrtić"
+msgstr "Подарочный набор «Для садика»"
+
+msgid "Poklon paket Avokado ljubav"
+msgstr "Подарочный набор «Любовь к авокадо»"
+
+msgid "Poklon paket Doručak u kuhinji"
+msgstr "Подарочный набор «Завтрак на кухне»"
+
+msgid "Poklon paket Kupatilo za celu porodicu"
+msgstr "Подарочный набор «Ванная для всей семьи»"
+
+msgid "Poklon paket Novi dom"
+msgstr "Подарочный набор «Новый дом»"
+
+msgid "Poklon paket Za dvoje"
+msgstr "Подарочный набор «Для двоих»"
+
+msgid "Poklon paket Mali znak pažnje"
+msgstr "Подарочный набор «Маленький знак внимания»"
+
+msgid "Poklon paket Praznična kutija mekoće"
+msgstr "Подарочный набор «Праздничная коробка мягкости»"
+
+msgid "3 dečija peškira (Zeka, Meda, Panda) i roze Cuddle Puff jastuk Kružić"
+msgstr "3 детских полотенца (Зайка, Мишка, Панда) и розовая подушка Cuddle Puff «Кружок»"
+
+msgid "Cuddle Puff jastuk Kružić, žuti, Cuddle Puff jastuk Kockasti, sivi, i dečiji peškir Sova"
+msgstr "Подушка Cuddle Puff «Кружок», жёлтая, подушка Cuddle Puff «Квадрат», серая, и детское полотенце «Сова»"
+
+msgid "4 dečija peškira sa alkom (Kucence, Maca, Pingvin, Koala)"
+msgstr "4 детских полотенца с петелькой (Щенок, Котик, Пингвин, Коала)"
+
+msgid "dečiji peškir Avokado i obe magične krpice Avokado (limeta i žalfija)"
+msgstr "детское полотенце «Авокадо» и обе волшебные салфетки «Авокадо» (лайм и шалфей)"
+
+msgid "3 peškira (Tost, Čokoladni keks, Krofna) i obe magične krpice Avokado"
+msgstr "3 полотенца (Тост, Шоколадное печенье, Пончик) и обе волшебные салфетки «Авокадо»"
+
+msgid "2 duga peškira Meda (krem i plavi) i 2 dečija peškira (Žirafa, Kapibara)"
+msgstr "2 длинных полотенца «Мишка» (кремовое и голубое) и 2 детских полотенца (Жираф, Капибара)"
+
+msgid "Cuddle Puff jastuk Kockasti, braon, 2 duga peškira Meda (krem i bež) i obe magične krpice Avokado"
+msgstr "Подушка Cuddle Puff «Квадрат», коричневая, 2 длинных полотенца «Мишка» (кремовое и бежевое) и обе волшебные салфетки «Авокадо»"
+
+msgid "2 Cuddle Puff jastuka Kockasti (roze i sivi) i 2 duga peškira Meda (roze i plavi)"
+msgstr "2 подушки Cuddle Puff «Квадрат» (розовая и серая) и 2 длинных полотенца «Мишка» (розовое и голубое)"
+
+msgid "peškir Lala, dugi peškir Meda, roze, i obe magične krpice Avokado"
+msgstr "полотенце «Тюльпан», длинное полотенце «Мишка», розовое, и обе волшебные салфетки «Авокадо»"
+
+msgid "3 dečija peškira (Pingvin, Meda, Čokoladni keks), Cuddle Puff jastuk Kružić, braon, dugi peškir Meda, bež, i obe magične krpice Avokado"
+msgstr "3 детских полотенца (Пингвин, Мишка, Шоколадное печенье), подушка Cuddle Puff «Кружок», коричневая, длинное полотенце «Мишка», бежевое, и обе волшебные салфетки «Авокадо»"
+
+msgid "Poklon za rođenje, krštenje ili baby shower: tri mekana dečija peškira u obliku životinja sa alkom za kačenje i roze Cuddle Puff jastuk za dečiju sobu."
+msgstr "Подарок на рождение, крестины или беби-шауэр: три мягких детских полотенца в форме животных с петелькой и розовая подушка Cuddle Puff для детской."
+
+msgid "Dva Cuddle Puff jastuka sa okicama — žuti kružić i sivi kockasti — i dečiji peškir Sova sa alkom za kačenje. Za uređenje dečije sobe ili rođendanski poklon."
+msgstr "Две подушки Cuddle Puff с глазками — жёлтый «Кружок» и серый «Квадрат» — и детское полотенце «Сова» с петелькой. Для оформления детской или в подарок на день рождения."
+
+msgid "Četiri dečija peškira sa alkom za kačenje: dva za kuku u vrtiću, dva za kuću. Dete svoj peškir prepozna na prvi pogled, a alka ga drži na mestu."
+msgstr "Четыре детских полотенца с петелькой: два для крючка в садике, два для дома. Ребёнок узнаёт своё полотенце с первого взгляда, а петелька держит его на месте."
+
+msgid "Za ljubitelje avokada: peškir u obliku prepolovljenog avokada i obe magične krpice sa vezenim avokadom. Mali poklon koji se koristi svaki dan."
+msgstr "Для любителей авокадо: полотенце в форме половинки авокадо и обе волшебные салфетки с вышитым авокадо. Маленький подарок, которым пользуются каждый день."
+
+msgid "Doručak koji se ne jede: peškiri u obliku tosta, keksa i krofne za ruke u kuhinji i obe magične krpice za radne površine. Šaljiv i praktičan poklon."
+msgstr "Завтрак, который не съесть: полотенца в форме тоста, печенья и пончика для рук на кухне и обе волшебные салфетки для столешниц. Забавный и практичный подарок."
+
+msgid "Peškiri za celu porodicu: dva duga peškira sa vezenim medom za odrasle i dva dečija peškira sa alkom za mališane. Za novo ili osveženo kupatilo."
+msgstr "Полотенца для всей семьи: два длинных полотенца с вышитым мишкой для взрослых и два детских полотенца с петелькой для малышей. Для новой или обновлённой ванной."
+
+msgid "Poklon za useljenje: mekani kockasti jastuk za sofu, dva duga peškira za kupatilo i dve magične krpice za kuhinju — po nešto za svaku sobu novog doma."
+msgstr "Подарок на новоселье: мягкая квадратная подушка для дивана, два длинных полотенца для ванной и две волшебные салфетки для кухни — что-то для каждой комнаты нового дома."
+
+msgid "Za njega i za nju: dva kockasta Cuddle Puff jastuka i dva duga peškira sa vezenim medom, u paru boja. Poklon za mladence, godišnjicu ili zajednički stan."
+msgstr "Для него и для неё: две квадратные подушки Cuddle Puff и два длинных полотенца с вышитым мишкой в паре цветов. Подарок молодожёнам, на годовщину или в общую квартиру."
+
+msgid "Mali poklon koji se koristi svaki dan: peškir u obliku lale, roze dugi peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili koleginicu."
+msgstr "Маленький подарок, которым пользуются каждый день: полотенце в форме тюльпана, розовое длинное полотенце с вышитым мишкой и две волшебные салфетки. Для воспитательницы, учительницы или коллеги."
+
+msgid "Najveći CosyPaw poklon: tri dečija peškira, Cuddle Puff jastuk, dugi peškir i dve magične krpice. Novogodišnji paketić za celu porodicu."
+msgstr "Самый большой подарок CosyPaw: три детских полотенца, подушка Cuddle Puff, длинное полотенце и две волшебные салфетки. Новогодний подарок для всей семьи."
+
+msgid "Poklon paket CosyPaw: sve iz paketa stiže zajedno, u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Svaki deo je isti kao kad ga kupuješ posebno — dečiji peškiri sa alkom za kačenje, dugi peškiri sa vezenim medom, Cuddle Puff jastuci sa okicama i magične krpice od mikrofibera — samo složen za jednu priliku i jeftiniji u paketu."
+msgstr "Подарочный набор CosyPaw: всё из набора приходит вместе, одним заказом, с оплатой при получении и доставкой по всей Сербии за 2–4 дня. Каждая вещь та же, что и при покупке по отдельности, — детские полотенца с петелькой, длинные полотенца с вышитым мишкой, подушки Cuddle Puff с глазками и волшебные салфетки из микрофибры, — только собраны для одного повода и дешевле в наборе."
+
+msgid "Za bebu i decu"
+msgstr "Для малышей и детей"
+
+msgid "Za dom i dvoje"
+msgstr "Для дома и пары"
+
+msgid "Mali pokloni"
+msgstr "Маленькие подарки"
+
+msgid "Za praznike"
+msgstr "К праздникам"
+
+msgid "U paketu"
+msgstr "В наборе"
+
+msgid "Prilika"
+msgstr "Повод"
+
+msgid "Besplatna dostava, plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
+msgstr "Бесплатная доставка, оплата при получении, 2–4 дня по всей Сербии."
+
+msgid "U paketu:"
+msgstr "В наборе:"
+
+msgid "Kupljeno posebno:"
+msgstr "По отдельности:"
+
+msgid "Dodaj paket u korpu"
+msgstr "Добавить набор в корзину"
+
+msgid "Svi poklon paketi"
+msgstr "Все подарочные наборы"
+
+msgid "Poklon paketi za svaku priliku"
+msgstr "Подарочные наборы на любой повод"
+
+msgid "Gotove kombinacije peškira, jastuka i krpica — složene za jednu priliku i jeftinije u paketu."
+msgstr "Готовые сочетания полотенец, подушек и салфеток — собраны для одного повода и дешевле в наборе."
+
+msgid "Gotovi poklon paketi za bebu i decu"
+msgstr "Готовые подарочные наборы для малышей и детей"
+
+msgid "Kad ne želiš da biraš sam: peškiri i jastuk, već složeni za poklon."
+msgstr "Если не хочется выбирать самому: полотенца и подушка, уже собранные в подарок."
+
+msgid "Dugi peškiri u poklon paketu"
+msgstr "Длинные полотенца в подарочном наборе"
+
+msgid "Uz dečije peškire, jastuke ili krpice — jeftinije nego posebno."
+msgstr "С детскими полотенцами, подушками или салфетками — дешевле, чем по отдельности."
+
+msgid "Cuddle Puff jastuci u poklon paketu"
+msgstr "Подушки Cuddle Puff в подарочном наборе"
+
+msgid "Uz peškire i krpice — jeftinije nego posebno."
+msgstr "С полотенцами и салфетками — дешевле, чем по отдельности."
+
+msgid "Poklon paketi"
+msgstr "Подарочные наборы"
+
+msgid "Gotove kombinacije peškira, Cuddle Puff jastuka i magičnih krpica, složene za jednu priliku — i jeftinije nego kad ih kupuješ posebno."
+msgstr "Готовые сочетания полотенец, подушек Cuddle Puff и волшебных салфеток, собранные для одного повода, — и дешевле, чем покупать по отдельности."
+
+msgid "Prilike"
+msgstr "Поводы"
+
+msgid "Pokloni za bebu i decu"
+msgstr "Подарки для малышей и детей"
+
+msgid "Za rođenje, krštenje, prvi rođendan i polazak u vrtić."
+msgstr "На рождение, крестины, первый день рождения и начало садика."
+
+msgid "Pokloni za useljenje i mladence"
+msgstr "Подарки на новоселье и молодожёнам"
+
+msgid "Za novi dom, novo kupatilo i zajednički stan."
+msgstr "Для нового дома, новой ванной и общей квартиры."
+
+msgid "Mali pokloni i znak pažnje"
+msgstr "Маленькие подарки и знаки внимания"
+
+msgid "Za vaspitačicu, učiteljicu, koleginicu ili domaćicu."
+msgstr "Для воспитательницы, учительницы, коллеги или хозяйки дома."
+
+msgid "Novogodišnji pokloni"
+msgstr "Новогодние подарки"
+
+msgid "Paketić za celu porodicu, za Novu godinu i Božić."
+msgstr "Подарок для всей семьи — на Новый год и Рождество."
+
+msgid "Praktični pokloni"
+msgstr "Практичные подарки"
+
+msgid "Poklon koji se koristi svaki dan"
+msgstr "Подарок, которым пользуются каждый день"
+
+msgid "Najbolji pokloni su oni koji ne završe u ormaru. Zato su naši poklon paketi sastavljeni od stvari koje se koriste svaki dan: dečijih peškira u obliku životinja sa alkom za kačenje, dugih peškira sa vezenim medom, mekanih Cuddle Puff jastuka i magičnih krpica od mikrofibera."
+msgstr "Лучшие подарки — те, что не оказываются в шкафу. Поэтому наши подарочные наборы состоят из вещей на каждый день: детских полотенец в форме животных с петелькой, длинных полотенец с вышитым мишкой, мягких подушек Cuddle Puff и волшебных салфеток из микрофибры."
+
+msgid "Tražiš poklon za bebu, poklon za krštenje ili rođendan? Paketi za bebu i decu spajaju peškire koje dete prepozna na prvi pogled i jastuk za dečiju sobu. Ako želiš da sam biraš svaki oblik, pogledaj i naše %s."
+msgstr "Ищешь подарок для малыша, на крестины или день рождения? Наборы для малышей и детей сочетают полотенца, которые ребёнок узнаёт с первого взгляда, и подушку для детской. Если хочешь сам выбрать каждую форму, загляни и в наши %s."
+
+msgid "Tražiš poklon za bebu, poklon za krštenje ili rođendan? Paketi za bebu i decu spajaju peškire koje dete prepozna na prvi pogled i jastuk za dečiju sobu."
+msgstr "Ищешь подарок для малыша, на крестины или день рождения? Наборы для малышей и детей сочетают полотенца, которые ребёнок узнаёт с первого взгляда, и подушку для детской."
+
+msgid "poklon setove za bebu i decu"
+msgstr "подарочные наборы для малышей и детей"
+
+msgid "Za poklon za useljenje ili poklon za mladence tu su paketi sa jastucima, dugim peškirima i krpicama — po nešto za dnevnu sobu, kupatilo i kuhinju. A kad ti treba mali znak pažnje za vaspitačicu, učiteljicu ili koleginicu, ili novogodišnji paketić za celu porodicu, i za to imamo gotov paket."
+msgstr "Для подарка на новоселье или молодожёнам есть наборы с подушками, длинными полотенцами и салфетками — что-то для гостиной, ванной и кухни. А если нужен маленький знак внимания для воспитательницы, учительницы или коллеги или новогодний подарок для всей семьи, для этого тоже есть готовый набор."
+
+msgid "Svaki paket stiže u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "Каждый набор приходит одним заказом, с оплатой при получении и доставкой по всей Сербии за 2–4 дня."
+
+msgid "Paketi od %s naviše stižu uz besplatnu dostavu."
+msgstr "Наборы от %s доставляются бесплатно."
+
+msgid "Izaberi poklon paket"
+msgstr "Выбрать подарочный набор"
+
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 

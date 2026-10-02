@@ -123,6 +123,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					array( $cosypaw_page( 'dugi' ), __( 'Dugi peškiri', 'cosypaw' ) ),
 					array( $cosypaw_page( 'jastuci' ), __( 'Jastuci', 'cosypaw' ) ),
 					array( $cosypaw_page( 'krpe' ), __( 'Magične krpe', 'cosypaw' ) ),
+					array( $cosypaw_page( 'paketi' ), __( 'Pokloni', 'cosypaw' ) ),
 					array( $cosypaw_home . '#paketi', __( 'Paketi', 'cosypaw' ) ),
 					array( $cosypaw_home . '#zasto', __( 'Zašto CosyPaw', 'cosypaw' ) ),
 				);

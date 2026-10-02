@@ -139,6 +139,13 @@ final class Bootstrap {
 	private ?Wording $wording = null;
 
 	/**
+	 * Poklon paketi (WooCommerce only).
+	 *
+	 * @var GiftBundles|null
+	 */
+	private ?GiftBundles $gift_bundles = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -179,6 +186,10 @@ final class Bootstrap {
 			// "Peškirići" became "peškiri": the same swap, once, in the alt
 			// text and descriptions the seeders wrote to the database.
 			$this->wording = new Wording();
+
+			// The gift bundles: fixed combinations of the above, each one
+			// product at one price, in a category of their own.
+			$this->gift_bundles = new GiftBundles();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

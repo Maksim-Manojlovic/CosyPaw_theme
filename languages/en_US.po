@@ -695,6 +695,219 @@ msgstr "Add a pillow to a towel package and reach free delivery over %s more eas
 msgid "Poruči Cuddle Puff jastuk"
 msgstr "Order a Cuddle Puff pillow"
 
+msgid "Poklon paket Dobrodošlica za bebu"
+msgstr "Welcome Baby gift bundle"
+
+msgid "Poklon paket Kutak za dečiju sobu"
+msgstr "Kids’ Room Corner gift bundle"
+
+msgid "Poklon paket Za vrtić"
+msgstr "Kindergarten gift bundle"
+
+msgid "Poklon paket Avokado ljubav"
+msgstr "Avocado Love gift bundle"
+
+msgid "Poklon paket Doručak u kuhinji"
+msgstr "Breakfast in the Kitchen gift bundle"
+
+msgid "Poklon paket Kupatilo za celu porodicu"
+msgstr "Family Bathroom gift bundle"
+
+msgid "Poklon paket Novi dom"
+msgstr "New Home gift bundle"
+
+msgid "Poklon paket Za dvoje"
+msgstr "For Two gift bundle"
+
+msgid "Poklon paket Mali znak pažnje"
+msgstr "Little Token gift bundle"
+
+msgid "Poklon paket Praznična kutija mekoće"
+msgstr "Holiday Box of Softness gift bundle"
+
+msgid "3 dečija peškira (Zeka, Meda, Panda) i roze Cuddle Puff jastuk Kružić"
+msgstr "3 children’s towels (Bunny, Teddy, Panda) and a pink Cuddle Puff round pillow"
+
+msgid "Cuddle Puff jastuk Kružić, žuti, Cuddle Puff jastuk Kockasti, sivi, i dečiji peškir Sova"
+msgstr "Cuddle Puff round pillow in yellow, Cuddle Puff square pillow in grey, and the Owl children’s towel"
+
+msgid "4 dečija peškira sa alkom (Kucence, Maca, Pingvin, Koala)"
+msgstr "4 children’s towels with a hanging loop (Puppy, Kitty, Penguin, Koala)"
+
+msgid "dečiji peškir Avokado i obe magične krpice Avokado (limeta i žalfija)"
+msgstr "the Avocado children’s towel and both Avocado magic cloths (lime and sage)"
+
+msgid "3 peškira (Tost, Čokoladni keks, Krofna) i obe magične krpice Avokado"
+msgstr "3 towels (Toast, Chocolate Cookie, Doughnut) and both Avocado magic cloths"
+
+msgid "2 duga peškira Meda (krem i plavi) i 2 dečija peškira (Žirafa, Kapibara)"
+msgstr "2 Teddy long towels (cream and blue) and 2 children’s towels (Giraffe, Capybara)"
+
+msgid "Cuddle Puff jastuk Kockasti, braon, 2 duga peškira Meda (krem i bež) i obe magične krpice Avokado"
+msgstr "Cuddle Puff square pillow in brown, 2 Teddy long towels (cream and beige) and both Avocado magic cloths"
+
+msgid "2 Cuddle Puff jastuka Kockasti (roze i sivi) i 2 duga peškira Meda (roze i plavi)"
+msgstr "2 Cuddle Puff square pillows (pink and grey) and 2 Teddy long towels (pink and blue)"
+
+msgid "peškir Lala, dugi peškir Meda, roze, i obe magične krpice Avokado"
+msgstr "the Tulip towel, the Teddy long towel in pink, and both Avocado magic cloths"
+
+msgid "3 dečija peškira (Pingvin, Meda, Čokoladni keks), Cuddle Puff jastuk Kružić, braon, dugi peškir Meda, bež, i obe magične krpice Avokado"
+msgstr "3 children’s towels (Penguin, Teddy, Chocolate Cookie), Cuddle Puff round pillow in brown, the Teddy long towel in beige, and both Avocado magic cloths"
+
+msgid "Poklon za rođenje, krštenje ili baby shower: tri mekana dečija peškira u obliku životinja sa alkom za kačenje i roze Cuddle Puff jastuk za dečiju sobu."
+msgstr "A gift for a birth, christening or baby shower: three soft children’s towels in animal shapes with a hanging loop, and a pink Cuddle Puff pillow for the nursery."
+
+msgid "Dva Cuddle Puff jastuka sa okicama — žuti kružić i sivi kockasti — i dečiji peškir Sova sa alkom za kačenje. Za uređenje dečije sobe ili rođendanski poklon."
+msgstr "Two Cuddle Puff pillows with little eyes — a yellow round one and a grey square one — and the Owl children’s towel with a hanging loop. For decorating a kids’ room or as a birthday gift."
+
+msgid "Četiri dečija peškira sa alkom za kačenje: dva za kuku u vrtiću, dva za kuću. Dete svoj peškir prepozna na prvi pogled, a alka ga drži na mestu."
+msgstr "Four children’s towels with a hanging loop: two for the kindergarten hook, two for home. A child recognises their towel at a glance, and the loop keeps it in place."
+
+msgid "Za ljubitelje avokada: peškir u obliku prepolovljenog avokada i obe magične krpice sa vezenim avokadom. Mali poklon koji se koristi svaki dan."
+msgstr "For avocado lovers: a towel shaped like half an avocado and both magic cloths with an embroidered avocado. A small gift that gets used every day."
+
+msgid "Doručak koji se ne jede: peškiri u obliku tosta, keksa i krofne za ruke u kuhinji i obe magične krpice za radne površine. Šaljiv i praktičan poklon."
+msgstr "A breakfast you can’t eat: towels shaped like toast, a cookie and a doughnut for drying hands in the kitchen, and both magic cloths for the worktops. A fun, practical gift."
+
+msgid "Peškiri za celu porodicu: dva duga peškira sa vezenim medom za odrasle i dva dečija peškira sa alkom za mališane. Za novo ili osveženo kupatilo."
+msgstr "Towels for the whole family: two long towels with an embroidered teddy for the grown-ups and two children’s towels with a hanging loop for the little ones. For a new or refreshed bathroom."
+
+msgid "Poklon za useljenje: mekani kockasti jastuk za sofu, dva duga peškira za kupatilo i dve magične krpice za kuhinju — po nešto za svaku sobu novog doma."
+msgstr "A housewarming gift: a soft square pillow for the sofa, two long towels for the bathroom and two magic cloths for the kitchen — something for every room of the new home."
+
+msgid "Za njega i za nju: dva kockasta Cuddle Puff jastuka i dva duga peškira sa vezenim medom, u paru boja. Poklon za mladence, godišnjicu ili zajednički stan."
+msgstr "For him and for her: two square Cuddle Puff pillows and two long towels with an embroidered teddy, in matching pairs of colours. A gift for newlyweds, an anniversary or a first shared flat."
+
+msgid "Mali poklon koji se koristi svaki dan: peškir u obliku lale, roze dugi peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili koleginicu."
+msgstr "A small gift that gets used every day: a tulip-shaped towel, a pink long towel with an embroidered teddy and two magic cloths. For a kindergarten teacher, a teacher or a colleague."
+
+msgid "Najveći CosyPaw poklon: tri dečija peškira, Cuddle Puff jastuk, dugi peškir i dve magične krpice. Novogodišnji paketić za celu porodicu."
+msgstr "The biggest CosyPaw gift: three children’s towels, a Cuddle Puff pillow, a long towel and two magic cloths. A New Year’s gift box for the whole family."
+
+msgid "Poklon paket CosyPaw: sve iz paketa stiže zajedno, u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Svaki deo je isti kao kad ga kupuješ posebno — dečiji peškiri sa alkom za kačenje, dugi peškiri sa vezenim medom, Cuddle Puff jastuci sa okicama i magične krpice od mikrofibera — samo složen za jednu priliku i jeftiniji u paketu."
+msgstr "A CosyPaw gift bundle: everything in it arrives together, in one order, cash on delivery, delivered anywhere in Serbia in 2–4 days. Each piece is exactly what you would get buying it on its own — children’s towels with a hanging loop, long towels with an embroidered teddy, Cuddle Puff pillows with little eyes and microfiber magic cloths — just put together for one occasion and cheaper as a bundle."
+
+msgid "Za bebu i decu"
+msgstr "For babies and children"
+
+msgid "Za dom i dvoje"
+msgstr "For the home and couples"
+
+msgid "Mali pokloni"
+msgstr "Small gifts"
+
+msgid "Za praznike"
+msgstr "For the holidays"
+
+msgid "U paketu"
+msgstr "In the bundle"
+
+msgid "Prilika"
+msgstr "Occasion"
+
+msgid "Besplatna dostava, plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
+msgstr "Free delivery, cash on delivery, 2–4 days anywhere in Serbia."
+
+msgid "U paketu:"
+msgstr "In the bundle:"
+
+msgid "Kupljeno posebno:"
+msgstr "Bought separately:"
+
+msgid "Dodaj paket u korpu"
+msgstr "Add the bundle to cart"
+
+msgid "Svi poklon paketi"
+msgstr "All gift bundles"
+
+msgid "Poklon paketi za svaku priliku"
+msgstr "Gift bundles for every occasion"
+
+msgid "Gotove kombinacije peškira, jastuka i krpica — složene za jednu priliku i jeftinije u paketu."
+msgstr "Ready-made combinations of towels, pillows and cloths — put together for one occasion and cheaper as a bundle."
+
+msgid "Gotovi poklon paketi za bebu i decu"
+msgstr "Ready-made gift bundles for babies and children"
+
+msgid "Kad ne želiš da biraš sam: peškiri i jastuk, već složeni za poklon."
+msgstr "When you would rather not choose yourself: towels and a pillow, already put together as a gift."
+
+msgid "Dugi peškiri u poklon paketu"
+msgstr "Long towels in a gift bundle"
+
+msgid "Uz dečije peškire, jastuke ili krpice — jeftinije nego posebno."
+msgstr "With children’s towels, pillows or cloths — cheaper than separately."
+
+msgid "Cuddle Puff jastuci u poklon paketu"
+msgstr "Cuddle Puff pillows in a gift bundle"
+
+msgid "Uz peškire i krpice — jeftinije nego posebno."
+msgstr "With towels and cloths — cheaper than separately."
+
+msgid "Poklon paketi"
+msgstr "Gift bundles"
+
+msgid "Gotove kombinacije peškira, Cuddle Puff jastuka i magičnih krpica, složene za jednu priliku — i jeftinije nego kad ih kupuješ posebno."
+msgstr "Ready-made combinations of towels, Cuddle Puff pillows and magic cloths, put together for one occasion — and cheaper than buying them separately."
+
+msgid "Prilike"
+msgstr "Occasions"
+
+msgid "Pokloni za bebu i decu"
+msgstr "Gifts for babies and children"
+
+msgid "Za rođenje, krštenje, prvi rođendan i polazak u vrtić."
+msgstr "For a birth, a christening, a first birthday and starting kindergarten."
+
+msgid "Pokloni za useljenje i mladence"
+msgstr "Housewarming and wedding gifts"
+
+msgid "Za novi dom, novo kupatilo i zajednički stan."
+msgstr "For a new home, a new bathroom and a first shared flat."
+
+msgid "Mali pokloni i znak pažnje"
+msgstr "Small gifts and tokens of appreciation"
+
+msgid "Za vaspitačicu, učiteljicu, koleginicu ili domaćicu."
+msgstr "For a kindergarten teacher, a teacher, a colleague or a host."
+
+msgid "Novogodišnji pokloni"
+msgstr "New Year’s gifts"
+
+msgid "Paketić za celu porodicu, za Novu godinu i Božić."
+msgstr "A gift box for the whole family, for New Year and Christmas."
+
+msgid "Praktični pokloni"
+msgstr "Practical gifts"
+
+msgid "Poklon koji se koristi svaki dan"
+msgstr "A gift that gets used every day"
+
+msgid "Najbolji pokloni su oni koji ne završe u ormaru. Zato su naši poklon paketi sastavljeni od stvari koje se koriste svaki dan: dečijih peškira u obliku životinja sa alkom za kačenje, dugih peškira sa vezenim medom, mekanih Cuddle Puff jastuka i magičnih krpica od mikrofibera."
+msgstr "The best gifts are the ones that don’t end up in a cupboard. That is why our gift bundles are made of things used every day: children’s towels in animal shapes with a hanging loop, long towels with an embroidered teddy, soft Cuddle Puff pillows and microfiber magic cloths."
+
+msgid "Tražiš poklon za bebu, poklon za krštenje ili rođendan? Paketi za bebu i decu spajaju peškire koje dete prepozna na prvi pogled i jastuk za dečiju sobu. Ako želiš da sam biraš svaki oblik, pogledaj i naše %s."
+msgstr "Looking for a baby gift, a christening gift or a birthday present? The bundles for babies and children pair towels a child recognises at a glance with a pillow for their room. If you would rather choose every shape yourself, see our %s too."
+
+msgid "Tražiš poklon za bebu, poklon za krštenje ili rođendan? Paketi za bebu i decu spajaju peškire koje dete prepozna na prvi pogled i jastuk za dečiju sobu."
+msgstr "Looking for a baby gift, a christening gift or a birthday present? The bundles for babies and children pair towels a child recognises at a glance with a pillow for their room."
+
+msgid "poklon setove za bebu i decu"
+msgstr "gift sets for babies and children"
+
+msgid "Za poklon za useljenje ili poklon za mladence tu su paketi sa jastucima, dugim peškirima i krpicama — po nešto za dnevnu sobu, kupatilo i kuhinju. A kad ti treba mali znak pažnje za vaspitačicu, učiteljicu ili koleginicu, ili novogodišnji paketić za celu porodicu, i za to imamo gotov paket."
+msgstr "For a housewarming or wedding gift there are bundles with pillows, long towels and cloths — something for the living room, the bathroom and the kitchen. And when you need a small token for a kindergarten teacher, a teacher or a colleague, or a New Year’s gift box for the whole family, there is a ready-made bundle for that too."
+
+msgid "Svaki paket stiže u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "Every bundle arrives in one order, cash on delivery, delivered anywhere in Serbia in 2–4 days."
+
+msgid "Paketi od %s naviše stižu uz besplatnu dostavu."
+msgstr "Bundles from %s up ship free."
+
+msgid "Izaberi poklon paket"
+msgstr "Choose a gift bundle"
+
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 

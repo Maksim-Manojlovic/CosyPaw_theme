@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY or reworded (REWORDED), so
 	 * installs that already ran ensure() look again.
 	 */
-	public const VERSION = 5;
+	public const VERSION = 6;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -81,6 +81,12 @@ final class Pages {
 			'title'           => 'Dugi peškiri',
 			'seo_title'       => 'Dugi Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
 			'seo_description' => 'Dugi peškiri sa vezenim medom i šapicom, u krem, roze, plavoj i bež boji. Mekani i upijajući, za lice, ruke i kosu. Poruči uz plaćanje pouzećem!',
+		),
+		'paketi'  => array(
+			'slug'            => 'poklon-paketi',
+			'title'           => 'Poklon paketi',
+			'seo_title'       => 'Poklon Paketi | Pokloni za Bebu, Useljenje i Praznike',
+			'seo_description' => 'Gotovi poklon paketi peškira, jastuka i krpica: za bebu, vrtić, useljenje, mladence, vaspitačicu i Novu godinu. Jeftinije u paketu, pouzećem!',
 		),
 	);
 

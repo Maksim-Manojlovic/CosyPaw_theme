@@ -21,7 +21,7 @@
  */
 export class SiteNav {
 	/** Viewport at or below which the nav collapses. Wider than the theme's
-	 *  880px single-column breakpoint: six links and the language switcher
+	 *  880px single-column breakpoint: seven links and the language switcher
 	 *  do not fit inline below it. Matches the media query in main.css. */
 	static BREAKPOINT = 1180;
 

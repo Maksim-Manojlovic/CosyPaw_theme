@@ -66,10 +66,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="footer-col">
 				<div class="footer-col__title"><?php esc_html_e( 'Poručivanje', 'cosypaw' ); ?></div>
-				<a href="https://www.instagram.com/cosypaw_?igsh=MTQzZmgwenVhNWN3Zg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-ig">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-					@cosypaw
-				</a>
+				<div class="footer-social">
+					<a href="https://www.instagram.com/cosypaw_?igsh=MTQzZmgwenVhNWN3Zg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-ig">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+						@cosypaw
+					</a>
+					<a href="https://www.facebook.com/share/1GaYRT9U9n/" target="_blank" rel="noopener noreferrer" class="footer-ig">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v7h4v-7h3l1-4h-4V8.6c0-.4.3-.6.6-.6z"/></svg>
+						Facebook
+					</a>
+					<a href="https://www.tiktok.com/@cosypaw_" target="_blank" rel="noopener noreferrer" class="footer-ig">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 3c.3 2.2 1.8 3.8 4 4v3.2c-1.5 0-2.9-.4-4-1.2v6.3a5.8 5.8 0 1 1-5.8-5.8c.3 0 .6 0 .9.1v3.3a2.6 2.6 0 1 0 1.7 2.4V3h3.2z"/></svg>
+						TikTok
+					</a>
+				</div>
 				<p class="footer-note"><?php echo wp_kses( __( 'Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem.', 'cosypaw' ), array( 'br' => array() ) ); ?></p>
 			</div>
 		</div>

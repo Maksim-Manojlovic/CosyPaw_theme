@@ -932,6 +932,9 @@ msgstr "Play the design slideshow"
 msgid "Peškiri"
 msgstr "Towels"
 
+msgid "Cosy peškiri"
+msgstr "Cosy towels"
+
 msgid "Pogledaj korpu"
 msgstr "View cart"
 

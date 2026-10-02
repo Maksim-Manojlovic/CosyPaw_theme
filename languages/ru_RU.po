@@ -932,6 +932,9 @@ msgstr "Возобновить смену мотивов"
 msgid "Peškiri"
 msgstr "Полотенца"
 
+msgid "Cosy peškiri"
+msgstr "Cosy полотенца"
+
 msgid "Pogledaj korpu"
 msgstr "Посмотреть корзину"
 

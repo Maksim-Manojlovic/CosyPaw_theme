@@ -359,6 +359,7 @@ $sr_source = array(
 	'Pauziraj smenjivanje peškira'                                                          => array( 'Pause the design slideshow', 'Приостановить смену мотивов' ),
 	'Pusti smenjivanje peškira'                                                             => array( 'Play the design slideshow', 'Возобновить смену мотивов' ),
 	'Peškiri'                                                                               => array( 'Towels', 'Полотенца' ),
+	'Cosy peškiri'                                                                          => array( 'Cosy towels', 'Cosy полотенца' ),
 	'Pogledaj korpu'                                                                          => array( 'View cart', 'Посмотреть корзину' ),
 	'Otvori korpu'                                                                            => array( 'Open cart', 'Открыть корзину' ),
 	'dodat u korpu'                                                                           => array( 'added to cart', 'добавлено в корзину' ),

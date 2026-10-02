@@ -119,8 +119,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$cosypaw_motifs = $cosypaw_page( 'motivi' );
 
 				$cosypaw_links = array(
-					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Peškiri', 'cosypaw' ) ),
-					array( $cosypaw_page( 'dugi' ), __( 'Dugi peškiri', 'cosypaw' ) ),
+					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Cosy peškiri', 'cosypaw' ) ),
+					array( $cosypaw_page( 'dugi' ), __( 'Peškiri', 'cosypaw' ) ),
 					array( $cosypaw_page( 'jastuci' ), __( 'Jastuci', 'cosypaw' ) ),
 					array( $cosypaw_page( 'krpe' ), __( 'Magične krpe', 'cosypaw' ) ),
 					array( $cosypaw_page( 'paketi' ), __( 'Pokloni', 'cosypaw' ) ),

@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY, so installs that already ran
 	 * ensure() look again.
 	 */
-	public const VERSION = 3;
+	public const VERSION = 4;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -69,6 +69,18 @@ final class Pages {
 			'title'           => 'Magične krpe',
 			'seo_title'       => 'Magična Krpa od Mikrofibera | Najbolja Krpa za Staklo i Kuhinju',
 			'seo_description' => 'Magična krpa od mikrofibera za čišćenje bez tragova — kuhinjska krpa i krpa za staklo u jednom. Višekratna, pere se u mašini. Poruči odmah!',
+		),
+		'jastuci' => array(
+			'slug'            => 'cuddle-puff-jastuci',
+			'title'           => 'Cuddle Puff jastuci',
+			'seo_title'       => 'Cuddle Puff Jastuci | Plišani Jastuci za Stolicu i Sofu',
+			'seo_description' => 'Cuddle Puff jastuci sa vezenim okicama, u obliku kružića ili kockasti. Mekani ukrasni jastuci za stolicu, fotelju i dečiju sobu. Poruči pouzećem!',
+		),
+		'dugi'    => array(
+			'slug'            => 'dugi-peskiri',
+			'title'           => 'Dugi peškiri',
+			'seo_title'       => 'Dugi Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
+			'seo_description' => 'Dugi peškiri sa vezenim medom i šapicom, u krem, roze, plavoj i bež boji. Mekani i upijajući, za lice, ruke i kosu. Poruči uz plaćanje pouzećem!',
 		),
 	);
 

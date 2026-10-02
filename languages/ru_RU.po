@@ -470,6 +470,234 @@ msgstr "Добавь их к набору полотенец — и легче �
 msgid "Poruči magične krpe"
 msgstr "Заказать волшебные салфетки"
 
+msgid "Cuddle Puff jastuk Kružić, braon"
+msgstr "Подушка Cuddle Puff «Кружок», коричневая"
+
+msgid "Cuddle Puff jastuk Kružić, sivi"
+msgstr "Подушка Cuddle Puff «Кружок», серая"
+
+msgid "Cuddle Puff jastuk Kružić, žuti"
+msgstr "Подушка Cuddle Puff «Кружок», жёлтая"
+
+msgid "Cuddle Puff jastuk Kružić, zeleni"
+msgstr "Подушка Cuddle Puff «Кружок», зелёная"
+
+msgid "Cuddle Puff jastuk Kružić, roze"
+msgstr "Подушка Cuddle Puff «Кружок», розовая"
+
+msgid "Cuddle Puff jastuk Kockasti, roze"
+msgstr "Подушка Cuddle Puff «Квадрат», розовая"
+
+msgid "Cuddle Puff jastuk Kockasti, braon"
+msgstr "Подушка Cuddle Puff «Квадрат», коричневая"
+
+msgid "Cuddle Puff jastuk Kockasti, sivi"
+msgstr "Подушка Cuddle Puff «Квадрат», серая"
+
+msgid "Mekani plišani jastuk u obliku kružića, u toploj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "Мягкая плюшевая подушка-кружок тёплого коричневого цвета, с вышитыми глазками, клювиком и зелёным листиком. Для стула, кресла, дивана или детской."
+
+msgid "Mekani plišani jastuk u obliku kružića, u nežnoj sivoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "Мягкая плюшевая подушка-кружок нежного серого цвета, с вышитыми глазками, клювиком и зелёным листиком. Для стула, кресла, дивана или детской."
+
+msgid "Mekani plišani jastuk u obliku kružića, u veseloj žutoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "Мягкая плюшевая подушка-кружок весёлого жёлтого цвета, с вышитыми глазками, клювиком и зелёным листиком. Для стула, кресла, дивана или детской."
+
+msgid "Mekani plišani jastuk u obliku kružića, u svetloj zelenoj boji, sa vezenim okicama, kljunićem i listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "Мягкая плюшевая подушка-кружок светло-зелёного цвета, с вышитыми глазками, клювиком и листиком. Для стула, кресла, дивана или детской."
+
+msgid "Mekani plišani jastuk u obliku kružića, u nežnoj roze boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "Мягкая плюшевая подушка-кружок нежного розового цвета, с вышитыми глазками, клювиком и зелёным листиком. Для стула, кресла, дивана или детской."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u roze boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "Мягкая квадратная плюшевая подушка с волнистыми краями, розовая, с вышитыми глазками, клювиком и зелёным листиком. Подушка для стула, кресла или дивана."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u svetloj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "Мягкая квадратная плюшевая подушка с волнистыми краями, светло-коричневая, с вышитыми глазками, клювиком и зелёным листиком. Подушка для стула, кресла или дивана."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u sivoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "Мягкая квадратная плюшевая подушка с волнистыми краями, серая, с вышитыми глазками, клювиком и зелёным листиком. Подушка для стула, кресла или дивана."
+
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Подушки Cuddle Puff — пухлые мягкие подушки из рельефного плюша, с вышитыми глазками, жёлтым клювиком и плюшевым зелёным листиком сверху. Волнистые края отделаны светлой пушистой тканью, а сбоку есть петелька для подвешивания. Они одинаково хороши как подушка на стул или кресло, как декоративная подушка на диване и как плюшевый друг в детской — и приносят улыбку в каждый уголок дома."
+
+msgid "Braon"
+msgstr "Коричневый"
+
+msgid "Siva"
+msgstr "Серый"
+
+msgid "Žuta"
+msgstr "Жёлтый"
+
+msgid "Zelena"
+msgstr "Зелёный"
+
+msgid "Roze"
+msgstr "Розовый"
+
+msgid "Krem"
+msgstr "Кремовый"
+
+msgid "Plava"
+msgstr "Голубой"
+
+msgid "Bež"
+msgstr "Бежевый"
+
+msgid "Oblik"
+msgstr "Форма"
+
+msgid "Kružić, okrugao sa talasastim ivicama."
+msgstr "Кружок — круглая, с волнистыми краями."
+
+msgid "Kockasti, sa talasastim ivicama."
+msgstr "Квадрат — с волнистыми краями."
+
+msgid "Boja"
+msgstr "Цвет"
+
+msgid "Detalji"
+msgstr "Детали"
+
+msgid "Vezene okice i kljunić, plišani listić, omčica za kačenje."
+msgstr "Вышитые глазки и клювик, плюшевый листик, петелька для подвешивания."
+
+msgid "Stolica, fotelja, sofa i dečija soba."
+msgstr "Стул, кресло, диван и детская."
+
+msgid "Dugi peškir Meda, krem"
+msgstr "Длинное полотенце «Мишка», кремовое"
+
+msgid "Dugi peškir Meda, roze"
+msgstr "Длинное полотенце «Мишка», розовое"
+
+msgid "Dugi peškir Meda, plavi"
+msgstr "Длинное полотенце «Мишка», голубое"
+
+msgid "Dugi peškir Meda, bež"
+msgstr "Длинное полотенце «Мишка», бежевое"
+
+msgid "Mekani dugi peškir u krem boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "Мягкое длинное полотенце кремового цвета с вышитым мишкой, лапкой и надписью GOODLUCK на бордюре. Для лица, рук и волос."
+
+msgid "Mekani dugi peškir u nežnoj roze boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "Мягкое длинное полотенце нежного розового цвета с вышитым мишкой, лапкой и надписью GOODLUCK на бордюре. Для лица, рук и волос."
+
+msgid "Mekani dugi peškir u nežnoj plavoj boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "Мягкое длинное полотенце нежного голубого цвета с вышитым мишкой, лапкой и надписью GOODLUCK на бордюре. Для лица, рук и волос."
+
+msgid "Mekani dugi peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "Мягкое длинное полотенце тёплого бежевого цвета с вышитым мишкой, лапкой и надписью GOODLUCK на бордюре. Для лица, рук и волос."
+
+msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškirića za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgstr "Длинное полотенце из мягкой впитывающей ткани с вышитым мишкой, лапкой и надписью GOODLUCK на тканом бордюре. Оно длиннее полотенца для рук, поэтому подходит и для лица, и для волос — на держателе у раковины или на лестнице для полотенец. Нежные цвета легко впишутся в любую ванную, а приходит оно, как и все товары CosyPaw: с оплатой при получении и доставкой по всей Сербии."
+
+msgid "Vezeni meda, šapica i natpis GOODLUCK."
+msgstr "Вышитый мишка, лапка и надпись GOODLUCK."
+
+msgid "Lice, ruke i kosa — za celu porodicu."
+msgstr "Лицо, руки и волосы — для всей семьи."
+
+msgid "Izaberi boju"
+msgstr "Выбери цвет"
+
+msgid "Za kupatilo"
+msgstr "Для ванной"
+
+msgid "Dugi peškiri"
+msgstr "Длинные полотенца"
+
+msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića."
+msgstr "Мягкие длинные полотенца с вышитым мишкой и лапкой — для лица, рук и волос. %s за штуку, вне наборов полотенчиков."
+
+msgid "Sve o dugim peškirima"
+msgstr "Всё о длинных полотенцах"
+
+msgid "Cuddle Puff jastuci"
+msgstr "Подушки Cuddle Puff"
+
+msgid "Punašni plišani jastuci sa vezenim okicama i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu."
+msgstr "Пухлые плюшевые подушки с вышитыми глазками и листиком, круглые или квадратные. Для стула, кресла, дивана или детской — %s за штуку."
+
+msgid "Sve o Cuddle Puff jastucima"
+msgstr "Всё о подушках Cuddle Puff"
+
+msgid "Jastuci"
+msgstr "Подушки"
+
+msgid "Dugi peškiri sa vezenim medom"
+msgstr "Длинные полотенца с вышитым мишкой"
+
+msgid "Mekani, upijajući peškiri za lice, ruke i kosu, sa vezenim medom i šapicom na borduri. Nežne boje za svako kupatilo, za %s po komadu."
+msgstr "Мягкие впитывающие полотенца для лица, рук и волос, с вышитым мишкой и лапкой на бордюре. Нежные цвета для любой ванной — %s за штуку."
+
+msgid "Peškiri za kupatilo"
+msgstr "Полотенца для ванной"
+
+msgid "Mekani peškiri za lice, ruke i kosu"
+msgstr "Мягкие полотенца для лица, рук и волос"
+
+msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškirića za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
+msgstr "Длинное полотенце — то, за которым тянешься каждое утро: для лица после умывания, для рук у раковины и для волос после душа. Оно длиннее полотенца для рук, поэтому одним движением вытираешь и лицо, и волосы, а мягкая впитывающая ткань быстро забирает воду."
+
+msgid "Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ."
+msgstr "На тканом бордюре вышиты маленький мишка с лапкой и надпись GOODLUCK — мелкая деталь, от которой ванная становится уютнее. Кремовый, розовый, голубой и бежевый — нежные цвета, которые легко сочетаются с плиткой, мрамором или деревом и красиво смотрятся вместе."
+
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje."
+msgstr "Если ищешь полотенце для лица или для рук, которое красиво смотрится и на держателе, и на лестнице для полотенец, — это оно. А для самых маленьких у нас есть %s — полотенчики ручной работы с петелькой."
+
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj."
+msgstr "Если ищешь полотенце для лица или для рук, которое красиво смотрится и на держателе, и на лестнице для полотенец, — это оно."
+
+msgid "dečije peškire sa motivima životinja"
+msgstr "детские полотенца с мотивами животных"
+
+msgid "Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "Длинные полотенца приходят, как и все товары CosyPaw, — с оплатой при получении и доставкой по всей Сербии за 2–4 дня."
+
+msgid "Dodaj ih uz paket peškirića i lakše stigni do besplatne dostave preko %s."
+msgstr "Добавь их к набору полотенчиков — и легче получить бесплатную доставку от %s."
+
+msgid "Poruči dugi peškir"
+msgstr "Заказать длинное полотенце"
+
+msgid "Mekani Cuddle Puff jastuci sa okicama"
+msgstr "Мягкие подушки Cuddle Puff с глазками"
+
+msgid "Punašni plišani jastuci sa vezenim okicama, kljunićem i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu, za %s."
+msgstr "Пухлые плюшевые подушки с вышитыми глазками, клювиком и листиком, круглые или квадратные. Для стула, кресла, дивана или детской — за %s."
+
+msgid "Jastuci za dom"
+msgstr "Подушки для дома"
+
+msgid "Jastuk za stolicu, ukrasni jastuk i plišani drug u jednom"
+msgstr "Подушка на стул, декоративная подушка и плюшевый друг в одном"
+
+msgid "Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi."
+msgstr "Подушку Cuddle Puff хочется обнять всем. Рельефный плюш мягкий на ощупь, а пухлая стёганая форма делает её удобной подушкой на стул или кресло — на кухне, за рабочим столом или в гостиной."
+
+msgid "Biraš između dva oblika. Kružić ima talasaste ivice kao cvet, a Kockasti je četvrtast, sa istim talasastim obrubom. Oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje, i dolaze u nežnim bojama — od roze i žute do sive i braon."
+msgstr "Можно выбрать одну из двух форм. «Кружок» с волнистыми краями, как цветок, а «Квадрат» — квадратный, с той же волнистой окантовкой. У обеих вышитые глазки, жёлтый клювик, зелёный плюшевый листик и петелька для подвешивания, а цвета нежные — от розового и жёлтого до серого и коричневого."
+
+msgid "Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda."
+msgstr "Как декоративная подушка на диване или кровати они добавляют цвета и улыбок, а в детской становятся плюшевым другом для обнимашек, чтения и игр. Это и милый подарок — на новоселье, день рождения или просто так."
+
+msgid "Cuddle Puff jastuke šaljemo kao i ostale CosyPaw proizvode — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Uz jastuk lepo idu i naši mekani proizvodi za kupatilo, poput %s."
+msgstr "Подушки Cuddle Puff мы отправляем, как и все товары CosyPaw, — с оплатой при получении и доставкой по всей Сербии за 2–4 дня. К подушке хорошо подойдут и наши мягкие вещи для ванной, например %s."
+
+msgid "Cuddle Puff jastuke šaljemo kao i ostale CosyPaw proizvode — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "Подушки Cuddle Puff мы отправляем, как и все товары CosyPaw, — с оплатой при получении и доставкой по всей Сербии за 2–4 дня."
+
+msgid "dugih peškira sa vezenim medom"
+msgstr "длинные полотенца с вышитым мишкой"
+
+msgid "Dodaj jastuk uz paket peškirića i lakše stigni do besplatne dostave preko %s."
+msgstr "Добавь подушку к набору полотенчиков — и легче получить бесплатную доставку от %s."
+
+msgid "Poruči Cuddle Puff jastuk"
+msgstr "Заказать подушку Cuddle Puff"
+
 msgid "Glavna navigacija"
 msgstr "Основная навигация"
 

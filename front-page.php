@@ -512,6 +512,102 @@ if ( $hero_deal ) {
 		</section>
 	<?php endif; ?>
 
+	<!-- DUGI PEŠKIRI -->
+	<?php
+	/*
+	 * Beside the cloths for the same reason: a 499 RSD towel sits next to the
+	 * package decision and often clears the free-delivery bar. Not part of
+	 * any package (\Theme\LongTowels), and printed only while on sale.
+	 */
+	$cosypaw_long = class_exists( '\Theme\LongTowels' ) ? \Theme\LongTowels::products() : array();
+	if ( $cosypaw_long ) :
+		$cosypaw_long_page = \Theme\Pages::url( 'dugi' );
+		?>
+		<section id="dugi-peskiri" class="section cloths-section">
+			<div class="section__head">
+				<span class="eyebrow"><?php esc_html_e( 'Za kupatilo', 'cosypaw' ); ?></span>
+				<h2 class="section__title"><?php esc_html_e( 'Dugi peškiri', 'cosypaw' ); ?></h2>
+				<p class="section__lead">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: %s: formatted price of one long towel. */
+							__( 'Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića.', 'cosypaw' ),
+							\Theme\Catalog::format_price( \Theme\LongTowels::from_price( $cosypaw_long ) )
+						)
+					);
+					?>
+				</p>
+			</div>
+
+			<?php
+			get_template_part(
+				'template-parts/cloth-cards',
+				null,
+				array(
+					'cloths' => $cosypaw_long,
+					'layout' => 'four',
+				)
+			);
+			?>
+
+			<?php if ( '' !== $cosypaw_long_page ) : ?>
+				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_long_page ); ?>">
+					<span><?php esc_html_e( 'Sve o dugim peškirima', 'cosypaw' ); ?></span>
+					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</a>
+			<?php endif; ?>
+		</section>
+	<?php endif; ?>
+
+	<!-- CUDDLE PUFF JASTUCI -->
+	<?php
+	/*
+	 * One card per shape, the colours as swatches on it — eight cards of the
+	 * same pillow in different colours would bury the two shapes. Printed only
+	 * while on sale (\Theme\Pillows).
+	 */
+	$cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
+	if ( $cosypaw_pillows ) :
+		$cosypaw_pillows_page = \Theme\Pages::url( 'jastuci' );
+		?>
+		<section id="cuddle-puff-jastuci" class="section cloths-section">
+			<div class="section__head">
+				<span class="eyebrow"><?php esc_html_e( 'Novo', 'cosypaw' ); ?></span>
+				<h2 class="section__title"><?php esc_html_e( 'Cuddle Puff jastuci', 'cosypaw' ); ?></h2>
+				<p class="section__lead">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: %s: formatted price of one pillow. */
+							__( 'Punašni plišani jastuci sa vezenim okicama i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu.', 'cosypaw' ),
+							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
+						)
+					);
+					?>
+				</p>
+			</div>
+
+			<?php
+			get_template_part(
+				'template-parts/swatch-cards',
+				null,
+				array(
+					'groups' => \Theme\Pillows::groups( $cosypaw_pillows ),
+					'id'     => 'jastuk',
+				)
+			);
+			?>
+
+			<?php if ( '' !== $cosypaw_pillows_page ) : ?>
+				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_pillows_page ); ?>">
+					<span><?php esc_html_e( 'Sve o Cuddle Puff jastucima', 'cosypaw' ); ?></span>
+					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</a>
+			<?php endif; ?>
+		</section>
+	<?php endif; ?>
+
 	<!-- U TVOM DOMU (lifestyle) -->
 	<section id="dom" class="section">
 		<div class="section__head">

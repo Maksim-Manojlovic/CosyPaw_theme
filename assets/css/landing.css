@@ -1819,6 +1819,185 @@ a.testimonial__meta:focus-visible {
 	.cloths { grid-template-columns: 1fr; }
 }
 
+/* ---------- Dugi peškiri ----------
+   Four colours of one towel: the cloth cards, four across, so every colour
+   is in view at once. Two across on a tablet or phone — never one, or the
+   section turns into four screens of the same towel. */
+.cloths--four {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	max-width: var(--maxw-content);
+}
+
+@media (max-width: 880px) {
+	.cloths--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Two across on a phone leaves ~150px for the button; the desktop padding
+   broke "Dodaj u korpu" over two lines. */
+@media (max-width: 560px) {
+	.cloths--four .cloth-card__buy {
+		padding: 13px 10px;
+		font-size: 14px;
+		white-space: nowrap;
+	}
+}
+
+@media (max-width: 420px) {
+	.cloths--four { gap: 12px; }
+	.cloths--four .cloth-card { padding: 10px; }
+	.cloths--four .cloth-card__name { font-size: 16px; }
+}
+
+/* ---------- Colour-swatch cards (Cuddle Puff jastuci) ----------
+   One card per design. Every colour is in the markup with its own photo,
+   link and add-to-cart; the checked swatch decides which one shows. The
+   visible colour's parts become the card's own flex items (display:
+   contents), so the swatches can sit between the price and the button.
+   Without :has() the colours stack instead, each a working mini card. */
+.swatch-cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px;
+	max-width: 760px;
+	margin: 0 auto;
+}
+
+.swatch-cards--single {
+	grid-template-columns: minmax(0, 1fr);
+	max-width: 380px;
+}
+
+.swatch-card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	background: #fff;
+	border-radius: var(--radius-lg);
+	padding: 14px;
+	box-shadow: var(--shadow-sm);
+	border: 1px solid var(--line);
+}
+
+.swatch-card__variant {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	width: 100%;
+}
+
+.swatch-card__media {
+	order: 0;
+	align-self: stretch;
+	margin-bottom: 8px;
+}
+
+.swatch-card__name {
+	order: 1;
+	padding-inline: 4px;
+}
+
+.swatch-card__price {
+	order: 2;
+	padding-inline: 4px;
+}
+
+.swatch-card__swatches {
+	display: none;
+	order: 3;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	margin: 2px 0 4px;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+}
+
+.swatch-card__buy {
+	order: 4;
+	margin-top: auto;
+	align-self: stretch;
+	justify-content: center;
+}
+
+.swatch-card__legend {
+	float: left; /* keeps the legend on the swatches' row instead of above it */
+	margin-right: 6px;
+	padding: 0 4px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+/* 44px target around a 28px dot. */
+.swatch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	cursor: pointer;
+}
+
+.swatch__input {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.swatch__dot {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--swatch, var(--cream2));
+	/* The ring keeps cream and pale swatches visible against the white card. */
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22);
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.swatch:hover .swatch__dot {
+	transform: scale(1.08);
+}
+
+.swatch__input:checked + .swatch__dot {
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22), 0 0 0 2px #fff, 0 0 0 4px var(--clay);
+}
+
+.swatch__input:focus-visible + .swatch__dot {
+	outline: 2px solid var(--ink);
+	outline-offset: 5px;
+}
+
+@supports selector(:has(*)) {
+	.swatch-card__swatches {
+		display: flex;
+	}
+
+	.swatch-card:has(.swatch__input) > .swatch-card__variant {
+		display: none;
+	}
+
+	.swatch-card:has(.swatch:nth-of-type(1) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(1),
+	.swatch-card:has(.swatch:nth-of-type(2) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(2),
+	.swatch-card:has(.swatch:nth-of-type(3) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(3),
+	.swatch-card:has(.swatch:nth-of-type(4) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(4),
+	.swatch-card:has(.swatch:nth-of-type(5) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(5),
+	.swatch-card:has(.swatch:nth-of-type(6) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(6),
+	.swatch-card:has(.swatch:nth-of-type(7) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(7),
+	.swatch-card:has(.swatch:nth-of-type(8) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(8) {
+		display: contents;
+	}
+}
+
+@media (max-width: 420px) {
+	.swatch-cards { grid-template-columns: 1fr; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
 	/* One column, and it owns the opening screen. Stacked, the card pushed the

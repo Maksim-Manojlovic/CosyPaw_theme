@@ -20,9 +20,10 @@
  *   </header>
  */
 export class SiteNav {
-	/** Viewport at or below which the nav collapses. Matches the theme's
-	 *  single-column breakpoint in landing.css / content.css. */
-	static BREAKPOINT = 880;
+	/** Viewport at or below which the nav collapses. Wider than the theme's
+	 *  880px single-column breakpoint: six links and the language switcher
+	 *  do not fit inline below it. Matches the media query in main.css. */
+	static BREAKPOINT = 1180;
 
 	/**
 	 * @param {HTMLElement} root The [data-site-nav] header element.

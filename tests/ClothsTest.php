@@ -69,6 +69,7 @@ namespace Theme\Tests {
 	}
 
 	require_once __DIR__ . '/stubs.php';
+	require_once dirname( __DIR__ ) . '/inc/ProductLine.php';
 	require_once dirname( __DIR__ ) . '/inc/Cloths.php';
 
 	final class ClothsTest extends TestCase {

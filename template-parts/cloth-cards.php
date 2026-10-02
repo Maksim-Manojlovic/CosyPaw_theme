@@ -1,16 +1,19 @@
 <?php
 /**
- * The magične krpice as cards: photo, name, price and an AJAX add-to-cart.
+ * Products of a line as cards: photo, name, price and an AJAX add-to-cart.
  *
- * Shared by the front page section and the /magicne-krpe/ page. A cloth is
- * not a towel, so there is no towel package to drop it in; its own deal is the
- * set of both colours, a wide card under the two.
+ * Made for the magične krpice — front page section and /magicne-krpe/ — and
+ * reused for the long towels. Neither is a towel in the package sense, so
+ * there is no package to drop them in; the cloths' own deal is the set of both
+ * colours, a wide card under the two.
  *
  * @package CosyPaw
  *
  * @var array $args {
  *     @type array      $cloths \Theme\Cloths::products() rows.
  *     @type array|null $set    \Theme\Cloths::set() row, or null.
+ *     @type string     $layout Optional grid modifier, e.g. "four" for a
+ *                              four-across row.
  * }
  */
 
@@ -22,12 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $cosypaw_cloths = (array) ( $args['cloths'] ?? array() );
 $cosypaw_set    = is_array( $args['set'] ?? null ) ? $args['set'] : null;
+$cosypaw_layout = sanitize_html_class( (string) ( $args['layout'] ?? '' ) );
 
 if ( ! $cosypaw_cloths ) {
 	return;
 }
 ?>
-<div class="cloths">
+<div class="cloths<?php echo '' !== $cosypaw_layout ? ' cloths--' . esc_attr( $cosypaw_layout ) : ''; ?>">
 	<?php foreach ( $cosypaw_cloths as $cosypaw_c ) : ?>
 		<div class="cloth-card">
 			<?php

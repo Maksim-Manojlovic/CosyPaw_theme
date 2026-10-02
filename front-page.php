@@ -212,7 +212,7 @@ if ( $hero_deal ) {
 					echo esc_html(
 						sprintf(
 							/* translators: %d: how many motifs are on sale. */
-							__( 'ili pogledaj svih %d peškirića', 'cosypaw' ),
+							__( 'ili pogledaj svih %d peškira', 'cosypaw' ),
 							count( $products )
 						)
 					);
@@ -278,7 +278,7 @@ if ( $hero_deal ) {
 			<div class="hero__blob hero__blob--sage" aria-hidden="true"></div>
 
 			<div class="hero__card">
-				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni peškirići', 'cosypaw' ); ?>">
+				<div class="hero__card-inner vertical-carousel" data-vertical-carousel data-autoplay-delay="3200" aria-label="<?php esc_attr_e( 'Izdvojeni peškiri', 'cosypaw' ); ?>">
 					<div class="vertical-carousel__track">
 						<?php foreach ( $featured as $cosypaw_i => $f ) : ?>
 							<div class="vertical-carousel__slide">
@@ -350,10 +350,10 @@ if ( $hero_deal ) {
 						type="button"
 						class="carousel-toggle"
 						data-carousel-toggle
-						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje peškirića', 'cosypaw' ); ?>"
-						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje peškirića', 'cosypaw' ); ?>"
+						data-label-pause="<?php esc_attr_e( 'Pauziraj smenjivanje peškira', 'cosypaw' ); ?>"
+						data-label-play="<?php esc_attr_e( 'Pusti smenjivanje peškira', 'cosypaw' ); ?>"
 						aria-pressed="false"
-						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje peškirića', 'cosypaw' ); ?>"
+						aria-label="<?php esc_attr_e( 'Pauziraj smenjivanje peškira', 'cosypaw' ); ?>"
 						hidden
 					>
 						<svg class="carousel-toggle__pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
@@ -376,7 +376,7 @@ if ( $hero_deal ) {
 	<section id="galerija" class="section">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Cela družina', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve peškiriće', 'cosypaw' ); ?></h2>
+			<h2 class="section__title"><?php esc_html_e( 'Upoznaj sve peškire', 'cosypaw' ); ?></h2>
 			<p class="section__lead"><?php echo esc_html( sprintf( /* translators: %s: formatted lowest unit price. */ __( 'Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi.', 'cosypaw' ), \Theme\Catalog::format_price( $from_price ) ) ); ?></p>
 		</div>
 
@@ -403,7 +403,7 @@ if ( $hero_deal ) {
 
 		<?php
 		/* translators: %d: total number of motifs. */
-		$cosypaw_more_label = sprintf( __( 'Prikaži sve peškiriće (%d)', 'cosypaw' ), count( $products ) );
+		$cosypaw_more_label = sprintf( __( 'Prikaži sve peškire (%d)', 'cosypaw' ), count( $products ) );
 		$cosypaw_less_label = __( 'Prikaži manje', 'cosypaw' );
 		?>
 		<button
@@ -431,7 +431,7 @@ if ( $hero_deal ) {
 					<?php
 					printf(
 						/* translators: 1: towels in the package, 2: formatted saving, e.g. "990 RSD". */
-						esc_html__( 'Spoji %1$d peškirića u paket — ušteda %2$s', 'cosypaw' ),
+						esc_html__( 'Spoji %1$d peškira u paket — ušteda %2$s', 'cosypaw' ),
 						(int) $selected['qty'],
 						esc_html( \Theme\Catalog::format_price( $cosypaw_bundle_save ) )
 					);
@@ -532,7 +532,7 @@ if ( $hero_deal ) {
 					echo esc_html(
 						sprintf(
 							/* translators: %s: formatted price of one long towel. */
-							__( 'Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića.', 'cosypaw' ),
+							__( 'Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškira.', 'cosypaw' ),
 							\Theme\Catalog::format_price( \Theme\LongTowels::from_price( $cosypaw_long ) )
 						)
 					);
@@ -613,7 +613,7 @@ if ( $hero_deal ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'U tvom domu', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Tvoj kutak, malo mekši', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
+			<p class="section__lead"><?php esc_html_e( 'Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline.', 'cosypaw' ); ?></p>
 		</div>
 
 		<div class="lifestyle">
@@ -651,7 +651,7 @@ if ( $hero_deal ) {
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Zašto CosyPaw', 'cosypaw' ); ?></span>
 			<h2 class="section__title"><?php esc_html_e( 'Mali zagrljaj pored lavaboa', 'cosypaw' ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.', 'cosypaw' ); ?></p>
+			<p class="section__lead"><?php esc_html_e( 'Svaki peškir je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak.', 'cosypaw' ); ?></p>
 		</div>
 
 		<div class="benefits">
@@ -725,7 +725,7 @@ if ( $hero_deal ) {
 	<section id="utisci" class="section">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Zadovoljne mušterije', 'cosypaw' ); ?></span>
-			<h2 class="section__title"><?php esc_html_e( 'Mali peškirići, veliki osmesi', 'cosypaw' ); ?></h2>
+			<h2 class="section__title"><?php esc_html_e( 'Mali peškiri, veliki osmesi', 'cosypaw' ); ?></h2>
 		</div>
 
 		<?php
@@ -750,7 +750,7 @@ if ( $hero_deal ) {
 					'meta'  => __( 'Beograd', 'cosypaw' ),
 				),
 				array(
-					'quote' => __( 'Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu.', 'cosypaw' ),
+					'quote' => __( 'Alka za kačenje je sitnica koja mnogo znači — peškir je uvek na svom mestu i ne završi na podu.', 'cosypaw' ),
 					'name'  => __( 'Ana T.', 'cosypaw' ),
 					'meta'  => __( 'Niš', 'cosypaw' ),
 				),
@@ -819,7 +819,7 @@ if ( $hero_deal ) {
 						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
 					</span>
 					<h3 class="review-cta__title"><?php esc_html_e( 'Sad si ti na redu', 'cosypaw' ); ?></h3>
-					<p class="review-cta__text"><?php esc_html_e( 'Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere.', 'cosypaw' ); ?></p>
+					<p class="review-cta__text"><?php esc_html_e( 'Stigao ti je peškir? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere.', 'cosypaw' ); ?></p>
 
 					<?php
 					/*
@@ -837,7 +837,7 @@ if ( $hero_deal ) {
 								<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
 							</span>
 						</summary>
-						<p class="review-cta__hint"><?php esc_html_e( 'Izaberi peškirić koji imaš — forma je na njegovoj stranici.', 'cosypaw' ); ?></p>
+						<p class="review-cta__hint"><?php esc_html_e( 'Izaberi peškir koji imaš — forma je na njegovoj stranici.', 'cosypaw' ); ?></p>
 						<ul class="review-cta__list">
 							<?php foreach ( $reviewable as $cosypaw_r ) : ?>
 								<li>

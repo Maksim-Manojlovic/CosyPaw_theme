@@ -296,7 +296,7 @@ final class WooCommerce {
 	public function display_motifs_cart_item_data( array $item_data, array $cart_item ): array {
 		if ( ! empty( $cart_item['cosypaw_motifs'] ) ) {
 			$item_data[] = array(
-				'key'   => __( 'Peškirići', 'cosypaw' ),
+				'key'   => __( 'Peškiri', 'cosypaw' ),
 				'value' => $this->motif_names( (string) $cart_item['cosypaw_motifs'] ),
 			);
 		}
@@ -372,7 +372,7 @@ final class WooCommerce {
 		unset( $item );
 
 		if ( $meta && self::ORDER_MOTIFS_META === $meta->key ) {
-			return __( 'Peškirići', 'cosypaw' );
+			return __( 'Peškiri', 'cosypaw' );
 		}
 
 		return (string) $display_key;
@@ -978,7 +978,7 @@ final class WooCommerce {
 			'<a class="cosypaw-bundle-cta" href="%1$s">%2$s<span class="cosypaw-bundle-cta__hint">%3$s</span></a>',
 			esc_url( $this->builder_url( $motif_id ) ),
 			esc_html__( 'Dodaj u paket', 'cosypaw' ),
-			esc_html__( 'Cena po komadu pada sa svakim sledećim peškirićem', 'cosypaw' )
+			esc_html__( 'Cena po komadu pada sa svakim sledećim peškirom', 'cosypaw' )
 		);
 		echo '</div>';
 	}
@@ -1531,7 +1531,7 @@ final class WooCommerce {
 			'cosypaw_product_specs',
 			array(
 				__( 'Materijal', 'cosypaw' )  => __( 'Plišana mikrofibra — mekana, lagana i jako upijajuća.', 'cosypaw' ),
-				__( 'Kačenje', 'cosypaw' )    => __( 'Alka za kačenje, da peškirić uvek stoji na svom mestu.', 'cosypaw' ),
+				__( 'Kačenje', 'cosypaw' )    => __( 'Alka za kačenje, da peškir uvek stoji na svom mestu.', 'cosypaw' ),
 				__( 'Održavanje', 'cosypaw' ) => __( 'Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik.', 'cosypaw' ),
 				__( 'Dostava', 'cosypaw' )    => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),
 			),

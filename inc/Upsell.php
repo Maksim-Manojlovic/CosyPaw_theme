@@ -175,7 +175,7 @@ final class Upsell {
 				'<th>%1$s</th>' .
 				'<td data-title="%1$s"><strong>%2$s</strong><small>%3$s</small></td>' .
 			'</tr>',
-			esc_html__( 'Sledeći peškirić', 'cosypaw' ),
+			esc_html__( 'Sledeći peškir', 'cosypaw' ),
 			esc_html__( 'Gratis', 'cosypaw' ),
 			esc_html__( 'Dodaj još jedan — ukupna cena ostaje ista.', 'cosypaw' )
 		);
@@ -222,7 +222,7 @@ final class Upsell {
 			$note = $shipping['unit'] > 0 && $shipping['gap'] <= $shipping['unit']
 				? sprintf(
 					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
-					__( 'Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
+					__( 'Dodaj još jedan peškir i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
 					Catalog::format_price( (int) $shipping['min'] )
 				)
 				: sprintf(
@@ -394,14 +394,14 @@ final class Upsell {
 		$price = Catalog::format_price( $towel['price'] );
 
 		if ( $towel['price'] < 1 ) {
-			$copy = __( 'Još jedan peškirić je gratis — ukupna cena se ne menja.', 'cosypaw' );
+			$copy = __( 'Još jedan peškir je gratis — ukupna cena se ne menja.', 'cosypaw' );
 		} elseif ( $closes ) {
 			/* translators: %s: formatted price of one more towel, e.g. "490 RSD". */
-			$copy = sprintf( __( 'Još jedan peškirić košta %s — i dostava je na nama.', 'cosypaw' ), $price );
+			$copy = sprintf( __( 'Još jedan peškir košta %s — i dostava je na nama.', 'cosypaw' ), $price );
 		} else {
 			$copy = sprintf(
 				/* translators: 1: formatted price of one more towel, 2: formatted saving against the single price. */
-				__( 'Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s.', 'cosypaw' ),
+				__( 'Još jedan peškir košta %1$s umesto pune cene — ušteda %2$s.', 'cosypaw' ),
 				$price,
 				Catalog::format_price( $towel['saving'] )
 			);
@@ -448,7 +448,7 @@ final class Upsell {
 		// two buttons that scroll nothing, and without script they never work.
 		printf(
 			'<button type="button" class="cosypaw-upsell__nav cosypaw-upsell__nav--prev" data-upsell-prev aria-label="%s" hidden>%s</button>',
-			esc_attr__( 'Prethodni peškirići', 'cosypaw' ),
+			esc_attr__( 'Prethodni peškiri', 'cosypaw' ),
 			$this->chevron( true ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
 		);
 
@@ -476,7 +476,7 @@ final class Upsell {
 
 		printf(
 			'<button type="button" class="cosypaw-upsell__nav cosypaw-upsell__nav--next" data-upsell-next aria-label="%s" hidden>%s</button>',
-			esc_attr__( 'Sledeći peškirići', 'cosypaw' ),
+			esc_attr__( 'Sledeći peškiri', 'cosypaw' ),
 			$this->chevron( false ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
 		);
 

@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="nav__brand">
 					<?php \Theme\Setup::brand_logo( 'brand-logo--lg', true ); ?>
 				</div>
-				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
+				<p class="footer-brand__text"><?php esc_html_e( 'Mekani svet peškira. Ručno šiveni ljubimci koji čine svako kupatilo toplijim.', 'cosypaw' ); ?></p>
 			</div>
 
 			<div class="footer-col">
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					// nowhere. Same home_url() prefix the header nav uses.
 					// Scroll order, matching the header nav.
 					$cosypaw_footer_links = array(
-						'#galerija'      => __( 'Svi peškirići', 'cosypaw' ),
+						'#galerija'      => __( 'Svi peškiri', 'cosypaw' ),
 						'#paketi'        => __( 'Paketi', 'cosypaw' ),
 						'#zasto'         => __( 'Zašto CosyPaw', 'cosypaw' ),
 						// Last in scroll order, and the reason it is in the
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="footer-bottom">
-			<span><?php printf( /* translators: %d: current year. */ esc_html__( '© %d CosyPaw — Mekani svet peškirića', 'cosypaw' ), (int) gmdate( 'Y' ) ); ?></span>
+			<span><?php printf( /* translators: %d: current year. */ esc_html__( '© %d CosyPaw — Mekani svet peškira', 'cosypaw' ), (int) gmdate( 'Y' ) ); ?></span>
 			<span><?php esc_html_e( 'Ručni rad • Made with love', 'cosypaw' ); ?></span>
 		</div>
 	</div>
@@ -109,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="cart-empty" data-cart-empty>
 				<div class="cart-empty__emoji" aria-hidden="true">🧺</div>
 				<p class="cart-empty__title"><?php esc_html_e( 'Korpa je još prazna', 'cosypaw' ); ?></p>
-				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni peškirić.', 'cosypaw' ); ?></p>
+				<p class="cart-empty__hint"><?php esc_html_e( 'Izaberi paket ili omiljeni peškir.', 'cosypaw' ); ?></p>
 			</div>
 			<div data-cart-items></div>
 		</div>

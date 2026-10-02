@@ -74,7 +74,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 		</div>
 
 		<div class="seo-copy__body">
-			<p><?php esc_html_e( 'Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškirića za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškira za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ.', 'cosypaw' ); ?></p>
 
@@ -84,7 +84,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 					echo wp_kses(
 						sprintf(
 							/* translators: %s: link "dečije peškire u obliku životinja", to the motif collection. */
-							__( 'Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje.', 'cosypaw' ),
+							__( 'Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene, sa alkom za kačenje.', 'cosypaw' ),
 							'<a href="' . esc_url( $cosypaw_collection ) . '">' . esc_html__( 'dečije peškire u obliku životinja', 'cosypaw' ) . '</a>'
 						),
 						array( 'a' => array( 'href' => array() ) )
@@ -106,7 +106,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 					echo ' ' . esc_html(
 						sprintf(
 							/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
-							__( 'Dodaj ih uz paket peškirića i lakše stigni do besplatne dostave preko %s.', 'cosypaw' ),
+							__( 'Dodaj ih uz paket peškira i lakše stigni do besplatne dostave preko %s.', 'cosypaw' ),
 							\Theme\Catalog::format_price( $cosypaw_free_min )
 						)
 					);

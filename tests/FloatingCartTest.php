@@ -207,7 +207,7 @@ final class FloatingCartTest extends TestCase {
 		$markup = $this->pill( 2 );
 
 		$this->assertStringContainsString( 'cart-fab__nudge', $markup );
-		$this->assertStringContainsString( 'Još 1 peškirić gratis', $markup );
+		$this->assertStringContainsString( 'Još 1 peškir gratis', $markup );
 	}
 
 	/**

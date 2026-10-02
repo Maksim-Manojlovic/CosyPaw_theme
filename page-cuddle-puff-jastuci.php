@@ -103,7 +103,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 					echo ' ' . esc_html(
 						sprintf(
 							/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
-							__( 'Dodaj jastuk uz paket peškirića i lakše stigni do besplatne dostave preko %s.', 'cosypaw' ),
+							__( 'Dodaj jastuk uz paket peškira i lakše stigni do besplatne dostave preko %s.', 'cosypaw' ),
 							\Theme\Catalog::format_price( $cosypaw_free_min )
 						)
 					);

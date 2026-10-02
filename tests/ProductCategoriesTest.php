@@ -74,7 +74,7 @@ final class ProductCategoriesTest extends TestCase {
 	}
 
 	/**
-	 * The four subcategories, hanging off Peškirići.
+	 * The four subcategories, hanging off Peškiri.
 	 *
 	 * @return void
 	 */
@@ -89,12 +89,12 @@ final class ProductCategoriesTest extends TestCase {
 		foreach ( ProductCategories::SUBCATEGORIES as $slug => $name ) {
 			$this->assertArrayHasKey( $slug, $this->terms, "missing: $slug" );
 			$this->assertSame( $name, $this->terms[ $slug ]->name );
-			$this->assertSame( $parent, $this->terms[ $slug ]->parent, "$slug is not under Peškirići" );
+			$this->assertSame( $parent, $this->terms[ $slug ]->parent, "$slug is not under Peškiri" );
 		}
 	}
 
 	/**
-	 * An existing Peškirići is reused rather than duplicated — it is the term
+	 * An existing Peškiri is reused rather than duplicated — it is the term
 	 * every towel in the shop is already filed under, and a second one would
 	 * quietly unmap all of them.
 	 *
@@ -170,7 +170,7 @@ final class ProductCategoriesTest extends TestCase {
 	}
 
 	/**
-	 * The parent is not one of the children. Putting a towel in "Peškirići" is
+	 * The parent is not one of the children. Putting a towel in "Peškiri" is
 	 * what makes it a towel; the subcategory is ticked alongside, never instead.
 	 *
 	 * @return void

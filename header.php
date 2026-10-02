@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		);
 	}
 
-	$announcements[] = __( 'Mekani svet peškirića', 'cosypaw' );
+	$announcements[] = __( 'Mekani svet peškira', 'cosypaw' );
 	// One group is rendered twice; the track animates -50% (one full group),
 	// so the second group is in place exactly when the first scrolls out =
 	// seamless, gap-free loop. Phrases are repeated inside each group so a
@@ -119,7 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$cosypaw_motifs = $cosypaw_page( 'motivi' );
 
 				$cosypaw_links = array(
-					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Peškirići', 'cosypaw' ) ),
+					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Peškiri', 'cosypaw' ) ),
 					array( $cosypaw_page( 'dugi' ), __( 'Dugi peškiri', 'cosypaw' ) ),
 					array( $cosypaw_page( 'jastuci' ), __( 'Jastuci', 'cosypaw' ) ),
 					array( $cosypaw_page( 'krpe' ), __( 'Magične krpe', 'cosypaw' ) ),

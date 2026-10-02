@@ -448,15 +448,15 @@ final class Assets {
 				'currency'    => __( 'RSD', 'cosypaw' ),
 				'locale'      => 'de-DE',
 				// Bundle builder.
-				'slotLabel'      => __( 'Peškirić %d', 'cosypaw' ),
+				'slotLabel'      => __( 'Peškir %d', 'cosypaw' ),
 				'addToCartPrice' => __( 'Dodaj u korpu • %s', 'cosypaw' ),
 				'chooseMore'     => __( 'Izaberi još %d', 'cosypaw' ),
-				'motifOne'       => __( 'peškirić', 'cosypaw' ),
-				'motifMany'      => __( 'peškirića', 'cosypaw' ),
-				'bundleMax'      => __( 'Najviše %d peškirića odjednom — dodaj ovaj paket u korpu, pa napravi sledeći', 'cosypaw' ),
+				'motifOne'       => __( 'peškir', 'cosypaw' ),
+				'motifMany'      => __( 'peškira', 'cosypaw' ),
+				'bundleMax'      => __( 'Najviše %d peškira odjednom — dodaj ovaj paket u korpu, pa napravi sledeći', 'cosypaw' ),
 				'bundleAdded'    => __( 'Dodato u paket — izaberi još %d', 'cosypaw' ),
 				'bundleReady'    => __( 'Paket je pun — dodaj u korpu ili izaberi još', 'cosypaw' ),
-				'bundleExtra'    => __( 'Dodato — u paketu je %d peškirića', 'cosypaw' ),
+				'bundleExtra'    => __( 'Dodato — u paketu je %d peškira', 'cosypaw' ),
 				/* translators: %s: formatted price the next towel adds, e.g. "790 RSD". */
 				'slotNext'       => __( '+ %s', 'cosypaw' ),
 				'slotFree'       => __( 'Gratis', 'cosypaw' ),
@@ -465,7 +465,7 @@ final class Assets {
 				/* translators: 1: formatted amount still missing, 2: formatted free-delivery threshold. */
 				'shipMissing'    => __( 'Još %1$s do besplatne dostave (preko %2$s)', 'cosypaw' ),
 				'notFull'        => __( 'Izaberi još %d — paket nije popunjen', 'cosypaw' ),
-				'removeMotif'    => __( 'Ukloni peškirić', 'cosypaw' ),
+				'removeMotif'    => __( 'Ukloni peškir', 'cosypaw' ),
 				'adding'         => __( 'Dodajem…', 'cosypaw' ),
 				'addFailed'      => __( 'Dodavanje nije uspelo — pokušaj ponovo', 'cosypaw' ),
 			)

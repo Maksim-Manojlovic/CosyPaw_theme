@@ -297,7 +297,7 @@ final class UpsellTest extends TestCase {
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
 		$this->assertStringContainsString( '510 RSD', $markup );
-		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
+		$this->assertStringContainsString( 'Dodaj još jedan peškir', $markup );
 	}
 
 	/**
@@ -338,7 +338,7 @@ final class UpsellTest extends TestCase {
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--gap', $markup );
 		$this->assertStringContainsString( '510 RSD', $markup );
-		$this->assertStringContainsString( 'Dodaj još jedan peškirić', $markup );
+		$this->assertStringContainsString( 'Dodaj još jedan peškir', $markup );
 	}
 
 	/**
@@ -350,7 +350,7 @@ final class UpsellTest extends TestCase {
 		$markup = $this->totals_row( 2, 'cart_free_towel_row' );
 
 		$this->assertStringContainsString( 'cosypaw-free-row', $markup );
-		$this->assertStringContainsString( 'Sledeći peškirić', $markup );
+		$this->assertStringContainsString( 'Sledeći peškir', $markup );
 		$this->assertStringContainsString( 'Gratis', $markup );
 	}
 
@@ -428,7 +428,7 @@ final class UpsellTest extends TestCase {
 		$this->assertStringContainsString( 'cosypaw-upsell', $markup );
 		// Stated as free, never as "0 RSD" — and with the reason a shopper can
 		// check against the total beside it.
-		$this->assertStringContainsString( 'Još jedan peškirić je gratis', $markup );
+		$this->assertStringContainsString( 'Još jedan peškir je gratis', $markup );
 		$this->assertStringContainsString( 'ukupna cena se ne menja', $markup );
 	}
 

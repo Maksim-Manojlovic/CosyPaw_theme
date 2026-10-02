@@ -32,8 +32,8 @@ msgstr "Search…"
 msgid "Traži"
 msgstr "Search"
 
-msgid "Mekani svet peškirića"
-msgstr "A soft world of little towels"
+msgid "Mekani svet peškira"
+msgstr "A soft world of towels"
 
 msgid "Dečiji peškiri od %s"
 msgstr "Children’s towels made of %s"
@@ -44,13 +44,13 @@ msgstr "microfiber"
 msgid "Izaberi paket"
 msgstr "Choose a package"
 
-msgid "Pogledaj peškiriće"
+msgid "Pogledaj peškire"
 msgstr "See the designs"
 
 msgid "Ručni rad"
 msgstr "Handmade"
 
-msgid "Izdvojeni peškirići"
+msgid "Izdvojeni peškiri"
 msgstr "Featured designs"
 
 msgid "od %s"
@@ -62,7 +62,7 @@ msgstr "Why CosyPaw"
 msgid "Mali zagrljaj pored lavaboa"
 msgstr "A little hug by the sink"
 
-msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
+msgid "Svaki peškir je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
 msgstr "Every towel is soft, absorbent and has a hanging loop — always at hand, always cute."
 
 msgid "Deca ih biraju sama"
@@ -89,10 +89,10 @@ msgstr "A gift that is remembered"
 msgid "Sitnica koja izmami osmeh pre nego što je odmotana."
 msgstr "A little thing that draws a smile before it is even unwrapped."
 
-msgid "Što više peškirića, veća ušteda"
+msgid "Što više peškira, veća ušteda"
 msgstr "The more towels, the bigger the saving"
 
-msgid "Izmešaj peškiriće kako želiš — cena po komadu pada sa svakim sledećim."
+msgid "Izmešaj peškire kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Mix the designs however you like — the price per piece drops with each one."
 
 msgid "kom"
@@ -113,7 +113,7 @@ msgstr "Cash on delivery • Delivery in 2–4 business days"
 msgid "Cela družina"
 msgstr "The whole crew"
 
-msgid "Upoznaj sve peškiriće"
+msgid "Upoznaj sve peškire"
 msgstr "Meet all the designs"
 
 msgid "Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi."
@@ -128,7 +128,7 @@ msgstr "Cart"
 msgid "Kupi"
 msgstr "Buy"
 
-msgid "Prikaži sve peškiriće (%d)"
+msgid "Prikaži sve peškire (%d)"
 msgstr "Show all designs (%d)"
 
 msgid "Prikaži manje"
@@ -146,8 +146,8 @@ msgstr "Added"
 msgid "Rezultati za „%s”"
 msgstr "Results for “%s”"
 
-msgid "Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
-msgstr "A soft world of little towels. Hand-sewn pets that make every bathroom warmer."
+msgid "Mekani svet peškira. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgstr "A soft world of towels. Hand-sewn pets that make every bathroom warmer."
 
 msgid "Brzi linkovi"
 msgstr "Quick links"
@@ -155,7 +155,7 @@ msgstr "Quick links"
 msgid "Paketi"
 msgstr "Packages"
 
-msgid "Svi peškirići"
+msgid "Svi peškiri"
 msgstr "All designs"
 
 msgid "Poručivanje"
@@ -164,8 +164,8 @@ msgstr "Ordering"
 msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
 msgstr "Order via DM or the cart.<br>Cash on delivery."
 
-msgid "© %d CosyPaw — Mekani svet peškirića"
-msgstr "© %d CosyPaw — A soft world of little towels"
+msgid "© %d CosyPaw — Mekani svet peškira"
+msgstr "© %d CosyPaw — A soft world of towels"
 
 msgid "Ručni rad • Made with love"
 msgstr "Handmade • Made with love"
@@ -182,7 +182,7 @@ msgstr "Close"
 msgid "Korpa je još prazna"
 msgstr "Your cart is still empty"
 
-msgid "Izaberi paket ili omiljeni peškirić."
+msgid "Izaberi paket ili omiljeni peškir."
 msgstr "Pick a package or a favorite design."
 
 msgid "Ukupno"
@@ -590,7 +590,7 @@ msgstr "A soft long towel in gentle blue, with an embroidered teddy, a paw and t
 msgid "Mekani dugi peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
 msgstr "A soft long towel in warm beige, with an embroidered teddy, a paw and the word GOODLUCK on its border. For face, hands and hair."
 
-msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškirića za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
 msgstr "A long towel of soft, absorbent fabric, with an embroidered teddy, a paw and the word GOODLUCK on its woven border. It is longer than a hand towel, so it works for face and hair too — on the rail by the basin or draped over a towel ladder. Its soft colours suit any bathroom, and it arrives like every CosyPaw product: cash on delivery, shipped anywhere in Serbia."
 
 msgid "Vezeni meda, šapica i natpis GOODLUCK."
@@ -608,7 +608,7 @@ msgstr "For the bathroom"
 msgid "Dugi peškiri"
 msgstr "Long towels"
 
-msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića."
+msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškira."
 msgstr "Soft long towels with an embroidered teddy and paw, for face, hands and hair. %s each, outside the towel packages."
 
 msgid "Sve o dugim peškirima"
@@ -638,13 +638,13 @@ msgstr "Bathroom towels"
 msgid "Mekani peškiri za lice, ruke i kosu"
 msgstr "Soft towels for face, hands and hair"
 
-msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškirića za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
+msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškira za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
 msgstr "A long towel is the one you reach for every morning: for your face after washing, your hands at the basin and your hair after a shower. It is longer than a hand towel, so one go dries both face and hair, and the soft, absorbent fabric takes up water quickly."
 
 msgid "Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ."
 msgstr "A little teddy with a paw and the word GOODLUCK are embroidered on the woven border — a small detail that makes a bathroom feel warmer. Cream, pink, blue and beige are soft colours that sit easily with tiles, marble or wood, and look good mixed together too."
 
-msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje."
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene, sa alkom za kačenje."
 msgstr "If you are looking for a face towel or hand towel that looks good on the rail and on a towel ladder alike, this is it. And for the little ones we also have %s — handmade towels with a hanging loop."
 
 msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj."
@@ -655,9 +655,6 @@ msgstr "children’s towels in animal shapes"
 
 msgid "Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
 msgstr "The long towels arrive like every CosyPaw product — cash on delivery, delivered across Serbia in 2–4 days."
-
-msgid "Dodaj ih uz paket peškirića i lakše stigni do besplatne dostave preko %s."
-msgstr "Add them to a towel package and reach free delivery over %s more easily."
 
 msgid "Poruči dugi peškir"
 msgstr "Order a long towel"
@@ -692,7 +689,7 @@ msgstr "We send the Cuddle Puff pillows like every CosyPaw product — cash on d
 msgid "dugih peškira sa vezenim medom"
 msgstr "the long towels with an embroidered teddy"
 
-msgid "Dodaj jastuk uz paket peškirića i lakše stigni do besplatne dostave preko %s."
+msgid "Dodaj jastuk uz paket peškira i lakše stigni do besplatne dostave preko %s."
 msgstr "Add a pillow to a towel package and reach free delivery over %s more easily."
 
 msgid "Poruči Cuddle Puff jastuk"
@@ -713,14 +710,14 @@ msgstr "Pause the announcements"
 msgid "Pusti najave"
 msgstr "Play the announcements"
 
-msgid "Pauziraj smenjivanje peškirića"
+msgid "Pauziraj smenjivanje peškira"
 msgstr "Pause the design slideshow"
 
-msgid "Pusti smenjivanje peškirića"
+msgid "Pusti smenjivanje peškira"
 msgstr "Play the design slideshow"
 
-msgid "Peškirići"
-msgstr "Designs"
+msgid "Peškiri"
+msgstr "Towels"
 
 msgid "Pogledaj korpu"
 msgstr "View cart"
@@ -803,7 +800,7 @@ msgstr "Maple leaf"
 msgid "Single"
 msgstr "Single"
 
-msgid "Jedan omiljeni peškirić"
+msgid "Jedan omiljeni peškir"
 msgstr "One favorite design"
 
 msgid "2+1 paket"
@@ -812,7 +809,7 @@ msgstr "2+1 package"
 msgid "Najpopularnije"
 msgstr "Most popular"
 
-msgid "Tri peškirića po izboru"
+msgid "Tri peškira po izboru"
 msgstr "Three designs of your choice"
 
 msgid "Žurnal"
@@ -836,13 +833,13 @@ msgstr "There's no content here yet."
 msgid "Napravi svoj paket"
 msgstr "Build your package"
 
-msgid "Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim."
+msgid "Izaberi veličinu paketa, pa ubaci omiljene peškire. Cena po komadu pada sa svakim sledećim."
 msgstr "Pick a package size, then drop in your favorite designs. The price per piece drops with each one."
 
 msgid "Izaberi veličinu paketa"
 msgstr "Choose a package size"
 
-msgid "Ubaci svoje peškiriće"
+msgid "Ubaci svoje peškire"
 msgstr "Add your designs"
 
 msgid "Izabrano"
@@ -854,7 +851,7 @@ msgstr "Surprise me"
 msgid "Očisti"
 msgstr "Clear"
 
-msgid "Peškirić %d"
+msgid "Peškir %d"
 msgstr "Design %d"
 
 msgid "Dodaj u korpu • %s"
@@ -863,19 +860,19 @@ msgstr "Add to cart • %s"
 msgid "Izaberi još %d"
 msgstr "Choose %d more"
 
-msgid "peškirić"
+msgid "peškir"
 msgstr "design"
 
-msgid "peškirića"
+msgid "peškira"
 msgstr "designs"
 
-msgid "Najviše %d peškirića odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
+msgid "Najviše %d peškira odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
 msgstr "At most %d designs at once — add this package to the cart, then build the next"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Choose %d more — the package isn't full"
 
-msgid "Ukloni peškirić"
+msgid "Ukloni peškir"
 msgstr "Remove design"
 
 msgid "Dodato u paket — izaberi još %d"
@@ -884,7 +881,7 @@ msgstr "Added to the package — choose %d more"
 msgid "Paket je pun — dodaj u korpu ili izaberi još"
 msgstr "The package is full — add it to the cart or choose more"
 
-msgid "Dodato — u paketu je %d peškirića"
+msgid "Dodato — u paketu je %d peškira"
 msgstr "Added — %d designs in the package"
 
 msgid "+ %s"
@@ -905,7 +902,7 @@ msgstr "Buy just one"
 msgid "Kupi %s, 1 kom"
 msgstr "Buy %s, 1 piece"
 
-msgid "Spoji %1$d peškirića u paket — ušteda %2$s"
+msgid "Spoji %1$d peškira u paket — ušteda %2$s"
 msgstr "Bundle %1$d designs and save %2$s"
 
 msgid "Dodajem…"
@@ -920,7 +917,7 @@ msgstr "In your home"
 msgid "Tvoj kutak, malo mekši"
 msgstr "Your corner, a little softer"
 
-msgid "Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgid "Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline."
 msgstr "By the sink, on a hook or a shelf — the towels fit into any home and add a touch of warmth."
 
 msgid "Spremni za jutarnju rutinu"
@@ -971,7 +968,7 @@ msgstr "Send"
 msgid "Zadovoljne mušterije"
 msgstr "Happy customers"
 
-msgid "Mali peškirići, veliki osmesi"
+msgid "Mali peškiri, veliki osmesi"
 msgstr "Little towels, big smiles"
 
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
@@ -980,7 +977,7 @@ msgstr "They arrived faster than I expected and are softer than in the photos. M
 msgid "Kupila sam 2+1 paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
 msgstr "I bought the 2+1 package as a gift and it was a real hit. The packaging is adorable, no extra wrapping needed."
 
-msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
+msgid "Alka za kačenje je sitnica koja mnogo znači — peškir je uvek na svom mestu i ne završi na podu."
 msgstr "The hanging loop is a small thing that means a lot — the towel is always in its place and never ends up on the floor."
 
 msgid "%d od 5 zvezdica"
@@ -1007,13 +1004,13 @@ msgstr "Niš"
 msgid "Sad si ti na redu"
 msgstr "Your turn now"
 
-msgid "Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere."
+msgid "Stigao ti je peškir? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere."
 msgstr "Has your towel arrived? Write a few words — that is what helps the next customer choose."
 
 msgid "Ostavi utisak"
 msgstr "Leave a review"
 
-msgid "Izaberi peškirić koji imaš — forma je na njegovoj stranici."
+msgid "Izaberi peškir koji imaš — forma je na njegovoj stranici."
 msgstr "Pick the towel you own — the form is on its page."
 
 msgid "Česta pitanja"
@@ -1025,7 +1022,7 @@ msgstr "Everything you want to know"
 msgid "Ako ne nađeš odgovor, piši nam — rado pomažemo."
 msgstr "If you don't find an answer, write to us — we're happy to help."
 
-msgid "Od čega su peškirići napravljeni?"
+msgid "Od čega su peškiri napravljeni?"
 msgstr "What are the towels made of?"
 
 msgid "Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži."
@@ -1061,7 +1058,7 @@ msgstr "Payment is cash on delivery — you pay the courier when you receive the
 msgid "Gde mogu da ostavim utisak?"
 msgstr "Where can I leave a review?"
 
-msgid "Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“."
+msgid "Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškir koji imaš. Isto možeš i sa stranice svakog peškira, u tabu „Recenzije“."
 msgstr "At the bottom of the home page, in the customer reviews part, click “Leave a review” and pick the towel you own. You can also do it from any towel’s page, in the “Reviews” tab."
 
 msgid "Plaćanje pouzećem"
@@ -1088,7 +1085,7 @@ msgstr "free shipping"
 msgid "Uzmi %1$d — plati %2$d"
 msgstr "Take %1$d — pay for %2$d"
 
-msgid "ili pogledaj svih %d peškirića"
+msgid "ili pogledaj svih %d peškira"
 msgstr "or see all %d towels"
 
 msgid "Ušteda na paketima"
@@ -1097,25 +1094,25 @@ msgstr "Package saving"
 msgid "Ušteda na paketima (%s)"
 msgstr "Package saving (%s)"
 
-msgid "Još 1 peškirić za %s"
+msgid "Još 1 peškir za %s"
 msgstr "1 more towel for %s"
 
-msgid "Još 1 peškirić gratis"
+msgid "Još 1 peškir gratis"
 msgstr "1 more towel free"
 
 msgid "Još malo, pa povoljnije"
 msgstr "A little more, a little cheaper"
 
-msgid "Još jedan peškirić košta %s — i dostava je na nama."
+msgid "Još jedan peškir košta %s — i dostava je na nama."
 msgstr "One more towel costs %s — and delivery is on us."
 
-msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
+msgid "Još jedan peškir košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "One more towel costs %1$s instead of full price — you save %2$s."
 
-msgid "Još jedan peškirić je gratis — ukupna cena se ne menja."
+msgid "Još jedan peškir je gratis — ukupna cena se ne menja."
 msgstr "One more towel is free — the total does not change."
 
-msgid "Sledeći peškirić"
+msgid "Sledeći peškir"
 msgstr "Next towel"
 
 msgid "Gratis"
@@ -1127,10 +1124,10 @@ msgstr "Add one more — the total stays the same."
 msgid "Dodaj"
 msgstr "Add"
 
-msgid "Prethodni peškirići"
+msgid "Prethodni peškiri"
 msgstr "Previous towels"
 
-msgid "Sledeći peškirići"
+msgid "Sledeći peškiri"
 msgstr "Next towels"
 
 msgid "Ostvarena"
@@ -1139,10 +1136,10 @@ msgstr "Earned"
 msgid "Još %s"
 msgstr "%s to go"
 
-msgid "Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima."
+msgid "Prag se računa na zbir peškira (%s) — ušteda na paketima se ne oduzima."
 msgstr "The threshold counts the towels themselves (%s) — the package saving is not subtracted."
 
-msgid "Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama."
+msgid "Dodaj još jedan peškir i pređeš %s — dostava je onda na nama."
 msgstr "Add one more towel to pass %s — delivery is then on us."
 
 msgid "Dostava je besplatna preko %s."
@@ -1160,19 +1157,19 @@ msgstr "The rest of the crew is waiting"
 msgid "%1$d kom · %2$s / kom"
 msgstr "%1$d pcs · %2$s / pc"
 
-msgid "Napravi paket od %1$d peškirića po %2$s, počni sa oblikom %3$s"
+msgid "Napravi paket od %1$d peškira po %2$s, počni sa oblikom %3$s"
 msgstr "Build a package of %1$d towels at %2$s each, starting with %3$s"
 
-msgid "Kako su peškirići, %s?"
+msgid "Kako su peškiri, %s?"
 msgstr "How are the towels, %s?"
 
-msgid "Kako su peškirići?"
+msgid "Kako su peškiri?"
 msgstr "How are the towels?"
 
-msgid "Reci nam par reči o svojim peškirićima"
+msgid "Reci nam par reči o svojim peškirima"
 msgstr "Tell us a few words about your towels"
 
-msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom."
+msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškiri okače, isprobaju i operu bar jednom."
 msgstr "A week has passed since the parcel arrived — just enough time to hang the towels, try them out and wash them at least once."
 
 msgid "Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće."
@@ -1196,7 +1193,7 @@ msgstr "Read what customers say"
 msgid "Dodaj u paket"
 msgstr "Add to a package"
 
-msgid "Cena po komadu pada sa svakim sledećim peškirićem"
+msgid "Cena po komadu pada sa svakim sledećim peškirom"
 msgstr "The price per towel drops with every one you add"
 
 msgid "Uzmi više, plati manje"
@@ -1226,7 +1223,7 @@ msgstr "Plush microfibre — soft, light and highly absorbent."
 msgid "Kačenje"
 msgstr "Hanging"
 
-msgid "Alka za kačenje, da peškirić uvek stoji na svom mestu."
+msgid "Alka za kačenje, da peškir uvek stoji na svom mestu."
 msgstr "A hanging loop, so the towel always stays where it belongs."
 
 msgid "Održavanje"

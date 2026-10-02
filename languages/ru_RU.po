@@ -32,8 +32,8 @@ msgstr "Поиск…"
 msgid "Traži"
 msgstr "Найти"
 
-msgid "Mekani svet peškirića"
-msgstr "Мягкий мир полотенчиков"
+msgid "Mekani svet peškira"
+msgstr "Мягкий мир полотенец"
 
 msgid "Dečiji peškiri od %s"
 msgstr "Детские полотенца из %s"
@@ -44,13 +44,13 @@ msgstr "микрофибры"
 msgid "Izaberi paket"
 msgstr "Выбери набор"
 
-msgid "Pogledaj peškiriće"
+msgid "Pogledaj peškire"
 msgstr "Смотреть мотивы"
 
 msgid "Ručni rad"
 msgstr "Ручная работа"
 
-msgid "Izdvojeni peškirići"
+msgid "Izdvojeni peškiri"
 msgstr "Избранные мотивы"
 
 msgid "od %s"
@@ -62,7 +62,7 @@ msgstr "Почему CosyPaw"
 msgid "Mali zagrljaj pored lavaboa"
 msgstr "Маленькое объятие у раковины"
 
-msgid "Svaki peškirić je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
+msgid "Svaki peškir je mekan, upijajuć i ima alku za kačenje — uvek pri ruci, uvek sladak."
 msgstr "Каждое полотенце мягкое, впитывающее и с петелькой — всегда под рукой, всегда милое."
 
 msgid "Deca ih biraju sama"
@@ -89,10 +89,10 @@ msgstr "Подарок, который запоминается"
 msgid "Sitnica koja izmami osmeh pre nego što je odmotana."
 msgstr "Мелочь, что вызывает улыбку ещё до того, как её развернут."
 
-msgid "Što više peškirića, veća ušteda"
+msgid "Što više peškira, veća ušteda"
 msgstr "Чем больше полотенец, тем больше выгода"
 
-msgid "Izmešaj peškiriće kako želiš — cena po komadu pada sa svakim sledećim."
+msgid "Izmešaj peškire kako želiš — cena po komadu pada sa svakim sledećim."
 msgstr "Сочетай мотивы как хочешь — цена за штуку падает с каждым следующим."
 
 msgid "kom"
@@ -113,7 +113,7 @@ msgstr "Оплата при получении • Доставка 2–4 раб
 msgid "Cela družina"
 msgstr "Вся компания"
 
-msgid "Upoznaj sve peškiriće"
+msgid "Upoznaj sve peškire"
 msgstr "Познакомься со всеми мотивами"
 
 msgid "Dečiji peškiri sa životinjicama, zalogajčićima i cvetićima, od %s po komadu — ili ih spoji u paket i uštedi."
@@ -128,7 +128,7 @@ msgstr "Корзина"
 msgid "Kupi"
 msgstr "Купить"
 
-msgid "Prikaži sve peškiriće (%d)"
+msgid "Prikaži sve peškire (%d)"
 msgstr "Показать все мотивы (%d)"
 
 msgid "Prikaži manje"
@@ -146,8 +146,8 @@ msgstr "Добавлено"
 msgid "Rezultati za „%s”"
 msgstr "Результаты по запросу «%s»"
 
-msgid "Mekani svet peškirića. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
-msgstr "Мягкий мир полотенчиков. Сшитые вручную зверушки, что делают любую ванную теплее."
+msgid "Mekani svet peškira. Ručno šiveni ljubimci koji čine svako kupatilo toplijim."
+msgstr "Мягкий мир полотенец. Сшитые вручную зверушки, что делают любую ванную теплее."
 
 msgid "Brzi linkovi"
 msgstr "Быстрые ссылки"
@@ -155,7 +155,7 @@ msgstr "Быстрые ссылки"
 msgid "Paketi"
 msgstr "Наборы"
 
-msgid "Svi peškirići"
+msgid "Svi peškiri"
 msgstr "Все мотивы"
 
 msgid "Poručivanje"
@@ -164,8 +164,8 @@ msgstr "Заказ"
 msgid "Poruči preko DM-a ili korpe.<br>Plaćanje pouzećem."
 msgstr "Заказывай через DM или корзину.<br>Оплата при получении."
 
-msgid "© %d CosyPaw — Mekani svet peškirića"
-msgstr "© %d CosyPaw — Мягкий мир полотенчиков"
+msgid "© %d CosyPaw — Mekani svet peškira"
+msgstr "© %d CosyPaw — Мягкий мир полотенец"
 
 msgid "Ručni rad • Made with love"
 msgstr "Ручная работа • Сделано с любовью"
@@ -182,7 +182,7 @@ msgstr "Закрыть"
 msgid "Korpa je još prazna"
 msgstr "Корзина пока пуста"
 
-msgid "Izaberi paket ili omiljeni peškirić."
+msgid "Izaberi paket ili omiljeni peškir."
 msgstr "Выбери набор или любимый мотив."
 
 msgid "Ukupno"
@@ -590,7 +590,7 @@ msgstr "Мягкое длинное полотенце нежного голуб
 msgid "Mekani dugi peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
 msgstr "Мягкое длинное полотенце тёплого бежевого цвета с вышитым мишкой, лапкой и надписью GOODLUCK на бордюре. Для лица, рук и волос."
 
-msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškirića za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
 msgstr "Длинное полотенце из мягкой впитывающей ткани с вышитым мишкой, лапкой и надписью GOODLUCK на тканом бордюре. Оно длиннее полотенца для рук, поэтому подходит и для лица, и для волос — на держателе у раковины или на лестнице для полотенец. Нежные цвета легко впишутся в любую ванную, а приходит оно, как и все товары CosyPaw: с оплатой при получении и доставкой по всей Сербии."
 
 msgid "Vezeni meda, šapica i natpis GOODLUCK."
@@ -608,8 +608,8 @@ msgstr "Для ванной"
 msgid "Dugi peškiri"
 msgstr "Длинные полотенца"
 
-msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića."
-msgstr "Мягкие длинные полотенца с вышитым мишкой и лапкой — для лица, рук и волос. %s за штуку, вне наборов полотенчиков."
+msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškira."
+msgstr "Мягкие длинные полотенца с вышитым мишкой и лапкой — для лица, рук и волос. %s за штуку, вне наборов полотенец."
 
 msgid "Sve o dugim peškirima"
 msgstr "Всё о длинных полотенцах"
@@ -638,14 +638,14 @@ msgstr "Полотенца для ванной"
 msgid "Mekani peškiri za lice, ruke i kosu"
 msgstr "Мягкие полотенца для лица, рук и волос"
 
-msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškirića za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
+msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškira za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
 msgstr "Длинное полотенце — то, за которым тянешься каждое утро: для лица после умывания, для рук у раковины и для волос после душа. Оно длиннее полотенца для рук, поэтому одним движением вытираешь и лицо, и волосы, а мягкая впитывающая ткань быстро забирает воду."
 
 msgid "Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ."
 msgstr "На тканом бордюре вышиты маленький мишка с лапкой и надпись GOODLUCK — мелкая деталь, от которой ванная становится уютнее. Кремовый, розовый, голубой и бежевый — нежные цвета, которые легко сочетаются с плиткой, мрамором или деревом и красиво смотрятся вместе."
 
-msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje."
-msgstr "Если ищешь полотенце для лица или для рук, которое красиво смотрится и на держателе, и на лестнице для полотенец, — это оно. А для самых маленьких у нас есть %s — полотенчики ручной работы с петелькой."
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene, sa alkom za kačenje."
+msgstr "Если ищешь полотенце для лица или для рук, которое красиво смотрится и на держателе, и на лестнице для полотенец, — это оно. А для самых маленьких у нас есть %s — полотенца ручной работы с петелькой."
 
 msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj."
 msgstr "Если ищешь полотенце для лица или для рук, которое красиво смотрится и на держателе, и на лестнице для полотенец, — это оно."
@@ -655,9 +655,6 @@ msgstr "детские полотенца в форме животных"
 
 msgid "Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
 msgstr "Длинные полотенца приходят, как и все товары CosyPaw, — с оплатой при получении и доставкой по всей Сербии за 2–4 дня."
-
-msgid "Dodaj ih uz paket peškirića i lakše stigni do besplatne dostave preko %s."
-msgstr "Добавь их к набору полотенчиков — и легче получить бесплатную доставку от %s."
 
 msgid "Poruči dugi peškir"
 msgstr "Заказать длинное полотенце"
@@ -692,8 +689,8 @@ msgstr "Подушки Cuddle Puff мы отправляем, как и все �
 msgid "dugih peškira sa vezenim medom"
 msgstr "длинные полотенца с вышитым мишкой"
 
-msgid "Dodaj jastuk uz paket peškirića i lakše stigni do besplatne dostave preko %s."
-msgstr "Добавь подушку к набору полотенчиков — и легче получить бесплатную доставку от %s."
+msgid "Dodaj jastuk uz paket peškira i lakše stigni do besplatne dostave preko %s."
+msgstr "Добавь подушку к набору полотенец — и легче получить бесплатную доставку от %s."
 
 msgid "Poruči Cuddle Puff jastuk"
 msgstr "Заказать подушку Cuddle Puff"
@@ -713,14 +710,14 @@ msgstr "Приостановить объявления"
 msgid "Pusti najave"
 msgstr "Возобновить объявления"
 
-msgid "Pauziraj smenjivanje peškirića"
+msgid "Pauziraj smenjivanje peškira"
 msgstr "Приостановить смену мотивов"
 
-msgid "Pusti smenjivanje peškirića"
+msgid "Pusti smenjivanje peškira"
 msgstr "Возобновить смену мотивов"
 
-msgid "Peškirići"
-msgstr "Мотивы"
+msgid "Peškiri"
+msgstr "Полотенца"
 
 msgid "Pogledaj korpu"
 msgstr "Посмотреть корзину"
@@ -803,7 +800,7 @@ msgstr "Кленовый лист"
 msgid "Single"
 msgstr "Поштучно"
 
-msgid "Jedan omiljeni peškirić"
+msgid "Jedan omiljeni peškir"
 msgstr "Один любимый мотив"
 
 msgid "2+1 paket"
@@ -812,7 +809,7 @@ msgstr "Набор 2+1"
 msgid "Najpopularnije"
 msgstr "Самое популярное"
 
-msgid "Tri peškirića po izboru"
+msgid "Tri peškira po izboru"
 msgstr "Три мотива на выбор"
 
 msgid "Žurnal"
@@ -836,13 +833,13 @@ msgstr "Здесь пока нет содержимого."
 msgid "Napravi svoj paket"
 msgstr "Собери свой набор"
 
-msgid "Izaberi veličinu paketa, pa ubaci omiljene peškiriće. Cena po komadu pada sa svakim sledećim."
+msgid "Izaberi veličinu paketa, pa ubaci omiljene peškire. Cena po komadu pada sa svakim sledećim."
 msgstr "Выбери размер набора, затем добавь любимые мотивы. Цена за штуку падает с каждым следующим."
 
 msgid "Izaberi veličinu paketa"
 msgstr "Выбери размер набора"
 
-msgid "Ubaci svoje peškiriće"
+msgid "Ubaci svoje peškire"
 msgstr "Добавь свои мотивы"
 
 msgid "Izabrano"
@@ -854,7 +851,7 @@ msgstr "Удиви меня"
 msgid "Očisti"
 msgstr "Очистить"
 
-msgid "Peškirić %d"
+msgid "Peškir %d"
 msgstr "Мотив %d"
 
 msgid "Dodaj u korpu • %s"
@@ -863,19 +860,19 @@ msgstr "В корзину • %s"
 msgid "Izaberi još %d"
 msgstr "Выбери ещё %d"
 
-msgid "peškirić"
+msgid "peškir"
 msgstr "мотив"
 
-msgid "peškirića"
+msgid "peškira"
 msgstr "мотива"
 
-msgid "Najviše %d peškirića odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
+msgid "Najviše %d peškira odjednom — dodaj ovaj paket u korpu, pa napravi sledeći"
 msgstr "Не больше %d мотивов за раз — добавь этот набор в корзину и собери следующий"
 
 msgid "Izaberi još %d — paket nije popunjen"
 msgstr "Выбери ещё %d — набор не заполнен"
 
-msgid "Ukloni peškirić"
+msgid "Ukloni peškir"
 msgstr "Удалить мотив"
 
 msgid "Dodato u paket — izaberi još %d"
@@ -884,7 +881,7 @@ msgstr "Добавлено в набор — выбери ещё %d"
 msgid "Paket je pun — dodaj u korpu ili izaberi još"
 msgstr "Набор собран — добавь в корзину или выбери ещё"
 
-msgid "Dodato — u paketu je %d peškirića"
+msgid "Dodato — u paketu je %d peškira"
 msgstr "Добавлено — в наборе %d мотивов"
 
 msgid "+ %s"
@@ -905,7 +902,7 @@ msgstr "Купить 1 шт"
 msgid "Kupi %s, 1 kom"
 msgstr "Купить %s, 1 шт"
 
-msgid "Spoji %1$d peškirića u paket — ušteda %2$s"
+msgid "Spoji %1$d peškira u paket — ušteda %2$s"
 msgstr "Собери %1$d мотива в набор — экономия %2$s"
 
 msgid "Dodajem…"
@@ -920,7 +917,7 @@ msgstr "У тебя дома"
 msgid "Tvoj kutak, malo mekši"
 msgstr "Твой уголок, чуть мягче"
 
-msgid "Pored lavaboa, na kuki ili na polici — peškirići se uklope u svaki dom i unesu trunku topline."
+msgid "Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline."
 msgstr "У раковины, на крючке или на полке — полотенца впишутся в любой дом и добавят капельку тепла."
 
 msgid "Spremni za jutarnju rutinu"
@@ -971,7 +968,7 @@ msgstr "Отправить"
 msgid "Zadovoljne mušterije"
 msgstr "Довольные покупатели"
 
-msgid "Mali peškirići, veliki osmesi"
+msgid "Mali peškiri, veliki osmesi"
 msgstr "Маленькие полотенца, большие улыбки"
 
 msgid "Stigli su brže nego što sam očekivala i mekši su nego na slikama. Ćerka bira koji će da koristi svaki dan."
@@ -980,7 +977,7 @@ msgstr "Пришли быстрее, чем я ожидала, и мягче, ч
 msgid "Kupila sam 2+1 paket za poklon i bio je pravi hit. Pakovanje je preslatko, ne moraš ništa dodatno da uvijaš."
 msgstr "Купила набор 2+1 в подарок — и это был настоящий хит. Упаковка очаровательна, ничего дополнительно заворачивать не нужно."
 
-msgid "Alka za kačenje je sitnica koja mnogo znači — peškirić je uvek na svom mestu i ne završi na podu."
+msgid "Alka za kačenje je sitnica koja mnogo znači — peškir je uvek na svom mestu i ne završi na podu."
 msgstr "Петелька — мелочь, которая много значит: полотенце всегда на своём месте и не падает на пол."
 
 msgid "%d od 5 zvezdica"
@@ -1007,13 +1004,13 @@ msgstr "Ниш"
 msgid "Sad si ti na redu"
 msgstr "Теперь твоя очередь"
 
-msgid "Stigao ti je peškirić? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere."
+msgid "Stigao ti je peškir? Napiši par reči — to je ono što sledećem kupcu pomogne da izabere."
 msgstr "Полотенце уже у вас? Напишите пару слов — именно это помогает следующему покупателю выбрать."
 
 msgid "Ostavi utisak"
 msgstr "Оставить отзыв"
 
-msgid "Izaberi peškirić koji imaš — forma je na njegovoj stranici."
+msgid "Izaberi peškir koji imaš — forma je na njegovoj stranici."
 msgstr "Выберите полотенце, которое у вас есть — форма на его странице."
 
 msgid "Česta pitanja"
@@ -1025,7 +1022,7 @@ msgstr "Всё, что вас интересует"
 msgid "Ako ne nađeš odgovor, piši nam — rado pomažemo."
 msgstr "Если не найдёте ответ — напишите нам, мы рады помочь."
 
-msgid "Od čega su peškirići napravljeni?"
+msgid "Od čega su peškiri napravljeni?"
 msgstr "Из чего сделаны полотенца?"
 
 msgid "Od plišane mikrofibre — mekane, lagane i jako upijajuće. Prijatna je i nežnoj dečjoj koži."
@@ -1061,7 +1058,7 @@ msgstr "Оплата при получении — вы платите курь�
 msgid "Gde mogu da ostavim utisak?"
 msgstr "Где можно оставить отзыв?"
 
-msgid "Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškirić koji imaš. Isto možeš i sa stranice svakog peškirića, u tabu „Recenzije“."
+msgid "Na dnu početne strane, u delu sa utiscima kupaca, klikni „Ostavi utisak“ i izaberi peškir koji imaš. Isto možeš i sa stranice svakog peškira, u tabu „Recenzije“."
 msgstr "Внизу главной страницы, в разделе с отзывами покупателей, нажмите «Оставить отзыв» и выберите своё полотенце. То же можно сделать на странице любого полотенца, во вкладке «Отзывы»."
 
 msgid "Plaćanje pouzećem"
@@ -1088,7 +1085,7 @@ msgstr "бесплатная доставка"
 msgid "Uzmi %1$d — plati %2$d"
 msgstr "Возьми %1$d — заплати за %2$d"
 
-msgid "ili pogledaj svih %d peškirića"
+msgid "ili pogledaj svih %d peškira"
 msgstr "или посмотри все %d полотенец"
 
 msgid "Ušteda na paketima"
@@ -1097,25 +1094,25 @@ msgstr "Скидка за наборы"
 msgid "Ušteda na paketima (%s)"
 msgstr "Скидка за наборы (%s)"
 
-msgid "Još 1 peškirić za %s"
+msgid "Još 1 peškir za %s"
 msgstr "Ещё 1 полотенце за %s"
 
-msgid "Još 1 peškirić gratis"
+msgid "Još 1 peškir gratis"
 msgstr "Ещё 1 полотенце бесплатно"
 
 msgid "Još malo, pa povoljnije"
 msgstr "Ещё немного — и выгоднее"
 
-msgid "Još jedan peškirić košta %s — i dostava je na nama."
+msgid "Još jedan peškir košta %s — i dostava je na nama."
 msgstr "Ещё одно полотенце стоит %s — и доставка за наш счёт."
 
-msgid "Još jedan peškirić košta %1$s umesto pune cene — ušteda %2$s."
+msgid "Još jedan peškir košta %1$s umesto pune cene — ušteda %2$s."
 msgstr "Ещё одно полотенце стоит %1$s вместо полной цены — экономия %2$s."
 
-msgid "Još jedan peškirić je gratis — ukupna cena se ne menja."
+msgid "Još jedan peškir je gratis — ukupna cena se ne menja."
 msgstr "Ещё одно полотенце бесплатно — сумма не изменится."
 
-msgid "Sledeći peškirić"
+msgid "Sledeći peškir"
 msgstr "Следующее полотенце"
 
 msgid "Gratis"
@@ -1127,10 +1124,10 @@ msgstr "Добавь ещё одно — сумма останется преж�
 msgid "Dodaj"
 msgstr "Добавить"
 
-msgid "Prethodni peškirići"
+msgid "Prethodni peškiri"
 msgstr "Предыдущие полотенца"
 
-msgid "Sledeći peškirići"
+msgid "Sledeći peškiri"
 msgstr "Следующие полотенца"
 
 msgid "Ostvarena"
@@ -1139,10 +1136,10 @@ msgstr "Получена"
 msgid "Još %s"
 msgstr "Ещё %s"
 
-msgid "Prag se računa na zbir peškirića (%s) — ušteda na paketima se ne oduzima."
+msgid "Prag se računa na zbir peškira (%s) — ušteda na paketima se ne oduzima."
 msgstr "Порог считается по сумме полотенец (%s) — скидка за набор не вычитается."
 
-msgid "Dodaj još jedan peškirić i pređeš %s — dostava je onda na nama."
+msgid "Dodaj još jedan peškir i pređeš %s — dostava je onda na nama."
 msgstr "Добавь ещё одно полотенце, чтобы превысить %s — доставка тогда за наш счёт."
 
 msgid "Dostava je besplatna preko %s."
@@ -1160,19 +1157,19 @@ msgstr "Остальная компания тебя ждёт"
 msgid "%1$d kom · %2$s / kom"
 msgstr "%1$d шт · %2$s / шт"
 
-msgid "Napravi paket od %1$d peškirića po %2$s, počni sa oblikom %3$s"
+msgid "Napravi paket od %1$d peškira po %2$s, počni sa oblikom %3$s"
 msgstr "Собрать набор из %1$d полотенец по %2$s, начиная с формы %3$s"
 
-msgid "Kako su peškirići, %s?"
+msgid "Kako su peškiri, %s?"
 msgstr "Как полотенца, %s?"
 
-msgid "Kako su peškirići?"
+msgid "Kako su peškiri?"
 msgstr "Как полотенца?"
 
-msgid "Reci nam par reči o svojim peškirićima"
+msgid "Reci nam par reči o svojim peškirima"
 msgstr "Расскажите пару слов о своих полотенцах"
 
-msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškirići okače, isprobaju i operu bar jednom."
+msgid "Prošlo je nedelju dana otkad je paket stigao — taman dovoljno da se peškiri okače, isprobaju i operu bar jednom."
 msgstr "Прошла неделя с тех пор, как посылка пришла — как раз достаточно, чтобы повесить полотенца, испытать их и постирать хотя бы раз."
 
 msgid "Ako imaš minut, ostavi kratku recenziju. Pomaže drugima da izaberu, a nama da znamo šta da pravimo sledeće."
@@ -1196,7 +1193,7 @@ msgstr "Читать отзывы покупателей"
 msgid "Dodaj u paket"
 msgstr "Добавить в набор"
 
-msgid "Cena po komadu pada sa svakim sledećim peškirićem"
+msgid "Cena po komadu pada sa svakim sledećim peškirom"
 msgstr "Цена за штуку падает с каждым следующим полотенцем"
 
 msgid "Uzmi više, plati manje"
@@ -1226,7 +1223,7 @@ msgstr "Плюшевая микрофибра — мягкая, лёгкая и 
 msgid "Kačenje"
 msgstr "Подвешивание"
 
-msgid "Alka za kačenje, da peškirić uvek stoji na svom mestu."
+msgid "Alka za kačenje, da peškir uvek stoji na svom mestu."
 msgstr "Петелька для подвешивания, чтобы полотенце всегда было на своём месте."
 
 msgid "Održavanje"

@@ -791,6 +791,15 @@ h1, h2, h3, h4 {
 	border-radius: var(--radius-pill);
 }
 
+/* Instagram, Facebook, TikTok: one pill each, stacked, so every label stays
+   on one line in the narrow footer column. */
+.footer-social {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+}
+
 .footer-note {
 	color: rgba(255, 255, 255, 0.62);
 	font-size: 14px;

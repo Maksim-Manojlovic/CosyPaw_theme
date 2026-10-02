@@ -341,7 +341,7 @@ final class Seo {
 			'@id'    => home_url( '/#organization' ),
 			'name'   => get_bloginfo( 'name' ),
 			'url'    => home_url( '/' ),
-			'sameAs' => array( 'https://www.instagram.com/cosypaw_' ),
+			'sameAs' => array( 'https://www.instagram.com/cosypaw_', 'https://www.tiktok.com/@cosypaw_' ),
 		);
 
 		$logo_id = (int) get_theme_mod( 'custom_logo' );

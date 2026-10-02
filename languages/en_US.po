@@ -854,7 +854,7 @@ msgstr "Ready-made combinations of towels, Cuddle Puff pillows and magic cloths,
 msgid "Prilike"
 msgstr "Occasions"
 
-msgid "Pokloni za bebu i decu"
+msgid "Pokloni za bebe i decu"
 msgstr "Gifts for babies and children"
 
 msgid "Za rođenje, krštenje, prvi rođendan i polazak u vrtić."

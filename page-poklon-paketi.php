@@ -29,7 +29,7 @@ $cosypaw_baby   = \Theme\Pages::url( 'pokloni' );
 // One heading per occasion, worded for what people type in.
 $cosypaw_heads = array(
 	'deca'     => array(
-		'title' => __( 'Pokloni za bebu i decu', 'cosypaw' ),
+		'title' => __( 'Pokloni za bebe i decu', 'cosypaw' ),
 		'lead'  => __( 'Za rođenje, krštenje, prvi rođendan i polazak u vrtić.', 'cosypaw' ),
 	),
 	'dom'      => array(

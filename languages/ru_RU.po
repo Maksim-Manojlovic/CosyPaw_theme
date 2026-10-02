@@ -854,7 +854,7 @@ msgstr "Готовые сочетания полотенец, подушек Cud
 msgid "Prilike"
 msgstr "Поводы"
 
-msgid "Pokloni za bebu i decu"
+msgid "Pokloni za bebe i decu"
 msgstr "Подарки для малышей и детей"
 
 msgid "Za rođenje, krštenje, prvi rođendan i polazak u vrtić."

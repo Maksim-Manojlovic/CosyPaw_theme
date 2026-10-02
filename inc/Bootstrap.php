@@ -118,6 +118,20 @@ final class Bootstrap {
 	private ?Cloths $cloths = null;
 
 	/**
+	 * Cuddle Puff jastuci (WooCommerce only).
+	 *
+	 * @var Pillows|null
+	 */
+	private ?Pillows $pillows = null;
+
+	/**
+	 * Dugi peškiri (WooCommerce only).
+	 *
+	 * @var LongTowels|null
+	 */
+	private ?LongTowels $long_towels = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -149,6 +163,11 @@ final class Bootstrap {
 			// The magične krpice: their own category and price, outside the
 			// towel packages.
 			$this->cloths = new Cloths();
+
+			// Same for the Cuddle Puff pillows and the long towels: each in
+			// its own category, none of them a motif or part of a 2+1.
+			$this->pillows     = new Pillows();
+			$this->long_towels = new LongTowels();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

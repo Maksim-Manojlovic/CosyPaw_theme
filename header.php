@@ -107,30 +107,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 					)
 				);
 			} else {
-				// Default in-page anchors (resolve from any page back to the homepage sections).
-				$cosypaw_home = home_url( '/' );
-				// Listed in scroll order — nav that disagrees with the page it
-				// links into makes the anchors feel arbitrary.
-				$cosypaw_anchors = array(
-					'#galerija' => __( 'Peškirići', 'cosypaw' ),
-					'#paketi'   => __( 'Paketi', 'cosypaw' ),
-					'#zasto'    => __( 'Zašto CosyPaw', 'cosypaw' ),
-				);
-				// Off the front page, "Peškirići" goes to the motif collection
-				// rather than back to the homepage gallery: it is the same list,
-				// on a page of its own, and the link is the page's main way in.
-				$cosypaw_collection = class_exists( '\Theme\Pages' ) ? \Theme\Pages::url( 'motivi' ) : '';
+				// Default links: every product line's own page first, then the
+				// homepage sections (resolved from any page back to the homepage).
+				$cosypaw_home = is_front_page() ? '' : home_url( '/' );
 
-				foreach ( $cosypaw_anchors as $anchor => $label ) {
-					$cosypaw_href = ( is_front_page() ? '' : $cosypaw_home ) . $anchor;
-					if ( '#galerija' === $anchor && '' !== $cosypaw_collection && ! is_front_page() ) {
-						$cosypaw_href = $cosypaw_collection;
+				// Each product goes to its own page — that page is the line's
+				// main way in, and the link is what tells search engines it
+				// matters. A page that does not exist yet drops out, except the
+				// towels, which fall back to the homepage gallery.
+				$cosypaw_page = static fn( string $key ): string => class_exists( '\Theme\Pages' ) ? \Theme\Pages::url( $key ) : '';
+				$cosypaw_motifs = $cosypaw_page( 'motivi' );
+
+				$cosypaw_links = array(
+					array( '' !== $cosypaw_motifs ? $cosypaw_motifs : $cosypaw_home . '#galerija', __( 'Peškirići', 'cosypaw' ) ),
+					array( $cosypaw_page( 'dugi' ), __( 'Dugi peškiri', 'cosypaw' ) ),
+					array( $cosypaw_page( 'jastuci' ), __( 'Jastuci', 'cosypaw' ) ),
+					array( $cosypaw_page( 'krpe' ), __( 'Magične krpe', 'cosypaw' ) ),
+					array( $cosypaw_home . '#paketi', __( 'Paketi', 'cosypaw' ) ),
+					array( $cosypaw_home . '#zasto', __( 'Zašto CosyPaw', 'cosypaw' ) ),
+				);
+
+				$cosypaw_here = is_singular() ? (string) get_permalink() : '';
+
+				foreach ( $cosypaw_links as $cosypaw_link ) {
+					list( $cosypaw_href, $cosypaw_label ) = $cosypaw_link;
+					if ( '' === $cosypaw_href ) {
+						continue;
 					}
 
 					printf(
-						'<a href="%1$s" class="nav__link">%2$s</a>',
+						'<a href="%1$s" class="nav__link"%3$s>%2$s</a>',
 						esc_url( $cosypaw_href ),
-						esc_html( $label )
+						esc_html( $cosypaw_label ),
+						'' !== $cosypaw_here && $cosypaw_href === $cosypaw_here ? ' aria-current="page"' : ''
 					);
 				}
 			}

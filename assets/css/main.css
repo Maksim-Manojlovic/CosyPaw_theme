@@ -516,6 +516,10 @@ h1, h2, h3, h4 {
 	font-size: 15px;
 }
 
+.nav__link[aria-current="page"] {
+	color: var(--claydk);
+}
+
 .nav__actions {
 	display: flex;
 	align-items: center;
@@ -853,7 +857,13 @@ h1, h2, h3, h4 {
 		gap: 6px;
 		margin-top: 28px;
 	}
+}
 
+/* The nav collapses earlier than the rest of the chrome: six links and the
+   language switcher need about 1150px inline, so between the single-column
+   breakpoint and that width they would wrap or overflow. Matches
+   SiteNav.BREAKPOINT. */
+@media (max-width: 1180px) {
 	/* The nav collapses into a toggle-driven panel. Scoped to
 	   [data-nav-enhanced] so the links stay visible if SiteNav.js never runs —
 	   previously they were hidden unconditionally with nothing to open. */

@@ -470,6 +470,234 @@ msgstr "Add them to a towel package and reach free delivery over %s more easily.
 msgid "Poruči magične krpe"
 msgstr "Order magic cloths"
 
+msgid "Cuddle Puff jastuk Kružić, braon"
+msgstr "Cuddle Puff round pillow, brown"
+
+msgid "Cuddle Puff jastuk Kružić, sivi"
+msgstr "Cuddle Puff round pillow, grey"
+
+msgid "Cuddle Puff jastuk Kružić, žuti"
+msgstr "Cuddle Puff round pillow, yellow"
+
+msgid "Cuddle Puff jastuk Kružić, zeleni"
+msgstr "Cuddle Puff round pillow, green"
+
+msgid "Cuddle Puff jastuk Kružić, roze"
+msgstr "Cuddle Puff round pillow, pink"
+
+msgid "Cuddle Puff jastuk Kockasti, roze"
+msgstr "Cuddle Puff square pillow, pink"
+
+msgid "Cuddle Puff jastuk Kockasti, braon"
+msgstr "Cuddle Puff square pillow, brown"
+
+msgid "Cuddle Puff jastuk Kockasti, sivi"
+msgstr "Cuddle Puff square pillow, grey"
+
+msgid "Mekani plišani jastuk u obliku kružića, u toploj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft, round plush pillow in warm brown, with embroidered eyes, a little beak and a green leaf. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku kružića, u nežnoj sivoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft, round plush pillow in gentle grey, with embroidered eyes, a little beak and a green leaf. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku kružića, u veseloj žutoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft, round plush pillow in cheerful yellow, with embroidered eyes, a little beak and a green leaf. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku kružića, u svetloj zelenoj boji, sa vezenim okicama, kljunićem i listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft, round plush pillow in light green, with embroidered eyes, a little beak and a leaf. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku kružića, u nežnoj roze boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft, round plush pillow in gentle pink, with embroidered eyes, a little beak and a green leaf. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u roze boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "A soft, square plush pillow with wavy edges in pink, with embroidered eyes, a little beak and a green leaf. A pillow for a chair, an armchair or the sofa."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u svetloj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "A soft, square plush pillow with wavy edges in light brown, with embroidered eyes, a little beak and a green leaf. A pillow for a chair, an armchair or the sofa."
+
+msgid "Mekani plišani kockasti jastuk sa talasastim ivicama, u sivoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu."
+msgstr "A soft, square plush pillow with wavy edges in grey, with embroidered eyes, a little beak and a green leaf. A pillow for a chair, an armchair or the sofa."
+
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
+
+msgid "Braon"
+msgstr "Brown"
+
+msgid "Siva"
+msgstr "Grey"
+
+msgid "Žuta"
+msgstr "Yellow"
+
+msgid "Zelena"
+msgstr "Green"
+
+msgid "Roze"
+msgstr "Pink"
+
+msgid "Krem"
+msgstr "Cream"
+
+msgid "Plava"
+msgstr "Blue"
+
+msgid "Bež"
+msgstr "Beige"
+
+msgid "Oblik"
+msgstr "Shape"
+
+msgid "Kružić, okrugao sa talasastim ivicama."
+msgstr "Round, with wavy edges."
+
+msgid "Kockasti, sa talasastim ivicama."
+msgstr "Square, with wavy edges."
+
+msgid "Boja"
+msgstr "Colour"
+
+msgid "Detalji"
+msgstr "Details"
+
+msgid "Vezene okice i kljunić, plišani listić, omčica za kačenje."
+msgstr "Embroidered eyes and beak, a plush leaf, a hanging loop."
+
+msgid "Stolica, fotelja, sofa i dečija soba."
+msgstr "Chair, armchair, sofa and children’s room."
+
+msgid "Dugi peškir Meda, krem"
+msgstr "Teddy long towel, cream"
+
+msgid "Dugi peškir Meda, roze"
+msgstr "Teddy long towel, pink"
+
+msgid "Dugi peškir Meda, plavi"
+msgstr "Teddy long towel, blue"
+
+msgid "Dugi peškir Meda, bež"
+msgstr "Teddy long towel, beige"
+
+msgid "Mekani dugi peškir u krem boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "A soft long towel in cream, with an embroidered teddy, a paw and the word GOODLUCK on its border. For face, hands and hair."
+
+msgid "Mekani dugi peškir u nežnoj roze boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "A soft long towel in gentle pink, with an embroidered teddy, a paw and the word GOODLUCK on its border. For face, hands and hair."
+
+msgid "Mekani dugi peškir u nežnoj plavoj boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "A soft long towel in gentle blue, with an embroidered teddy, a paw and the word GOODLUCK on its border. For face, hands and hair."
+
+msgid "Mekani dugi peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu."
+msgstr "A soft long towel in warm beige, with an embroidered teddy, a paw and the word GOODLUCK on its border. For face, hands and hair."
+
+msgid "Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškirića za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgstr "A long towel of soft, absorbent fabric, with an embroidered teddy, a paw and the word GOODLUCK on its woven border. It is longer than a hand towel, so it works for face and hair too — on the rail by the basin or draped over a towel ladder. Its soft colours suit any bathroom, and it arrives like every CosyPaw product: cash on delivery, shipped anywhere in Serbia."
+
+msgid "Vezeni meda, šapica i natpis GOODLUCK."
+msgstr "Embroidered teddy, paw and the word GOODLUCK."
+
+msgid "Lice, ruke i kosa — za celu porodicu."
+msgstr "Face, hands and hair — for the whole family."
+
+msgid "Izaberi boju"
+msgstr "Choose a colour"
+
+msgid "Za kupatilo"
+msgstr "For the bathroom"
+
+msgid "Dugi peškiri"
+msgstr "Long towels"
+
+msgid "Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškirića."
+msgstr "Soft long towels with an embroidered teddy and paw, for face, hands and hair. %s each, outside the towel packages."
+
+msgid "Sve o dugim peškirima"
+msgstr "All about the long towels"
+
+msgid "Cuddle Puff jastuci"
+msgstr "Cuddle Puff pillows"
+
+msgid "Punašni plišani jastuci sa vezenim okicama i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu."
+msgstr "Plump plush pillows with embroidered eyes and a leaf, round or square. For a chair, an armchair, the sofa or a child’s room — %s each."
+
+msgid "Sve o Cuddle Puff jastucima"
+msgstr "All about the Cuddle Puff pillows"
+
+msgid "Jastuci"
+msgstr "Pillows"
+
+msgid "Dugi peškiri sa vezenim medom"
+msgstr "Long towels with an embroidered teddy"
+
+msgid "Mekani, upijajući peškiri za lice, ruke i kosu, sa vezenim medom i šapicom na borduri. Nežne boje za svako kupatilo, za %s po komadu."
+msgstr "Soft, absorbent towels for face, hands and hair, with an embroidered teddy and paw on the border. Soft colours for any bathroom, at %s each."
+
+msgid "Peškiri za kupatilo"
+msgstr "Bathroom towels"
+
+msgid "Mekani peškiri za lice, ruke i kosu"
+msgstr "Soft towels for face, hands and hair"
+
+msgid "Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškirića za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu."
+msgstr "A long towel is the one you reach for every morning: for your face after washing, your hands at the basin and your hair after a shower. It is longer than a hand towel, so one go dries both face and hair, and the soft, absorbent fabric takes up water quickly."
+
+msgid "Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ."
+msgstr "A little teddy with a paw and the word GOODLUCK are embroidered on the woven border — a small detail that makes a bathroom feel warmer. Cream, pink, blue and beige are soft colours that sit easily with tiles, marble or wood, and look good mixed together too."
+
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj. A za najmlađe imamo i %s — ručno rađene peškiriće sa alkom za kačenje."
+msgstr "If you are looking for a face towel or hand towel that looks good on the rail and on a towel ladder alike, this is it. And for the little ones we also have %s — handmade towels with a hanging loop."
+
+msgid "Ako tražiš peškir za lice ili peškir za ruke koji lepo izgleda i na držaču i na merdevinama za peškire, ovo je taj."
+msgstr "If you are looking for a face towel or hand towel that looks good on the rail and on a towel ladder alike, this is it."
+
+msgid "dečije peškire sa motivima životinja"
+msgstr "children’s towels with animal designs"
+
+msgid "Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "The long towels arrive like every CosyPaw product — cash on delivery, delivered across Serbia in 2–4 days."
+
+msgid "Dodaj ih uz paket peškirića i lakše stigni do besplatne dostave preko %s."
+msgstr "Add them to a towel package and reach free delivery over %s more easily."
+
+msgid "Poruči dugi peškir"
+msgstr "Order a long towel"
+
+msgid "Mekani Cuddle Puff jastuci sa okicama"
+msgstr "Soft Cuddle Puff pillows with little eyes"
+
+msgid "Punašni plišani jastuci sa vezenim okicama, kljunićem i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu, za %s."
+msgstr "Plump plush pillows with embroidered eyes, a little beak and a leaf, round or square. For a chair, an armchair, the sofa or a child’s room, at %s."
+
+msgid "Jastuci za dom"
+msgstr "Pillows for the home"
+
+msgid "Jastuk za stolicu, ukrasni jastuk i plišani drug u jednom"
+msgstr "A chair cushion, a decorative pillow and a plush friend in one"
+
+msgid "Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi."
+msgstr "A Cuddle Puff pillow is the one everyone wants to hug. The ribbed plush is soft to the touch, and the plump, quilted shape makes it a comfortable chair or armchair cushion — in the kitchen, at the desk or in the living room."
+
+msgid "Biraš između dva oblika. Kružić ima talasaste ivice kao cvet, a Kockasti je četvrtast, sa istim talasastim obrubom. Oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje, i dolaze u nežnim bojama — od roze i žute do sive i braon."
+msgstr "You choose between two shapes. The round one has wavy edges like a flower, and the square one has the same wavy trim. Both have embroidered eyes, a yellow beak, a green plush leaf and a hanging loop, and come in soft colours — from pink and yellow to grey and brown."
+
+msgid "Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda."
+msgstr "As a decorative pillow on the sofa or bed they bring colour and a smile, and in a child’s room they become a plush friend for cuddles, reading and play. They make a lovely gift too — for a housewarming, a birthday or no reason at all."
+
+msgid "Cuddle Puff jastuke šaljemo kao i ostale CosyPaw proizvode — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Uz jastuk lepo idu i naši mekani proizvodi za kupatilo, poput %s."
+msgstr "We send the Cuddle Puff pillows like every CosyPaw product — cash on delivery, delivered across Serbia in 2–4 days. They pair nicely with our soft bathroom pieces too, such as %s."
+
+msgid "Cuddle Puff jastuke šaljemo kao i ostale CosyPaw proizvode — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije."
+msgstr "We send the Cuddle Puff pillows like every CosyPaw product — cash on delivery, delivered across Serbia in 2–4 days."
+
+msgid "dugih peškira sa vezenim medom"
+msgstr "the long towels with an embroidered teddy"
+
+msgid "Dodaj jastuk uz paket peškirića i lakše stigni do besplatne dostave preko %s."
+msgstr "Add a pillow to a towel package and reach free delivery over %s more easily."
+
+msgid "Poruči Cuddle Puff jastuk"
+msgstr "Order a Cuddle Puff pillow"
+
 msgid "Glavna navigacija"
 msgstr "Main navigation"
 

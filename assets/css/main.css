@@ -484,7 +484,7 @@ h1, h2, h3, h4 {
 .nav__links {
 	display: flex;
 	align-items: center;
-	gap: 28px;
+	gap: 24px;
 }
 
 /* wp_nav_menu() prints a <ul class="nav__menu">; without this reset an assigned
@@ -493,7 +493,7 @@ h1, h2, h3, h4 {
 .nav__menu {
 	display: flex;
 	align-items: center;
-	gap: 28px;
+	gap: 24px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -859,10 +859,10 @@ h1, h2, h3, h4 {
 	}
 }
 
-/* The nav collapses earlier than the rest of the chrome: six links and the
-   language switcher need about 1150px inline, so between the single-column
-   breakpoint and that width they would wrap or overflow. Matches
-   SiteNav.BREAKPOINT. */
+/* The nav collapses earlier than the rest of the chrome: seven links and the
+   language switcher only fit inline once the nav has its full width
+   (--maxw-content), which it reaches here — tightest in Russian, the longest
+   of the three languages. Matches SiteNav.BREAKPOINT. */
 @media (max-width: 1180px) {
 	/* The nav collapses into a toggle-driven panel. Scoped to
 	   [data-nav-enhanced] so the links stay visible if SiteNav.js never runs —

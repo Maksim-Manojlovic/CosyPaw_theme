@@ -608,6 +608,25 @@ if ( $hero_deal ) {
 		</section>
 	<?php endif; ?>
 
+	<!-- POKLON PAKETI -->
+	<?php
+	/*
+	 * Three bundles for three kinds of buyer — a baby gift, a housewarming,
+	 * the holidays — with the rest a click away. Printed only while they are
+	 * on offer and cheaper than their parts (\Theme\GiftBundles).
+	 */
+	get_template_part(
+		'template-parts/bundle-section',
+		null,
+		array(
+			'keys'  => array( 'dobrodoslica-za-bebu', 'novi-dom', 'praznicna-kutija' ),
+			'id'    => 'poklon-paketi',
+			'title' => __( 'Poklon paketi za svaku priliku', 'cosypaw' ),
+			'lead'  => __( 'Gotove kombinacije peškira, jastuka i krpica — složene za jednu priliku i jeftinije u paketu.', 'cosypaw' ),
+		)
+	);
+	?>
+
 	<!-- U TVOM DOMU (lifestyle) -->
 	<section id="dom" class="section">
 		<div class="section__head">

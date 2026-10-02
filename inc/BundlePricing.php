@@ -484,9 +484,25 @@ final class BundlePricing {
 			return $this->tiers;
 		}
 
+		$this->tiers = self::tiers_from( $this->catalog->packages() );
+
+		return $this->tiers;
+	}
+
+	/**
+	 * Catalog::packages() rows as pricing tiers, largest first.
+	 *
+	 * Shared with anything else that has to quote what the shop would charge
+	 * for some number of towels — the gift bundles' "separately" price above
+	 * all, which must agree with what the cart would actually take.
+	 *
+	 * @param array<int,array<string,mixed>> $packages Catalog::packages() output.
+	 * @return array<int,array{id:string,name:string,qty:int,price:int}> Empty without a single-towel tier.
+	 */
+	public static function tiers_from( array $packages ): array {
 		$tiers = array();
 
-		foreach ( $this->catalog->packages() as $package ) {
+		foreach ( $packages as $package ) {
 			$qty   = (int) ( $package['qty'] ?? 0 );
 			$price = (int) ( $package['price'] ?? 0 );
 
@@ -513,14 +529,12 @@ final class BundlePricing {
 		}
 
 		if ( ! $has_single ) {
-			$tiers = array();
+			return array();
 		}
 
 		usort( $tiers, static fn( array $a, array $b ): int => $b['qty'] <=> $a['qty'] );
 
-		$this->tiers = $tiers;
-
-		return $this->tiers;
+		return $tiers;
 	}
 
 	/**

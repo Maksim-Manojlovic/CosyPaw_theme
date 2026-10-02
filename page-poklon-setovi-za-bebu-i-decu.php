@@ -133,6 +133,19 @@ $cosypaw_motifs_href = \Theme\Pages::url( 'motivi' );
 		</div>
 	</section>
 
+	<?php
+	get_template_part(
+		'template-parts/bundle-section',
+		null,
+		array(
+			'keys'  => array( 'dobrodoslica-za-bebu', 'kutak-za-decju-sobu', 'za-vrtic' ),
+			'id'    => 'gotovi-paketi',
+			'title' => __( 'Gotovi poklon paketi za bebu i decu', 'cosypaw' ),
+			'lead'  => __( 'Kad ne želiš da biraš sam: peškiri i jastuk, već složeni za poklon.', 'cosypaw' ),
+		)
+	);
+	?>
+
 	<section id="unikatni-pokloni" class="section seo-copy">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Zašto CosyPaw poklon', 'cosypaw' ); ?></span>

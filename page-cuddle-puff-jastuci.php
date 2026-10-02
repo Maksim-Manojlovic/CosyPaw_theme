@@ -68,6 +68,19 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 		</section>
 	<?php endif; ?>
 
+	<?php
+	get_template_part(
+		'template-parts/bundle-section',
+		null,
+		array(
+			'keys'  => array( 'kutak-za-decju-sobu', 'novi-dom', 'za-dvoje' ),
+			'id'    => 'poklon-paketi',
+			'title' => __( 'Cuddle Puff jastuci u poklon paketu', 'cosypaw' ),
+			'lead'  => __( 'Uz peškire i krpice — jeftinije nego posebno.', 'cosypaw' ),
+		)
+	);
+	?>
+
 	<section id="jastuci-za-dom" class="section seo-copy">
 		<div class="section__head">
 			<span class="eyebrow"><?php esc_html_e( 'Jastuci za dom', 'cosypaw' ); ?></span>

@@ -328,6 +328,20 @@ $sr_source = array(
 	'Cuddle Puff jastuci u poklon paketu'                                                     => array( 'Cuddle Puff pillows in a gift bundle', 'Подушки Cuddle Puff в подарочном наборе' ),
 	'Uz peškire i krpice — jeftinije nego posebno.'                                           => array( 'With towels and cloths — cheaper than separately.', 'С полотенцами и салфетками — дешевле, чем по отдельности.' ),
 
+	// "Složi svoj paket" on a gift bundle's page, and the packing list in the
+	// cart and on the order (template-parts/bundle-picker.php, GiftBundlePicker).
+	'Složi svoj paket'                                                                        => array( 'Build your own bundle', 'Собери свой набор' ),
+	'Ovo je naš predlog. Promeni boju ili oblik bilo kog dela — cena paketa ostaje ista.'     => array( 'This is our suggestion. Change the colour or shape of any part — the bundle price stays the same.', 'Это наше предложение. Поменяй цвет или форму любой части — цена набора не изменится.' ),
+	'Promeni'                                                                                 => array( 'Change', 'Изменить' ),
+	'%s: izaberi boju'                                                                        => array( '%s: choose a colour', '%s: выбери цвет' ),
+	'%s: izaberi oblik'                                                                       => array( '%s: choose a shape', '%s: выбери форму' ),
+	'Nešto iz paketa trenutno nije dostupno — izaberi drugu boju ili oblik.'                  => array( 'Something in the bundle is not available right now — choose another colour or shape.', 'Что-то из набора сейчас недоступно — выбери другой цвет или форму.' ),
+	'Peškir'                                                                                  => array( 'Towel', 'Полотенце' ),
+	'Dugi peškir'                                                                             => array( 'Long towel', 'Длинное полотенце' ),
+	'Jastuk Kružić'                                                                           => array( 'Round pillow', 'Подушка «Кружок»' ),
+	'Jastuk Kockasti'                                                                         => array( 'Square pillow', 'Подушка «Квадрат»' ),
+	'Avokado, limeta i žalfija'                                                               => array( 'Avocado, lime and sage', 'Авокадо, лайм и шалфей' ),
+
 	// Poklon paketi page (page-poklon-paketi.php).
 	'Poklon paketi'                                                                           => array( 'Gift bundles', 'Подарочные наборы' ),
 	'Gotove kombinacije peškira, Cuddle Puff jastuka i magičnih krpica, složene za jednu priliku — i jeftinije nego kad ih kupuješ posebno.' => array( 'Ready-made combinations of towels, Cuddle Puff pillows and magic cloths, put together for one occasion — and cheaper than buying them separately.', 'Готовые сочетания полотенец, подушек Cuddle Puff и волшебных салфеток, собранные для одного повода, — и дешевле, чем покупать по отдельности.' ),

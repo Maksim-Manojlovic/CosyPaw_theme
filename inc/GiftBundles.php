@@ -5,9 +5,14 @@
  *
  * A bundle is a plain simple product rather than a cart rule, like the cloth
  * set: it has its own page, photo and Yoast fields, and the free-delivery
- * threshold sees the price it is really sold at. Its contents are fixed —
- * named towels, colours and the cloth set — so the shop knows what to pack
- * from the order line alone, and `contains` below is the packing list.
+ * threshold sees the price it is really sold at. `contains` below is the
+ * suggested packing list, one slot per part, and each slot can be swapped
+ * like for like on the product page (slots(), \Theme\GiftBundlePicker): a
+ * pillow for another colour of the same shape, a towel for any other shape,
+ * a long towel for another colour — only ever for something on sale at the
+ * same price, so the bundle's price and its saving hold whatever is chosen.
+ * The order line carries what was chosen, so the shop still knows what to
+ * pack from it alone.
  *
  * What a bundle saves is never a number typed in. It is worked out against
  * the cheapest way the shop itself would sell the same things today: towels
@@ -96,9 +101,10 @@ final class GiftBundles extends ProductLine {
 	 *  - occasion: OCCASIONS key.
 	 *  - includes: the contents in words (a Serbian msgid), for the card and
 	 *    the product page.
-	 *  - contains: the packing list, [line, key] pairs. A towel is its motif
-	 *    id (Catalog), the others their own line's ITEMS key; the cloths are
-	 *    the set of both.
+	 *  - contains: the suggested packing list, [line, key] pairs, one per slot.
+	 *    A towel is its motif id (Catalog), the others their own line's ITEMS
+	 *    key; the cloths are the set of both. Cards and offers() describe and
+	 *    price exactly this; the product page lets each slot be swapped.
 	 *
 	 * @var array<string,array<string,mixed>>
 	 */
@@ -246,6 +252,27 @@ final class GiftBundles extends ProductLine {
 	 * @var array<int,array{id:string,name:string,qty:int,price:int}>|null
 	 */
 	private static ?array $tiers = null;
+
+	/**
+	 * Per-request memo of the towel motifs, sold or not, by id.
+	 *
+	 * @var array<string,array<string,mixed>>|null
+	 */
+	private static ?array $motifs = null;
+
+	/**
+	 * Per-request memo of the towels on sale, as slot choices.
+	 *
+	 * @var array<string,array{key:string,name:string,swatch:string,image:string,price:int}>|null
+	 */
+	private static ?array $towels = null;
+
+	/**
+	 * Per-request memo of slots(), by bundle key.
+	 *
+	 * @var array<string,array<int,array<string,mixed>>>
+	 */
+	private static array $slots = array();
 
 	/* ---------------------------------------------------------------------
 	 * Storefront
@@ -395,12 +422,358 @@ final class GiftBundles extends ProductLine {
 	}
 
 	/**
-	 * Forget the memoised tiers (tests price several scenarios in one run).
+	 * Forget the memoised tiers, motifs and slots (tests price several
+	 * scenarios in one run).
 	 *
 	 * @return void
 	 */
 	public static function flush(): void {
-		self::$tiers = null;
+		self::$tiers  = null;
+		self::$motifs = null;
+		self::$towels = null;
+		self::$slots  = array();
+	}
+
+	/* ---------------------------------------------------------------------
+	 * Slots: what each part of a bundle may be swapped for
+	 * ------------------------------------------------------------------ */
+
+	/**
+	 * The bundle's parts, each with what it may be swapped for.
+	 *
+	 * One slot per `contains` entry, in that order. `choices` are the things
+	 * on sale today that can take the slot: another colour of the same pillow
+	 * shape, any towel shape, another colour of the long towel; the cloth set
+	 * is the only thing that fills its own slot. A choice has to sell at the
+	 * price the suggested part does (its launch price, while that part is off
+	 * sale), so a swap never changes what the bundle is worth — the price and
+	 * the saving offers() states hold for every combination. A colour the shop
+	 * reprices on its own simply drops out of the bundle until the line is
+	 * level again.
+	 *
+	 * @param string $key ITEMS key.
+	 * @return array<int,array{line:string,default:string,label:string,choices:array<string,array{key:string,name:string,swatch:string,image:string,price:int}>}> Empty for an unknown key.
+	 */
+	public static function slots( string $key ): array {
+		if ( isset( self::$slots[ $key ] ) ) {
+			return self::$slots[ $key ];
+		}
+
+		$item = self::ITEMS[ $key ] ?? null;
+		if ( null === $item ) {
+			return array();
+		}
+
+		$slots = array();
+		foreach ( $item['contains'] as $part ) {
+			list( $line, $default ) = $part;
+
+			$slots[] = array(
+				'line'    => $line,
+				'default' => $default,
+				'label'   => self::slot_label( $line, $default ),
+				'choices' => self::choices( $line, $default ),
+			);
+		}
+
+		self::$slots[ $key ] = $slots;
+
+		return $slots;
+	}
+
+	/**
+	 * Whether every slot of the bundle has something on sale to fill it.
+	 *
+	 * @param string $key ITEMS key.
+	 * @return bool
+	 */
+	public static function packable( string $key ): bool {
+		$slots = self::slots( $key );
+
+		foreach ( $slots as $slot ) {
+			if ( ! $slot['choices'] ) {
+				return false;
+			}
+		}
+
+		return (bool) $slots;
+	}
+
+	/**
+	 * The packing list for a bundle, with the shopper's picks in it.
+	 *
+	 * A slot not picked keeps its suggested part — which is what an add from a
+	 * bundle card, carrying no picks at all, gets. A pick that is not one of
+	 * the slot's choices, or a suggestion no longer on sale, makes the whole
+	 * list unpackable rather than quietly packing something else.
+	 *
+	 * @param string            $key    ITEMS key.
+	 * @param array<int,string> $picked Slot index => chosen key.
+	 * @return array<int,array{0:string,1:string}>|null [line, key] pairs, or null.
+	 */
+	public static function resolve( string $key, array $picked = array() ): ?array {
+		$slots = self::slots( $key );
+		if ( ! $slots ) {
+			return null;
+		}
+
+		$parts = array();
+		foreach ( $slots as $i => $slot ) {
+			$choice = isset( $picked[ $i ] ) ? (string) $picked[ $i ] : $slot['default'];
+			if ( ! isset( $slot['choices'][ $choice ] ) ) {
+				return null;
+			}
+			$parts[] = array( $slot['line'], $choice );
+		}
+
+		return $parts;
+	}
+
+	/**
+	 * A packing list as one string for the cart item and the order line:
+	 * "pillow:kruzic-zuti,towel:sova". Language-neutral, like the builder's
+	 * motif ids, so the order reads in whatever language it is viewed in.
+	 *
+	 * @param array<int,array{0:string,1:string}> $parts [line, key] pairs.
+	 * @return string
+	 */
+	public static function encode( array $parts ): string {
+		return implode( ',', array_map( static fn( array $part ): string => $part[0] . ':' . $part[1], $parts ) );
+	}
+
+	/**
+	 * encode() reversed. Anything that is not a known line and a key is
+	 * dropped.
+	 *
+	 * @param string $stored Stored packing list.
+	 * @return array<int,array{0:string,1:string}>
+	 */
+	public static function decode( string $stored ): array {
+		$lines = array( self::TOWEL, self::LONG, self::PILLOW, self::CLOTHS );
+		$parts = array();
+
+		foreach ( explode( ',', $stored ) as $pair ) {
+			$pair = explode( ':', trim( $pair ), 2 );
+			if ( 2 === count( $pair ) && in_array( $pair[0], $lines, true ) && '' !== $pair[1] ) {
+				$parts[] = array( $pair[0], $pair[1] );
+			}
+		}
+
+		return $parts;
+	}
+
+	/**
+	 * A packing list in words, a row per part: "Jastuk Kružić" / "Žuta".
+	 *
+	 * Resolved from the registries rather than the live products, so an order
+	 * still names a part long after it has gone off sale.
+	 *
+	 * @param array<int,array{0:string,1:string}> $parts [line, key] pairs.
+	 * @return array<int,array{label:string,name:string}>
+	 */
+	public static function describe( array $parts ): array {
+		$out = array();
+
+		foreach ( $parts as $part ) {
+			list( $line, $key ) = $part;
+
+			$out[] = array(
+				'label' => self::slot_label( $line, $key ),
+				'name'  => self::part_name( $line, $key ),
+			);
+		}
+
+		return $out;
+	}
+
+	/**
+	 * ITEMS key a product is mapped to, or '' for anything that is not a
+	 * bundle.
+	 *
+	 * @param int $product_id Product id.
+	 * @return string
+	 */
+	public static function key_for( int $product_id ): string {
+		return self::key_of( $product_id );
+	}
+
+	/**
+	 * What a slot is, in words: "Peškir", "Jastuk Kockasti".
+	 *
+	 * @param string $line Component line.
+	 * @param string $key  The part in the slot.
+	 * @return string
+	 */
+	private static function slot_label( string $line, string $key ): string {
+		return match ( $line ) {
+			self::TOWEL  => __( 'Peškir', 'cosypaw' ),
+			self::PILLOW => Pillows::SQUARE === ( Pillows::ITEMS[ $key ]['group'] ?? '' )
+				? __( 'Jastuk Kockasti', 'cosypaw' )
+				: __( 'Jastuk Kružić', 'cosypaw' ),
+			self::LONG   => __( 'Dugi peškir', 'cosypaw' ),
+			default      => __( 'Magične krpice', 'cosypaw' ),
+		};
+	}
+
+	/**
+	 * Which one a part is, in words: the towel's shape, the colour of the
+	 * others. Its key when the registry no longer knows it.
+	 *
+	 * @param string $line Component line.
+	 * @param string $key  Part key.
+	 * @return string
+	 */
+	private static function part_name( string $line, string $key ): string {
+		$color = match ( $line ) {
+			self::PILLOW => Pillows::ITEMS[ $key ]['color'] ?? '',
+			self::LONG   => LongTowels::ITEMS[ $key ]['color'] ?? '',
+			default      => '',
+		};
+
+		if ( '' !== $color ) {
+			return self::translate( (string) $color );
+		}
+
+		if ( self::TOWEL === $line ) {
+			return (string) ( self::motifs()[ $key ]['name'] ?? $key );
+		}
+
+		if ( self::CLOTHS === $line && isset( Cloths::ITEMS[ $key ] ) ) {
+			return __( 'Avokado, limeta i žalfija', 'cosypaw' );
+		}
+
+		return $key;
+	}
+
+	/**
+	 * What may take a slot: the candidates on sale at the suggested part's
+	 * price, in registry order.
+	 *
+	 * @param string $line    Component line.
+	 * @param string $default The suggested part.
+	 * @return array<string,array{key:string,name:string,swatch:string,image:string,price:int}>
+	 */
+	private static function choices( string $line, string $default ): array {
+		$candidates = match ( $line ) {
+			self::TOWEL  => self::towel_choices(),
+			self::PILLOW => self::line_choices( $line, Pillows::class, self::same_group( Pillows::ITEMS, $default ) ),
+			self::LONG   => self::line_choices( $line, LongTowels::class, self::same_group( LongTowels::ITEMS, $default ) ),
+			self::CLOTHS => self::line_choices( $line, Cloths::class, static fn( string $key, array $item ): bool => $key === $default ),
+			default      => array(),
+		};
+
+		$price = $candidates[ $default ]['price'] ?? self::launch_price( $line, $default );
+
+		return array_filter( $candidates, static fn( array $choice ): bool => $choice['price'] === $price );
+	}
+
+	/**
+	 * Every towel on sale, as slot choices. Its photo is the 192px square
+	 * the benefit cards use.
+	 *
+	 * @return array<string,array{key:string,name:string,swatch:string,image:string,price:int}>
+	 */
+	private static function towel_choices(): array {
+		if ( null !== self::$towels ) {
+			return self::$towels;
+		}
+
+		$out = array();
+		foreach ( self::motifs() as $id => $motif ) {
+			$price = self::towel_price( (string) $id );
+			if ( null === $price ) {
+				continue;
+			}
+
+			$out[ (string) $id ] = array(
+				'key'    => (string) $id,
+				'name'   => (string) ( $motif['name'] ?? $id ),
+				'swatch' => '',
+				'image'  => (string) ( $motif['image_th'] ?? '' ),
+				'price'  => $price,
+			);
+		}
+
+		self::$towels = $out;
+
+		return $out;
+	}
+
+	/**
+	 * A product line's items on sale that a predicate admits, as slot choices.
+	 *
+	 * @param string                       $line   Component line.
+	 * @param class-string<ProductLine>    $class  The line's class.
+	 * @param callable(string,array):bool $wanted Whether an ITEMS entry may take the slot.
+	 * @return array<string,array{key:string,name:string,swatch:string,image:string,price:int}>
+	 */
+	private static function line_choices( string $line, string $class, callable $wanted ): array {
+		$out = array();
+
+		foreach ( $class::ITEMS as $key => $item ) {
+			$key = (string) $key;
+			if ( ! $wanted( $key, $item ) ) {
+				continue;
+			}
+
+			$row = $class::row( $key );
+			if ( null === $row || $row['price'] < 1 ) {
+				continue;
+			}
+
+			$out[ $key ] = array(
+				'key'    => $key,
+				'name'   => self::part_name( $line, $key ),
+				'swatch' => (string) ( $item['swatch'] ?? '' ),
+				'image'  => $row['image_id'] > 0 ? (string) wp_get_attachment_image_url( $row['image_id'], 'woocommerce_thumbnail' ) : '',
+				'price'  => $row['price'],
+			);
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Predicate for line_choices(): the items of the same design as one item —
+	 * the colours of one pillow shape, the colours of the long towel.
+	 *
+	 * @param array<string,array<string,mixed>> $items A line's ITEMS.
+	 * @param string                            $key   The suggested item.
+	 * @return callable(string,array):bool
+	 */
+	private static function same_group( array $items, string $key ): callable {
+		$group = $items[ $key ]['group'] ?? null;
+
+		return static fn( string $candidate, array $item ): bool => null !== $group && ( $item['group'] ?? null ) === $group;
+	}
+
+	/**
+	 * What a part was launched at, for a slot whose suggestion is off sale.
+	 *
+	 * @param string $line Component line.
+	 * @param string $key  Part key.
+	 * @return int
+	 */
+	private static function launch_price( string $line, string $key ): int {
+		return (int) match ( $line ) {
+			self::PILLOW => Pillows::ITEMS[ $key ]['price'] ?? Pillows::PRICE,
+			self::LONG   => LongTowels::ITEMS[ $key ]['price'] ?? LongTowels::PRICE,
+			self::CLOTHS => Cloths::ITEMS[ $key ]['price'] ?? Cloths::PRICE,
+			default      => Catalog::UNIT_PRICE,
+		};
+	}
+
+	/**
+	 * Every towel motif by id, sold or not — orders have to name retired ones.
+	 *
+	 * @return array<string,array<string,mixed>>
+	 */
+	private static function motifs(): array {
+		if ( null === self::$motifs ) {
+			self::$motifs = ( new Catalog() )->motif_map();
+		}
+
+		return self::$motifs;
 	}
 
 	/* ---------------------------------------------------------------------
@@ -408,7 +781,11 @@ final class GiftBundles extends ProductLine {
 	 * ------------------------------------------------------------------ */
 
 	/**
-	 * The spec list under a bundle's summary: the packing list first.
+	 * The spec list under a bundle's summary.
+	 *
+	 * The suggested packing list leads it only where the picker above the
+	 * button is not printed: there the picker already lists every part, and
+	 * would have the list here contradicting it after the first swap.
 	 *
 	 * @param string $key ITEMS key of the product on screen.
 	 * @return array<string,string>
@@ -420,8 +797,12 @@ final class GiftBundles extends ProductLine {
 		// The live price, not the launch one: wp-admin may have moved it.
 		$free = $free_min > 0 && null !== $row && $row['price'] >= $free_min;
 
-		return array(
-			__( 'U paketu', 'cosypaw' )  => self::translate( (string) $item['includes'] ),
+		$specs = array();
+		if ( null === $row || ! self::packable( $key ) ) {
+			$specs[ __( 'U paketu', 'cosypaw' ) ] = self::translate( (string) $item['includes'] );
+		}
+
+		return $specs + array(
 			__( 'Prilika', 'cosypaw' )   => self::translate( self::OCCASIONS[ $item['occasion'] ] ),
 			__( 'Dostava', 'cosypaw' )   => $free
 				? __( 'Besplatna dostava, plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' )

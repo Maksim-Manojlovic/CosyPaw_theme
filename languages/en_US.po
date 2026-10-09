@@ -845,6 +845,39 @@ msgstr "Cuddle Puff pillows in a gift bundle"
 msgid "Uz peškire i krpice — jeftinije nego posebno."
 msgstr "With towels and cloths — cheaper than separately."
 
+msgid "Složi svoj paket"
+msgstr "Build your own bundle"
+
+msgid "Ovo je naš predlog. Promeni boju ili oblik bilo kog dela — cena paketa ostaje ista."
+msgstr "This is our suggestion. Change the colour or shape of any part — the bundle price stays the same."
+
+msgid "Promeni"
+msgstr "Change"
+
+msgid "%s: izaberi boju"
+msgstr "%s: choose a colour"
+
+msgid "%s: izaberi oblik"
+msgstr "%s: choose a shape"
+
+msgid "Nešto iz paketa trenutno nije dostupno — izaberi drugu boju ili oblik."
+msgstr "Something in the bundle is not available right now — choose another colour or shape."
+
+msgid "Peškir"
+msgstr "Towel"
+
+msgid "Dugi peškir"
+msgstr "Long towel"
+
+msgid "Jastuk Kružić"
+msgstr "Round pillow"
+
+msgid "Jastuk Kockasti"
+msgstr "Square pillow"
+
+msgid "Avokado, limeta i žalfija"
+msgstr "Avocado, lime and sage"
+
 msgid "Poklon paketi"
 msgstr "Gift bundles"
 

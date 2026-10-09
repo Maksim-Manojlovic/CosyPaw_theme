@@ -845,6 +845,39 @@ msgstr "Подушки Cuddle Puff в подарочном наборе"
 msgid "Uz peškire i krpice — jeftinije nego posebno."
 msgstr "С полотенцами и салфетками — дешевле, чем по отдельности."
 
+msgid "Složi svoj paket"
+msgstr "Собери свой набор"
+
+msgid "Ovo je naš predlog. Promeni boju ili oblik bilo kog dela — cena paketa ostaje ista."
+msgstr "Это наше предложение. Поменяй цвет или форму любой части — цена набора не изменится."
+
+msgid "Promeni"
+msgstr "Изменить"
+
+msgid "%s: izaberi boju"
+msgstr "%s: выбери цвет"
+
+msgid "%s: izaberi oblik"
+msgstr "%s: выбери форму"
+
+msgid "Nešto iz paketa trenutno nije dostupno — izaberi drugu boju ili oblik."
+msgstr "Что-то из набора сейчас недоступно — выбери другой цвет или форму."
+
+msgid "Peškir"
+msgstr "Полотенце"
+
+msgid "Dugi peškir"
+msgstr "Длинное полотенце"
+
+msgid "Jastuk Kružić"
+msgstr "Подушка «Кружок»"
+
+msgid "Jastuk Kockasti"
+msgstr "Подушка «Квадрат»"
+
+msgid "Avokado, limeta i žalfija"
+msgstr "Авокадо, лайм и шалфей"
+
 msgid "Poklon paketi"
 msgstr "Подарочные наборы"
 

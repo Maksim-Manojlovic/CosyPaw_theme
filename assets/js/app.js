@@ -17,6 +17,7 @@ import { CartDrawer } from './components/CartDrawer.js';
 import { InViewVideo } from './components/InViewVideo.js';
 import { CartUpsell } from './components/CartUpsell.js';
 import { CartQuantity } from './components/CartQuantity.js';
+import { BundlePicker } from './components/BundlePicker.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -64,6 +65,12 @@ const boot = () => {
 	// button is hidden.
 	const cartForm = document.querySelector('.woocommerce-cart-form');
 	if (cartForm) new CartQuantity(cartForm);
+
+	// "Složi svoj paket" on a gift bundle's page. Product pages load no entry
+	// of their own beyond this one, so it boots from here.
+	document.querySelectorAll('[data-bundle-picker]').forEach((picker) => {
+		new BundlePicker(picker);
+	});
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

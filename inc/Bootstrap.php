@@ -153,6 +153,14 @@ final class Bootstrap {
 	private ?GiftBundles $gift_bundles = null;
 
 	/**
+	 * A bundle's contents picked on its page, carried to the cart and the
+	 * order (WooCommerce only).
+	 *
+	 * @var GiftBundlePicker|null
+	 */
+	private ?GiftBundlePicker $gift_bundle_picker = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -200,6 +208,10 @@ final class Bootstrap {
 			// The gift bundles: fixed combinations of the above, each one
 			// product at one price, in a category of their own.
 			$this->gift_bundles = new GiftBundles();
+
+			// Each part of a bundle swapped like for like on its page — another
+			// colour, another towel shape — and the pick packed as chosen.
+			$this->gift_bundle_picker = new GiftBundlePicker();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

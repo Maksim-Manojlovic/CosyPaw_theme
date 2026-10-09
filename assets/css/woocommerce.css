@@ -661,6 +661,275 @@
 	}
 }
 
+/* ---------- Single product: "Složi svoj paket" (gift bundles) ----------
+   A row per part inside the add-to-cart form: photo, what the part is and
+   which one is picked. Colours swap inline; a towel's twenty shapes fold
+   away under "Promeni". Sits above WooCommerce's floated quantity and
+   button, which clear below it. */
+.bundle-picker {
+	margin: 0 0 18px;
+	padding: 16px 18px 6px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	background: #fff;
+}
+
+.bundle-picker__title {
+	margin: 0;
+	font-family: var(--font-heading);
+	font-size: 18px;
+	font-weight: 800;
+	line-height: 1.3;
+	color: var(--ink);
+}
+
+.bundle-picker__hint {
+	margin: 2px 0 6px;
+	font-size: 13.5px;
+	line-height: 1.5;
+	color: var(--muted);
+}
+
+.bundle-picker__slots {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.bundle-slot {
+	padding: 10px 0;
+	border-top: 1px solid var(--line);
+}
+
+.bundle-slot:first-child {
+	border-top: 0;
+}
+
+.bundle-slot__head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+}
+
+.bundle-slot__thumb {
+	flex: none;
+	width: 48px;
+	height: 48px;
+	border-radius: var(--radius-sm);
+	object-fit: cover;
+	background: var(--cream2);
+}
+
+.bundle-slot__text {
+	display: grid;
+	min-width: 0;
+	line-height: 1.3;
+}
+
+.bundle-slot__label {
+	font-size: 12.5px;
+	font-weight: 700;
+	color: var(--muted);
+}
+
+.bundle-slot__name {
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--ink);
+}
+
+/* Colours: the swatches beside the row on a wide column, under it on a
+   narrow one. */
+.bundle-slot__fieldset {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px 12px;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.bundle-slot__swatches {
+	display: flex;
+	flex-wrap: wrap;
+	margin: -4px -8px -4px 0;
+}
+
+/* The landing's swatch, at the same 44px target around a 28px dot. */
+.bundle-swatch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	cursor: pointer;
+}
+
+.bundle-swatch__input {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.bundle-swatch__dot {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--swatch, var(--cream2));
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22);
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.bundle-swatch:hover .bundle-swatch__dot {
+	transform: scale(1.08);
+}
+
+.bundle-swatch__input:checked + .bundle-swatch__dot {
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22), 0 0 0 2px #fff, 0 0 0 4px var(--clay);
+}
+
+.bundle-swatch__input:focus-visible + .bundle-swatch__dot {
+	outline: 2px solid var(--ink);
+	outline-offset: 5px;
+}
+
+/* Shapes: the row is the button that opens them. */
+.bundle-slot__summary {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: -4px;
+	padding: 4px;
+	border-radius: var(--radius-sm);
+	list-style: none;
+	cursor: pointer;
+}
+
+.bundle-slot__summary::-webkit-details-marker {
+	display: none;
+}
+
+.bundle-slot__summary:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 2px;
+}
+
+.bundle-slot__change {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex: none;
+	min-height: 36px;
+	margin-left: auto;
+	padding: 6px 14px;
+	border-radius: var(--radius-pill);
+	background: var(--sand);
+	color: var(--claydk);
+	font-size: 13.5px;
+	font-weight: 800;
+	transition: background 0.15s ease;
+}
+
+/* A chevron that turns over while the shapes are open. */
+.bundle-slot__change::after {
+	content: "";
+	width: 7px;
+	height: 7px;
+	margin-top: -4px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.15s ease, margin 0.15s ease;
+}
+
+.bundle-slot__more[open] .bundle-slot__change::after {
+	margin-top: 4px;
+	transform: rotate(225deg);
+}
+
+.bundle-slot__summary:hover .bundle-slot__change {
+	background: var(--sandmid);
+}
+
+.bundle-slot__tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+	gap: 12px 8px;
+	min-width: 0;
+	margin: 12px 0 4px;
+	padding: 0;
+	border: 0;
+}
+
+.bundle-tile {
+	position: relative;
+	display: grid;
+	justify-items: center;
+	gap: 5px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.bundle-tile__input {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.bundle-tile__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	border-radius: var(--radius-sm);
+	object-fit: cover;
+	background: var(--cream2);
+	transition: transform 0.15s ease;
+}
+
+.bundle-tile:hover .bundle-tile__img {
+	transform: translateY(-2px);
+}
+
+.bundle-tile__name {
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: var(--muted);
+}
+
+.bundle-tile__input:checked ~ .bundle-tile__img {
+	outline: 3px solid var(--clay);
+	outline-offset: 2px;
+}
+
+.bundle-tile__input:checked ~ .bundle-tile__name {
+	color: var(--claydk);
+	font-weight: 800;
+}
+
+.bundle-tile__input:focus-visible ~ .bundle-tile__img {
+	outline: 3px solid var(--ink);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bundle-swatch__dot,
+	.bundle-tile__img,
+	.bundle-slot__change::after {
+		transition: none;
+	}
+}
+
 /* ---------- Cart ---------- */
 .woocommerce table.shop_table {
 	border: 1px solid var(--line);

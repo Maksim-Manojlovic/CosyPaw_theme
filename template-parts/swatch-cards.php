@@ -31,8 +31,15 @@ $cosypaw_prefix = sanitize_key( (string) ( $args['id'] ?? 'boja' ) );
 if ( ! $cosypaw_groups ) {
 	return;
 }
+
+// Two cards share a row by default; one is centred and three get a row of
+// their own, so no count leaves a card stranded beside an empty column.
+$cosypaw_layout = array(
+	1 => ' swatch-cards--single',
+	3 => ' swatch-cards--three',
+)[ count( $cosypaw_groups ) ] ?? '';
 ?>
-<div class="swatch-cards<?php echo 1 === count( $cosypaw_groups ) ? ' swatch-cards--single' : ''; ?>">
+<div class="swatch-cards<?php echo esc_attr( $cosypaw_layout ); ?>">
 	<?php foreach ( $cosypaw_groups as $cosypaw_group ) : ?>
 		<?php
 		$cosypaw_variants = (array) $cosypaw_group['variants'];

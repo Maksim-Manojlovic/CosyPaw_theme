@@ -2031,6 +2031,28 @@ a.testimonial__meta:focus-visible {
 	max-width: 380px;
 }
 
+/* Three designs (the pillows' three shapes): one row, as wide as the bundle
+   cards' row. */
+.swatch-cards--three {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	max-width: var(--maxw-content);
+}
+
+/* Too narrow for three: two share a row and the third is centred under them
+   at the same width, rather than stranded in the left column. */
+@media (max-width: 880px) {
+	.swatch-cards--three {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		max-width: 760px;
+	}
+
+	.swatch-cards--three > .swatch-card:last-child {
+		grid-column: 1 / -1;
+		justify-self: center;
+		width: calc(50% - 9px);
+	}
+}
+
 .swatch-card {
 	display: flex;
 	flex-direction: column;
@@ -2160,6 +2182,7 @@ a.testimonial__meta:focus-visible {
 
 @media (max-width: 420px) {
 	.swatch-cards { grid-template-columns: 1fr; }
+	.swatch-cards--three > .swatch-card:last-child { width: 100%; }
 }
 
 /* ---------- Responsive ---------- */

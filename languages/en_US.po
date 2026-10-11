@@ -494,6 +494,18 @@ msgstr "Cuddle Puff square pillow, brown"
 msgid "Cuddle Puff jastuk Kockasti, sivi"
 msgstr "Cuddle Puff square pillow, grey"
 
+msgid "Cuddle Puff jastuk Cvetić, žuti"
+msgstr "Cuddle Puff flower pillow, yellow"
+
+msgid "Cuddle Puff jastuk Cvetić, roze"
+msgstr "Cuddle Puff flower pillow, pink"
+
+msgid "Cuddle Puff jastuk Cvetić, zeleni"
+msgstr "Cuddle Puff flower pillow, green"
+
+msgid "Cuddle Puff jastuk Cvetić, sivi"
+msgstr "Cuddle Puff flower pillow, grey"
+
 msgid "Mekani plišani jastuk u obliku kružića, u toploj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Za stolicu, fotelju, sofu ili dečiju sobu."
 msgstr "A soft, round plush pillow in warm brown, with embroidered eyes, a little beak and a green leaf. For a chair, an armchair, the sofa or a child’s room."
 
@@ -520,6 +532,21 @@ msgstr "A soft, square plush pillow with wavy edges in grey, with embroidered ey
 
 msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
 msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
+
+msgid "Mekani plišani jastuk u obliku cvetića, u nežnoj žutoj boji, sa zaobljenim laticama i lila sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, in gentle yellow, with rounded petals and a lilac centre. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani jastuk u obliku cvetića od rebrastog pliša, u toploj roze boji, sa zaobljenim laticama i krem sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft pillow shaped like a flower, in ribbed plush of a warm pink, with rounded petals and a cream centre. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cvetića, u nežnoj mint zelenoj boji, sa izduženim laticama i žutom sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, in gentle mint green, with long petals and a yellow centre. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cvetića, u nežnoj sivoj boji, sa izduženim laticama i belom sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, in gentle grey, with long petals and a white centre. For a chair, an armchair, the sofa or a child’s room."
+
+msgid "Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma."
+msgstr "The Cuddle Puff flower pillow is a plump, soft plush pillow shaped like a flower, with quilted petals and a round centre in another colour. It looks just as good as a chair or armchair cushion, as a decorative pillow on the sofa or bed and as a plush friend in a child’s room — and it brings colour and a smile to every corner of the home."
 
 msgid "Braon"
 msgstr "Brown"
@@ -554,6 +581,9 @@ msgstr "Round, with wavy edges."
 msgid "Kockasti, sa talasastim ivicama."
 msgstr "Square, with wavy edges."
 
+msgid "Cvetić, sa punašnim laticama."
+msgstr "Flower, with plump petals."
+
 msgid "Boja"
 msgstr "Colour"
 
@@ -562,6 +592,9 @@ msgstr "Details"
 
 msgid "Vezene okice i kljunić, plišani listić, omčica za kačenje."
 msgstr "Embroidered eyes and beak, a plush leaf, a hanging loop."
+
+msgid "Prošivene latice i sredina u drugoj boji."
+msgstr "Quilted petals and a centre in another colour."
 
 msgid "Stolica, fotelja, sofa i dečija soba."
 msgstr "Chair, armchair, sofa and children’s room."
@@ -617,8 +650,8 @@ msgstr "All about the long towels"
 msgid "Cuddle Puff jastuci"
 msgstr "Cuddle Puff pillows"
 
-msgid "Punašni plišani jastuci sa vezenim okicama i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu."
-msgstr "Plump plush pillows with embroidered eyes and a leaf, round or square. For a chair, an armchair, the sofa or a child’s room — %s each."
+msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, i cvetići sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu."
+msgstr "Plump plush pillows: round and square ones with embroidered eyes and a leaf, and flowers with colourful petals. For a chair, an armchair, the sofa or a child’s room — %s each."
 
 msgid "Sve o Cuddle Puff jastucima"
 msgstr "All about the Cuddle Puff pillows"
@@ -662,8 +695,8 @@ msgstr "Order a long towel"
 msgid "Mekani Cuddle Puff jastuci sa okicama"
 msgstr "Soft Cuddle Puff pillows with little eyes"
 
-msgid "Punašni plišani jastuci sa vezenim okicama, kljunićem i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu, za %s."
-msgstr "Plump plush pillows with embroidered eyes, a little beak and a leaf, round or square. For a chair, an armchair, the sofa or a child’s room, at %s."
+msgid "Punašni plišani jastuci u tri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, i cvetić sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu, za %s."
+msgstr "Plump plush pillows in three shapes: round and square with embroidered eyes, a little beak and a leaf, and a flower with colourful petals. For a chair, an armchair, the sofa or a child’s room, at %s."
 
 msgid "Jastuci za dom"
 msgstr "Pillows for the home"
@@ -674,8 +707,8 @@ msgstr "A chair cushion, a decorative pillow and a plush friend in one"
 msgid "Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi."
 msgstr "A Cuddle Puff pillow is the one everyone wants to hug. The ribbed plush is soft to the touch, and the plump, quilted shape makes it a comfortable chair or armchair cushion — in the kitchen, at the desk or in the living room."
 
-msgid "Biraš između dva oblika. Kružić ima talasaste ivice kao cvet, a Kockasti je četvrtast, sa istim talasastim obrubom. Oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje, i dolaze u nežnim bojama — od roze i žute do sive i braon."
-msgstr "You choose between two shapes. The round one has wavy edges like a flower, and the square one has the same wavy trim. Both have embroidered eyes, a yellow beak, a green plush leaf and a hanging loop, and come in soft colours — from pink and yellow to grey and brown."
+msgid "Biraš između tri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Svi dolaze u nežnim bojama — od roze i žute do sive i braon."
+msgstr "You choose between three shapes. The round one has wavy edges, and the square one has the same wavy trim — both have embroidered eyes, a yellow beak, a green plush leaf and a hanging loop. The flower is a real little bloom: plump petals around a round centre in another colour. All of them come in soft colours — from pink and yellow to grey and brown."
 
 msgid "Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda."
 msgstr "As a decorative pillow on the sofa or bed they bring colour and a smile, and in a child’s room they become a plush friend for cuddles, reading and play. They make a lovely gift too — for a housewarming, a birthday or no reason at all."

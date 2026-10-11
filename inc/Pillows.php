@@ -2,10 +2,12 @@
 /**
  * Pillows — the Cuddle Puff jastuci.
  *
- * Plush pillows with embroidered eyes, a little yellow beak and a felt leaf,
- * in two shapes: the round, wavy-edged "Kružić" (five colours) and the square
- * "Kockasti" (three). Each colour is a simple product of its own, so it has its
- * own page, photograph, alt text and Yoast fields; the storefront folds the
+ * Plush pillows in three shapes. The round, wavy-edged "Kružić" (five colours)
+ * and the square "Kockasti" (three) have embroidered eyes, a little yellow
+ * beak and a felt leaf; the "Cvetić" (four) is a flower instead — petals around
+ * a centre in another colour, no face — so it carries its own description and
+ * spec rows. Each colour is a simple product of its own, so it has its own
+ * page, photograph, alt text and Yoast fields; the storefront folds the
  * colours of one shape back into a single card with colour swatches
  * (ProductLine::groups()).
  *
@@ -37,7 +39,7 @@ final class Pillows extends ProductLine {
 	/**
 	 * Bump when a product is added to ITEMS.
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -60,7 +62,7 @@ final class Pillows extends ProductLine {
 	protected const CATEGORY_NAME = 'Cuddle Puff jastuci';
 
 	/**
-	 * Launch price (RSD) of one pillow, either shape. Written once, at
+	 * Launch price (RSD) of one pillow, any shape. Written once, at
 	 * creation; wp-admin owns it after.
 	 */
 	public const PRICE = 1599;
@@ -75,12 +77,20 @@ final class Pillows extends ProductLine {
 	 */
 	public const ROUND  = 'kruzic';
 	public const SQUARE = 'kockasti';
+	public const FLOWER = 'cvetic';
 
 	/**
 	 * The shapes' group photographs, file => alt.
 	 */
 	private const ROUND_FAMILY  = array( 'cuddle-puff-jastuci-kruzici-svih-boja.webp' => 'Šest Cuddle Puff jastuka u obliku kružića, u braon, sivoj, žutoj, roze i zelenoj boji, poređani na travi' );
 	private const SQUARE_FAMILY = array( 'cuddle-puff-jastuci-kockasti-svih-boja.webp' => 'Tri kockasta Cuddle Puff jastuka, roze, braon i sivi, na krem sofi' );
+	private const FLOWER_FAMILY = array( 'cuddle-puff-jastuci-cvetici-svih-boja.webp' => 'Šest Cuddle Puff jastuka u obliku cvetića, u mint zelenoj, žutoj, sivoj i roze boji, poređani na travi' );
+
+	/**
+	 * Long description of the flowers, which have none of what DESCRIPTION
+	 * lists: no eyes, beak, leaf, trimmed edge or hanging loop.
+	 */
+	private const FLOWER_DESCRIPTION = 'Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma.';
 
 	/**
 	 * Key => product definition. Names, colours and copy are Serbian database
@@ -194,10 +204,66 @@ final class Pillows extends ProductLine {
 			'seo_title'       => 'Cuddle Puff Kockasti Jastuk, Sivi | Jastuk za Stolicu i Sofu',
 			'seo_description' => 'Sivi kockasti Cuddle Puff jastuk sa vezenim okicama i listićem. Mekan ukrasni jastuk za stolicu, fotelju ili sofu. Plaćanje pouzećem!',
 		),
+		'cvetic-zuti'     => array(
+			'name'            => 'Cuddle Puff jastuk Cvetić, žuti',
+			'slug'            => 'cuddle-puff-jastuk-cvetic-zuti',
+			'group'           => self::FLOWER,
+			'color'           => 'Žuta',
+			'swatch'          => '#efd76a',
+			'image'           => 'cuddle-puff-jastuk-cvetic-zuti.webp',
+			'alt'             => 'Žuti Cuddle Puff jastuk u obliku cvetića sa lila sredinom, na travi',
+			'gallery'         => self::FLOWER_FAMILY,
+			'short'           => 'Mekani plišani jastuk u obliku cvetića, u nežnoj žutoj boji, sa zaobljenim laticama i lila sredinom. Za stolicu, fotelju, sofu ili dečiju sobu.',
+			'description'     => self::FLOWER_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Žuti | Jastuk u Obliku Cveta',
+			'seo_description' => 'Žuti Cuddle Puff jastuk u obliku cveta, sa lila sredinom. Mekan plišani jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'cvetic-roze'     => array(
+			'name'            => 'Cuddle Puff jastuk Cvetić, roze',
+			'slug'            => 'cuddle-puff-jastuk-cvetic-roze',
+			'group'           => self::FLOWER,
+			'color'           => 'Roze',
+			'swatch'          => '#de9a93',
+			'image'           => 'cuddle-puff-jastuk-cvetic-roze.webp',
+			'alt'             => 'Roze Cuddle Puff jastuk u obliku cvetića od rebrastog pliša, sa krem sredinom, na travi',
+			'gallery'         => self::FLOWER_FAMILY,
+			'short'           => 'Mekani jastuk u obliku cvetića od rebrastog pliša, u toploj roze boji, sa zaobljenim laticama i krem sredinom. Za stolicu, fotelju, sofu ili dečiju sobu.',
+			'description'     => self::FLOWER_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Roze | Jastuk u Obliku Cveta',
+			'seo_description' => 'Roze Cuddle Puff jastuk u obliku cveta, od rebrastog pliša, sa krem sredinom. Mekan jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'cvetic-zeleni'   => array(
+			'name'            => 'Cuddle Puff jastuk Cvetić, zeleni',
+			'slug'            => 'cuddle-puff-jastuk-cvetic-zeleni',
+			'group'           => self::FLOWER,
+			'color'           => 'Zelena',
+			'swatch'          => '#a9e6c1',
+			'image'           => 'cuddle-puff-jastuk-cvetic-zeleni.webp',
+			'alt'             => 'Mint zeleni Cuddle Puff jastuk u obliku cvetića sa žutom sredinom, na travi',
+			'gallery'         => self::FLOWER_FAMILY,
+			'short'           => 'Mekani plišani jastuk u obliku cvetića, u nežnoj mint zelenoj boji, sa izduženim laticama i žutom sredinom. Za stolicu, fotelju, sofu ili dečiju sobu.',
+			'description'     => self::FLOWER_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Zeleni | Jastuk u Obliku Cveta',
+			'seo_description' => 'Mint zeleni Cuddle Puff jastuk u obliku cveta, sa žutom sredinom. Mekan plišani jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'cvetic-sivi'     => array(
+			'name'            => 'Cuddle Puff jastuk Cvetić, sivi',
+			'slug'            => 'cuddle-puff-jastuk-cvetic-sivi',
+			'group'           => self::FLOWER,
+			'color'           => 'Siva',
+			'swatch'          => '#b3b5b1',
+			'image'           => 'cuddle-puff-jastuk-cvetic-sivi.webp',
+			'alt'             => 'Sivi Cuddle Puff jastuk u obliku cvetića sa belom sredinom, na travi',
+			'gallery'         => self::FLOWER_FAMILY,
+			'short'           => 'Mekani plišani jastuk u obliku cvetića, u nežnoj sivoj boji, sa izduženim laticama i belom sredinom. Za stolicu, fotelju, sofu ili dečiju sobu.',
+			'description'     => self::FLOWER_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Sivi | Jastuk u Obliku Cveta',
+			'seo_description' => 'Sivi Cuddle Puff jastuk u obliku cveta, sa belom sredinom. Mekan plišani jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
 	);
 
 	/**
-	 * Long description, shared by every pillow.
+	 * Long description, shared by every pillow that does not bring its own.
 	 */
 	protected const DESCRIPTION = 'Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma.';
 
@@ -211,11 +277,15 @@ final class Pillows extends ProductLine {
 		$item = self::ITEMS[ $key ];
 
 		return array(
-			__( 'Oblik', 'cosypaw' )   => self::SQUARE === $item['group']
-				? __( 'Kockasti, sa talasastim ivicama.', 'cosypaw' )
-				: __( 'Kružić, okrugao sa talasastim ivicama.', 'cosypaw' ),
+			__( 'Oblik', 'cosypaw' )   => match ( $item['group'] ) {
+				self::SQUARE => __( 'Kockasti, sa talasastim ivicama.', 'cosypaw' ),
+				self::FLOWER => __( 'Cvetić, sa punašnim laticama.', 'cosypaw' ),
+				default      => __( 'Kružić, okrugao sa talasastim ivicama.', 'cosypaw' ),
+			},
 			__( 'Boja', 'cosypaw' )    => self::translate( (string) $item['color'] ),
-			__( 'Detalji', 'cosypaw' ) => __( 'Vezene okice i kljunić, plišani listić, omčica za kačenje.', 'cosypaw' ),
+			__( 'Detalji', 'cosypaw' ) => self::FLOWER === $item['group']
+				? __( 'Prošivene latice i sredina u drugoj boji.', 'cosypaw' )
+				: __( 'Vezene okice i kljunić, plišani listić, omčica za kačenje.', 'cosypaw' ),
 			__( 'Namena', 'cosypaw' )  => __( 'Stolica, fotelja, sofa i dečija soba.', 'cosypaw' ),
 			__( 'Dostava', 'cosypaw' ) => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),
 		);

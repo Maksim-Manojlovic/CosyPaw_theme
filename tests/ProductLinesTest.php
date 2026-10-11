@@ -156,7 +156,7 @@ namespace Theme\Tests {
 		}
 
 		/**
-		 * Every colour of both shapes is its own product, in the pillow
+		 * Every colour of every shape is its own product, in the pillow
 		 * category, at the launch price, with its Yoast fields.
 		 *
 		 * @return void
@@ -164,7 +164,7 @@ namespace Theme\Tests {
 		public function test_it_creates_every_pillow_in_its_own_category(): void {
 			$this->assertSame( count( Pillows::ITEMS ), ( new Pillows() )->ensure() );
 
-			$this->assertCount( 8, \WC_Product_Simple::$saved );
+			$this->assertCount( 12, \WC_Product_Simple::$saved );
 			foreach ( \WC_Product_Simple::$saved as $id => $props ) {
 				$this->assertSame( array( 61 ), $props['category_ids'] );
 				$this->assertSame( (string) Pillows::PRICE, $props['regular_price'] );
@@ -175,6 +175,28 @@ namespace Theme\Tests {
 
 			$this->assertSame( array_keys( Pillows::ITEMS ), array_keys( $this->options[ Pillows::MAP_OPTION ] ) );
 			$this->assertSame( 1599, Pillows::PRICE );
+		}
+
+		/**
+		 * The flowers have no eyes, beak or leaf, so they are not created
+		 * with the description that promises them; the other shapes keep it.
+		 *
+		 * @return void
+		 */
+		public function test_flower_pillows_bring_their_own_description(): void {
+			( new Pillows() )->ensure();
+
+			$flowers = 0;
+			foreach ( \WC_Product_Simple::$saved as $props ) {
+				$flower   = str_contains( (string) $props['slug'], '-cvetic-' );
+				$flowers += (int) $flower;
+
+				$this->assertSame( ! $flower, str_contains( (string) $props['description'], 'okicama' ), (string) $props['slug'] );
+				$this->assertSame( $flower, str_contains( (string) $props['description'], 'laticama' ), (string) $props['slug'] );
+				$this->assertSame( ! $flower, str_contains( (string) $props['short_description'], 'okicama' ), (string) $props['slug'] );
+			}
+
+			$this->assertSame( 4, $flowers );
 		}
 
 		/**
@@ -202,7 +224,7 @@ namespace Theme\Tests {
 		 */
 		public function test_each_line_runs_once_per_version_on_its_own(): void {
 			( new Pillows() )->maybe_ensure();
-			$this->assertCount( 8, \WC_Product_Simple::$saved );
+			$this->assertCount( 12, \WC_Product_Simple::$saved );
 			$this->assertArrayNotHasKey( LongTowels::MAP_OPTION, $this->options );
 
 			\WC_Product_Simple::$saved = array();
@@ -253,6 +275,7 @@ namespace Theme\Tests {
 				'kruzic-braon'  => 1,
 				'kruzic-sivi'   => 2,
 				'kockasti-roze' => 3,
+				'cvetic-zuti'   => 4,
 			);
 
 			Functions\when( 'wc_get_product' )->alias( fn( int $id ) => self::product( $id, '1599' ) );
@@ -261,10 +284,11 @@ namespace Theme\Tests {
 			$rows   = Pillows::products();
 			$groups = Pillows::groups( $rows );
 
-			$this->assertSame( array( Pillows::ROUND, Pillows::SQUARE ), array_column( $groups, 'key' ) );
+			$this->assertSame( array( Pillows::ROUND, Pillows::SQUARE, Pillows::FLOWER ), array_column( $groups, 'key' ) );
 			$this->assertSame( array( 1, 2 ), array_column( $groups[0]['variants'], 'id' ) );
 			$this->assertSame( array( 'Braon', 'Siva' ), array_column( $groups[0]['variants'], 'color' ) );
 			$this->assertSame( Pillows::ITEMS['kockasti-roze']['swatch'], $groups[1]['variants'][0]['swatch'] );
+			$this->assertSame( array( 4 ), array_column( $groups[2]['variants'], 'id' ) );
 			$this->assertSame( 1599, Pillows::from_price( $rows ) );
 
 			$this->assertSame( array( Pillows::ROUND ), array_column( Pillows::groups( array_slice( $rows, 0, 2 ) ), 'key' ) );

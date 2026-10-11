@@ -2,11 +2,11 @@
 /**
  * Cuddle Puff jastuci — "Cuddle Puff jastuci sa okicama".
  *
- * The pillows' own page: one card per shape with its colours as swatches, up
- * top where they can be bought, then copy for what people search for (jastuk
- * za stolicu, ukrasni jastuk, plišani jastuk, jastuk za dečiju sobu…). It says
- * only what the photographs show — no size or fibre content until the shop has
- * them to state.
+ * The pillows' own page: one card per shape (Kružić, Kockasti, Cvetić) with
+ * its colours as swatches, up top where they can be bought, then copy for what
+ * people search for (jastuk za stolicu, ukrasni jastuk, plišani jastuk, jastuk
+ * za dečiju sobu…). It says only what the photographs show — no size or fibre
+ * content until the shop has them to state.
  *
  * Rendered for the page \Theme\Pages creates under this slug; the products
  * come from \Theme\Pillows. Until they exist the page still reads, without the
@@ -44,7 +44,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 				echo esc_html(
 					sprintf(
 						/* translators: %s: formatted price of one pillow. */
-						__( 'Punašni plišani jastuci sa vezenim okicama, kljunićem i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu, za %s.', 'cosypaw' ),
+						__( 'Punašni plišani jastuci u tri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, i cvetić sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu, za %s.', 'cosypaw' ),
 						\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 					)
 				);
@@ -90,7 +90,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 		<div class="seo-copy__body">
 			<p><?php esc_html_e( 'Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi.', 'cosypaw' ); ?></p>
 
-			<p><?php esc_html_e( 'Biraš između dva oblika. Kružić ima talasaste ivice kao cvet, a Kockasti je četvrtast, sa istim talasastim obrubom. Oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje, i dolaze u nežnim bojama — od roze i žute do sive i braon.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Biraš između tri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Svi dolaze u nežnim bojama — od roze i žute do sive i braon.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda.', 'cosypaw' ); ?></p>
 

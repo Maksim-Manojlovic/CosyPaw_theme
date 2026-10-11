@@ -563,9 +563,9 @@ if ( $hero_deal ) {
 	<!-- CUDDLE PUFF JASTUCI -->
 	<?php
 	/*
-	 * One card per shape, the colours as swatches on it — eight cards of the
-	 * same pillow in different colours would bury the two shapes. Printed only
-	 * while on sale (\Theme\Pillows).
+	 * One card per shape, the colours as swatches on it — twelve cards of the
+	 * same pillow in different colours would bury the three shapes. Printed
+	 * only while on sale (\Theme\Pillows).
 	 */
 	$cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
 	if ( $cosypaw_pillows ) :
@@ -580,7 +580,7 @@ if ( $hero_deal ) {
 					echo esc_html(
 						sprintf(
 							/* translators: %s: formatted price of one pillow. */
-							__( 'Punašni plišani jastuci sa vezenim okicama i listićem, u obliku kružića ili kockasti. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu.', 'cosypaw' ),
+							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, i cvetići sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu.', 'cosypaw' ),
 							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 						)
 					);

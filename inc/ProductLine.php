@@ -36,7 +36,8 @@
  *  - CATEGORY_NAME  string Its name, a Serbian database value.
  *  - PRICE          int    Launch price (RSD), written once at creation.
  *  - IMAGE_DIR      string Theme directory the photographs ship in.
- *  - DESCRIPTION    string Long description shared by the line's items.
+ *  - DESCRIPTION    string Long description shared by the line's items (an
+ *                          item may bring its own, see ensure()).
  *  - ITEMS          array  Key => item, see item() for the shape.
  *
  * @package CosyPaw
@@ -104,6 +105,8 @@ abstract class ProductLine {
 	 *  - name, slug, short, seo_title, seo_description: the product's own.
 	 *  - image, alt: its photograph under IMAGE_DIR and that photo's alt text.
 	 *  - price (int, optional): launch price when it is not the line's PRICE.
+	 *  - description (optional): long description when the line's DESCRIPTION
+	 *    does not describe this item.
 	 *  - gallery (optional): file => alt of further photographs, e.g. the
 	 *    whole family together. A file shared by several items is imported
 	 *    once and the same attachment reused.
@@ -146,7 +149,7 @@ abstract class ProductLine {
 			$product->set_catalog_visibility( 'visible' );
 			$product->set_regular_price( (string) ( $item['price'] ?? static::PRICE ) );
 			$product->set_short_description( $item['short'] );
-			$product->set_description( static::DESCRIPTION );
+			$product->set_description( $item['description'] ?? static::DESCRIPTION );
 			$product->set_category_ids( array( $category ) );
 			$id = (int) $product->save();
 

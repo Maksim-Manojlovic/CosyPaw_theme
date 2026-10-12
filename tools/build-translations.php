@@ -452,8 +452,10 @@ $sr_source = array(
 	'U tvom domu'                                                                             => array( 'In your home', 'У тебя дома' ),
 	'Tvoj kutak, malo mekši'                                                                  => array( 'Your corner, a little softer', 'Твой уголок, чуть мягче' ),
 	'Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline.' => array( 'By the sink, on a hook or a shelf — the towels fit into any home and add a touch of warmth.', 'У раковины, на крючке или на полке — полотенца впишутся в любой дом и добавят капельку тепла.' ),
-	'Spremni za jutarnju rutinu'                                                              => array( 'Ready for the morning routine', 'Готовы к утренним делам' ),
-	'Na kuki, uvek pri ruci'                                                                  => array( 'On the hook, always at hand', 'На крючке, всегда под рукой' ),
+	// The two clips in "U tvom domu": what each one shows, for a reader who
+	// cannot see it. The second quotes the line written across its frame.
+	'Glazura se sliva preko peškira Krofna'                                                   => array( 'Icing runs down the Donut towel', 'Глазурь стекает по полотенцу «Пончик»' ),
+	'Ušla si da kupiš samo jedan — a iz veš-mašine izlazi gomila CosyPaw peškira'            => array( 'You went in to buy just one — and a pile of CosyPaw towels comes out of the washing machine', 'Зашла купить только одно — а из стиральной машины появляется гора полотенец CosyPaw' ),
 	'Stiže spremno za poklon'                                                                 => array( 'Arrives gift-ready', 'Приходит готовым к подарку' ),
 	'Pauziraj video'                                                                          => array( 'Pause the video', 'Приостановить видео' ),
 	'Pusti video'                                                                             => array( 'Play the video', 'Воспроизвести видео' ),

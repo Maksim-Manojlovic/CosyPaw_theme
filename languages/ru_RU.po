@@ -1202,11 +1202,11 @@ msgstr "Твой уголок, чуть мягче"
 msgid "Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline."
 msgstr "У раковины, на крючке или на полке — полотенца впишутся в любой дом и добавят капельку тепла."
 
-msgid "Spremni za jutarnju rutinu"
-msgstr "Готовы к утренним делам"
+msgid "Glazura se sliva preko peškira Krofna"
+msgstr "Глазурь стекает по полотенцу «Пончик»"
 
-msgid "Na kuki, uvek pri ruci"
-msgstr "На крючке, всегда под рукой"
+msgid "Ušla si da kupiš samo jedan — a iz veš-mašine izlazi gomila CosyPaw peškira"
+msgstr "Зашла купить только одно — а из стиральной машины появляется гора полотенец CosyPaw"
 
 msgid "Stiže spremno za poklon"
 msgstr "Приходит готовым к подарку"

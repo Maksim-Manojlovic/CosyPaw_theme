@@ -637,30 +637,57 @@ if ( $hero_deal ) {
 
 		<div class="lifestyle">
 			<?php
+			// Two clips where two photographs were. Each is silent and loops, and
+			// is driven by InViewVideo as the gift banner's is: started only on
+			// screen, with nothing but the poster fetched until then.
+			// `data-video-manual` keeps the play button where motion is not
+			// welcome — these are the section's whole content, not a picture
+			// beside some copy.
+			//
+			// `label` says what the clip shows. The second also carries the line
+			// written across its frame, which a screen reader cannot read there.
 			$lifestyle = array(
-				array( 'file' => 'lifestyle1', 'cap' => __( 'Spremni za jutarnju rutinu', 'cosypaw' ) ),
-				array( 'file' => 'lifestyle2', 'cap' => __( 'Na kuki, uvek pri ruci', 'cosypaw' ) ),
+				array(
+					'file'  => 'krofna',
+					'label' => __( 'Glazura se sliva preko peškira Krofna', 'cosypaw' ),
+				),
+				array(
+					'file'  => 'ves-masina',
+					'label' => __( 'Ušla si da kupiš samo jedan — a iz veš-mašine izlazi gomila CosyPaw peškira', 'cosypaw' ),
+				),
 			);
-			$assets_uri = get_template_directory_uri() . '/assets/';
+			$videos_uri = get_template_directory_uri() . '/' . \Theme\ProductVideos::DIR;
 			foreach ( $lifestyle as $shot ) :
-				// These carried a `sizes` but no `srcset`, so every visitor got
-				// the 1086w original for a slot at most 547 CSS px wide.
-				$shot_uri = $assets_uri . $shot['file'];
+				$shot_uri = $videos_uri . $shot['file'];
 				?>
-				<figure class="lifestyle-card">
-					<img
+				<div class="lifestyle-card">
+					<video
 						class="lifestyle-card__img"
-						src="<?php echo esc_url( $shot_uri . '-md.avif' ); ?>"
-						srcset="<?php echo esc_attr( "{$shot_uri}-md.avif 600w, {$shot_uri}-lg.avif 900w, {$shot_uri}.avif 1086w" ); ?>"
-						sizes="(max-width: 880px) calc(100vw - 44px), 547px"
-						width="1086"
-						height="1358"
-						alt="<?php echo esc_attr( $shot['cap'] ); ?>"
-						loading="lazy"
-						decoding="async"
+						data-inview-video
+						data-video-manual
+						src="<?php echo esc_url( $shot_uri . '.mp4' ); ?>"
+						poster="<?php echo esc_url( $shot_uri . '.webp' ); ?>"
+						width="720"
+						height="1280"
+						preload="none"
+						muted
+						loop
+						playsinline
+						aria-label="<?php echo esc_attr( $shot['label'] ); ?>"
+					></video>
+					<?php // The gift banner's pause button, classes and all (assets/css/blocks.css). ?>
+					<button
+						type="button"
+						class="pkg-banner__toggle"
+						data-video-toggle
+						aria-pressed="false"
+						aria-label="<?php esc_attr_e( 'Pauziraj video', 'cosypaw' ); ?>"
+						hidden
 					>
-					<figcaption class="lifestyle-card__cap"><?php echo esc_html( $shot['cap'] ); ?></figcaption>
-				</figure>
+						<svg class="pkg-banner__pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+						<svg class="pkg-banner__play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+					</button>
+				</div>
 			<?php endforeach; ?>
 		</div>
 	</section>

@@ -210,4 +210,30 @@ final class PagesTest extends TestCase {
 		// Already reworded: nothing left to do.
 		$this->assertSame( 0, ( new Pages() )->reword() );
 	}
+
+	/**
+	 * The long towels' page was created as "Dugi peškiri"; it is "Peškiri"
+	 * now, at the address it always had.
+	 *
+	 * @return void
+	 */
+	public function test_reword_drops_dugi_from_the_long_towel_page(): void {
+		$slug = Pages::REGISTRY['dugi']['slug'];
+
+		$this->pages[ $slug ] = (object) array(
+			'ID'           => 9,
+			'post_title'   => 'Dugi peškiri',
+			'post_excerpt' => 'Naš opis',
+		);
+		$this->meta[9] = array(
+			'_yoast_wpseo_title' => 'Dugi Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
+		);
+
+		$this->assertSame( 2, ( new Pages() )->reword() );
+
+		$this->assertSame( 'dugi-peskiri', $slug );
+		$this->assertSame( 'Peškiri', $this->pages[ $slug ]->post_title );
+		$this->assertSame( 'Naš opis', $this->pages[ $slug ]->post_excerpt );
+		$this->assertSame( 'Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo', $this->meta[9]['_yoast_wpseo_title'] );
+	}
 }

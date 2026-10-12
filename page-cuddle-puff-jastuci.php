@@ -99,9 +99,9 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 				if ( '' !== $cosypaw_long ) {
 					echo wp_kses(
 						sprintf(
-							/* translators: %s: link "dugim peškirima sa vezenim medom", to the long towel page. */
+							/* translators: %s: link "peškirima sa vezenim medom", to the long towel page. */
 							__( 'Cuddle Puff jastuke šaljemo kao i ostale CosyPaw proizvode — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Uz jastuk lepo idu i naši mekani proizvodi za kupatilo, poput %s.', 'cosypaw' ),
-							'<a href="' . esc_url( $cosypaw_long ) . '">' . esc_html__( 'dugih peškira sa vezenim medom', 'cosypaw' ) . '</a>'
+							'<a href="' . esc_url( $cosypaw_long ) . '">' . esc_html__( 'peškira sa vezenim medom', 'cosypaw' ) . '</a>'
 						),
 						array( 'a' => array( 'href' => array() ) )
 					);

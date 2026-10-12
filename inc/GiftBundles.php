@@ -180,11 +180,11 @@ final class GiftBundles extends ProductLine {
 			'occasion'        => 'dom',
 			'price'           => 2190,
 			'image'           => 'poklon-paket-kupatilo-za-celu-porodicu.webp',
-			'alt'             => 'Krem i plavi dugi peškir sa vezenim medom i dečiji peškiri u obliku žirafe i kapibare',
-			'includes'        => '2 duga peškira Meda (krem i plavi) i 2 dečija peškira (Žirafa, Kapibara)',
-			'short'           => 'Peškiri za celu porodicu: dva duga peškira sa vezenim medom za odrasle i dva dečija peškira sa alkom za mališane. Za novo ili osveženo kupatilo.',
-			'seo_title'       => 'Peškiri za Celu Porodicu | Dugi i Dečiji Peškiri u Paketu',
-			'seo_description' => 'Dva duga peškira sa vezenim medom i dva dečija peškira u obliku životinja — kupatilo za celu porodicu u jednom paketu. Besplatna dostava!',
+			'alt'             => 'Krem i plavi peškir sa vezenim medom i dečiji peškiri u obliku žirafe i kapibare',
+			'includes'        => '2 peškira Meda (krem i plavi) i 2 dečija peškira (Žirafa, Kapibara)',
+			'short'           => 'Peškiri za celu porodicu: dva peškira sa vezenim medom za odrasle i dva dečija peškira sa alkom za mališane. Za novo ili osveženo kupatilo.',
+			'seo_title'       => 'Peškiri za Celu Porodicu | Peškiri za Odrasle i Decu u Paketu',
+			'seo_description' => 'Dva peškira sa vezenim medom i dva dečija peškira u obliku životinja — kupatilo za celu porodicu u jednom paketu. Besplatna dostava!',
 			'contains'        => array( array( self::LONG, 'meda-krem' ), array( self::LONG, 'meda-plavi' ), array( self::TOWEL, 'zirafa' ), array( self::TOWEL, 'kapibara' ) ),
 		),
 		'novi-dom'             => array(
@@ -193,11 +193,11 @@ final class GiftBundles extends ProductLine {
 			'occasion'        => 'dom',
 			'price'           => 2490,
 			'image'           => 'poklon-paket-novi-dom.webp',
-			'alt'             => 'Braon kockasti Cuddle Puff jastuk, krem i bež dugi peškir sa vezenim medom i dve magične krpice sa avokadom',
-			'includes'        => 'Cuddle Puff jastuk Kockasti, braon, 2 duga peškira Meda (krem i bež) i obe magične krpice Avokado',
-			'short'           => 'Poklon za useljenje: mekani kockasti jastuk za sofu, dva duga peškira za kupatilo i dve magične krpice za kuhinju — po nešto za svaku sobu novog doma.',
+			'alt'             => 'Braon kockasti Cuddle Puff jastuk, krem i bež peškir sa vezenim medom i dve magične krpice sa avokadom',
+			'includes'        => 'Cuddle Puff jastuk Kockasti, braon, 2 peškira Meda (krem i bež) i obe magične krpice Avokado',
+			'short'           => 'Poklon za useljenje: mekani kockasti jastuk za sofu, dva peškira za kupatilo i dve magične krpice za kuhinju — po nešto za svaku sobu novog doma.',
 			'seo_title'       => 'Poklon za Useljenje | Paket Jastuk, Peškiri i Krpice',
-			'seo_description' => 'Poklon za useljenje: Cuddle Puff jastuk, dva duga peškira i dve magične krpice — po nešto za svaku sobu novog doma. Besplatna dostava!',
+			'seo_description' => 'Poklon za useljenje: Cuddle Puff jastuk, dva peškira i dve magične krpice — po nešto za svaku sobu novog doma. Besplatna dostava!',
 			'contains'        => array( array( self::PILLOW, 'kockasti-braon' ), array( self::LONG, 'meda-krem' ), array( self::LONG, 'meda-bez' ), array( self::CLOTHS, Cloths::SET ) ),
 		),
 		'za-dvoje'             => array(
@@ -206,11 +206,11 @@ final class GiftBundles extends ProductLine {
 			'occasion'        => 'dom',
 			'price'           => 3490,
 			'image'           => 'poklon-paket-za-dvoje.webp',
-			'alt'             => 'Roze i sivi kockasti Cuddle Puff jastuk i roze i plavi dugi peškir sa vezenim medom',
-			'includes'        => '2 Cuddle Puff jastuka Kockasti (roze i sivi) i 2 duga peškira Meda (roze i plavi)',
-			'short'           => 'Za njega i za nju: dva kockasta Cuddle Puff jastuka i dva duga peškira sa vezenim medom, u paru boja. Poklon za mladence, godišnjicu ili zajednički stan.',
+			'alt'             => 'Roze i sivi kockasti Cuddle Puff jastuk i roze i plavi peškir sa vezenim medom',
+			'includes'        => '2 Cuddle Puff jastuka Kockasti (roze i sivi) i 2 peškira Meda (roze i plavi)',
+			'short'           => 'Za njega i za nju: dva kockasta Cuddle Puff jastuka i dva peškira sa vezenim medom, u paru boja. Poklon za mladence, godišnjicu ili zajednički stan.',
 			'seo_title'       => 'Poklon za Mladence i Parove | Jastuci i Peškiri za Dvoje',
-			'seo_description' => 'Dva Cuddle Puff jastuka i dva duga peškira u paru boja — poklon za mladence, godišnjicu ili zajednički stan. Plaćanje pouzećem, besplatna dostava!',
+			'seo_description' => 'Dva Cuddle Puff jastuka i dva peškira u paru boja — poklon za mladence, godišnjicu ili zajednički stan. Plaćanje pouzećem, besplatna dostava!',
 			'contains'        => array( array( self::PILLOW, 'kockasti-roze' ), array( self::PILLOW, 'kockasti-sivi' ), array( self::LONG, 'meda-roze' ), array( self::LONG, 'meda-plavi' ) ),
 		),
 		'mali-znak-paznje'     => array(
@@ -219,11 +219,11 @@ final class GiftBundles extends ProductLine {
 			'occasion'        => 'paznja',
 			'price'           => 1390,
 			'image'           => 'poklon-paket-mali-znak-paznje.webp',
-			'alt'             => 'Peškir u obliku lale, roze dugi peškir sa vezenim medom i dve magične krpice sa avokadom',
-			'includes'        => 'peškir Lala, dugi peškir Meda, roze, i obe magične krpice Avokado',
-			'short'           => 'Mali poklon koji se koristi svaki dan: peškir u obliku lale, roze dugi peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili koleginicu.',
+			'alt'             => 'Peškir u obliku lale, roze peškir sa vezenim medom i dve magične krpice sa avokadom',
+			'includes'        => 'peškir Lala, peškir Meda, roze, i obe magične krpice Avokado',
+			'short'           => 'Mali poklon koji se koristi svaki dan: peškir u obliku lale, roze peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili koleginicu.',
 			'seo_title'       => 'Poklon za Vaspitačicu i Učiteljicu | Mali Znak Pažnje',
-			'seo_description' => 'Peškir u obliku lale, dugi peškir i dve magične krpice — mali, praktičan poklon za vaspitačicu, učiteljicu, 8. mart ili kraj godine. Pouzećem!',
+			'seo_description' => 'Peškir u obliku lale, peškir sa medom i dve magične krpice — mali, praktičan poklon za vaspitačicu, učiteljicu, 8. mart ili kraj godine. Pouzećem!',
 			'contains'        => array( array( self::TOWEL, 'lala' ), array( self::LONG, 'meda-roze' ), array( self::CLOTHS, Cloths::SET ) ),
 		),
 		'praznicna-kutija'     => array(
@@ -232,11 +232,11 @@ final class GiftBundles extends ProductLine {
 			'occasion'        => 'praznici',
 			'price'           => 3390,
 			'image'           => 'poklon-paket-praznicna-kutija-mekoce.webp',
-			'alt'             => 'Braon Cuddle Puff jastuk Kružić, bež dugi peškir, dečiji peškiri u obliku pingvina, mede i keksa i dve magične krpice',
-			'includes'        => '3 dečija peškira (Pingvin, Meda, Čokoladni keks), Cuddle Puff jastuk Kružić, braon, dugi peškir Meda, bež, i obe magične krpice Avokado',
-			'short'           => 'Najveći CosyPaw poklon: tri dečija peškira, Cuddle Puff jastuk, dugi peškir i dve magične krpice. Novogodišnji paketić za celu porodicu.',
+			'alt'             => 'Braon Cuddle Puff jastuk Kružić, bež peškir, dečiji peškiri u obliku pingvina, mede i keksa i dve magične krpice',
+			'includes'        => '3 dečija peškira (Pingvin, Meda, Čokoladni keks), Cuddle Puff jastuk Kružić, braon, peškir Meda, bež, i obe magične krpice Avokado',
+			'short'           => 'Najveći CosyPaw poklon: tri dečija peškira, Cuddle Puff jastuk, peškir sa medom i dve magične krpice. Novogodišnji paketić za celu porodicu.',
 			'seo_title'       => 'Novogodišnji Poklon Paket | Praznična Kutija Mekoće',
-			'seo_description' => 'Novogodišnji paketić za celu porodicu: tri dečija peškira, Cuddle Puff jastuk, dugi peškir i magične krpice. Plaćanje pouzećem, besplatna dostava!',
+			'seo_description' => 'Novogodišnji paketić za celu porodicu: tri dečija peškira, Cuddle Puff jastuk, peškir sa medom i magične krpice. Plaćanje pouzećem, besplatna dostava!',
 			'contains'        => array( array( self::TOWEL, 'pingvin' ), array( self::TOWEL, 'meda' ), array( self::TOWEL, 'keks' ), array( self::PILLOW, 'kruzic-braon' ), array( self::LONG, 'meda-bez' ), array( self::CLOTHS, Cloths::SET ) ),
 		),
 	);
@@ -244,7 +244,7 @@ final class GiftBundles extends ProductLine {
 	/**
 	 * Long description, shared by every bundle.
 	 */
-	protected const DESCRIPTION = 'Poklon paket CosyPaw: sve iz paketa stiže zajedno, u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Svaki deo je isti kao kad ga kupuješ posebno — dečiji peškiri sa alkom za kačenje, dugi peškiri sa vezenim medom, Cuddle Puff jastuci sa okicama i magične krpice od mikrofibera — samo složen za jednu priliku i jeftiniji u paketu.';
+	protected const DESCRIPTION = 'Poklon paket CosyPaw: sve iz paketa stiže zajedno, u jednoj porudžbini, uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije. Svaki deo je isti kao kad ga kupuješ posebno — dečiji peškiri sa alkom za kačenje, peškiri sa vezenim medom, Cuddle Puff jastuci sa okicama i magične krpice od mikrofibera — samo složen za jednu priliku i jeftiniji u paketu.';
 
 	/**
 	 * Per-request memo of towel tiers.
@@ -598,7 +598,9 @@ final class GiftBundles extends ProductLine {
 	}
 
 	/**
-	 * What a slot is, in words: "Peškir", "Jastuk Kockasti".
+	 * What a slot is, in words: "Peškir", "Jastuk Kockasti". The long towel
+	 * is "Peškir Meda", after its product, so it does not read as a second
+	 * shaped-towel slot.
 	 *
 	 * @param string $line Component line.
 	 * @param string $key  The part in the slot.
@@ -610,7 +612,7 @@ final class GiftBundles extends ProductLine {
 			self::PILLOW => Pillows::SQUARE === ( Pillows::ITEMS[ $key ]['group'] ?? '' )
 				? __( 'Jastuk Kockasti', 'cosypaw' )
 				: __( 'Jastuk Kružić', 'cosypaw' ),
-			self::LONG   => __( 'Dugi peškir', 'cosypaw' ),
+			self::LONG   => __( 'Peškir Meda', 'cosypaw' ),
 			default      => __( 'Magične krpice', 'cosypaw' ),
 		};
 	}

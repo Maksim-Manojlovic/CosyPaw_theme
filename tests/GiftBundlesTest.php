@@ -453,7 +453,7 @@ namespace Theme\Tests {
 						'name'  => 'Roze',
 					),
 					array(
-						'label' => 'Dugi peškir',
+						'label' => 'Peškir Meda',
 						'name'  => 'Plava',
 					),
 					array(

@@ -513,7 +513,7 @@ if ( $hero_deal ) {
 		</section>
 	<?php endif; ?>
 
-	<!-- DUGI PEŠKIRI -->
+	<!-- PEŠKIRI (Meda) -->
 	<?php
 	/*
 	 * Between the pillows and the cloths: a 499 RSD towel sits next to the
@@ -527,13 +527,13 @@ if ( $hero_deal ) {
 		<section id="dugi-peskiri" class="section cloths-section">
 			<div class="section__head">
 				<span class="eyebrow"><?php esc_html_e( 'Za kupatilo', 'cosypaw' ); ?></span>
-				<h2 class="section__title"><?php esc_html_e( 'Dugi peškiri', 'cosypaw' ); ?></h2>
+				<h2 class="section__title"><?php esc_html_e( 'Peškiri', 'cosypaw' ); ?></h2>
 				<p class="section__lead">
 					<?php
 					echo esc_html(
 						sprintf(
 							/* translators: %s: formatted price of one long towel. */
-							__( 'Mekani dugi peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškira.', 'cosypaw' ),
+							__( 'Mekani peškiri sa vezenim medom i šapicom, za lice, ruke i kosu. %s po komadu, van paketa peškira.', 'cosypaw' ),
 							\Theme\Catalog::format_price( \Theme\LongTowels::from_price( $cosypaw_long ) )
 						)
 					);
@@ -554,7 +554,7 @@ if ( $hero_deal ) {
 
 			<?php if ( '' !== $cosypaw_long_page ) : ?>
 				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_long_page ); ?>">
-					<span><?php esc_html_e( 'Sve o dugim peškirima', 'cosypaw' ); ?></span>
+					<span><?php esc_html_e( 'Sve o peškirima', 'cosypaw' ); ?></span>
 					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 				</a>
 			<?php endif; ?>

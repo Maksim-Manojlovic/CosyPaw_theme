@@ -26,13 +26,23 @@ $storefront = \Theme\Storefront::context( new \Theme\Catalog() );
 $products   = $storefront['products'];
 
 /*
- * Heading and lead per subcategory, in the order the page shows them —
- * animals first, since that is what the page is named for. Written here rather
- * than read from the term, because a term name is a Serbian database value and
- * this page is served in three languages. "Peškiri u torbi" gets no lead:
- * what is in the bag is the product page's to describe.
+ * Heading and lead per subcategory, in the order the page shows them: the
+ * bagged towels, the animals, the treats, the cartoon characters, then the
+ * flowers. Written here rather than read from the term, because a term name
+ * is a Serbian database value and this page is served in three languages.
+ * "Peškiri u torbi" gets no lead: what is in the bag is the product page's
+ * to describe.
+ *
+ * The empty key is the towels filed under none of the subcategories. Those
+ * are the cartoon characters, which have no subcategory of their own, so the
+ * group is headed for what it holds and takes its place in the order rather
+ * than trailing the page as "Još peškira".
  */
 $cosypaw_group_copy = array(
+	'peskiri-u-torbi'   => array(
+		'title' => __( 'Peškiri u torbi', 'cosypaw' ),
+		'lead'  => '',
+	),
 	'zivotinjice'       => array(
 		'title' => __( 'Peškiri životinjice', 'cosypaw' ),
 		'lead'  => __( 'Meki drugari koji čekaju na kuki — dete samo bira svog i raduje mu se posle svakog pranja ruku.', 'cosypaw' ),
@@ -41,21 +51,21 @@ $cosypaw_group_copy = array(
 		'title' => __( 'Zalogajčići', 'cosypaw' ),
 		'lead'  => __( 'Voće i poslastice od mikrofibre — vesela sitnica za kupatilo ili kuhinju.', 'cosypaw' ),
 	),
+	''                  => array(
+		'title' => __( 'Peškiri iz vaših omiljenih crtanih filmova', 'cosypaw' ),
+		'lead'  => '',
+	),
 	'cvetici-i-listici' => array(
 		'title' => __( 'Cvetići i listići', 'cosypaw' ),
 		'lead'  => __( 'Nežni cvetni oblici za mirniji, prirodni kutak.', 'cosypaw' ),
-	),
-	'peskiri-u-torbi' => array(
-		'title' => __( 'Peškiri u torbi', 'cosypaw' ),
-		'lead'  => '',
 	),
 );
 
 $groups = \Theme\Storefront::by_subcategory( $products, array_keys( $cosypaw_group_copy ) );
 
 // Until the shop files its towels into subcategories every motif lands in the
-// unfiled group, and a lone "Još peškira" heading under the page's own H1
-// would be a heading with nothing before it to be "more" than.
+// unfiled group, and the page's own H1 is the only heading that is true of
+// all of them.
 $cosypaw_only_unfiled = array( '' ) === array_keys( $groups );
 
 $cosypaw_home_link = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'ručno rađeni peškiri', 'cosypaw' ) . '</a>';
@@ -90,10 +100,10 @@ $cosypaw_home_link = '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html_
 
 	<?php foreach ( $groups as $cosypaw_slug => $cosypaw_rows ) : ?>
 		<?php
-		$cosypaw_copy = $cosypaw_group_copy[ $cosypaw_slug ] ?? array(
-			'title' => $cosypaw_only_unfiled ? '' : __( 'Još peškira', 'cosypaw' ),
-			'lead'  => '',
-		);
+		$cosypaw_copy = $cosypaw_group_copy[ $cosypaw_slug ];
+		if ( $cosypaw_only_unfiled ) {
+			$cosypaw_copy['title'] = '';
+		}
 		?>
 		<section class="section collection__group"<?php echo '' !== $cosypaw_slug ? ' id="' . esc_attr( $cosypaw_slug ) . '"' : ''; ?>>
 			<?php if ( '' !== $cosypaw_copy['title'] ) : ?>

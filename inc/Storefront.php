@@ -133,15 +133,20 @@ final class Storefront {
 	 * the same towel twice on one page reads as a mistake. Motifs in none —
 	 * every towel, until the shop files them in wp-admin, and any motif with no
 	 * WooCommerce product behind it — are returned under the empty key, so the
-	 * page can still show them rather than lose them.
+	 * page can still show them rather than lose them. That group comes last,
+	 * unless $order names the empty key itself and so says where it goes.
 	 *
 	 * @param array<int,array<string,mixed>> $products Catalogue rows.
-	 * @param string[]                       $order    Subcategory slugs in display order; defaults to ProductCategories order.
+	 * @param string[]                       $order    Subcategory slugs in display order, '' for the unfiled group; defaults to ProductCategories order.
 	 * @return array<string,array<int,array<string,mixed>>> Subcategory slug (or '') => rows. Empty groups omitted.
 	 */
 	public static function by_subcategory( array $products, array $order = array() ): array {
 		$slugs  = $order ? array_values( $order ) : array_keys( ProductCategories::SUBCATEGORIES );
 		$groups = array_fill_keys( array_merge( $slugs, array( '' ) ), array() );
+
+		// The empty key is a place in the order, not a term to look for:
+		// has_term() with no term asks "is it filed under anything at all".
+		$slugs = array_values( array_diff( $slugs, array( '' ) ) );
 
 		foreach ( $products as $row ) {
 			$home = '';

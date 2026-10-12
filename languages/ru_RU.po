@@ -275,8 +275,8 @@ msgstr "Нежные цветочные формы для спокойного, 
 msgid "Peškiri u torbi"
 msgstr "Полотенца в сумочке"
 
-msgid "Još peškira"
-msgstr "Ещё полотенца"
+msgid "Peškiri iz vaših omiljenih crtanih filmova"
+msgstr "Полотенца из ваших любимых мультфильмов"
 
 msgid "Zašto oblici"
 msgstr "Зачем формы"

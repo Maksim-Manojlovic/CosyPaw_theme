@@ -116,6 +116,27 @@ final class StorefrontTest extends TestCase {
 	}
 
 	/**
+	 * A page that names the unfiled group in its order gets it there, not
+	 * last — and a filed towel is never swept into it on the way.
+	 *
+	 * @return void
+	 */
+	public function test_the_unfiled_group_goes_where_the_order_puts_it(): void {
+		$this->filed = array(
+			1 => array( 'cvetici-i-listici' ),
+			2 => array( 'zivotinjice' ),
+		);
+
+		$groups = Storefront::by_subcategory(
+			array( $this->row( 'lala', 1 ), $this->row( 'zeka', 2 ), $this->row( 'crtani', 3 ) ),
+			array( 'zivotinjice', '', 'cvetici-i-listici' )
+		);
+
+		$this->assertSame( array( 'zivotinjice', '', 'cvetici-i-listici' ), array_keys( $groups ) );
+		$this->assertSame( array( 'crtani' ), array_column( $groups[''], 'id' ) );
+	}
+
+	/**
 	 * A motif with no product behind it cannot be filed, and is not lost.
 	 *
 	 * @return void

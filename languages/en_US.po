@@ -275,8 +275,8 @@ msgstr "Gentle floral shapes for a calmer, natural corner."
 msgid "Peškiri u torbi"
 msgstr "Towels in a bag"
 
-msgid "Još peškira"
-msgstr "More towels"
+msgid "Peškiri iz vaših omiljenih crtanih filmova"
+msgstr "Towels from your favourite cartoons"
 
 msgid "Zašto oblici"
 msgstr "Why shapes"

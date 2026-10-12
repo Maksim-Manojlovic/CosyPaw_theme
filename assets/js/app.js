@@ -48,11 +48,15 @@ const boot = () => {
 
 	// The gift banner's unboxing clip. It is on the landing and under every
 	// product now, so it boots from here rather than from the landing entry.
-	if (InViewVideo.wanted()) {
-		document.querySelectorAll('[data-inview-video]').forEach((video) => {
+	// A product's own clip, in its gallery, boots here too — and does so even
+	// where nothing may start by itself, because it is the only way to play
+	// a clip the visitor has just asked to see.
+	const autoplay = InViewVideo.wanted();
+	document.querySelectorAll('[data-inview-video]').forEach((video) => {
+		if (autoplay || video.hasAttribute('data-video-manual')) {
 			new InViewVideo(video, l10n);
-		});
-	}
+		}
+	});
 
 	// The cart / checkout package offer: its motif strip, and the re-render
 	// that keeps it in step with WooCommerce's AJAX cart. Those two views load

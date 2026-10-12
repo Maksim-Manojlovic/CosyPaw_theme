@@ -253,6 +253,67 @@
 	border-radius: var(--radius-lg);
 }
 
+/* ---------- Promo clip in the gallery ---------- */
+
+/* The clip's slide (template-parts/product-video.php). It holds the shape of
+   the photograph beside it — --clip-ratio, read from that picture — because
+   the slider resizes the gallery to whichever slide is on show, and a 9:16
+   clip would push the thumbnails under it down the page each time it slid in.
+   The clip is cropped into the box; --clip-focus says which part of it stays. */
+.woocommerce div.product div.images .woocommerce-product-gallery__image.cosypaw-gallery-video {
+	position: relative;
+	aspect-ratio: var(--clip-ratio, 3 / 4);
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background-color: var(--cream2);
+}
+
+/* Until the slider has built itself, WooCommerce shows every picture after
+   the first as a quarter-width tile under it. For a clip that tile is a still
+   nobody can play — and one InViewVideo may find on screen and start fetching.
+   The slider's viewport appearing is the sign that the slide has a place. */
+.woocommerce div.product div.images:not(:has(.flex-viewport)) .woocommerce-product-gallery__image.cosypaw-gallery-video {
+	display: none;
+}
+
+.cosypaw-gallery-video__clip {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: var(--clip-focus, center);
+}
+
+/* The magnifier opens the photographs' lightbox, which the clip is not in. */
+.woocommerce div.product div.images:has(.cosypaw-gallery-video.flex-active-slide) .woocommerce-product-gallery__trigger {
+	display: none;
+}
+
+/* The slider builds the thumbnail strip as one bare image per slide, so the
+   badge that tells the clip's thumbnail from a photograph hangs on its place
+   in the strip: the clip is always the last slide. It lets clicks through to
+   the image under it, which is what the slider listens on. */
+.woocommerce div.product div.images.cosypaw-gallery--video .flex-control-thumbs li:last-child {
+	position: relative;
+}
+
+.woocommerce div.product div.images.cosypaw-gallery--video .flex-control-thumbs li:last-child::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5.5v13l11-6.5z'/%3E%3C/svg%3E") center / 16px 16px no-repeat,
+		rgba(58, 44, 36, 0.62);
+	pointer-events: none;
+}
+
 /* Ratings and the links around them shipped in WooCommerce's own colours —
    a browser-default blue link and black stars, both of which read as somebody
    else's page. --ochre-ink rather than --ochre for the same reason the

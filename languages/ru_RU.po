@@ -1217,6 +1217,9 @@ msgstr "Приостановить видео"
 msgid "Pusti video"
 msgstr "Воспроизвести видео"
 
+msgid "Video: %s"
+msgstr "Видео: %s"
+
 msgid "Otvaranje CosyPaw paketa"
 msgstr "Распаковка набора CosyPaw"
 

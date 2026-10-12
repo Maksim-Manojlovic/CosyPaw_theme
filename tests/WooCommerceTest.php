@@ -52,6 +52,7 @@ require_once dirname( __DIR__ ) . '/inc/LongTowels.php';
 require_once dirname( __DIR__ ) . '/inc/Wording.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundles.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundlePicker.php';
+require_once dirname( __DIR__ ) . '/inc/ProductVideos.php';
 require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';
 require_once dirname( __DIR__ ) . '/inc/Reviews.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';

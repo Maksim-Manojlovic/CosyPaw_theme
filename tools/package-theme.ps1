@@ -61,13 +61,15 @@ foreach ($d in 'inc','template-parts','dist','languages') {
 	if (Test-Path $src) { Copy-Item $src (Join-Path $stage $d) -Recurse -Force }
 }
 
-# Image assets only. The css/js source is compiled into dist/ and not shipped.
+# Image assets only, plus the products' promo clips (assets/videos/*.mp4, which
+# ProductVideos.php builds URLs to). The css/js source is compiled into dist/
+# and not shipped.
 # Recursive: the motif photography lives in assets/motifs/, and its relative
 # subdirectory must survive into the zip because Catalog.php builds URLs from it.
 $assetsIn  = Join-Path $root 'assets'
 $assetsOut = Join-Path $stage 'assets'
 New-Item -ItemType Directory -Force -Path $assetsOut | Out-Null
-$imgExt = '.png','.jpg','.jpeg','.gif','.svg','.webp','.avif'
+$imgExt = '.png','.jpg','.jpeg','.gif','.svg','.webp','.avif','.mp4'
 Get-ChildItem $assetsIn -File -Recurse |
 	Where-Object { $imgExt -contains $_.Extension.ToLower() } |
 	ForEach-Object {

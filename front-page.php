@@ -461,31 +461,32 @@ if ( $hero_deal ) {
 	<!-- PAKETI -->
 	<?php get_template_part( 'template-parts/packages', null, $storefront ); ?>
 
-	<!-- MAGIČNE KRPICE -->
+	<!-- CUDDLE PUFF JASTUCI -->
 	<?php
 	/*
 	 * Right after the builder, and before the objection handling: the visitor
-	 * has just decided on towels, and a 299 RSD cloth is the add-on that sits
-	 * beside that decision — often the step that clears the free-delivery bar.
-	 * Printed only once the cloths exist and are on sale (\Theme\Cloths
-	 * creates them on the first wp-admin visit), so the page never offers a
-	 * button that cannot sell.
+	 * has just decided on towels, and the three lines sold outside the packages
+	 * follow in the order pillows, long towels, cloths.
+	 *
+	 * One card per shape, the colours as swatches on it — twelve cards of the
+	 * same pillow in different colours would bury the three shapes. Printed
+	 * only while on sale (\Theme\Pillows).
 	 */
-	$cosypaw_cloths = class_exists( '\Theme\Cloths' ) ? \Theme\Cloths::products() : array();
-	if ( $cosypaw_cloths ) :
-		$cosypaw_cloths_page = \Theme\Pages::url( 'krpe' );
+	$cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
+	if ( $cosypaw_pillows ) :
+		$cosypaw_pillows_page = \Theme\Pages::url( 'jastuci' );
 		?>
-		<section id="magicne-krpice" class="section cloths-section">
+		<section id="cuddle-puff-jastuci" class="section cloths-section">
 			<div class="section__head">
 				<span class="eyebrow"><?php esc_html_e( 'Novo', 'cosypaw' ); ?></span>
-				<h2 class="section__title"><?php esc_html_e( 'Magične krpice', 'cosypaw' ); ?></h2>
+				<h2 class="section__title"><?php esc_html_e( 'Cuddle Puff jastuci', 'cosypaw' ); ?></h2>
 				<p class="section__lead">
 					<?php
 					echo esc_html(
 						sprintf(
-							/* translators: %s: formatted price of one cloth. */
-							__( 'Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira.', 'cosypaw' ),
-							\Theme\Catalog::format_price( \Theme\Cloths::from_price( $cosypaw_cloths ) )
+							/* translators: %s: formatted price of one pillow. */
+							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, i cvetići sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu.', 'cosypaw' ),
+							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 						)
 					);
 					?>
@@ -494,18 +495,18 @@ if ( $hero_deal ) {
 
 			<?php
 			get_template_part(
-				'template-parts/cloth-cards',
+				'template-parts/swatch-cards',
 				null,
 				array(
-					'cloths' => $cosypaw_cloths,
-					'set'    => \Theme\Cloths::set( $cosypaw_cloths ),
+					'groups' => \Theme\Pillows::groups( $cosypaw_pillows ),
+					'id'     => 'jastuk',
 				)
 			);
 			?>
 
-			<?php if ( '' !== $cosypaw_cloths_page ) : ?>
-				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_cloths_page ); ?>">
-					<span><?php esc_html_e( 'Sve o magičnim krpama', 'cosypaw' ); ?></span>
+			<?php if ( '' !== $cosypaw_pillows_page ) : ?>
+				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_pillows_page ); ?>">
+					<span><?php esc_html_e( 'Sve o Cuddle Puff jastucima', 'cosypaw' ); ?></span>
 					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 				</a>
 			<?php endif; ?>
@@ -515,7 +516,7 @@ if ( $hero_deal ) {
 	<!-- DUGI PEŠKIRI -->
 	<?php
 	/*
-	 * Beside the cloths for the same reason: a 499 RSD towel sits next to the
+	 * Between the pillows and the cloths: a 499 RSD towel sits next to the
 	 * package decision and often clears the free-delivery bar. Not part of
 	 * any package (\Theme\LongTowels), and printed only while on sale.
 	 */
@@ -560,28 +561,31 @@ if ( $hero_deal ) {
 		</section>
 	<?php endif; ?>
 
-	<!-- CUDDLE PUFF JASTUCI -->
+	<!-- MAGIČNE KRPICE -->
 	<?php
 	/*
-	 * One card per shape, the colours as swatches on it — twelve cards of the
-	 * same pillow in different colours would bury the three shapes. Printed
-	 * only while on sale (\Theme\Pillows).
+	 * Last of the three, and still before the objection handling: a 299 RSD
+	 * cloth is the add-on that sits beside the towel decision — often the step
+	 * that clears the free-delivery bar.
+	 * Printed only once the cloths exist and are on sale (\Theme\Cloths
+	 * creates them on the first wp-admin visit), so the page never offers a
+	 * button that cannot sell.
 	 */
-	$cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
-	if ( $cosypaw_pillows ) :
-		$cosypaw_pillows_page = \Theme\Pages::url( 'jastuci' );
+	$cosypaw_cloths = class_exists( '\Theme\Cloths' ) ? \Theme\Cloths::products() : array();
+	if ( $cosypaw_cloths ) :
+		$cosypaw_cloths_page = \Theme\Pages::url( 'krpe' );
 		?>
-		<section id="cuddle-puff-jastuci" class="section cloths-section">
+		<section id="magicne-krpice" class="section cloths-section">
 			<div class="section__head">
 				<span class="eyebrow"><?php esc_html_e( 'Novo', 'cosypaw' ); ?></span>
-				<h2 class="section__title"><?php esc_html_e( 'Cuddle Puff jastuci', 'cosypaw' ); ?></h2>
+				<h2 class="section__title"><?php esc_html_e( 'Magične krpice', 'cosypaw' ); ?></h2>
 				<p class="section__lead">
 					<?php
 					echo esc_html(
 						sprintf(
-							/* translators: %s: formatted price of one pillow. */
-							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, i cvetići sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu.', 'cosypaw' ),
-							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
+							/* translators: %s: formatted price of one cloth. */
+							__( 'Mikrofiber krpice sa vezenim avokadom — upijaju vodu, hvataju prašinu i brišu staklo bez tragova. %s po komadu, van paketa peškira.', 'cosypaw' ),
+							\Theme\Catalog::format_price( \Theme\Cloths::from_price( $cosypaw_cloths ) )
 						)
 					);
 					?>
@@ -590,18 +594,18 @@ if ( $hero_deal ) {
 
 			<?php
 			get_template_part(
-				'template-parts/swatch-cards',
+				'template-parts/cloth-cards',
 				null,
 				array(
-					'groups' => \Theme\Pillows::groups( $cosypaw_pillows ),
-					'id'     => 'jastuk',
+					'cloths' => $cosypaw_cloths,
+					'set'    => \Theme\Cloths::set( $cosypaw_cloths ),
 				)
 			);
 			?>
 
-			<?php if ( '' !== $cosypaw_pillows_page ) : ?>
-				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_pillows_page ); ?>">
-					<span><?php esc_html_e( 'Sve o Cuddle Puff jastucima', 'cosypaw' ); ?></span>
+			<?php if ( '' !== $cosypaw_cloths_page ) : ?>
+				<a class="motif-handoff" href="<?php echo esc_url( $cosypaw_cloths_page ); ?>">
+					<span><?php esc_html_e( 'Sve o magičnim krpama', 'cosypaw' ); ?></span>
 					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 				</a>
 			<?php endif; ?>

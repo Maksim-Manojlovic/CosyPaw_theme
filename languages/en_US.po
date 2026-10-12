@@ -755,6 +755,60 @@ msgstr "Little Token gift bundle"
 msgid "Poklon paket Praznična kutija mekoće"
 msgstr "Holiday Box of Softness gift bundle"
 
+msgid "Poklon paket Drugari u torbi"
+msgstr "Friends in a Bag gift bundle"
+
+msgid "Poklon paket Prvi rođendan"
+msgstr "First Birthday gift bundle"
+
+msgid "Poklon paket Slatki zalogaji"
+msgstr "Sweet Treats gift bundle"
+
+msgid "Poklon paket Hvala od srca"
+msgstr "Heartfelt Thanks gift bundle"
+
+msgid "Poklon paket Novogodišnji paketić"
+msgstr "New Year’s Gift Box bundle"
+
+msgid "Poklon paket Topla zima"
+msgstr "Warm Winter gift bundle"
+
+msgid "4 dečija peškira u torbi (Žirafa, Koala, Kapibarica, Zeka)"
+msgstr "4 children’s towels in a bag (Giraffe, Koala, Capybara, Bunny)"
+
+msgid "Cuddle Puff jastuk Cvetić, žuti, i 3 dečija peškira (Pingvin, Sovica, Meda)"
+msgstr "Cuddle Puff flower pillow in yellow and 3 children’s towels (Penguin, Owl, Teddy)"
+
+msgid "3 peškira (Krofnica, Keksić, Ananas) i obe magične krpice Avokado"
+msgstr "3 towels (Donut, Cookie, Pineapple) and both Avocado magic cloths"
+
+msgid "peškir List, peškir Meda, krem, i obe magične krpice Avokado"
+msgstr "the Leaf towel, the Teddy towel in cream, and both Avocado magic cloths"
+
+msgid "4 dečija peškira (Pingvin, Kuca pecaroš, Krofnica, Keksić)"
+msgstr "4 children’s towels (Penguin, Fishing Puppy, Donut, Cookie)"
+
+msgid "Cuddle Puff jastuk Kružić, zeleni, 2 peškira Meda (krem i bež) i dečiji peškir Pingvin"
+msgstr "Cuddle Puff round pillow in green, 2 Teddy towels (cream and beige) and the Penguin children’s towel"
+
+msgid "Četiri drugara koji vire iz torbe: žirafa, koala, kapibarica i zeka, svaki u svojoj boji i sa alkom za kačenje. Poklon za rođendan, polazak u vrtić ili za braću i sestre."
+msgstr "Four friends peeking out of a bag: a giraffe, a koala, a capybara and a bunny, each in its own colour and with a hanging loop. A gift for a birthday, for starting kindergarten, or for brothers and sisters."
+
+msgid "Za prvu svećicu: žuti Cuddle Puff jastuk u obliku cveta za dečiju sobu i tri dečija peškira sa alkom — pingvin, sovica i meda. Poklon za prvi rođendan, krštenje ili rođenje."
+msgstr "For the first candle: a yellow flower-shaped Cuddle Puff pillow for the nursery and three children’s towels with a hanging loop — a penguin, an owl and a teddy. A gift for a first birthday, a christening or a birth."
+
+msgid "Slatkiši koji ne goje: peškiri u obliku krofne, keksa i ananasa za ruke u kuhinji i obe magične krpice za radne površine. Veseo poklon za koleginicu ili domaćicu."
+msgstr "Sweets with no calories: towels shaped like a donut, a cookie and a pineapple for hands in the kitchen, and both magic cloths for the worktops. A cheerful gift for a colleague or a host."
+
+msgid "Mali poklon da kažeš hvala: peškir u obliku javorovog lista, krem peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili kraj školske godine."
+msgstr "A small gift to say thank you: a towel shaped like a maple leaf, a cream towel with an embroidered teddy and two magic cloths. For a kindergarten teacher, a teacher or the end of the school year."
+
+msgid "Paketić pod jelku koji se ne pojede za jedan dan: četiri dečija peškira sa alkom — pingvin, kuca, krofnica i keksić. Novogodišnji poklon za decu, bez šećera."
+msgstr "A gift under the tree that is not eaten in a day: four children’s towels with a hanging loop — a penguin, a puppy, a donut and a cookie. A New Year’s gift for children, with no sugar."
+
+msgid "Za duge zimske večeri: zeleni Cuddle Puff jastuk za fotelju, dva mekana peškira sa vezenim medom i pingvin za najmlađe. Novogodišnji ili božićni poklon za dom."
+msgstr "For long winter evenings: a green Cuddle Puff pillow for the armchair, two soft towels with an embroidered teddy and a penguin for the little ones. A New Year’s or Christmas gift for the home."
+
 msgid "3 dečija peškira (Zeka, Meda, Panda) i roze Cuddle Puff jastuk Kružić"
 msgstr "3 children’s towels (Bunny, Teddy, Panda) and a pink Cuddle Puff round pillow"
 
@@ -904,6 +958,9 @@ msgstr "Round pillow"
 
 msgid "Jastuk Kockasti"
 msgstr "Square pillow"
+
+msgid "Jastuk Cvetić"
+msgstr "Flower pillow"
 
 msgid "Avokado, limeta i žalfija"
 msgstr "Avocado, lime and sage"

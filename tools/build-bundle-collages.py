@@ -55,6 +55,12 @@ CONTENTS = {
     'poklon-paket-za-dvoje': [pillow('kockasti-roze'), pillow('kockasti-sivi'), long_towel('meda-roze'), long_towel('meda-plavi')],
     'poklon-paket-mali-znak-paznje': [towel('lala'), long_towel('meda-roze')] + CLOTHS,
     'poklon-paket-praznicna-kutija-mekoce': [pillow('kruzic-braon'), long_towel('meda-bez'), towel('pingvin'), towel('meda'), towel('keks')] + CLOTHS,
+    'poklon-paket-drugari-u-torbi': [towel('zirafa'), towel('koala'), towel('kapibara'), towel('zeka')],
+    'poklon-paket-prvi-rodjendan': [pillow('cvetic-zuti'), towel('pingvin'), towel('sova'), towel('meda')],
+    'poklon-paket-slatki-zalogaji': [towel('krofna'), towel('keks'), towel('ananas')] + CLOTHS,
+    'poklon-paket-hvala-od-srca': [towel('list'), long_towel('meda-krem')] + CLOTHS,
+    'poklon-paket-novogodisnji-paketic': [towel('pingvin'), towel('kucence'), towel('krofna'), towel('keks')],
+    'poklon-paket-topla-zima': [pillow('kruzic-zeleni'), long_towel('meda-krem'), long_towel('meda-bez'), towel('pingvin')],
 }
 
 

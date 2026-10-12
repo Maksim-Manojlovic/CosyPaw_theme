@@ -755,6 +755,60 @@ msgstr "Подарочный набор «Маленький знак внима
 msgid "Poklon paket Praznična kutija mekoće"
 msgstr "Подарочный набор «Праздничная коробка мягкости»"
 
+msgid "Poklon paket Drugari u torbi"
+msgstr "Подарочный набор «Друзья в сумочке»"
+
+msgid "Poklon paket Prvi rođendan"
+msgstr "Подарочный набор «Первый день рождения»"
+
+msgid "Poklon paket Slatki zalogaji"
+msgstr "Подарочный набор «Сладкие вкусняшки»"
+
+msgid "Poklon paket Hvala od srca"
+msgstr "Подарочный набор «Спасибо от всего сердца»"
+
+msgid "Poklon paket Novogodišnji paketić"
+msgstr "Подарочный набор «Новогодний подарок»"
+
+msgid "Poklon paket Topla zima"
+msgstr "Подарочный набор «Тёплая зима»"
+
+msgid "4 dečija peškira u torbi (Žirafa, Koala, Kapibarica, Zeka)"
+msgstr "4 детских полотенца в сумочке (Жираф, Коала, Капибара, Зайка)"
+
+msgid "Cuddle Puff jastuk Cvetić, žuti, i 3 dečija peškira (Pingvin, Sovica, Meda)"
+msgstr "Подушка Cuddle Puff «Цветок», жёлтая, и 3 детских полотенца (Пингвин, Совушка, Мишка)"
+
+msgid "3 peškira (Krofnica, Keksić, Ananas) i obe magične krpice Avokado"
+msgstr "3 полотенца (Пончик, Печенье, Ананас) и обе волшебные салфетки «Авокадо»"
+
+msgid "peškir List, peškir Meda, krem, i obe magične krpice Avokado"
+msgstr "полотенце «Лист», полотенце «Мишка», кремовое, и обе волшебные салфетки «Авокадо»"
+
+msgid "4 dečija peškira (Pingvin, Kuca pecaroš, Krofnica, Keksić)"
+msgstr "4 детских полотенца (Пингвин, Щенок-рыболов, Пончик, Печенье)"
+
+msgid "Cuddle Puff jastuk Kružić, zeleni, 2 peškira Meda (krem i bež) i dečiji peškir Pingvin"
+msgstr "Подушка Cuddle Puff «Кружок», зелёная, 2 полотенца «Мишка» (кремовое и бежевое) и детское полотенце «Пингвин»"
+
+msgid "Četiri drugara koji vire iz torbe: žirafa, koala, kapibarica i zeka, svaki u svojoj boji i sa alkom za kačenje. Poklon za rođendan, polazak u vrtić ili za braću i sestre."
+msgstr "Четыре друга выглядывают из сумочки: жираф, коала, капибара и зайка — каждый своего цвета и с петелькой. Подарок на день рождения, к садику или для братьев и сестёр."
+
+msgid "Za prvu svećicu: žuti Cuddle Puff jastuk u obliku cveta za dečiju sobu i tri dečija peškira sa alkom — pingvin, sovica i meda. Poklon za prvi rođendan, krštenje ili rođenje."
+msgstr "К первой свечке: жёлтая подушка Cuddle Puff в форме цветка для детской и три детских полотенца с петелькой — пингвин, совушка и мишка. Подарок на первый день рождения, крестины или рождение."
+
+msgid "Slatkiši koji ne goje: peškiri u obliku krofne, keksa i ananasa za ruke u kuhinji i obe magične krpice za radne površine. Veseo poklon za koleginicu ili domaćicu."
+msgstr "Сладости без калорий: полотенца в форме пончика, печенья и ананаса для рук на кухне и обе волшебные салфетки для столешниц. Весёлый подарок коллеге или хозяйке."
+
+msgid "Mali poklon da kažeš hvala: peškir u obliku javorovog lista, krem peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili kraj školske godine."
+msgstr "Маленький подарок, чтобы сказать спасибо: полотенце в форме кленового листа, кремовое полотенце с вышитым мишкой и две волшебные салфетки. Для воспитательницы, учительницы или к концу учебного года."
+
+msgid "Paketić pod jelku koji se ne pojede za jedan dan: četiri dečija peškira sa alkom — pingvin, kuca, krofnica i keksić. Novogodišnji poklon za decu, bez šećera."
+msgstr "Подарок под ёлку, который не съедят за один день: четыре детских полотенца с петелькой — пингвин, щенок, пончик и печенье. Новогодний подарок детям, без сахара."
+
+msgid "Za duge zimske večeri: zeleni Cuddle Puff jastuk za fotelju, dva mekana peškira sa vezenim medom i pingvin za najmlađe. Novogodišnji ili božićni poklon za dom."
+msgstr "Для долгих зимних вечеров: зелёная подушка Cuddle Puff для кресла, два мягких полотенца с вышитым мишкой и пингвин для самых маленьких. Новогодний или рождественский подарок для дома."
+
 msgid "3 dečija peškira (Zeka, Meda, Panda) i roze Cuddle Puff jastuk Kružić"
 msgstr "3 детских полотенца (Зайка, Мишка, Панда) и розовая подушка Cuddle Puff «Кружок»"
 
@@ -904,6 +958,9 @@ msgstr "Подушка «Кружок»"
 
 msgid "Jastuk Kockasti"
 msgstr "Подушка «Квадрат»"
+
+msgid "Jastuk Cvetić"
+msgstr "Подушка «Цветок»"
 
 msgid "Avokado, limeta i žalfija"
 msgstr "Авокадо, лайм и шалфей"

@@ -623,7 +623,7 @@ if ( $hero_deal ) {
 		'template-parts/bundle-section',
 		null,
 		array(
-			'keys'  => array( 'dobrodoslica-za-bebu', 'novi-dom', 'praznicna-kutija' ),
+			'keys'  => array( 'prvi-rodjendan', 'novi-dom', 'praznicna-kutija' ),
 			'id'    => 'poklon-paketi',
 			'title' => __( 'Poklon paketi za svaku priliku', 'cosypaw' ),
 			'lead'  => __( 'Gotove kombinacije peškira, jastuka i krpica — složene za jednu priliku i jeftinije u paketu.', 'cosypaw' ),

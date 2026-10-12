@@ -46,7 +46,7 @@ final class GiftBundles extends ProductLine {
 	/**
 	 * Bump when a bundle is added to ITEMS.
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -238,6 +238,93 @@ final class GiftBundles extends ProductLine {
 			'seo_title'       => 'Novogodišnji Poklon Paket | Praznična Kutija Mekoće',
 			'seo_description' => 'Novogodišnji paketić za celu porodicu: tri dečija peškira, Cuddle Puff jastuk, peškir sa medom i magične krpice. Plaćanje pouzećem, besplatna dostava!',
 			'contains'        => array( array( self::TOWEL, 'pingvin' ), array( self::TOWEL, 'meda' ), array( self::TOWEL, 'keks' ), array( self::PILLOW, 'kruzic-braon' ), array( self::LONG, 'meda-bez' ), array( self::CLOTHS, Cloths::SET ) ),
+		),
+
+		/*
+		 * Version 2: two more for children, for small gifts and for the
+		 * holidays, so each of those occasions has three to choose from. A
+		 * bundle is withdrawn the day one of its towels is retired, and the
+		 * shop had retired enough of them to leave those occasions with one
+		 * bundle each. These hold only towels the shop sells today, and name
+		 * them as the shop does ("u torbi", "Sovica", "Krofnica").
+		 */
+		'drugari-u-torbi'      => array(
+			'name'            => 'Poklon paket Drugari u torbi',
+			'slug'            => 'poklon-paket-drugari-u-torbi',
+			'occasion'        => 'deca',
+			'price'           => 2090,
+			'image'           => 'poklon-paket-drugari-u-torbi.webp',
+			'alt'             => 'Četiri dečija peškira sa alkom za kačenje: žirafa, koala, kapibara i zeka, svaka viri iz svoje torbe',
+			'includes'        => '4 dečija peškira u torbi (Žirafa, Koala, Kapibarica, Zeka)',
+			'short'           => 'Četiri drugara koji vire iz torbe: žirafa, koala, kapibarica i zeka, svaki u svojoj boji i sa alkom za kačenje. Poklon za rođendan, polazak u vrtić ili za braću i sestre.',
+			'seo_title'       => 'Dečiji Peškiri u Torbi | Poklon Paket od 4 Peškira sa Alkom',
+			'seo_description' => 'Četiri dečija peškira u torbi — žirafa, koala, kapibarica i zeka, sa alkom za kačenje. Poklon za rođendan ili vrtić. Pouzećem, besplatna dostava!',
+			'contains'        => array( array( self::TOWEL, 'zirafa' ), array( self::TOWEL, 'koala' ), array( self::TOWEL, 'kapibara' ), array( self::TOWEL, 'zeka' ) ),
+		),
+		'prvi-rodjendan'       => array(
+			'name'            => 'Poklon paket Prvi rođendan',
+			'slug'            => 'poklon-paket-prvi-rodjendan',
+			'occasion'        => 'deca',
+			'price'           => 2790,
+			'image'           => 'poklon-paket-prvi-rodjendan.webp',
+			'alt'             => 'Žuti Cuddle Puff jastuk u obliku cveta i dečiji peškiri u obliku pingvina, sove i mede',
+			'includes'        => 'Cuddle Puff jastuk Cvetić, žuti, i 3 dečija peškira (Pingvin, Sovica, Meda)',
+			'short'           => 'Za prvu svećicu: žuti Cuddle Puff jastuk u obliku cveta za dečiju sobu i tri dečija peškira sa alkom — pingvin, sovica i meda. Poklon za prvi rođendan, krštenje ili rođenje.',
+			'seo_title'       => 'Poklon za Prvi Rođendan | Jastuk Cvetić i 3 Dečija Peškira',
+			'seo_description' => 'Poklon za prvi rođendan ili krštenje: Cuddle Puff jastuk u obliku cveta i tri dečija peškira u obliku životinja. Plaćanje pouzećem, besplatna dostava!',
+			'contains'        => array( array( self::PILLOW, 'cvetic-zuti' ), array( self::TOWEL, 'pingvin' ), array( self::TOWEL, 'sova' ), array( self::TOWEL, 'meda' ) ),
+		),
+		'slatki-zalogaji'      => array(
+			'name'            => 'Poklon paket Slatki zalogaji',
+			'slug'            => 'poklon-paket-slatki-zalogaji',
+			'occasion'        => 'paznja',
+			'price'           => 1590,
+			'image'           => 'poklon-paket-slatki-zalogaji.webp',
+			'alt'             => 'Peškiri u obliku krofne, čokoladnog keksa i ananasa i dve magične krpice sa vezenim avokadom',
+			'includes'        => '3 peškira (Krofnica, Keksić, Ananas) i obe magične krpice Avokado',
+			'short'           => 'Slatkiši koji ne goje: peškiri u obliku krofne, keksa i ananasa za ruke u kuhinji i obe magične krpice za radne površine. Veseo poklon za koleginicu ili domaćicu.',
+			'seo_title'       => 'Poklon za Koleginicu | Peškiri Krofna, Keks i Ananas',
+			'seo_description' => 'Peškiri u obliku krofne, keksa i ananasa i dve magične krpice — veseo, praktičan poklon za koleginicu, domaćicu ili kuhinju. Plaćanje pouzećem!',
+			'contains'        => array( array( self::TOWEL, 'krofna' ), array( self::TOWEL, 'keks' ), array( self::TOWEL, 'ananas' ), array( self::CLOTHS, Cloths::SET ) ),
+		),
+		'hvala-od-srca'        => array(
+			'name'            => 'Poklon paket Hvala od srca',
+			'slug'            => 'poklon-paket-hvala-od-srca',
+			'occasion'        => 'paznja',
+			'price'           => 1290,
+			'image'           => 'poklon-paket-hvala-od-srca.webp',
+			'alt'             => 'Peškir u obliku javorovog lista, krem peškir sa vezenim medom i dve magične krpice sa avokadom',
+			'includes'        => 'peškir List, peškir Meda, krem, i obe magične krpice Avokado',
+			'short'           => 'Mali poklon da kažeš hvala: peškir u obliku javorovog lista, krem peškir sa vezenim medom i dve magične krpice. Za vaspitačicu, učiteljicu ili kraj školske godine.',
+			'seo_title'       => 'Poklon za Učiteljicu i Vaspitačicu | Paket Hvala od Srca',
+			'seo_description' => 'Peškir u obliku lista, peškir sa medom i dve magične krpice — mali poklon za učiteljicu, vaspitačicu, kraj školske godine ili 8. mart. Pouzećem!',
+			'contains'        => array( array( self::TOWEL, 'list' ), array( self::LONG, 'meda-krem' ), array( self::CLOTHS, Cloths::SET ) ),
+		),
+		'novogodisnji-paketic' => array(
+			'name'            => 'Poklon paket Novogodišnji paketić',
+			'slug'            => 'poklon-paket-novogodisnji-paketic',
+			'occasion'        => 'praznici',
+			'price'           => 2090,
+			'image'           => 'poklon-paket-novogodisnji-paketic.webp',
+			'alt'             => 'Četiri dečija peškira sa alkom za kačenje, u obliku pingvina, kuce, krofne i čokoladnog keksa',
+			'includes'        => '4 dečija peškira (Pingvin, Kuca pecaroš, Krofnica, Keksić)',
+			'short'           => 'Paketić pod jelku koji se ne pojede za jedan dan: četiri dečija peškira sa alkom — pingvin, kuca, krofnica i keksić. Novogodišnji poklon za decu, bez šećera.',
+			'seo_title'       => 'Novogodišnji Paketić za Decu | 4 Dečija Peškira sa Alkom',
+			'seo_description' => 'Novogodišnji paketić za decu: četiri dečija peškira u obliku pingvina, kuce, krofne i keksa. Poklon pod jelku bez šećera. Pouzećem, besplatna dostava!',
+			'contains'        => array( array( self::TOWEL, 'pingvin' ), array( self::TOWEL, 'kucence' ), array( self::TOWEL, 'krofna' ), array( self::TOWEL, 'keks' ) ),
+		),
+		'topla-zima'           => array(
+			'name'            => 'Poklon paket Topla zima',
+			'slug'            => 'poklon-paket-topla-zima',
+			'occasion'        => 'praznici',
+			'price'           => 2790,
+			'image'           => 'poklon-paket-topla-zima.webp',
+			'alt'             => 'Zeleni Cuddle Puff jastuk Kružić, krem i bež peškir sa vezenim medom i dečiji peškir u obliku pingvina',
+			'includes'        => 'Cuddle Puff jastuk Kružić, zeleni, 2 peškira Meda (krem i bež) i dečiji peškir Pingvin',
+			'short'           => 'Za duge zimske večeri: zeleni Cuddle Puff jastuk za fotelju, dva mekana peškira sa vezenim medom i pingvin za najmlađe. Novogodišnji ili božićni poklon za dom.',
+			'seo_title'       => 'Božićni i Novogodišnji Poklon za Dom | Paket Topla Zima',
+			'seo_description' => 'Novogodišnji poklon za dom: Cuddle Puff jastuk, dva peškira sa vezenim medom i dečiji peškir Pingvin. Plaćanje pouzećem, besplatna dostava!',
+			'contains'        => array( array( self::PILLOW, 'kruzic-zeleni' ), array( self::LONG, 'meda-krem' ), array( self::LONG, 'meda-bez' ), array( self::TOWEL, 'pingvin' ) ),
 		),
 	);
 
@@ -609,9 +696,11 @@ final class GiftBundles extends ProductLine {
 	private static function slot_label( string $line, string $key ): string {
 		return match ( $line ) {
 			self::TOWEL  => __( 'Peškir', 'cosypaw' ),
-			self::PILLOW => Pillows::SQUARE === ( Pillows::ITEMS[ $key ]['group'] ?? '' )
-				? __( 'Jastuk Kockasti', 'cosypaw' )
-				: __( 'Jastuk Kružić', 'cosypaw' ),
+			self::PILLOW => match ( Pillows::ITEMS[ $key ]['group'] ?? '' ) {
+				Pillows::SQUARE => __( 'Jastuk Kockasti', 'cosypaw' ),
+				Pillows::FLOWER => __( 'Jastuk Cvetić', 'cosypaw' ),
+				default         => __( 'Jastuk Kružić', 'cosypaw' ),
+			},
 			self::LONG   => __( 'Peškir Meda', 'cosypaw' ),
 			default      => __( 'Magične krpice', 'cosypaw' ),
 		};

@@ -457,6 +457,8 @@ $sr_source = array(
 	'Stiže spremno za poklon'                                                                 => array( 'Arrives gift-ready', 'Приходит готовым к подарку' ),
 	'Pauziraj video'                                                                          => array( 'Pause the video', 'Приостановить видео' ),
 	'Pusti video'                                                                             => array( 'Play the video', 'Воспроизвести видео' ),
+	// The promo clip in a product's gallery: its label, and its thumbnail's.
+	'Video: %s'                                                                               => array( 'Video: %s', 'Видео: %s' ),
 	'Otvaranje CosyPaw paketa'                                                                => array( 'Opening a CosyPaw package', 'Распаковка набора CosyPaw' ),
 	'Svaki paket je mali poklon'                                                              => array( 'Every package is a little gift', 'Каждый набор — маленький подарок' ),
 	'Pažljivo upakovano u CosyPaw kutiju, sa porukom dobrodošlice i mirisom lavande — idealno za rođendan, bebi šauer ili samo da nekog razmaziš.' => array( 'Carefully packed in a CosyPaw box, with a welcome note and a scent of lavender — perfect for a birthday, baby shower, or just to spoil someone.', 'Аккуратно упаковано в коробку CosyPaw, с приветственной открыткой и ароматом лаванды — идеально на день рождения, бэби-шауэр или просто чтобы кого-то побаловать.' ),

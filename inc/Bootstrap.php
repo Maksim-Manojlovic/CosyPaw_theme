@@ -161,6 +161,13 @@ final class Bootstrap {
 	private ?GiftBundlePicker $gift_bundle_picker = null;
 
 	/**
+	 * Promo clips in the product gallery (WooCommerce only).
+	 *
+	 * @var ProductVideos|null
+	 */
+	private ?ProductVideos $product_videos = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -212,6 +219,9 @@ final class Bootstrap {
 			// Each part of a bundle swapped like for like on its page — another
 			// colour, another towel shape — and the pick packed as chosen.
 			$this->gift_bundle_picker = new GiftBundlePicker();
+
+			// A towel's promo clip, as the last slide of its own gallery.
+			$this->product_videos = new ProductVideos();
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

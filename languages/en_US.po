@@ -1217,6 +1217,9 @@ msgstr "Pause the video"
 msgid "Pusti video"
 msgstr "Play the video"
 
+msgid "Video: %s"
+msgstr "Video: %s"
+
 msgid "Otvaranje CosyPaw paketa"
 msgstr "Opening a CosyPaw package"
 

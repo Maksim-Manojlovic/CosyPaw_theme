@@ -11,7 +11,12 @@
  * be nothing to pause. That button is the pause WCAG 2.2.2 asks of a loop this
  * long.
  *
- * Markup contract: see template-parts/gift-banner.php.
+ * A clip the visitor went looking for — the one in a product's gallery, marked
+ * [data-video-manual] — is booted even where wanted() says no. There it never
+ * starts on its own, and the same button, showing "play", is how it starts.
+ *
+ * Markup contract: see template-parts/gift-banner.php and, for the manual
+ * kind, template-parts/product-video.php.
  */
 export class InViewVideo {
 	/**
@@ -31,9 +36,11 @@ export class InViewVideo {
 
 		// A pause the visitor asked for has to stick, or scrolling away and back
 		// would start the clip again over their objection. `ours` is the pause
-		// that follows the clip off screen; theirs ends the arrangement.
+		// that follows the clip off screen; theirs ends the arrangement. Where
+		// motion is not welcome the arrangement never begins: the clip waits
+		// for the button, and pressing play is what opts it in.
 		this.ours = false;
-		this.auto = true;
+		this.auto = InViewVideo.wanted();
 
 		this._bind();
 	}
@@ -75,6 +82,14 @@ export class InViewVideo {
 			this.auto = true;
 			this._syncToggle();
 		});
+
+		// The button says what the clip is doing from the start: "play", until
+		// something starts it. A clip that waits to be asked and an autoplay
+		// the browser refuses (a phone saving its battery) both stay paused,
+		// and neither fires an event that would say so.
+		this._syncToggle();
+
+		if (!('IntersectionObserver' in window)) return;
 
 		this.observer = new IntersectionObserver(
 			(entries) => {

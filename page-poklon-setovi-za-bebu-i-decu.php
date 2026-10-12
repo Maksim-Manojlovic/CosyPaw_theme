@@ -138,7 +138,7 @@ $cosypaw_motifs_href = \Theme\Pages::url( 'motivi' );
 		'template-parts/bundle-section',
 		null,
 		array(
-			'keys'  => array( 'dobrodoslica-za-bebu', 'kutak-za-decju-sobu', 'za-vrtic' ),
+			'keys'  => array( 'prvi-rodjendan', 'kutak-za-decju-sobu', 'drugari-u-torbi' ),
 			'id'    => 'gotovi-paketi',
 			'title' => __( 'Gotovi poklon paketi za bebu i decu', 'cosypaw' ),
 			'lead'  => __( 'Kad ne želiš da biraš sam: peškiri i jastuk, već složeni za poklon.', 'cosypaw' ),

@@ -213,13 +213,13 @@ namespace Theme\Tests {
 		}
 
 		/**
-		 * All ten bundles are created in their own category at their own
+		 * All sixteen bundles are created in their own category at their own
 		 * prices, with the Yoast fields — never in the towel category.
 		 *
 		 * @return void
 		 */
 		public function test_it_creates_every_bundle_at_its_price(): void {
-			$this->assertSame( 10, ( new GiftBundles() )->ensure() );
+			$this->assertSame( 16, ( new GiftBundles() )->ensure() );
 
 			$map = $this->options[ GiftBundles::MAP_OPTION ];
 			foreach ( GiftBundles::ITEMS as $key => $item ) {
@@ -322,7 +322,41 @@ namespace Theme\Tests {
 
 			$groups = GiftBundles::by_occasion( GiftBundles::offers() );
 			$this->assertSame( array_keys( GiftBundles::OCCASIONS ), array_keys( $groups ) );
-			$this->assertCount( 3, $groups['deca']['offers'] );
+			$this->assertCount( 5, $groups['deca']['offers'] );
+		}
+
+		/**
+		 * The shop has retired the Panda, Maca, Tost and Lala towels (and
+		 * sells its long towels and pillows at today's prices, not the launch
+		 * ones). Four bundles go with them — and every occasion still has
+		 * three on offer, each cheaper than its parts.
+		 *
+		 * @return void
+		 */
+		public function test_every_occasion_keeps_three_without_the_retired_towels(): void {
+			$this->seed_shop();
+
+			foreach ( array( 'panda', 'maca', 'tost', 'lala' ) as $retired ) {
+				unset( $this->prices[ $this->options[ WooCommerce::PRODUCT_MAP_OPTION ][ $retired ] ] );
+			}
+			foreach ( $this->options[ LongTowels::MAP_OPTION ] as $id ) {
+				$this->prices[ $id ] = '399';
+			}
+
+			$offers = GiftBundles::offers();
+			$keys   = array_column( $offers, 'key' );
+
+			foreach ( array( 'dobrodoslica-za-bebu', 'za-vrtic', 'dorucak-u-kuhinji', 'mali-znak-paznje' ) as $withdrawn ) {
+				$this->assertNotContains( $withdrawn, $keys );
+			}
+
+			$groups = GiftBundles::by_occasion( $offers );
+			foreach ( array_keys( GiftBundles::OCCASIONS ) as $occasion ) {
+				$this->assertCount( 3, $groups[ $occasion ]['offers'], $occasion );
+			}
+			foreach ( $offers as $offer ) {
+				$this->assertGreaterThan( 0, $offer['saving'], $offer['key'] );
+			}
 		}
 
 		/**

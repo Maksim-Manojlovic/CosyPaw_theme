@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY or reworded (REWORDED), so
 	 * installs that already ran ensure() look again.
 	 */
-	public const VERSION = 6;
+	public const VERSION = 7;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -78,9 +78,9 @@ final class Pages {
 		),
 		'dugi'    => array(
 			'slug'            => 'dugi-peskiri',
-			'title'           => 'Dugi peškiri',
-			'seo_title'       => 'Dugi Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
-			'seo_description' => 'Dugi peškiri sa vezenim medom i šapicom, u krem, roze, plavoj i bež boji. Mekani i upijajući, za lice, ruke i kosu. Poruči uz plaćanje pouzećem!',
+			'title'           => 'Peškiri',
+			'seo_title'       => 'Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
+			'seo_description' => 'Peškiri sa vezenim medom i šapicom, u krem, roze, plavoj i bež boji. Mekani i upijajući, za lice, ruke i kosu. Poruči uz plaćanje pouzećem!',
 		),
 		'paketi'  => array(
 			'slug'            => 'poklon-paketi',
@@ -117,7 +117,9 @@ final class Pages {
 	 * key => the title, Yoast title and description the theme wrote then.
 	 *
 	 * The collection's towels are "oblici", no longer "motivi"; its address
-	 * stays, so it keeps what it ranks for.
+	 * stays, so it keeps what it ranks for. The long towels are plain
+	 * "peškiri", no longer "dugi peškiri", at their old address for the same
+	 * reason.
 	 *
 	 * @var array<string,array{title:string,seo_title:string,seo_description:string}>
 	 */
@@ -126,6 +128,11 @@ final class Pages {
 			'title'           => 'Dečiji peškiri sa motivima životinja',
 			'seo_title'       => 'Dečiji Peškiri sa Motivima Životinja | Najlepši Peškiri za Decu',
 			'seo_description' => 'Dečiji peškiri sa motivima životinja čine pranje ruku zabavnim! Peškir za ruke zeka, sovica ili panda, ručno rađen od mikrofibre. Pogledaj kolekciju!',
+		),
+		'dugi'   => array(
+			'title'           => 'Dugi peškiri',
+			'seo_title'       => 'Dugi Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo',
+			'seo_description' => 'Dugi peškiri sa vezenim medom i šapicom, u krem, roze, plavoj i bež boji. Mekani i upijajući, za lice, ruke i kosu. Poruči uz plaćanje pouzećem!',
 		),
 	);
 

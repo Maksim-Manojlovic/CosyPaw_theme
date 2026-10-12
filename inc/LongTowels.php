@@ -1,6 +1,10 @@
 <?php
 /**
- * LongTowels — the dugi peškiri.
+ * LongTowels — the long towels with the embroidered teddy.
+ *
+ * The shop sold them as "dugi peškiri" and now calls them plain "peškiri".
+ * The copy below says so, \Theme\Wording carries it into products that were
+ * already created, and the slugs keep the old word so no address moves.
  *
  * A longer towel with an embroidered teddy, a paw and "GOODLUCK" on its woven
  * border, in four colours, each a simple product of its own.
@@ -54,6 +58,10 @@ final class LongTowels extends ProductLine {
 
 	/**
 	 * Its name — a database value, stored in the source language.
+	 *
+	 * Still "Dugi": the shaped towels' category is already named "Peškiri"
+	 * (ProductCategories), and two categories of one name cannot be told
+	 * apart in wp-admin.
 	 */
 	protected const CATEGORY_NAME = 'Dugi peškiri';
 
@@ -81,59 +89,59 @@ final class LongTowels extends ProductLine {
 	 */
 	public const ITEMS = array(
 		'meda-krem'  => array(
-			'name'            => 'Dugi peškir Meda, krem',
+			'name'            => 'Peškir Meda, krem',
 			'slug'            => 'dugi-peskir-meda-krem',
 			'group'           => self::TEDDY,
 			'color'           => 'Krem',
 			'swatch'          => '#f3ede0',
 			'image'           => 'dugi-peskir-meda-krem.webp',
-			'alt'             => 'Krem dugi peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na hromirani držač u mermernom kupatilu',
-			'short'           => 'Mekani dugi peškir u krem boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
-			'seo_title'       => 'Dugi Peškir Meda, Krem | Mekani Peškir za Kupatilo',
-			'seo_description' => 'Krem dugi peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
+			'alt'             => 'Krem peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na hromirani držač u mermernom kupatilu',
+			'short'           => 'Mekani peškir u krem boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
+			'seo_title'       => 'Peškir Meda, Krem | Mekani Peškir za Kupatilo',
+			'seo_description' => 'Krem peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
 		),
 		'meda-roze'  => array(
-			'name'            => 'Dugi peškir Meda, roze',
+			'name'            => 'Peškir Meda, roze',
 			'slug'            => 'dugi-peskir-meda-roze',
 			'group'           => self::TEDDY,
 			'color'           => 'Roze',
 			'swatch'          => '#e8cdc8',
 			'image'           => 'dugi-peskir-meda-roze.webp',
-			'alt'             => 'Roze dugi peškir sa vezenim medom, šapicom i natpisom GOODLUCK, prebačen preko drvenih merdevina za peškire u kupatilu',
-			'short'           => 'Mekani dugi peškir u nežnoj roze boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
-			'seo_title'       => 'Dugi Peškir Meda, Roze | Mekani Peškir za Kupatilo',
-			'seo_description' => 'Roze dugi peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
+			'alt'             => 'Roze peškir sa vezenim medom, šapicom i natpisom GOODLUCK, prebačen preko drvenih merdevina za peškire u kupatilu',
+			'short'           => 'Mekani peškir u nežnoj roze boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
+			'seo_title'       => 'Peškir Meda, Roze | Mekani Peškir za Kupatilo',
+			'seo_description' => 'Roze peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
 		),
 		'meda-plavi' => array(
-			'name'            => 'Dugi peškir Meda, plavi',
+			'name'            => 'Peškir Meda, plavi',
 			'slug'            => 'dugi-peskir-meda-plavi',
 			'group'           => self::TEDDY,
 			'color'           => 'Plava',
 			'swatch'          => '#8fa6be',
 			'image'           => 'dugi-peskir-meda-plavi.webp',
-			'alt'             => 'Plavi dugi peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na hromirani držač u mermernom kupatilu',
-			'short'           => 'Mekani dugi peškir u nežnoj plavoj boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
-			'seo_title'       => 'Dugi Peškir Meda, Plavi | Mekani Peškir za Kupatilo',
-			'seo_description' => 'Plavi dugi peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
+			'alt'             => 'Plavi peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na hromirani držač u mermernom kupatilu',
+			'short'           => 'Mekani peškir u nežnoj plavoj boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
+			'seo_title'       => 'Peškir Meda, Plavi | Mekani Peškir za Kupatilo',
+			'seo_description' => 'Plavi peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
 		),
 		'meda-bez'   => array(
-			'name'            => 'Dugi peškir Meda, bež',
+			'name'            => 'Peškir Meda, bež',
 			'slug'            => 'dugi-peskir-meda-bez',
 			'group'           => self::TEDDY,
 			'color'           => 'Bež',
 			'swatch'          => '#cdbba6',
 			'image'           => 'dugi-peskir-meda-bez.webp',
-			'alt'             => 'Bež dugi peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na držač u mermernom kupatilu',
-			'short'           => 'Mekani dugi peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
-			'seo_title'       => 'Dugi Peškir Meda, Bež | Mekani Peškir za Kupatilo',
-			'seo_description' => 'Bež dugi peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
+			'alt'             => 'Bež peškir sa vezenim medom, šapicom i natpisom GOODLUCK, okačen na držač u mermernom kupatilu',
+			'short'           => 'Mekani peškir u toploj bež boji, sa vezenim medom, šapicom i natpisom GOODLUCK na borduri. Za lice, ruke i kosu.',
+			'seo_title'       => 'Peškir Meda, Bež | Mekani Peškir za Kupatilo',
+			'seo_description' => 'Bež peškir sa vezenim medom i šapicom: mekan i upijajuć, za lice, ruke i kosu. Lep detalj za svako kupatilo. Plaćanje pouzećem!',
 		),
 	);
 
 	/**
 	 * Long description, shared by every colour.
 	 */
-	protected const DESCRIPTION = 'Dugi peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije.';
+	protected const DESCRIPTION = 'Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije.';
 
 	/**
 	 * The spec list under a long towel's summary.

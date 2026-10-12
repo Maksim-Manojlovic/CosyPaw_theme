@@ -88,7 +88,7 @@ $cosypaw_heads = array(
 		</div>
 
 		<div class="seo-copy__body">
-			<p><?php esc_html_e( 'Najbolji pokloni su oni koji ne završe u ormaru. Zato su naši poklon paketi sastavljeni od stvari koje se koriste svaki dan: dečijih peškira u obliku životinja sa alkom za kačenje, dugih peškira sa vezenim medom, mekanih Cuddle Puff jastuka i magičnih krpica od mikrofibera.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Najbolji pokloni su oni koji ne završe u ormaru. Zato su naši poklon paketi sastavljeni od stvari koje se koriste svaki dan: dečijih peškira u obliku životinja sa alkom za kačenje, peškira sa vezenim medom, mekanih Cuddle Puff jastuka i magičnih krpica od mikrofibera.', 'cosypaw' ); ?></p>
 
 			<p>
 				<?php
@@ -107,7 +107,7 @@ $cosypaw_heads = array(
 				?>
 			</p>
 
-			<p><?php esc_html_e( 'Za poklon za useljenje ili poklon za mladence tu su paketi sa jastucima, dugim peškirima i krpicama — po nešto za dnevnu sobu, kupatilo i kuhinju. A kad ti treba mali znak pažnje za vaspitačicu, učiteljicu ili koleginicu, ili novogodišnji paketić za celu porodicu, i za to imamo gotov paket.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Za poklon za useljenje ili poklon za mladence tu su paketi sa jastucima, peškirima i krpicama — po nešto za dnevnu sobu, kupatilo i kuhinju. A kad ti treba mali znak pažnje za vaspitačicu, učiteljicu ili koleginicu, ili novogodišnji paketić za celu porodicu, i za to imamo gotov paket.', 'cosypaw' ); ?></p>
 
 			<p>
 				<?php

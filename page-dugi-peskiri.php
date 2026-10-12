@@ -32,12 +32,12 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 		<nav class="collection__crumbs" aria-label="<?php esc_attr_e( 'Putanja', 'cosypaw' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Početna', 'cosypaw' ); ?></a>
 			<span aria-hidden="true">›</span>
-			<span aria-current="page"><?php esc_html_e( 'Dugi peškiri', 'cosypaw' ); ?></span>
+			<span aria-current="page"><?php esc_html_e( 'Peškiri', 'cosypaw' ); ?></span>
 		</nav>
 
 		<div class="section__head">
-			<span class="eyebrow"><?php esc_html_e( 'Dugi peškiri', 'cosypaw' ); ?></span>
-			<h1 class="section__title"><?php esc_html_e( 'Dugi peškiri sa vezenim medom', 'cosypaw' ); ?></h1>
+			<span class="eyebrow"><?php esc_html_e( 'Peškiri', 'cosypaw' ); ?></span>
+			<h1 class="section__title"><?php esc_html_e( 'Peškiri sa vezenim medom', 'cosypaw' ); ?></h1>
 			<p class="section__lead">
 				<?php
 				echo esc_html(
@@ -74,7 +74,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 		array(
 			'keys'  => array( 'kupatilo-za-porodicu', 'novi-dom', 'za-dvoje' ),
 			'id'    => 'poklon-paketi',
-			'title' => __( 'Dugi peškiri u poklon paketu', 'cosypaw' ),
+			'title' => __( 'Peškiri u poklon paketu', 'cosypaw' ),
 			'lead'  => __( 'Uz dečije peškire, jastuke ili krpice — jeftinije nego posebno.', 'cosypaw' ),
 		)
 	);
@@ -87,7 +87,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 		</div>
 
 		<div class="seo-copy__body">
-			<p><?php esc_html_e( 'Dugi peškir je onaj koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškira za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Ovo je peškir koji uzmeš svakog jutra: za lice posle umivanja, za ruke pored lavaboa i za kosu posle tuširanja. Duži je od peškira za ruke, pa jednim potezom obrišeš i lice i kosu, a mekana, upijajuća tkanina brzo pokupi vodu.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Na tkanoj borduri izvezen je mali meda sa šapicom i natpis GOODLUCK — sitan detalj koji kupatilo čini toplijim. Krem, roze, plava i bež su nežne boje koje se lako uklope uz pločice, mermer ili drvo, a lepo stoje i kada ih kombinuješ.', 'cosypaw' ); ?></p>
 
@@ -110,7 +110,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 
 			<p>
 				<?php
-				esc_html_e( 'Dugi peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije.', 'cosypaw' );
+				esc_html_e( 'Peškiri stižu kao i ostali CosyPaw proizvodi — uz plaćanje pouzećem i dostavu 2–4 dana širom Srbije.', 'cosypaw' );
 
 				// Only while free delivery is switched on — derived, like every
 				// other delivery claim on the site.
@@ -130,7 +130,7 @@ $cosypaw_collection = \Theme\Pages::url( 'motivi' );
 
 		<?php if ( $cosypaw_long ) : ?>
 			<div class="seo-copy__cta">
-				<a href="#peskiri" class="btn btn--primary"><?php esc_html_e( 'Poruči dugi peškir', 'cosypaw' ); ?></a>
+				<a href="#peskiri" class="btn btn--primary"><?php esc_html_e( 'Poruči peškir', 'cosypaw' ); ?></a>
 			</div>
 		<?php endif; ?>
 	</section>

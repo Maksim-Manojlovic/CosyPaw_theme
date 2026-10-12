@@ -1202,11 +1202,11 @@ msgstr "Your corner, a little softer"
 msgid "Pored lavaboa, na kuki ili na polici — peškiri se uklope u svaki dom i unesu trunku topline."
 msgstr "By the sink, on a hook or a shelf — the towels fit into any home and add a touch of warmth."
 
-msgid "Spremni za jutarnju rutinu"
-msgstr "Ready for the morning routine"
+msgid "Glazura se sliva preko peškira Krofna"
+msgstr "Icing runs down the Donut towel"
 
-msgid "Na kuki, uvek pri ruci"
-msgstr "On the hook, always at hand"
+msgid "Ušla si da kupiš samo jedan — a iz veš-mašine izlazi gomila CosyPaw peškira"
+msgstr "You went in to buy just one — and a pile of CosyPaw towels comes out of the washing machine"
 
 msgid "Stiže spremno za poklon"
 msgstr "Arrives gift-ready"

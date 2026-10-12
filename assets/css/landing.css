@@ -375,23 +375,29 @@
 	margin: 0;
 }
 
-/* ---------- Lifestyle gallery (U tvom domu) ---------- */
+/* ---------- Lifestyle clips (U tvom domu) ---------- */
+
+/* Two clips shot for a phone, side by side at every width. The pair is held
+   to a narrow column: across the section's full width two 9:16 cards would
+   each stand taller than the screen they are watched on. */
 .lifestyle {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 22px;
+	max-width: 760px;
+	margin-inline: auto;
 }
 
-/* Portrait to match the product photography, which is shot 3:4 flat-lay. A
-   landscape card cropped straight through the towel and dropped the styling
-   props that make the shot read as a home. */
+/* The clip's own 9:16, so it is shown whole. One of them has a line of text
+   across the top of its frame and what it is about at the bottom, and any
+   shorter box cuts one or the other. The fill shows while the poster loads. */
 .lifestyle-card {
 	position: relative;
-	margin: 0;
 	border-radius: var(--radius-lg);
 	overflow: hidden;
 	box-shadow: var(--shadow-sm);
-	aspect-ratio: 4 / 5;
+	aspect-ratio: 9 / 16;
+	background-color: var(--cream2);
 }
 
 .lifestyle-card__img {
@@ -401,28 +407,6 @@
 	height: 100%;
 	object-fit: cover;
 	object-position: center;
-}
-
-.lifestyle-card__cap {
-	position: absolute;
-	left: 18px;
-	bottom: 18px;
-	background: var(--glass-bg-strong);
-	backdrop-filter: blur(6px);
-	-webkit-backdrop-filter: blur(6px);
-	padding: 10px 18px;
-	border-radius: var(--radius-pill);
-	font-family: var(--font-heading);
-	font-weight: 700;
-	font-size: 15px;
-	color: var(--ink);
-	box-shadow: 0 6px 16px rgba(62, 51, 42, 0.18);
-}
-
-@supports not ((backdrop-filter: blur(6px)) or (-webkit-backdrop-filter: blur(6px))) {
-	.lifestyle-card__cap {
-		background: #fff;
-	}
 }
 
 /* ---------- Packages ---------- */
@@ -2362,10 +2346,13 @@ a.testimonial__meta:focus-visible {
 	}
 
 	.testimonials { grid-template-columns: 1fr; }
-	.lifestyle { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
+	/* The two clips stay side by side on a phone: stacked, each 9:16 card is
+	   a screen of its own. Less gap, so each keeps what width there is. */
+	.lifestyle { gap: 12px; }
+
 	/* The 880px block owns the hero's vertical rhythm now. What is left here
 	   is type: without the card beside it the headline has the width to carry
 	   a larger floor, and 32px on a 390px screen looked timid holding the

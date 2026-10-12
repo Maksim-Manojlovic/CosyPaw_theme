@@ -30,7 +30,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class ProductVideos {
 
 	/**
-	 * Where the clips live, relative to the theme root.
+	 * Where the clips live, relative to the theme root. The landing's "U tvom
+	 * domu" (front-page.php) plays two clips out of the same folder: one of
+	 * these, and one of its own that belongs to no product.
 	 */
 	public const DIR = 'assets/videos/';
 

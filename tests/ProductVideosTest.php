@@ -120,6 +120,30 @@ final class ProductVideosTest extends TestCase {
 	}
 
 	/**
+	 * The landing's "U tvom domu" plays two clips out of the same folder, and
+	 * each one it names ships its video and its poster.
+	 *
+	 * @return void
+	 */
+	public function test_the_landing_clips_ship_their_files(): void {
+		$dir      = dirname( __DIR__ ) . '/' . ProductVideos::DIR;
+		$template = (string) file_get_contents( dirname( __DIR__ ) . '/front-page.php' );
+		$start    = strpos( $template, '<div class="lifestyle">' );
+
+		$this->assertIsInt( $start );
+
+		$section = substr( $template, $start, (int) strpos( $template, '</section>', $start ) - $start );
+		preg_match_all( "/'file'\s*=>\s*'([a-z0-9-]+)'/", $section, $found );
+
+		$this->assertCount( 2, $found[1] );
+
+		foreach ( $found[1] as $file ) {
+			$this->assertFileExists( $dir . $file . '.mp4', $file );
+			$this->assertFileExists( $dir . $file . '.webp', $file );
+		}
+	}
+
+	/**
 	 * The clips reach the server only if the packaging allowlist lets their
 	 * extension through; it was images only.
 	 *

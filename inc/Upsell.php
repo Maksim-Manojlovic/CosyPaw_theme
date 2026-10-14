@@ -199,15 +199,23 @@ final class Upsell {
 			return;
 		}
 
-		$label = __( 'Besplatna dostava', 'cosypaw' );
+		$label   = __( 'Besplatna dostava', 'cosypaw' );
+		$postage = $this->postage();
 
 		if ( 'earned' === $shipping['state'] ) {
 			$value = __( 'Ostvarena', 'cosypaw' );
 
-			// Nothing left to explain. The threshold is measured on what the
-			// cart is worth after its package saving, which is the number the
-			// row below this one already prints.
-			$note = '';
+			// Nothing left to explain about the threshold — it is measured on
+			// what the cart is worth after its package saving, which is the
+			// number the row below this one already prints. What is left is
+			// the size of the win, where the shop can quote it.
+			$notes = array(
+				'' === $postage ? '' : sprintf(
+					/* translators: %s: courier price range, e.g. "400–600 RSD". */
+					__( 'Ne plaćaš poštarinu od %s.', 'cosypaw' ),
+					$postage
+				),
+			);
 		} else {
 			$value = sprintf(
 				/* translators: %s: formatted amount still to spend, e.g. "320 RSD". */
@@ -219,17 +227,32 @@ final class Upsell {
 			// the shopper can act on. Further out it stays an amount, which is
 			// the only honest thing to promise about a basket this module
 			// cannot see the shape of.
-			$note = $shipping['unit'] > 0 && $shipping['gap'] <= $shipping['unit']
-				? sprintf(
-					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
-					__( 'Dodaj još jedan peškir i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
-					Catalog::format_price( (int) $shipping['min'] )
-				)
-				: sprintf(
-					/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
-					__( 'Dostava je besplatna preko %s.', 'cosypaw' ),
-					Catalog::format_price( (int) $shipping['min'] )
-				);
+			$notes = array(
+				$shipping['unit'] > 0 && $shipping['gap'] <= $shipping['unit']
+					? sprintf(
+						/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+						__( 'Dodaj još jedan peškir i pređeš %s — dostava je onda na nama.', 'cosypaw' ),
+						Catalog::format_price( (int) $shipping['min'] )
+					)
+					: sprintf(
+						/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */
+						__( 'Dostava je besplatna preko %s.', 'cosypaw' ),
+						Catalog::format_price( (int) $shipping['min'] )
+					),
+				// The threshold alone is a number with nothing on the other
+				// side of it. The courier's price is the reason a fourth towel
+				// is cheaper than it looks.
+				'' === $postage ? '' : sprintf(
+					/* translators: %s: courier price range, e.g. "400–600 RSD". */
+					__( 'Ispod toga poštarinu plaćaš kuriru, %s.', 'cosypaw' ),
+					$postage
+				),
+			);
+		}
+
+		$small = '';
+		foreach ( array_filter( $notes ) as $note ) {
+			$small .= '<small>' . esc_html( $note ) . '</small>';
 		}
 
 		printf(
@@ -240,7 +263,7 @@ final class Upsell {
 			esc_attr( (string) $shipping['state'] ),
 			esc_html( $label ),
 			esc_html( $value ),
-			'' === $note ? '' : '<small>' . esc_html( $note ) . '</small>'
+			$small // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 		);
 	}
 
@@ -281,7 +304,7 @@ final class Upsell {
 			esc_html__( 'Možda vam se svidi', 'cosypaw' )
 		);
 
-		$this->motif_slider( self::STAY_CART );
+		$this->motif_slider( self::STAY_CART, $this->offer_motifs() );
 
 		echo '</div>';
 
@@ -343,10 +366,13 @@ final class Upsell {
 	private function offer( string $stay, bool $bar ): void {
 		$towel    = $this->next_towel();
 		$shipping = $this->free_shipping();
+		$picks    = $this->offer_motifs();
+		$gap      = null !== $shipping && 'gap' === $shipping['state'];
+		$earned   = null !== $shipping && 'earned' === $shipping['state'];
 
-		// Nothing to say: a cart already at a package optimum, with delivery
-		// settled, is not owed a banner.
-		if ( null === $towel && ( null === $shipping || 'gap' !== $shipping['state'] ) ) {
+		// Nothing to say and nothing to show: every towel is already in the
+		// cart, at a package optimum, with delivery settled.
+		if ( null === $towel && ! $gap && ! $picks ) {
 			return;
 		}
 
@@ -355,25 +381,41 @@ final class Upsell {
 		// line is already carrying the better news, and folding the delivery
 		// into it would cost the shopper the progress bar as well.
 		$closes = null !== $towel && $towel['price'] > 0
-			&& null !== $shipping && 'gap' === $shipping['state']
+			&& $gap
 			&& $shipping['gap'] <= $shipping['unit'];
+
+		// The strip stays once delivery is won and the package is whole. That
+		// cart used to get no box at all, on the theory that it had nothing
+		// left to be talked into — but it is the buyer with the most reason to
+		// add a towel: whatever they add now arrives on a delivery already paid
+		// for. The heading says so instead of the price argument it can no
+		// longer make.
+		if ( null !== $towel || $gap ) {
+			$title = __( 'Još malo, pa povoljnije', 'cosypaw' );
+		} elseif ( $earned ) {
+			$title = __( 'Dostava je na nama', 'cosypaw' );
+		} else {
+			$title = __( 'Možda vam se svidi', 'cosypaw' );
+		}
 
 		echo '<div class="cosypaw-upsell">';
 
-		printf(
-			'<span class="cosypaw-upsell__title">%s</span>',
-			esc_html__( 'Još malo, pa povoljnije', 'cosypaw' )
-		);
+		printf( '<span class="cosypaw-upsell__title">%s</span>', esc_html( $title ) );
 
 		if ( null !== $towel ) {
 			$this->towel_line( $towel, $closes );
 		}
 
-		if ( $bar && null !== $shipping && 'gap' === $shipping['state'] && ! $closes ) {
-			$this->shipping_bar( $shipping );
+		if ( $gap && ! $closes ) {
+			$this->shipping_line( $shipping, $bar );
+		} elseif ( $earned ) {
+			printf(
+				'<p class="cosypaw-upsell__ship cosypaw-upsell__ship--earned">%s</p>',
+				esc_html__( 'Besplatna dostava je ostvarena — sve što dodaš stiže bez poštarine.', 'cosypaw' )
+			);
 		}
 
-		$this->motif_slider( $stay );
+		$this->motif_slider( $stay, $picks );
 
 		echo '</div>';
 	}
@@ -423,19 +465,11 @@ final class Upsell {
 	 * redraw the cart table, so on this page a reload is the honest answer to
 	 * the click, and the link carries the page it was clicked from back with it.
 	 *
-	 * @param string $stay Which page an add-to-cart from here returns to.
+	 * @param string                         $stay  Which page an add-to-cart from here returns to.
+	 * @param array<int,array<string,mixed>> $offer Motifs to list; see offer_motifs().
 	 * @return void
 	 */
-	private function motif_slider( string $stay ): void {
-		$in_cart = $this->cart_motif_ids();
-		$offer   = array();
-
-		foreach ( $this->motifs() as $product_id => $motif ) {
-			if ( ! in_array( $product_id, $in_cart, true ) ) {
-				$offer[ $product_id ] = $motif;
-			}
-		}
-
+	private function motif_slider( string $stay, array $offer ): void {
 		// A cart holding one of everything is not owed an empty rail; the
 		// catalogue itself is then the offer.
 		if ( ! $offer ) {
@@ -497,22 +531,95 @@ final class Upsell {
 	}
 
 	/**
-	 * How far the cart is from free delivery, drawn as a bar.
+	 * The motifs the strip offers: the catalogue less what the cart holds.
+	 *
+	 * Anything taken out of the cart this session leads the strip. Removing a
+	 * towel is often a second thought rather than a no, and the strip is the
+	 * one place left on the page where it can be put back with a click — at
+	 * the end of a twenty-tile rail it would be as good as gone.
+	 *
+	 * @return array<int,array<string,mixed>>
+	 */
+	private function offer_motifs(): array {
+		$in_cart = $this->cart_motif_ids();
+		$offer   = array();
+
+		foreach ( $this->motifs() as $product_id => $motif ) {
+			if ( ! in_array( $product_id, $in_cart, true ) ) {
+				$offer[ $product_id ] = $motif;
+			}
+		}
+
+		$back = array();
+
+		foreach ( $this->removed_motif_ids() as $product_id ) {
+			if ( isset( $offer[ $product_id ] ) ) {
+				$back[ $product_id ] = $offer[ $product_id ];
+			}
+		}
+
+		// Array union keeps the left side's order and adds only the keys it
+		// lacks, so the removed towels come first and appear once.
+		return $back + $offer;
+	}
+
+	/**
+	 * Motifs removed from the cart this session, most recent first.
+	 *
+	 * @return int[]
+	 */
+	private function removed_motif_ids(): array {
+		$cart = $this->cart();
+
+		if ( null === $cart || ! is_callable( array( $cart, 'get_removed_cart_contents' ) ) ) {
+			return array();
+		}
+
+		$ids = array();
+
+		foreach ( array_reverse( (array) $cart->get_removed_cart_contents() ) as $item ) {
+			$product_id = (int) ( $item['product_id'] ?? 0 );
+
+			if ( $product_id > 0 && ! in_array( $product_id, $ids, true ) ) {
+				$ids[] = $product_id;
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * How far the cart is from free delivery, and on the cart, a bar.
 	 *
 	 * @param array{state:string,gap:int,min:int,pct:int,unit:int} $shipping Threshold state.
+	 * @param bool                                                 $bar      Whether to draw the progress bar.
 	 * @return void
 	 */
-	private function shipping_bar( array $shipping ): void {
+	private function shipping_line( array $shipping, bool $bar ): void {
+		$postage = $this->postage();
+		$gap     = Catalog::format_price( $shipping['gap'] );
+
 		printf(
 			'<p class="cosypaw-upsell__ship">%s</p>',
 			esc_html(
-				sprintf(
-					/* translators: %s: formatted amount still to spend, e.g. "400 RSD". */
-					__( 'Još %s do besplatne dostave', 'cosypaw' ),
-					Catalog::format_price( $shipping['gap'] )
-				)
+				'' === $postage
+					? sprintf(
+						/* translators: %s: formatted amount still to spend, e.g. "400 RSD". */
+						__( 'Još %s do besplatne dostave', 'cosypaw' ),
+						$gap
+					)
+					: sprintf(
+						/* translators: 1: formatted amount still to spend, 2: courier price range, e.g. "400–600 RSD". */
+						__( 'Još %1$s do besplatne dostave — umesto %2$s poštarine kuriru', 'cosypaw' ),
+						$gap,
+						$postage
+					)
 			)
 		);
+
+		if ( ! $bar ) {
+			return;
+		}
 
 		// aria-hidden: the sentence above is the accessible version of this,
 		// and a progress element would otherwise announce the same fact twice.
@@ -852,6 +959,23 @@ final class Upsell {
 		}
 
 		return $prices ? (int) min( $prices ) : Catalog::UNIT_PRICE;
+	}
+
+	/**
+	 * What the courier charges below the threshold, as "400–600 RSD".
+	 *
+	 * @return string Empty where the shop quotes no price.
+	 */
+	private function postage(): string {
+		$range = class_exists( CheckoutSetup::class ) ? CheckoutSetup::courier_cost() : array();
+
+		if ( ! $range ) {
+			return '';
+		}
+
+		return $range[0] === $range[1]
+			? Catalog::format_price( $range[0] )
+			: number_format( $range[0], 0, ',', '.' ) . '–' . Catalog::format_price( $range[1] );
 	}
 
 	/**

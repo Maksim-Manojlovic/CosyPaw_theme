@@ -1591,6 +1591,12 @@
 	color: var(--claydk);
 }
 
+/* Delivery won, nothing left to fill: the line is a statement, not a bar's
+   caption, so it sits close under the copy (or the heading) it follows. */
+.cosypaw-upsell__ship--earned {
+	margin: 4px 0 0;
+}
+
 .cosypaw-upsell__bar {
 	display: block;
 	height: 8px;

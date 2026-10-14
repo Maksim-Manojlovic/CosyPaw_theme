@@ -568,6 +568,11 @@ $sr_source = array(
 	'Dostava je besplatna preko %s.'                                                          => array( 'Delivery is free over %s.', 'Доставка бесплатна свыше %s.' ),
 	'Još %s do besplatne dostave'                                                             => array( '%s more for free delivery', 'Ещё %s до бесплатной доставки' ),
 	'Možda vam se svidi'                                                                      => array( 'You might like', 'Возможно, вам понравится' ),
+	'Ne plaćaš poštarinu od %s.'                                                              => array( 'You save the %s courier fee.', 'Ты экономишь %s на оплате курьера.' ),
+	'Ispod toga poštarinu plaćaš kuriru, %s.'                                                 => array( 'Below that, you pay the courier %s for delivery.', 'Ниже этой суммы доставку оплачиваешь курьеру: %s.' ),
+	'Još %1$s do besplatne dostave — umesto %2$s poštarine kuriru'                           => array( '%1$s more for free delivery — instead of paying the courier %2$s', 'Ещё %1$s до бесплатной доставки — вместо %2$s курьеру' ),
+	'Dostava je na nama'                                                                      => array( 'Delivery is on us', 'Доставка за наш счёт' ),
+	'Besplatna dostava je ostvarena — sve što dodaš stiže bez poštarine.'                    => array( 'Free delivery earned — anything you add ships at no extra cost.', 'Бесплатная доставка получена — всё, что добавишь, приедет без оплаты доставки.' ),
 	'Ostatak družine te čeka'                                                                 => array( 'The rest of the crew is waiting', 'Остальная компания тебя ждёт' ),
 
 	// The per-piece price on a motif card (front-page.php).

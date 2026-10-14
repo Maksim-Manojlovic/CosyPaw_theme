@@ -163,12 +163,28 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		public array $fees = array();
 
 		/**
+		 * Lines removed this session, in WooCommerce's shape.
+		 *
+		 * @var array<string,array<string,mixed>>
+		 */
+		public array $removed = array();
+
+		/**
 		 * Constructor.
 		 *
 		 * @param array<int,array<string,mixed>> $contents Cart lines.
 		 */
 		public function __construct( array $contents = array() ) {
 			$this->contents = $contents;
+		}
+
+		/**
+		 * Lines removed this session, oldest first.
+		 *
+		 * @return array<string,array<string,mixed>>
+		 */
+		public function get_removed_cart_contents(): array {
+			return $this->removed;
 		}
 
 		/**

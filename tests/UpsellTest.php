@@ -28,6 +28,7 @@ require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 require_once dirname( __DIR__ ) . '/inc/ProductNames.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
+require_once dirname( __DIR__ ) . '/inc/CheckoutSetup.php';
 require_once dirname( __DIR__ ) . '/inc/Upsell.php';
 
 final class UpsellTest extends TestCase {
@@ -270,7 +271,8 @@ final class UpsellTest extends TestCase {
 
 	/**
 	 * Past the bar on what is actually payable, the row says so and stops
-	 * explaining itself — there is no discrepancy left to reconcile.
+	 * explaining the threshold — there is no discrepancy left to reconcile.
+	 * What it adds is what the win is worth.
 	 */
 	public function test_the_row_states_a_win_plainly(): void {
 		$markup = $this->shipping_row(
@@ -280,7 +282,22 @@ final class UpsellTest extends TestCase {
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--earned', $markup );
 		$this->assertStringContainsString( 'Ostvarena', $markup );
-		$this->assertStringNotContainsString( '<small>', $markup );
+		$this->assertStringContainsString( '<small>Ne plaćaš poštarinu od 400–600 RSD.</small>', $markup );
+		$this->assertStringNotContainsString( 'besplatna preko', $markup );
+	}
+
+	/**
+	 * Short of the bar, the row prices what the bar saves: the courier's
+	 * range, which is the reason a bigger order costs less than it looks.
+	 */
+	public function test_the_totals_row_quotes_the_postage(): void {
+		$markup = $this->shipping_row(
+			array( array( 'id' => self::MOTIF_ID, 'qty' => 1, 'price' => self::LIVE_PRICES['solo'] ) ),
+			2000
+		);
+
+		$this->assertStringContainsString( 'Dostava je besplatna preko 2.000 RSD.', $markup );
+		$this->assertStringContainsString( '<small>Ispod toga poštarinu plaćaš kuriru, 400–600 RSD.</small>', $markup );
 	}
 
 	/**
@@ -477,18 +494,74 @@ final class UpsellTest extends TestCase {
 	}
 
 	/**
-	 * A whole package is already at an optimum — the fourth towel is full price.
-	 * With no threshold to quote either, there is nothing to say and no box is
-	 * printed to say it in.
-	 *
-	 * The slot around it stays, empty: it is what CartUpsell re-renders into
-	 * when a towel comes back out of the cart, and a cart that had nothing to
-	 * offer could otherwise never offer anything again without a full reload.
+	 * A whole package is already at an optimum — the fourth towel is full price
+	 * — and with no threshold there is no price argument left to make. The
+	 * strip stays anyway, under a plain heading: the rest of the range is
+	 * still the rest of the range.
 	 */
-	public function test_a_complete_package_gets_no_panel(): void {
+	public function test_a_complete_package_still_gets_the_strip(): void {
 		$markup = $this->panel( array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
-		$this->assertSame( '<div class="cosypaw-upsell-slot" data-upsell-panel></div>', $markup );
+		$this->assertStringContainsString( 'Možda vam se svidi', $markup );
+		$this->assertStringNotContainsString( 'Još malo, pa povoljnije', $markup );
+		$this->assertSame( 19, substr_count( $markup, 'class="cosypaw-upsell__slide"' ) );
+	}
+
+	/**
+	 * Free delivery won used to silence the cart, as if the buyer had nothing
+	 * left to want. They are the buyer with the best reason to add a towel —
+	 * it rides on a delivery already paid for — so the strip says that.
+	 */
+	public function test_won_delivery_keeps_the_strip(): void {
+		$markup = $this->panel(
+			array( array( 'id' => self::MOTIF_ID, 'qty' => 3, 'price' => self::LIVE_PRICES['solo'] ) ),
+			1400
+		);
+
+		$this->assertStringContainsString( 'Dostava je na nama', $markup );
+		$this->assertStringContainsString( 'cosypaw-upsell__ship--earned', $markup );
+		$this->assertStringContainsString( 'cosypaw-upsell__track', $markup );
+		$this->assertStringNotContainsString( 'cosypaw-upsell__bar', $markup );
+	}
+
+	/**
+	 * Short of the bar, the panel's delivery line says what the bar is worth.
+	 */
+	public function test_the_panel_prices_the_postage(): void {
+		$markup = $this->panel(
+			array( array( 'id' => self::DUO_ID, 'qty' => 1, 'price' => self::LIVE_PRICES['duo'] ) ),
+			2400
+		);
+
+		$this->assertStringContainsString( 'do besplatne dostave — umesto 400–600 RSD poštarine kuriru', $markup );
+		$this->assertStringContainsString( 'cosypaw-upsell__bar', $markup );
+	}
+
+	/**
+	 * A towel just taken out of the cart leads the strip, so a second thought
+	 * is one click from being undone.
+	 */
+	public function test_a_removed_towel_leads_the_strip(): void {
+		Functions\when( 'is_cart' )->justReturn( true );
+		Functions\when( 'is_main_query' )->justReturn( true );
+		Functions\when( 'in_the_loop' )->justReturn( true );
+
+		$this->cart          = new \WC_Cart();
+		$this->cart->removed = array(
+			'a' => array( 'product_id' => self::MOTIF_ID + 4 ),
+			'b' => array( 'product_id' => self::MOTIF_ID + 7 ),
+		);
+
+		$upsell = new Upsell( 'cosypaw', new BundlePricing( 'cosypaw', new Catalog() ), new Catalog() );
+		$markup = $upsell->append_empty_cart_picks( '' );
+
+		preg_match_all( '/add-to-cart=(\d+)&/', $markup, $ids );
+
+		$this->assertSame(
+			array( self::MOTIF_ID + 7, self::MOTIF_ID + 4, self::MOTIF_ID ),
+			array_map( 'intval', array_slice( $ids[1], 0, 3 ) )
+		);
+		$this->assertSame( 20, count( $ids[1] ) );
 	}
 
 	/**

@@ -93,6 +93,18 @@ final class CheckoutSetup {
 	public const COURIER_LABEL = 'Dostava kurirskom službom (poštarina se plaća kuriru)';
 
 	/**
+	 * What the courier usually charges, lowest and highest, in RSD.
+	 *
+	 * Quoted, never charged: the courier rate stays at zero and the buyer pays
+	 * the courier at the door (see create_shipping_zone()). It is printed next
+	 * to the free-delivery threshold so the bar has a price — "free over
+	 * 2.000" reads as a footnote until it says what it saves.
+	 *
+	 * @var array{0:int,1:int}
+	 */
+	public const COURIER_COST = array( 400, 600 );
+
+	/**
 	 * Rate id of the last-resort courier rate. Stable across requests, because
 	 * WooCommerce stores the buyer's chosen method by id in the session.
 	 *
@@ -538,6 +550,28 @@ final class CheckoutSetup {
 		update_option( self::ZONE_OPTION, $zone_id );
 
 		return true;
+	}
+
+	/**
+	 * The courier's price range, as quoted beside the free-delivery threshold.
+	 *
+	 * @return int[] Lowest and highest postage in RSD; empty when not quoted.
+	 */
+	public static function courier_cost(): array {
+		/**
+		 * Filter the courier's price range as quoted to the buyer.
+		 *
+		 * @param int[] $range Lowest and highest postage, in RSD.
+		 */
+		$range = (array) apply_filters( 'cosypaw_courier_cost', self::COURIER_COST );
+		$low   = (int) ( $range[0] ?? 0 );
+		$high  = (int) ( $range[1] ?? $low );
+
+		if ( $low < 1 || $high < $low ) {
+			return array();
+		}
+
+		return array( $low, $high );
 	}
 
 	/**

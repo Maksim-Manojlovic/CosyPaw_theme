@@ -1490,6 +1490,21 @@ msgstr "%s more for free delivery"
 msgid "Možda vam se svidi"
 msgstr "You might like"
 
+msgid "Ne plaćaš poštarinu od %s."
+msgstr "You save the %s courier fee."
+
+msgid "Ispod toga poštarinu plaćaš kuriru, %s."
+msgstr "Below that, you pay the courier %s for delivery."
+
+msgid "Još %1$s do besplatne dostave — umesto %2$s poštarine kuriru"
+msgstr "%1$s more for free delivery — instead of paying the courier %2$s"
+
+msgid "Dostava je na nama"
+msgstr "Delivery is on us"
+
+msgid "Besplatna dostava je ostvarena — sve što dodaš stiže bez poštarine."
+msgstr "Free delivery earned — anything you add ships at no extra cost."
+
 msgid "Ostatak družine te čeka"
 msgstr "The rest of the crew is waiting"
 

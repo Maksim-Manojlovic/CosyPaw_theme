@@ -1490,6 +1490,21 @@ msgstr "Ещё %s до бесплатной доставки"
 msgid "Možda vam se svidi"
 msgstr "Возможно, вам понравится"
 
+msgid "Ne plaćaš poštarinu od %s."
+msgstr "Ты экономишь %s на оплате курьера."
+
+msgid "Ispod toga poštarinu plaćaš kuriru, %s."
+msgstr "Ниже этой суммы доставку оплачиваешь курьеру: %s."
+
+msgid "Još %1$s do besplatne dostave — umesto %2$s poštarine kuriru"
+msgstr "Ещё %1$s до бесплатной доставки — вместо %2$s курьеру"
+
+msgid "Dostava je na nama"
+msgstr "Доставка за наш счёт"
+
+msgid "Besplatna dostava je ostvarena — sve što dodaš stiže bez poštarine."
+msgstr "Бесплатная доставка получена — всё, что добавишь, приедет без оплаты доставки."
+
 msgid "Ostatak družine te čeka"
 msgstr "Остальная компания тебя ждёт"
 

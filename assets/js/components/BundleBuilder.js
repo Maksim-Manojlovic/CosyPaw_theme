@@ -223,6 +223,11 @@ export class BundleBuilder {
 		const tier = e.target.closest('[data-package]');
 		if (tier && this.root.contains(tier)) {
 			this.selectTier(tier);
+			// Choosing a size is step 1 of 2: take the visitor straight on to
+			// the towels, which sit below the cards — on a phone, a full screen
+			// below. Also for the size already chosen, since the press still
+			// says "I am ready for the next step".
+			this._scrollTo(this.step2El);
 			return;
 		}
 

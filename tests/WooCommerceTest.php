@@ -405,11 +405,11 @@ final class WooCommerceTest extends TestCase {
 
 		$wc = new WooCommerce( 'cosypaw', new Catalog() );
 
-		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '1900' ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '2400' ) );
 		$under = $wc->inject_package_ids( $row() );
 		$this->assertFalse( $under[0]['free_ship'] );
 
-		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '2400' ) );
+		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 'Trio paket', '2600' ) );
 		$over = $wc->inject_package_ids( $row() );
 		$this->assertTrue( $over[0]['free_ship'] );
 	}

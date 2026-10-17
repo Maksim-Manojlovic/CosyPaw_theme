@@ -73,13 +73,14 @@ final class CheckoutSetup {
 	 * package card only claims free shipping while its own price clears the bar
 	 * (Catalog::packages() derives that, it is no longer authored).
 	 *
-	 * The 2+1 package is 1.490 and does not clear it on its own; four towels —
-	 * the package plus a single, 2.280 — do. That is deliberate: the bar sits
-	 * one towel past the package so it still has something to ask for.
+	 * The 2+1 package is 1.490 and does not clear it on its own, nor do four
+	 * towels — the package plus a single, 2.280. Five do: a second package
+	 * fills from the fourth towel on, 2.980. The bar used to sit at 2.000, one
+	 * towel past the package; at 2.500 it asks for the second package instead.
 	 *
 	 * @var int
 	 */
-	public const FREE_SHIPPING_MIN = 2000;
+	public const FREE_SHIPPING_MIN = 2500;
 
 	/**
 	 * Label of the courier rate, in the source language.
@@ -98,7 +99,7 @@ final class CheckoutSetup {
 	 * Quoted, never charged: the courier rate stays at zero and the buyer pays
 	 * the courier at the door (see create_shipping_zone()). It is printed next
 	 * to the free-delivery threshold so the bar has a price — "free over
-	 * 2.000" reads as a footnote until it says what it saves.
+	 * 2.500" reads as a footnote until it says what it saves.
 	 *
 	 * @var array{0:int,1:int}
 	 */

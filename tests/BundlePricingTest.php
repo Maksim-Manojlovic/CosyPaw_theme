@@ -414,21 +414,40 @@ final class BundlePricingTest extends TestCase {
 	}
 
 	/**
-	 * Four towels clear the free-delivery bar, which is what the ladder is
-	 * shaped for: the package alone is 1.490 and stops short of the 2.000, and
-	 * one more towel takes the basket to 2.280.
+	 * Four towels stop short of the 2.500 bar: the package plus a single is
+	 * 2.280. They cleared it while the bar was 2.000, so this pins the move.
 	 *
 	 * The rate is checked rather than the fee, because the fee is only half the
-	 * answer — the cart pays 3.160 in line items and the threshold is judged on
-	 * the 2.280 that is left after the saving.
+	 * answer — the cart pays 3.160 in line items, which WooCommerce alone would
+	 * wave through, and the threshold is judged on the 2.280 left after the
+	 * saving.
 	 */
-	public function test_four_towels_clear_the_free_delivery_bar(): void {
+	public function test_four_towels_stop_short_of_the_free_delivery_bar(): void {
 		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 4, 'price' => self::LIVE_PRICES['solo'] ) ) );
 
 		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
 		$pricing->apply_bundle_discount( $cart );
 
 		$this->assertSame( 2280.0, $pricing->payable_total( $cart ) );
+
+		$rates = $pricing->require_threshold_after_saving(
+			array( 'free_shipping:1' => new \WC_Mock_Shipping_Rate( 'free_shipping' ) )
+		);
+
+		$this->assertArrayNotHasKey( 'free_shipping:1', $rates );
+	}
+
+	/**
+	 * Five towels clear the bar: a second package fills from the fourth towel
+	 * on, and the basket pays 2.980.
+	 */
+	public function test_five_towels_clear_the_free_delivery_bar(): void {
+		$cart = $this->cart( array( array( 'id' => self::MOTIF_ID, 'qty' => 5, 'price' => self::LIVE_PRICES['solo'] ) ) );
+
+		$pricing = new BundlePricing( 'cosypaw', new Catalog() );
+		$pricing->apply_bundle_discount( $cart );
+
+		$this->assertSame( 2980.0, $pricing->payable_total( $cart ) );
 
 		$rates = $pricing->require_threshold_after_saving(
 			array( 'free_shipping:1' => new \WC_Mock_Shipping_Rate( 'free_shipping' ) )

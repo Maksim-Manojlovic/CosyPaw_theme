@@ -183,6 +183,14 @@ final class CheckoutSetup {
 		// shipping calculator instead. Off for the same reason.
 		add_filter( 'option_woocommerce_enable_shipping_calc', array( $this, 'hide_cart_shipping_calculator' ), 20 );
 
+		// Cash on delivery: the courier calls before coming, and an order
+		// without a number is a parcel nobody can hand over. WooCommerce makes
+		// the phone optional unless a Customizer setting says otherwise, and
+		// orders arrived without one — so it is required here, where no
+		// setting can switch it off. Late, after anything else that edits
+		// the field.
+		add_filter( 'woocommerce_billing_fields', array( $this, 'require_phone' ), 100 );
+
 		// A threshold change used to reach checkout only through the seeder,
 		// which meant every page of the site could advertise a bar the cart did
 		// not enforce until someone remembered to click Tools → CosyPaw Seeder.
@@ -194,6 +202,24 @@ final class CheckoutSetup {
 		// A deploy that changes how a package is rated has to reach the baskets
 		// that were rated before it. Once per version, then never again.
 		add_action( 'init', array( $this, 'maybe_flush_rate_cache' ), 21 );
+	}
+
+	/**
+	 * Make the billing phone a required field.
+	 *
+	 * WooCommerce validates required fields on the server when the order is
+	 * placed, so this refuses an order without a number even where the
+	 * browser's own check is skipped.
+	 *
+	 * @param array<string,array<string,mixed>>|mixed $fields Billing fields.
+	 * @return array<string,array<string,mixed>>|mixed
+	 */
+	public function require_phone( $fields ) {
+		if ( is_array( $fields ) && isset( $fields['billing_phone'] ) && is_array( $fields['billing_phone'] ) ) {
+			$fields['billing_phone']['required'] = true;
+		}
+
+		return $fields;
 	}
 
 	/**

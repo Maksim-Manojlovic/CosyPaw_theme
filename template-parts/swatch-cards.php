@@ -44,6 +44,16 @@ $cosypaw_layout = array(
 		<?php
 		$cosypaw_variants = (array) $cosypaw_group['variants'];
 		$cosypaw_name     = $cosypaw_prefix . '-' . sanitize_key( (string) $cosypaw_group['key'] );
+
+		// The card opens on the first colour that can be bought; a sold-out
+		// one is still a swatch, and shows "Rasprodato" when picked.
+		$cosypaw_open = 0;
+		foreach ( $cosypaw_variants as $cosypaw_i => $cosypaw_v ) {
+			if ( empty( $cosypaw_v['sold_out'] ) ) {
+				$cosypaw_open = $cosypaw_i;
+				break;
+			}
+		}
 		?>
 		<div class="swatch-card">
 			<?php if ( count( $cosypaw_variants ) > 1 ) : ?>
@@ -56,7 +66,7 @@ $cosypaw_layout = array(
 								class="swatch__input"
 								name="<?php echo esc_attr( $cosypaw_name ); ?>"
 								value="<?php echo esc_attr( $cosypaw_v['key'] ); ?>"
-								<?php checked( 0, $cosypaw_i ); ?>
+								<?php checked( $cosypaw_open, $cosypaw_i ); ?>
 							>
 							<span class="swatch__dot" style="--swatch: <?php echo esc_attr( $cosypaw_v['swatch'] ); ?>" aria-hidden="true"></span>
 							<span class="screen-reader-text"><?php echo esc_html( $cosypaw_v['color'] ); ?></span>
@@ -66,7 +76,7 @@ $cosypaw_layout = array(
 			<?php endif; ?>
 
 			<?php foreach ( $cosypaw_variants as $cosypaw_v ) : ?>
-				<div class="swatch-card__variant">
+				<div class="swatch-card__variant<?php echo ! empty( $cosypaw_v['sold_out'] ) ? ' is-sold-out' : ''; ?>">
 					<?php
 					// aria-hidden + tabindex="-1": the name below is the same link
 					// with the accessible text; the photo would be a second,
@@ -92,16 +102,25 @@ $cosypaw_layout = array(
 						}
 						?>
 					</a>
+					<?php
+					if ( ! empty( $cosypaw_v['sold_out'] ) ) {
+						\Theme\Stock::badge();
+					}
+					?>
 					<a class="cloth-card__name swatch-card__name" href="<?php echo esc_url( $cosypaw_v['permalink'] ); ?>"><?php echo esc_html( $cosypaw_v['name'] ); ?></a>
 					<span class="cloth-card__price swatch-card__price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_v['price'] ) ); ?></span>
-					<a
-						href="<?php echo esc_url( $cosypaw_v['add_to_cart_url'] ); ?>"
-						class="btn btn--primary cloth-card__buy swatch-card__buy add_to_cart_button ajax_add_to_cart"
-						data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_v['id'] ); ?>"
-						data-quantity="1"
-						rel="nofollow"
-						aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_v['name'] ) ); ?>"
-					><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></a>
+					<?php if ( ! empty( $cosypaw_v['sold_out'] ) ) : ?>
+						<span class="btn btn--primary cloth-card__buy swatch-card__buy is-sold-out" aria-disabled="true"><?php esc_html_e( 'Rasprodato', 'cosypaw' ); ?></span>
+					<?php else : ?>
+						<a
+							href="<?php echo esc_url( $cosypaw_v['add_to_cart_url'] ); ?>"
+							class="btn btn--primary cloth-card__buy swatch-card__buy add_to_cart_button ajax_add_to_cart"
+							data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_v['id'] ); ?>"
+							data-quantity="1"
+							rel="nofollow"
+							aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_v['name'] ) ); ?>"
+						><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></a>
+					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		</div>

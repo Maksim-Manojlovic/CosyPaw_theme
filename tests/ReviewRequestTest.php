@@ -25,6 +25,7 @@ if ( ! defined( 'DAY_IN_SECONDS' ) ) {
 }
 
 require_once __DIR__ . '/stubs.php';
+require_once dirname( __DIR__ ) . '/inc/Stock.php';
 require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';
 

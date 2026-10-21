@@ -827,6 +827,11 @@ final class WooCommerce {
 				// resolve the name for orders placed while it was on sale.
 				$row['available'] = 'publish' === get_post_status( $pid ) && $product->is_purchasable();
 
+				// Out of stock is not retired: the card stays, marked
+				// "Rasprodato", but nothing on it can put the towel in the cart
+				// or the builder (Storefront::sellable()).
+				$row['sold_out'] = Stock::sold_out( $product );
+
 				// Once a product exists, WooCommerce owns the name and the price.
 				// The Catalog values are only the seed: editing either in wp-admin
 				// has to move the landing page too, and a price shown there that
@@ -968,6 +973,12 @@ final class WooCommerce {
 		// Packages have no motif id of their own, and neither does anything the
 		// shop added by hand. Both are already sold as what they are.
 		if ( '' === $motif_id ) {
+			return;
+		}
+
+		// WooCommerce prints "Rasprodato" in place of its own button; the
+		// builder would refuse the towel too, so there is nowhere to send it.
+		if ( Stock::sold_out( $product ) ) {
 			return;
 		}
 

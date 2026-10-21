@@ -33,8 +33,11 @@ $item_label = sprintf( __( '%s • 1 kom', 'cosypaw' ), $p['name'] );
 // Only a seeded motif has a product page behind it. Without one
 // the card stays exactly what it was: a picture and a buy button.
 $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
+
+// Out of stock in wp-admin: the card stays, marked, and offers no way to buy.
+$cosypaw_sold_out = ! empty( $p['sold_out'] );
 ?>
-<div class="motif-card">
+<div class="motif-card<?php echo $cosypaw_sold_out ? ' is-sold-out' : ''; ?>">
 	<?php
 	if ( '' !== $cosypaw_link ) :
 		// aria-hidden + tabindex="-1": the name below links to the
@@ -64,6 +67,11 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 	<?php if ( '' !== $cosypaw_link ) : ?>
 		</a>
 	<?php endif; ?>
+	<?php
+	if ( $cosypaw_sold_out ) {
+		\Theme\Stock::badge();
+	}
+	?>
 	<div class="motif-card__row">
 		<div class="motif-card__meta">
 			<div class="motif-name">
@@ -81,7 +89,7 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 				// card's own — motifs are priced individually in
 				// wp-admin, so the comparison is made per card and
 				// not once for the grid.
-				if ( null !== $cosypaw_ladder && (int) $cosypaw_ladder['per'] < (int) $p['price'] ) :
+				if ( ! $cosypaw_sold_out && null !== $cosypaw_ladder && (int) $cosypaw_ladder['per'] < (int) $p['price'] ) :
 					?>
 					<button
 						type="button"
@@ -118,8 +126,10 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 			// a single towel is the cheapest thing the shop sells and
 			// the only one that pays for its own delivery, so it is a
 			// poor default for a click made at peak enthusiasm.
-			if ( ! empty( $p['product_id'] ) ) :
+			if ( $cosypaw_sold_out ) :
 				?>
+				<span class="motif-single motif-single--sold-out"><?php esc_html_e( 'Trenutno nema na stanju', 'cosypaw' ); ?></span>
+			<?php elseif ( ! empty( $p['product_id'] ) ) : ?>
 				<a
 					href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
 					class="motif-single add_to_cart_button ajax_add_to_cart"
@@ -142,16 +152,18 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 		<?php
 		// Drops the motif straight into a builder slot further down
 		// the page — see BundleBuilder.addMotifFromGallery().
-		?>
-		<button
-			type="button"
-			class="motif-add"
-			data-add-to-bundle
-			data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
-			aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Dodaj %s u paket', 'cosypaw' ), $p['name'] ) ); ?>"
-		>
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-			<?php esc_html_e( 'U paket', 'cosypaw' ); ?>
-		</button>
+		if ( ! $cosypaw_sold_out ) :
+			?>
+			<button
+				type="button"
+				class="motif-add"
+				data-add-to-bundle
+				data-motif-id="<?php echo esc_attr( $p['id'] ); ?>"
+				aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Dodaj %s u paket', 'cosypaw' ), $p['name'] ) ); ?>"
+			>
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+				<?php esc_html_e( 'U paket', 'cosypaw' ); ?>
+			</button>
+		<?php endif; ?>
 	</div>
 </div>

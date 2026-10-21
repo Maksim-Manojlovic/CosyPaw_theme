@@ -1265,6 +1265,44 @@
 	pointer-events: none;
 }
 
+/* Sold out: the text that stands where "Kupi 1 kom" was, and the buy button
+   on the other cards turned into a label (Theme\Stock). */
+.motif-single--sold-out {
+	color: var(--muted);
+	text-decoration: none;
+	cursor: default;
+}
+
+.btn.is-sold-out {
+	background: var(--sand);
+	/* Ink, not muted: muted on sand falls under 4.5:1, and this is the
+	   one line on the card that says why there is no button. */
+	color: var(--ink);
+	box-shadow: none;
+	cursor: default;
+}
+
+.btn.is-sold-out:hover {
+	transform: none;
+}
+
+/* The builder tile is a <div>, not a button: no lift, no pointer. */
+.motif-pick.is-sold-out {
+	cursor: default;
+}
+
+.motif-pick.is-sold-out:hover {
+	transform: none;
+	box-shadow: inset 0 0 0 1px var(--color-border-control);
+}
+
+.motif-pick .sold-out-badge {
+	top: 16px;
+	left: 16px;
+	padding: 5px 9px;
+	font-size: 11px;
+}
+
 /* Brief confirmation state after a successful WC add-to-cart. */
 .motif-add.is-added,
 .pkg-cta.is-added {

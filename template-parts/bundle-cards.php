@@ -31,7 +31,7 @@ if ( ! $cosypaw_offers ) {
 ?>
 <div class="bundles">
 	<?php foreach ( $cosypaw_offers as $cosypaw_b ) : ?>
-		<div class="bundle-card">
+		<div class="bundle-card<?php echo ! empty( $cosypaw_b['sold_out'] ) ? ' is-sold-out' : ''; ?>">
 			<?php
 			// aria-hidden + tabindex="-1": the name below is the same link with
 			// the accessible text; the photo would be a second, unlabelled stop.
@@ -53,6 +53,11 @@ if ( ! $cosypaw_offers ) {
 				}
 				?>
 			</a>
+			<?php
+			if ( ! empty( $cosypaw_b['sold_out'] ) ) {
+				\Theme\Stock::badge();
+			}
+			?>
 			<div class="bundle-card__body">
 				<div class="bundle-card__tags">
 					<span class="bundle-card__badge">
@@ -82,14 +87,28 @@ if ( ! $cosypaw_offers ) {
 						<?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_b['separately'] ) ); ?>
 					</del>
 				</span>
-				<a
-					href="<?php echo esc_url( $cosypaw_b['add_to_cart_url'] ); ?>"
-					class="btn btn--primary bundle-card__buy add_to_cart_button ajax_add_to_cart"
-					data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_b['id'] ); ?>"
-					data-quantity="1"
-					rel="nofollow"
-					aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_b['name'] ) ); ?>"
-				><?php esc_html_e( 'Dodaj paket u korpu', 'cosypaw' ); ?></a>
+				<?php
+				/*
+				 * Sold out: the bundle itself, or a part with nothing left to
+				 * take its place. "choose": the suggested part ran out but
+				 * another can take it, which only the picker on the bundle's
+				 * page can ask — an add from here would pack the suggestion.
+				 */
+				if ( ! empty( $cosypaw_b['sold_out'] ) ) :
+					?>
+					<span class="btn btn--primary bundle-card__buy is-sold-out" aria-disabled="true"><?php esc_html_e( 'Rasprodato', 'cosypaw' ); ?></span>
+				<?php elseif ( ! empty( $cosypaw_b['choose'] ) ) : ?>
+					<a class="btn btn--primary bundle-card__buy" href="<?php echo esc_url( $cosypaw_b['permalink'] ); ?>"><?php esc_html_e( 'Složi paket', 'cosypaw' ); ?></a>
+				<?php else : ?>
+					<a
+						href="<?php echo esc_url( $cosypaw_b['add_to_cart_url'] ); ?>"
+						class="btn btn--primary bundle-card__buy add_to_cart_button ajax_add_to_cart"
+						data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_b['id'] ); ?>"
+						data-quantity="1"
+						rel="nofollow"
+						aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_b['name'] ) ); ?>"
+					><?php esc_html_e( 'Dodaj paket u korpu', 'cosypaw' ); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endforeach; ?>

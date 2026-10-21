@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once dirname( __DIR__ ) . '/inc/Catalog.php';
+require_once dirname( __DIR__ ) . '/inc/Storefront.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
 
 final class SeoTest extends TestCase {

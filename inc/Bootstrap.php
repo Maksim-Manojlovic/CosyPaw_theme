@@ -161,6 +161,13 @@ final class Bootstrap {
 	private ?GiftBundlePicker $gift_bundle_picker = null;
 
 	/**
+	 * Sold-out products kept out of the cart, packed or not (WooCommerce only).
+	 *
+	 * @var Stock|null
+	 */
+	private ?Stock $stock = null;
+
+	/**
 	 * Promo clips in the product gallery (WooCommerce only).
 	 *
 	 * @var ProductVideos|null
@@ -219,6 +226,10 @@ final class Bootstrap {
 			// Each part of a bundle swapped like for like on its page — another
 			// colour, another towel shape — and the pick packed as chosen.
 			$this->gift_bundle_picker = new GiftBundlePicker();
+
+			// A product marked out of stock is "Rasprodato": not on its own,
+			// not in a builder package, not in a gift bundle.
+			$this->stock = new Stock( new Catalog() );
 
 			// A towel's promo clip, as the last slide of its own gallery.
 			$this->product_videos = new ProductVideos();

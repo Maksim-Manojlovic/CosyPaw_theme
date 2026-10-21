@@ -243,6 +243,39 @@ h1, h2, h3, h4 {
 	box-shadow: inset 0 0 0 1.5px var(--color-border-control);
 }
 
+/* --- "Rasprodato" (Theme\Stock::badge()) ---
+   Laid over the photo of a sold-out card. The card it sits in is the
+   positioning context (see .is-sold-out); the ink fill keeps the white label
+   at 11.41:1 over any photograph. */
+.sold-out-badge {
+	position: absolute;
+	top: 24px;
+	left: 24px;
+	z-index: 2;
+	padding: 7px 14px;
+	border-radius: var(--radius-pill);
+	background: var(--ink);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 14px;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	pointer-events: none;
+}
+
+.is-sold-out {
+	position: relative;
+}
+
+/* The photo stays readable — the shopper still sees what ran out — but reads
+   as not on offer next to the cards that are. */
+.is-sold-out img {
+	opacity: 0.55;
+	filter: grayscale(0.6);
+}
+
 /* --- Vertical carousel (hero featured motifs). Transforms applied by JS. --- */
 .vertical-carousel {
 	position: relative;

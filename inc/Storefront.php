@@ -48,10 +48,22 @@ final class Storefront {
 		 */
 		$products = array_values( array_filter( $catalog->products(), array( self::class, 'in_stock' ) ) );
 
+		/*
+		 * A sold-out motif is still shown, marked "Rasprodato", but after
+		 * everything that can be bought: the grid opens on towels a click can
+		 * put in the cart, and the collapsed front-page grid hides the rest.
+		 * The sort is stable, so each half keeps the catalogue's order.
+		 */
+		$on_sale  = array_values( array_filter( $products, array( self::class, 'sellable' ) ) );
+		$products = array_merge(
+			$on_sale,
+			array_values( array_filter( $products, static fn( array $row ): bool => ! self::sellable( $row ) ) )
+		);
+
 		// Motifs can be priced individually in wp-admin, so the headline price
 		// is the cheapest one actually on sale rather than a catalog-wide figure.
-		$from_price = $products
-			? (int) min( array_column( $products, 'price' ) )
+		$from_price = $on_sale
+			? (int) min( array_column( $on_sale, 'price' ) )
 			: Catalog::UNIT_PRICE;
 
 		$packages    = $catalog->packages();
@@ -105,6 +117,17 @@ final class Storefront {
 	 */
 	public static function in_stock( array $row ): bool {
 		return (bool) ( $row['available'] ?? true );
+	}
+
+	/**
+	 * Whether a catalogue row can be put in the cart or the builder: on sale
+	 * and not sold out. A sold-out row is still shown, marked "Rasprodato".
+	 *
+	 * @param array<string,mixed> $row Catalogue row.
+	 * @return bool
+	 */
+	public static function sellable( array $row ): bool {
+		return self::in_stock( $row ) && empty( $row['sold_out'] );
 	}
 
 	/**

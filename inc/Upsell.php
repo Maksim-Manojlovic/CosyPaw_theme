@@ -1015,8 +1015,9 @@ final class Upsell {
 			$product_id = (int) ( $motif['product_id'] ?? 0 );
 
 			// Rows carry no 'available' key at all until WooCommerce injects
-			// one; a retired motif carries it as false and must not be offered.
-			if ( $product_id > 0 && false !== ( $motif['available'] ?? true ) ) {
+			// one; a retired motif carries it as false and must not be offered,
+			// and neither must one that is sold out.
+			if ( $product_id > 0 && Storefront::sellable( $motif ) ) {
 				$motifs[ $product_id ] = $motif;
 			}
 		}

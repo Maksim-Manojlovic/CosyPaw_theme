@@ -159,6 +159,20 @@ final class StorefrontTest extends TestCase {
 	}
 
 	/**
+	 * A sold-out motif is on sale (its card is shown) but cannot be bought.
+	 *
+	 * @return void
+	 */
+	public function test_sellable_leaves_out_what_is_sold_out(): void {
+		$this->assertTrue( Storefront::sellable( array() ) );
+		$this->assertTrue( Storefront::sellable( array( 'available' => true, 'sold_out' => false ) ) );
+		$this->assertFalse( Storefront::sellable( array( 'available' => true, 'sold_out' => true ) ) );
+		$this->assertFalse( Storefront::sellable( array( 'available' => false ) ) );
+
+		$this->assertTrue( Storefront::in_stock( array( 'available' => true, 'sold_out' => true ) ) );
+	}
+
+	/**
 	 * Standalone photo alt names the product, not just the motif.
 	 *
 	 * @return void

@@ -223,6 +223,34 @@ if ( ! $packages ) {
 
 				<div class="builder-gallery" data-gallery>
 					<?php foreach ( $products as $p ) : ?>
+						<?php
+						/*
+						 * Sold out: the tile is shown, marked, but is not a
+						 * button and carries no data-motif-id — BundleBuilder
+						 * collects its motifs by that attribute, so a click,
+						 * "Iznenadi me" and a ?motif= deep link all pass it by.
+						 */
+						if ( ! empty( $p['sold_out'] ) ) :
+							?>
+							<div class="motif-pick is-sold-out" aria-disabled="true">
+								<img
+									class="motif-pick__img"
+									src="<?php echo esc_url( $p['image_sm'] ); ?>"
+									width="360"
+									height="360"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								>
+								<?php \Theme\Stock::badge(); ?>
+								<span class="motif-pick__row">
+									<span class="motif-pick__name"><?php echo esc_html( $p['name'] ); ?></span>
+								</span>
+							</div>
+							<?php
+							continue;
+						endif;
+						?>
 						<button
 							type="button"
 							class="motif-pick"

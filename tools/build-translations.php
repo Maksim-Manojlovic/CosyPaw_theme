@@ -575,6 +575,13 @@ $sr_source = array(
 	'Besplatna dostava je ostvarena — sve što dodaš stiže bez poštarine.'                    => array( 'Free delivery earned — anything you add ships at no extra cost.', 'Бесплатная доставка получена — всё, что добавишь, приедет без оплаты доставки.' ),
 	'Ostatak družine te čeka'                                                                 => array( 'The rest of the crew is waiting', 'Остальная компания тебя ждёт' ),
 
+	// Sold out (Theme\Stock and the card templates).
+	'Rasprodato'                                                                              => array( 'Sold out', 'Распродано' ),
+	'Trenutno nema na stanju'                                                                 => array( 'Currently out of stock', 'Сейчас нет в наличии' ),
+	'Složi paket'                                                                             => array( 'Build the bundle', 'Собрать набор' ),
+	'Rasprodato: %s. Izaberi drugi peškir za paket.'                                          => array( 'Sold out: %s. Pick another towel for the package.', 'Распродано: %s. Выбери другое полотенце для набора.' ),
+	'Rasprodato: %1$s (u stavci „%2$s“). Ukloni tu stavku iz korpe i složi je ponovo.'        => array( 'Sold out: %1$s (in “%2$s”). Remove that item from the cart and put it together again.', 'Распродано: %1$s (в позиции «%2$s»). Удали эту позицию из корзины и собери её заново.' ),
+
 	// The per-piece price on a motif card (front-page.php).
 	'%1$d kom · %2$s / kom'                                                                   => array( '%1$d pcs · %2$s / pc', '%1$d шт · %2$s / шт' ),
 	'Napravi paket od %1$d peškira po %2$s, počni sa oblikom %3$s'                          => array( 'Build a package of %1$d towels at %2$s each, starting with %3$s', 'Собрать набор из %1$d полотенец по %2$s, начиная с формы %3$s' ),

@@ -347,8 +347,13 @@ abstract class ProductLine {
 	/**
 	 * One ITEMS entry as a storefront row, or null while it cannot be sold.
 	 *
+	 * Out of stock is not "cannot be sold": the row is returned with
+	 * `sold_out` set, so its card is printed marked "Rasprodato" rather than
+	 * dropped. A set (an item that holds others) is sold out as soon as
+	 * anything it holds is — the shop cannot pack it.
+	 *
 	 * @param string $key ITEMS key.
-	 * @return array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>}|null
+	 * @return array{key:string,id:int,name:string,price:int,permalink:string,add_to_cart_url:string,image_id:int,gallery_ids:array<int,int>,sold_out:bool}|null
 	 */
 	public static function row( string $key ): ?array {
 		if ( ! function_exists( 'wc_get_product' ) ) {
@@ -363,6 +368,12 @@ abstract class ProductLine {
 			return null;
 		}
 
+		$sold_out = Stock::sold_out( $product );
+		foreach ( static::ITEMS[ $key ]['holds'] ?? array() as $held ) {
+			$held_row = static::row( (string) $held );
+			$sold_out = $sold_out || ( null !== $held_row && $held_row['sold_out'] );
+		}
+
 		return array(
 			'key'             => $key,
 			'id'              => $id,
@@ -372,6 +383,7 @@ abstract class ProductLine {
 			'add_to_cart_url' => (string) $product->add_to_cart_url(),
 			'image_id'        => (int) $product->get_image_id(),
 			'gallery_ids'     => is_callable( array( $product, 'get_gallery_image_ids' ) ) ? array_map( 'intval', (array) $product->get_gallery_image_ids() ) : array(),
+			'sold_out'        => $sold_out,
 		);
 	}
 
@@ -382,7 +394,8 @@ abstract class ProductLine {
 	 * @return int
 	 */
 	public static function from_price( array $rows ): int {
-		$prices = array_filter( array_map( 'intval', array_column( $rows, 'price' ) ) );
+		$on_sale = array_filter( $rows, static fn( array $row ): bool => empty( $row['sold_out'] ) );
+		$prices  = array_filter( array_map( 'intval', array_column( $on_sale ? $on_sale : $rows, 'price' ) ) );
 
 		return $prices ? (int) min( $prices ) : static::PRICE;
 	}

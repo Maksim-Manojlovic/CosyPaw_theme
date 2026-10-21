@@ -387,12 +387,7 @@ final class Seo {
 	 * @return array<string,mixed>
 	 */
 	private function schema_product_group(): array {
-		$products = array_values(
-			array_filter(
-				$this->catalog->products(),
-				static fn( array $row ): bool => (bool) ( $row['available'] ?? true )
-			)
-		);
+		$products = array_values( array_filter( $this->catalog->products(), array( Storefront::class, 'sellable' ) ) );
 
 		$prices = array_map( 'intval', array_column( $products, 'price' ) );
 		$low    = $prices ? min( $prices ) : Catalog::UNIT_PRICE;
@@ -410,7 +405,7 @@ final class Seo {
 				'lowPrice'      => $low,
 				'highPrice'     => $high,
 				'offerCount'    => count( $products ),
-				'availability'  => 'https://schema.org/InStock',
+				'availability'  => $products ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
 			),
 		);
 	}

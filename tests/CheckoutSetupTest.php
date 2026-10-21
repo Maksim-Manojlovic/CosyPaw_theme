@@ -165,6 +165,27 @@ final class CheckoutSetupTest extends TestCase {
 	}
 
 	/**
+	 * An order paid to the courier needs a number to call: the phone is
+	 * required whatever WooCommerce's own setting says, and nothing else
+	 * about the fields changes.
+	 */
+	public function test_the_phone_is_required(): void {
+		$fields = array(
+			'billing_phone' => array( 'label' => 'Telefon', 'required' => false, 'type' => 'tel' ),
+			'billing_email' => array( 'label' => 'Email', 'required' => true ),
+		);
+
+		$out = ( new CheckoutSetup() )->require_phone( $fields );
+
+		$this->assertTrue( $out['billing_phone']['required'] );
+		$this->assertSame( 'tel', $out['billing_phone']['type'] );
+		$this->assertSame( $fields['billing_email'], $out['billing_email'] );
+
+		// A shop that hid the field entirely is left as it is.
+		$this->assertSame( array( 'billing_email' => $fields['billing_email'] ), ( new CheckoutSetup() )->require_phone( array( 'billing_email' => $fields['billing_email'] ) ) );
+	}
+
+	/**
 	 * A marker written by an older, weaker sync must not silence the new one:
 	 * version 1 recorded "applied" even where it had found no zone, so a shop
 	 * in that state would never retry. The version in the marker forces the

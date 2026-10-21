@@ -370,8 +370,10 @@ final class GiftBundles extends ProductLine {
 	 *
 	 * A products() row plus `occasion`, `includes` (translated), `separately`
 	 * (what the same things cost bought the cheapest way the shop sells them
-	 * today) and `saving`. A bundle is left out while it, or anything it
-	 * holds, cannot be bought, or while it is not cheaper than its parts.
+	 * today), `saving` and `choose` (see below). A bundle is left out while
+	 * it, or anything it holds, cannot be bought, or while it is not cheaper
+	 * than its parts. Out of stock is not "cannot be bought": that bundle is
+	 * listed with `sold_out` set.
 	 *
 	 * @param array<int,string> $keys Only these bundles, in this order; all when empty.
 	 * @return array<int,array<string,mixed>>
@@ -395,7 +397,14 @@ final class GiftBundles extends ProductLine {
 			$row['includes']   = self::translate( $item['includes'] );
 			$row['separately'] = $separately;
 			$row['saving']     = $separately - $row['price'];
-			$out[]             = $row;
+
+			// Sold out: the bundle itself, or a part nothing on sale can stand
+			// in for. A suggested part that ran out while another can take its
+			// place is "choose": the bundle sells, but only through the picker.
+			$row['sold_out'] = $row['sold_out'] || ! self::packable( (string) $key );
+			$row['choose']   = ! $row['sold_out'] && null === self::resolve( (string) $key );
+
+			$out[] = $row;
 		}
 
 		return $out;
@@ -479,6 +488,24 @@ final class GiftBundles extends ProductLine {
 	 * @return int|null
 	 */
 	private static function towel_price( string $motif ): ?int {
+		$product = self::towel_product( $motif );
+		if ( null === $product ) {
+			return null;
+		}
+
+		$price = (int) round( (float) $product->get_price() );
+
+		return $price > 0 ? $price : null;
+	}
+
+	/**
+	 * A towel motif's product, or null while it cannot be bought. Sold out
+	 * still counts as on sale here; Stock::sold_out() asks that separately.
+	 *
+	 * @param string $motif Catalog motif id.
+	 * @return \WC_Product|null
+	 */
+	private static function towel_product( string $motif ): ?\WC_Product {
 		if ( ! function_exists( 'wc_get_product' ) ) {
 			return null;
 		}
@@ -490,9 +517,32 @@ final class GiftBundles extends ProductLine {
 			return null;
 		}
 
-		$price = (int) round( (float) $product->get_price() );
+		return $product;
+	}
 
-		return $price > 0 ? $price : null;
+	/**
+	 * Whether one part of a packing list is sold out.
+	 *
+	 * A part that is no longer on sale at all is not "sold out" — resolve()
+	 * already refuses it — so only a stock status can make this true.
+	 *
+	 * @param string $line Component line.
+	 * @param string $key  Part key.
+	 * @return bool
+	 */
+	public static function part_sold_out( string $line, string $key ): bool {
+		if ( self::TOWEL === $line ) {
+			return Stock::sold_out( self::towel_product( $key ) );
+		}
+
+		$row = match ( $line ) {
+			self::LONG   => LongTowels::row( $key ),
+			self::PILLOW => Pillows::row( $key ),
+			self::CLOTHS => Cloths::row( $key ),
+			default      => null,
+		};
+
+		return null !== $row && $row['sold_out'];
 	}
 
 	/**
@@ -755,7 +805,17 @@ final class GiftBundles extends ProductLine {
 
 		$price = $candidates[ $default ]['price'] ?? self::launch_price( $line, $default );
 
-		return array_filter( $candidates, static fn( array $choice ): bool => $choice['price'] === $price );
+		// A sold-out candidate still names the slot's price — the suggestion
+		// running out must not reprice the bundle — but cannot fill it.
+		$out = array();
+		foreach ( $candidates as $choice_key => $choice ) {
+			if ( $choice['price'] === $price && ! $choice['sold_out'] ) {
+				unset( $choice['sold_out'] );
+				$out[ $choice_key ] = $choice;
+			}
+		}
+
+		return $out;
 	}
 
 	/**
@@ -777,11 +837,12 @@ final class GiftBundles extends ProductLine {
 			}
 
 			$out[ (string) $id ] = array(
-				'key'    => (string) $id,
-				'name'   => (string) ( $motif['name'] ?? $id ),
-				'swatch' => '',
-				'image'  => (string) ( $motif['image_th'] ?? '' ),
-				'price'  => $price,
+				'key'      => (string) $id,
+				'name'     => (string) ( $motif['name'] ?? $id ),
+				'swatch'   => '',
+				'image'    => (string) ( $motif['image_th'] ?? '' ),
+				'price'    => $price,
+				'sold_out' => self::part_sold_out( self::TOWEL, (string) $id ),
 			);
 		}
 
@@ -813,11 +874,12 @@ final class GiftBundles extends ProductLine {
 			}
 
 			$out[ $key ] = array(
-				'key'    => $key,
-				'name'   => self::part_name( $line, $key ),
-				'swatch' => (string) ( $item['swatch'] ?? '' ),
-				'image'  => $row['image_id'] > 0 ? (string) wp_get_attachment_image_url( $row['image_id'], 'woocommerce_thumbnail' ) : '',
-				'price'  => $row['price'],
+				'key'      => $key,
+				'name'     => self::part_name( $line, $key ),
+				'swatch'   => (string) ( $item['swatch'] ?? '' ),
+				'image'    => $row['image_id'] > 0 ? (string) wp_get_attachment_image_url( $row['image_id'], 'woocommerce_thumbnail' ) : '',
+				'price'    => $row['price'],
+				'sold_out' => $row['sold_out'],
 			);
 		}
 

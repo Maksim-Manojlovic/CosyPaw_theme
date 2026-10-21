@@ -106,6 +106,22 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
+		 * Whether the product is in stock; a test that sells out sets it false.
+		 *
+		 * @var bool
+		 */
+		public bool $in_stock = true;
+
+		/**
+		 * Whether the product is in stock.
+		 *
+		 * @return bool
+		 */
+		public function is_in_stock(): bool {
+			return $this->in_stock;
+		}
+
+		/**
 		 * Featured image attachment ID.
 		 *
 		 * @var int

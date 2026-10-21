@@ -36,7 +36,9 @@ $selected       = $storefront['selected'];
 $cosypaw_ladder = $storefront['ladder'];
 $free_min       = $storefront['free_min'];
 
-$featured = array_values( array_filter( $catalog->featured(), array( \Theme\Storefront::class, 'in_stock' ) ) );
+// The hero shows what can be bought: a sold-out motif keeps its card in the
+// grid, marked, but is not the shop's headline.
+$featured = array_values( array_filter( $catalog->featured(), array( \Theme\Storefront::class, 'sellable' ) ) );
 
 // The hero lead used to carry four facts — material, hanging loop, catalogue
 // size and an instruction — two of which are repeated verbatim in the benefits

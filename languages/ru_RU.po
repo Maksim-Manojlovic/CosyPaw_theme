@@ -1508,6 +1508,21 @@ msgstr "Бесплатная доставка получена — всё, чт�
 msgid "Ostatak družine te čeka"
 msgstr "Остальная компания тебя ждёт"
 
+msgid "Rasprodato"
+msgstr "Распродано"
+
+msgid "Trenutno nema na stanju"
+msgstr "Сейчас нет в наличии"
+
+msgid "Složi paket"
+msgstr "Собрать набор"
+
+msgid "Rasprodato: %s. Izaberi drugi peškir za paket."
+msgstr "Распродано: %s. Выбери другое полотенце для набора."
+
+msgid "Rasprodato: %1$s (u stavci „%2$s“). Ukloni tu stavku iz korpe i složi je ponovo."
+msgstr "Распродано: %1$s (в позиции «%2$s»). Удали эту позицию из корзины и собери её заново."
+
 msgid "%1$d kom · %2$s / kom"
 msgstr "%1$d шт · %2$s / шт"
 

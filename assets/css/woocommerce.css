@@ -185,6 +185,29 @@
 	line-height: 1;
 }
 
+/* Sold out in the shop loops (Theme\Stock::loop_badge()) and the "Rasprodato"
+   availability line on the product page. */
+.woocommerce ul.products li.product {
+	position: relative;
+}
+
+.woocommerce ul.products li.product .sold-out-badge {
+	top: 24px;
+	left: 24px;
+}
+
+.woocommerce div.product p.stock.out-of-stock {
+	display: inline-block;
+	padding: 8px 16px;
+	border-radius: var(--radius-pill);
+	background: var(--ink);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
 /* ---------- Breadcrumb ---------- */
 .woocommerce .woocommerce-breadcrumb {
 	color: var(--muted);

@@ -27,6 +27,7 @@ if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
 }
 
 require_once __DIR__ . '/stubs.php';
+require_once dirname( __DIR__ ) . '/inc/Stock.php';
 
 // The runtime theme is NOT Composer-autoloaded (it uses spl_autoload_register in
 // functions.php). For tests we require the classes under test directly.
@@ -362,6 +363,43 @@ final class WooCommerceTest extends TestCase {
 		$this->assertStringContainsString( 'motif=zirafa', $out );
 		$this->assertStringContainsString( '#napravi-paket', $out );
 		$this->assertStringContainsString( 'Dodaj u paket', $out );
+	}
+
+	/**
+	 * Out of stock is not retired: the row stays available, flagged sold out,
+	 * so its card is printed marked "Rasprodato" rather than dropped.
+	 */
+	public function test_inject_product_ids_flags_a_sold_out_motif(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$product           = new \WC_Product( 'Žirafa', '790', true, 42 );
+		$product->in_stock = false;
+		Functions\when( 'wc_get_product' )->justReturn( $product );
+
+		$out = ( new WooCommerce( 'cosypaw', new Catalog() ) )->inject_product_ids(
+			array( array( 'id' => 'zirafa', 'name' => 'Žirafa', 'price' => 790 ) )
+		);
+
+		$this->assertTrue( $out[0]['sold_out'] );
+		$this->assertTrue( $out[0]['available'] );
+	}
+
+	/**
+	 * A sold-out motif's page has nowhere to send the towel: the builder
+	 * would refuse it, so the way there is not printed.
+	 */
+	public function test_bundle_cta_is_silent_on_a_sold_out_motif(): void {
+		Functions\when( 'get_option' )->justReturn( array( 'zirafa' => 42 ) );
+
+		$product           = new \WC_Product( 'Žirafa', '790', true, 42 );
+		$product->in_stock = false;
+		Functions\when( 'wc_get_product' )->justReturn( $product );
+
+		ob_start();
+		( new WooCommerce( 'cosypaw', new Catalog() ) )->bundle_cta();
+		$this->assertSame( '', (string) ob_get_clean() );
 	}
 
 	/**

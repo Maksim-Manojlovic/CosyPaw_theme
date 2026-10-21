@@ -74,6 +74,7 @@ namespace Theme\Tests {
 	}
 
 	require_once __DIR__ . '/stubs.php';
+	require_once dirname( __DIR__ ) . '/inc/Stock.php';
 	require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 	require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 	require_once dirname( __DIR__ ) . '/inc/BundlePricing.php';
@@ -98,6 +99,9 @@ namespace Theme\Tests {
 		/** @var array<int,string> Product id => live price. */
 		private array $prices = array();
 
+		/** @var array<int,int> Ids of the products marked out of stock. */
+		private array $out = array();
+
 		protected function setUp(): void {
 			parent::setUp();
 			Monkey\setUp();
@@ -107,6 +111,7 @@ namespace Theme\Tests {
 			$this->options             = array();
 			$this->meta                = array();
 			$this->prices              = array();
+			$this->out                 = array();
 			$this->notices             = array();
 			unset( $_REQUEST[ GiftBundlePicker::FIELD ] );
 
@@ -163,15 +168,25 @@ namespace Theme\Tests {
 			);
 
 			Functions\when( 'wc_get_product' )->alias(
-				fn( int $id ) => isset( $this->prices[ $id ] ) ? new class( 'Proizvod', $this->prices[ $id ], true, $id ) extends \WC_Product {
-					public function get_status(): string {
-						return 'publish';
+				function ( int $id ) {
+					if ( ! isset( $this->prices[ $id ] ) ) {
+						return null;
 					}
 
-					public function add_to_cart_url(): string {
-						return '?add-to-cart=' . $this->get_id();
-					}
-				} : null
+					$product = new class( 'Proizvod', $this->prices[ $id ], true, $id ) extends \WC_Product {
+						public function get_status(): string {
+							return 'publish';
+						}
+
+						public function add_to_cart_url(): string {
+							return '?add-to-cart=' . $this->get_id();
+						}
+					};
+
+					$product->in_stock = ! in_array( $id, $this->out, true );
+
+					return $product;
+				}
 			);
 			Functions\when( 'get_permalink' )->alias( fn( int $id ) => 'https://cosypaw.test/p/' . $id );
 		}
@@ -307,6 +322,66 @@ namespace Theme\Tests {
 			$this->assertNotContains( 'dobrodoslica-za-bebu', $keys );
 			$this->assertNotContains( 'avokado-ljubav', $keys );
 			$this->assertContains( 'novi-dom', $keys );
+		}
+
+		/**
+		 * A sold-out bundle stays on offer, marked, at its price and saving.
+		 *
+		 * @return void
+		 */
+		public function test_a_sold_out_bundle_is_listed_as_sold_out(): void {
+			$this->seed_shop();
+			$this->out[] = $this->options[ GiftBundles::MAP_OPTION ]['novi-dom'];
+
+			$by_key = array_column( GiftBundles::offers(), null, 'key' );
+
+			$this->assertTrue( $by_key['novi-dom']['sold_out'] );
+			$this->assertGreaterThan( 0, $by_key['novi-dom']['saving'] );
+			$this->assertFalse( $by_key['dobrodoslica-za-bebu']['sold_out'] );
+		}
+
+		/**
+		 * A sold-out towel cannot take a slot, but another towel can: the
+		 * bundle keeps its price and sells through the picker ("choose"),
+		 * and only a pick that is on sale packs.
+		 *
+		 * @return void
+		 */
+		public function test_a_sold_out_towel_is_swapped_not_packed(): void {
+			$this->seed_shop();
+			$this->out[] = $this->options[ WooCommerce::PRODUCT_MAP_OPTION ]['pingvin'];
+
+			$slots = GiftBundles::slots( 'novogodisnji-paketic' );
+			$this->assertArrayNotHasKey( 'pingvin', $slots[0]['choices'] );
+			$this->assertArrayHasKey( 'zeka', $slots[0]['choices'] );
+
+			$by_key = array_column( GiftBundles::offers(), null, 'key' );
+			$this->assertFalse( $by_key['novogodisnji-paketic']['sold_out'] );
+			$this->assertTrue( $by_key['novogodisnji-paketic']['choose'] );
+			$this->assertFalse( $by_key['dobrodoslica-za-bebu']['choose'] );
+
+			$this->assertNull( GiftBundles::resolve( 'novogodisnji-paketic' ) );
+			$this->assertNotNull( GiftBundles::resolve( 'novogodisnji-paketic', array( 0 => 'zeka' ) ) );
+
+			$this->assertTrue( GiftBundles::part_sold_out( 'towel', 'pingvin' ) );
+			$this->assertFalse( GiftBundles::part_sold_out( 'towel', 'zeka' ) );
+		}
+
+		/**
+		 * The cloth set is sold out with either cloth it holds, and a bundle
+		 * whose slot nothing else can fill is sold out with it.
+		 *
+		 * @return void
+		 */
+		public function test_a_part_nothing_can_replace_sells_the_bundle_out(): void {
+			$this->seed_shop();
+			$this->out[] = $this->options[ Cloths::MAP_OPTION ]['avokado-limeta'];
+
+			$this->assertTrue( Cloths::row( Cloths::SET )['sold_out'] );
+			$this->assertFalse( Cloths::row( 'avokado-zalfija' )['sold_out'] );
+
+			$by_key = array_column( GiftBundles::offers(), null, 'key' );
+			$this->assertTrue( $by_key['avokado-ljubav']['sold_out'] );
 		}
 
 		/**

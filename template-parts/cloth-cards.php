@@ -33,7 +33,7 @@ if ( ! $cosypaw_cloths ) {
 ?>
 <div class="cloths<?php echo '' !== $cosypaw_layout ? ' cloths--' . esc_attr( $cosypaw_layout ) : ''; ?>">
 	<?php foreach ( $cosypaw_cloths as $cosypaw_c ) : ?>
-		<div class="cloth-card">
+		<div class="cloth-card<?php echo ! empty( $cosypaw_c['sold_out'] ) ? ' is-sold-out' : ''; ?>">
 			<?php
 			// aria-hidden + tabindex="-1": the name below is the same link with
 			// the accessible text; the photo would be a second, unlabelled stop.
@@ -57,24 +57,33 @@ if ( ! $cosypaw_cloths ) {
 				}
 				?>
 			</a>
+			<?php
+			if ( ! empty( $cosypaw_c['sold_out'] ) ) {
+				\Theme\Stock::badge();
+			}
+			?>
 			<div class="cloth-card__body">
 				<a class="cloth-card__name" href="<?php echo esc_url( $cosypaw_c['permalink'] ); ?>"><?php echo esc_html( $cosypaw_c['name'] ); ?></a>
 				<span class="cloth-card__price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_c['price'] ) ); ?></span>
-				<a
-					href="<?php echo esc_url( $cosypaw_c['add_to_cart_url'] ); ?>"
-					class="btn btn--primary cloth-card__buy add_to_cart_button ajax_add_to_cart"
-					data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_c['id'] ); ?>"
-					data-quantity="1"
-					rel="nofollow"
-					aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_c['name'] ) ); ?>"
-				><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></a>
+				<?php if ( ! empty( $cosypaw_c['sold_out'] ) ) : ?>
+					<span class="btn btn--primary cloth-card__buy is-sold-out" aria-disabled="true"><?php esc_html_e( 'Rasprodato', 'cosypaw' ); ?></span>
+				<?php else : ?>
+					<a
+						href="<?php echo esc_url( $cosypaw_c['add_to_cart_url'] ); ?>"
+						class="btn btn--primary cloth-card__buy add_to_cart_button ajax_add_to_cart"
+						data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_c['id'] ); ?>"
+						data-quantity="1"
+						rel="nofollow"
+						aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_c['name'] ) ); ?>"
+					><?php esc_html_e( 'Dodaj u korpu', 'cosypaw' ); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
 </div>
 
 <?php if ( $cosypaw_set ) : ?>
-	<div class="cloth-set">
+	<div class="cloth-set<?php echo ! empty( $cosypaw_set['sold_out'] ) ? ' is-sold-out' : ''; ?>">
 		<a class="cloth-set__media" href="<?php echo esc_url( $cosypaw_set['permalink'] ); ?>" aria-hidden="true" tabindex="-1">
 			<?php
 			// Both photographs side by side: the set is the two cloths above,
@@ -94,6 +103,11 @@ if ( ! $cosypaw_cloths ) {
 			}
 			?>
 		</a>
+		<?php
+		if ( ! empty( $cosypaw_set['sold_out'] ) ) {
+			\Theme\Stock::badge();
+		}
+		?>
 		<div class="cloth-set__body">
 			<span class="cloth-set__badge">
 				<?php
@@ -114,14 +128,18 @@ if ( ! $cosypaw_cloths ) {
 					<?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_set['separately'] ) ); ?>
 				</del>
 			</span>
-			<a
-				href="<?php echo esc_url( $cosypaw_set['add_to_cart_url'] ); ?>"
-				class="btn btn--primary cloth-card__buy add_to_cart_button ajax_add_to_cart"
-				data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_set['id'] ); ?>"
-				data-quantity="1"
-				rel="nofollow"
-				aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_set['name'] ) ); ?>"
-			><?php esc_html_e( 'Dodaj set u korpu', 'cosypaw' ); ?></a>
+			<?php if ( ! empty( $cosypaw_set['sold_out'] ) ) : ?>
+				<span class="btn btn--primary cloth-card__buy is-sold-out" aria-disabled="true"><?php esc_html_e( 'Rasprodato', 'cosypaw' ); ?></span>
+			<?php else : ?>
+				<a
+					href="<?php echo esc_url( $cosypaw_set['add_to_cart_url'] ); ?>"
+					class="btn btn--primary cloth-card__buy add_to_cart_button ajax_add_to_cart"
+					data-product_id="<?php echo esc_attr( (string) (int) $cosypaw_set['id'] ); ?>"
+					data-quantity="1"
+					rel="nofollow"
+					aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name. */ __( 'Dodaj %s u korpu', 'cosypaw' ), $cosypaw_set['name'] ) ); ?>"
+				><?php esc_html_e( 'Dodaj set u korpu', 'cosypaw' ); ?></a>
+			<?php endif; ?>
 		</div>
 	</div>
 <?php endif; ?>

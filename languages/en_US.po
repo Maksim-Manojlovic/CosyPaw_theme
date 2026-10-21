@@ -1508,6 +1508,21 @@ msgstr "Free delivery earned — anything you add ships at no extra cost."
 msgid "Ostatak družine te čeka"
 msgstr "The rest of the crew is waiting"
 
+msgid "Rasprodato"
+msgstr "Sold out"
+
+msgid "Trenutno nema na stanju"
+msgstr "Currently out of stock"
+
+msgid "Složi paket"
+msgstr "Build the bundle"
+
+msgid "Rasprodato: %s. Izaberi drugi peškir za paket."
+msgstr "Sold out: %s. Pick another towel for the package."
+
+msgid "Rasprodato: %1$s (u stavci „%2$s“). Ukloni tu stavku iz korpe i složi je ponovo."
+msgstr "Sold out: %1$s (in “%2$s”). Remove that item from the cart and put it together again."
+
 msgid "%1$d kom · %2$s / kom"
 msgstr "%1$d pcs · %2$s / pc"
 

@@ -211,7 +211,7 @@ final class Upsell {
 			// the size of the win, where the shop can quote it.
 			$notes = array(
 				'' === $postage ? '' : sprintf(
-					/* translators: %s: courier price range, e.g. "400–600 RSD". */
+					/* translators: %s: courier price range, e.g. "500–700 RSD". */
 					__( 'Ne plaćaš poštarinu od %s.', 'cosypaw' ),
 					$postage
 				),
@@ -243,7 +243,7 @@ final class Upsell {
 				// side of it. The courier's price is the reason a fourth towel
 				// is cheaper than it looks.
 				'' === $postage ? '' : sprintf(
-					/* translators: %s: courier price range, e.g. "400–600 RSD". */
+					/* translators: %s: courier price range, e.g. "500–700 RSD". */
 					__( 'Ispod toga poštarinu plaćaš kuriru, %s.', 'cosypaw' ),
 					$postage
 				),
@@ -609,7 +609,7 @@ final class Upsell {
 						$gap
 					)
 					: sprintf(
-						/* translators: 1: formatted amount still to spend, 2: courier price range, e.g. "400–600 RSD". */
+						/* translators: 1: formatted amount still to spend, 2: courier price range, e.g. "500–700 RSD". */
 						__( 'Još %1$s do besplatne dostave — umesto %2$s poštarine kuriru', 'cosypaw' ),
 						$gap,
 						$postage
@@ -962,7 +962,7 @@ final class Upsell {
 	}
 
 	/**
-	 * What the courier charges below the threshold, as "400–600 RSD".
+	 * What the courier charges below the threshold, as "500–700 RSD".
 	 *
 	 * @return string Empty where the shop quotes no price.
 	 */

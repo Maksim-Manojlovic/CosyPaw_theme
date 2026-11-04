@@ -284,7 +284,7 @@ final class UpsellTest extends TestCase {
 
 		$this->assertStringContainsString( 'cosypaw-ship-row--earned', $markup );
 		$this->assertStringContainsString( 'Ostvarena', $markup );
-		$this->assertStringContainsString( '<small>Ne plaćaš poštarinu od 400–600 RSD.</small>', $markup );
+		$this->assertStringContainsString( '<small>Ne plaćaš poštarinu od 500–700 RSD.</small>', $markup );
 		$this->assertStringNotContainsString( 'besplatna preko', $markup );
 	}
 
@@ -299,7 +299,7 @@ final class UpsellTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'Dostava je besplatna preko 2.000 RSD.', $markup );
-		$this->assertStringContainsString( '<small>Ispod toga poštarinu plaćaš kuriru, 400–600 RSD.</small>', $markup );
+		$this->assertStringContainsString( '<small>Ispod toga poštarinu plaćaš kuriru, 500–700 RSD.</small>', $markup );
 	}
 
 	/**
@@ -535,7 +535,7 @@ final class UpsellTest extends TestCase {
 			2400
 		);
 
-		$this->assertStringContainsString( 'do besplatne dostave — umesto 400–600 RSD poštarine kuriru', $markup );
+		$this->assertStringContainsString( 'do besplatne dostave — umesto 500–700 RSD poštarine kuriru', $markup );
 		$this->assertStringContainsString( 'cosypaw-upsell__bar', $markup );
 	}
 

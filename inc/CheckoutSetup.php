@@ -103,7 +103,7 @@ final class CheckoutSetup {
 	 *
 	 * @var array{0:int,1:int}
 	 */
-	public const COURIER_COST = array( 400, 600 );
+	public const COURIER_COST = array( 500, 700 );
 
 	/**
 	 * Rate id of the last-resort courier rate. Stable across requests, because

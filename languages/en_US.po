@@ -386,8 +386,8 @@ msgstr "A microfiber magic cloth in bright lime green, with an embroidered avoca
 msgid "Magična krpa od mikrofibera u nežnoj žalfija zelenoj boji, sa vezenim nasmejanim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
 msgstr "A microfiber magic cloth in soft sage green, with an embroidered smiling avocado. It soaks up water, traps dust and wipes glass without streaks — for the kitchen, the bathroom and mirrors."
 
-msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
-msgstr "Ribbed microfiber soaks up water and traps dust instead of smearing it, so the same cloth is just as good as a kitchen cloth for worktops and dishes as it is as a glass cloth for windows, mirrors and shower screens. It wipes without streaks or lint, and without harsh cleaners. It is reusable and machine-washable at 40°C, without fabric softener so it keeps absorbing — and it replaces a pile of paper towels."
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Dimenzije su 29 cm x 21 cm. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Ribbed microfiber soaks up water and traps dust instead of smearing it, so the same cloth is just as good as a kitchen cloth for worktops and dishes as it is as a glass cloth for windows, mirrors and shower screens. It wipes without streaks or lint, and without harsh cleaners. It measures 29 cm x 21 cm. It is reusable and machine-washable at 40°C, without fabric softener so it keeps absorbing — and it replaces a pile of paper towels."
 
 msgid "Namena"
 msgstr "Use"
@@ -1588,6 +1588,12 @@ msgstr "Fabric"
 
 msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
 msgstr "Plush microfibre — soft, light and highly absorbent."
+
+msgid "Dimenzije"
+msgstr "Size"
+
+msgid "29 cm x 21 cm."
+msgstr "29 cm x 21 cm."
 
 msgid "Kačenje"
 msgstr "Hanging"

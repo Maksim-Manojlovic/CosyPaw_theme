@@ -124,7 +124,7 @@ final class Cloths extends ProductLine {
 	/**
 	 * Long description, shared by both colours.
 	 */
-	protected const DESCRIPTION = 'Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa.';
+	protected const DESCRIPTION = 'Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Dimenzije su 29 cm x 21 cm. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa.';
 
 	/**
 	 * The set of both colours, when it is on sale and actually saves something.
@@ -188,6 +188,7 @@ final class Cloths extends ProductLine {
 
 		return $specs + array(
 			__( 'Materijal', 'cosypaw' )  => __( 'Rebrasta mikrofibra — upija vodu i hvata prašinu.', 'cosypaw' ),
+			__( 'Dimenzije', 'cosypaw' )  => __( '29 cm x 21 cm.', 'cosypaw' ),
 			__( 'Namena', 'cosypaw' )     => __( 'Kuhinja, staklo, ogledala, tuš kabine i radne površine.', 'cosypaw' ),
 			__( 'Održavanje', 'cosypaw' ) => __( 'Mašinsko pranje na 40°C, bez omekšivača.', 'cosypaw' ),
 			__( 'Dostava', 'cosypaw' )    => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),

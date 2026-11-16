@@ -386,8 +386,8 @@ msgstr "Волшебная салфетка из микрофибры ярко-�
 msgid "Magična krpa od mikrofibera u nežnoj žalfija zelenoj boji, sa vezenim nasmejanim avokadom. Upija vodu, hvata prašinu i briše staklo bez tragova — za kuhinju, kupatilo i ogledala."
 msgstr "Волшебная салфетка из микрофибры нежного шалфейно-зелёного цвета с вышитым улыбающимся авокадо. Впитывает воду, собирает пыль и вытирает стекло без разводов — для кухни, ванной и зеркал."
 
-msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
-msgstr "Рельефная микрофибра впитывает воду и собирает пыль, а не размазывает её, поэтому одна и та же салфетка одинаково хороша и как кухонная — для столешниц и посуды, — и как салфетка для стекла, зеркал и душевых кабин. Вытирает без разводов и ворса, без агрессивных средств. Многоразовая, стирается в машине при 40°C без кондиционера, чтобы сохранить впитываемость, — и заменяет гору бумажных полотенец."
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Dimenzije su 29 cm x 21 cm. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Рельефная микрофибра впитывает воду и собирает пыль, а не размазывает её, поэтому одна и та же салфетка одинаково хороша и как кухонная — для столешниц и посуды, — и как салфетка для стекла, зеркал и душевых кабин. Вытирает без разводов и ворса, без агрессивных средств. Размер — 29 см x 21 см. Многоразовая, стирается в машине при 40°C без кондиционера, чтобы сохранить впитываемость, — и заменяет гору бумажных полотенец."
 
 msgid "Namena"
 msgstr "Назначение"
@@ -1588,6 +1588,12 @@ msgstr "Материал"
 
 msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
 msgstr "Плюшевая микрофибра — мягкая, лёгкая и очень впитывающая."
+
+msgid "Dimenzije"
+msgstr "Размеры"
+
+msgid "29 cm x 21 cm."
+msgstr "29 см x 21 см."
 
 msgid "Kačenje"
 msgstr "Подвешивание"

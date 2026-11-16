@@ -146,6 +146,13 @@ final class Bootstrap {
 	private ?Wording $wording = null;
 
 	/**
+	 * Sizes carried into seeded descriptions (WooCommerce only).
+	 *
+	 * @var Sizes|null
+	 */
+	private ?Sizes $sizes = null;
+
+	/**
 	 * Poklon paketi (WooCommerce only).
 	 *
 	 * @var GiftBundles|null
@@ -218,6 +225,10 @@ final class Bootstrap {
 			// "Peškirići" became "peškiri": the same swap, once, in the alt
 			// text and descriptions the seeders wrote to the database.
 			$this->wording = new Wording();
+
+			// The sizes the shop has stated, added once to the descriptions the
+			// seeders wrote to the database.
+			$this->sizes = new Sizes();
 
 			// The gift bundles: fixed combinations of the above, each one
 			// product at one price, in a category of their own.

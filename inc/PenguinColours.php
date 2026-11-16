@@ -72,33 +72,39 @@ final class PenguinColours {
 
 	/**
 	 * The colours, in the order the field lists them. Names are Serbian
-	 * msgids; `image` is the photograph under IMAGE_DIR (none for the original
+	 * msgids; `swatch` is the colour of its dot, `image` the photograph under IMAGE_DIR (none for the original
 	 * colour) and `alt` what it shows.
 	 *
-	 * @var array<string,array{image:string,alt:string}>
+	 * @var array<string,array{swatch:string,image:string,alt:string}>
 	 */
 	public const COLOURS = array(
 		'Plava'       => array(
+			'swatch' => '#5f86c9',
 			'image' => '',
 			'alt'   => '',
 		),
 		'Braon'       => array(
+			'swatch' => '#b08a62',
 			'image' => 'pingvin-braon.webp',
 			'alt'   => 'Ručno šiven ukrasni peškir u obliku braon pingvina sa belim stopalima i žutim kljunom, na krem podlozi',
 		),
 		'Roze'        => array(
+			'swatch' => '#efb9b9',
 			'image' => 'pingvin-roze.webp',
 			'alt'   => 'Ručno šiven ukrasni peškir u obliku roze pingvina sa belim stopalima i žutim kljunom, na krem podlozi',
 		),
 		'Siva'        => array(
+			'swatch' => '#9b9594',
 			'image' => 'pingvin-sivi.webp',
 			'alt'   => 'Ručno šiven ukrasni peškir u obliku sivog pingvina sa belim stopalima i žutim kljunom, na krem podlozi',
 		),
 		'Tamno plava' => array(
+			'swatch' => '#35507f',
 			'image' => 'pingvin-tamno-plavi.webp',
 			'alt'   => 'Ručno šiven ukrasni peškir u obliku tamno plavog pingvina sa belim stopalima i žutim kljunom, na krem podlozi',
 		),
 		'Tirkizna'    => array(
+			'swatch' => '#a9cdb9',
 			'image' => 'pingvin-tirkizni.webp',
 			'alt'   => 'Ručno šiven ukrasni peškir u obliku tirkiznog pingvina sa belim stopalima i žutim kljunom, na krem podlozi',
 		),
@@ -114,6 +120,11 @@ final class PenguinColours {
 		// storefront translates them the way it does the rest of the copy.
 		add_filter( 'woocommerce_variation_option_name', array( $this, 'translate' ) );
 		add_filter( 'woocommerce_attribute_label', array( $this, 'translate_label' ) );
+
+		// The colour dots: on the product page in place of the dropdown, and on
+		// the penguin's card in the motif grid.
+		add_filter( 'woocommerce_dropdown_variation_attribute_options_html', array( $this, 'swatch_field' ), 10, 2 );
+		add_filter( 'cosypaw_catalog_products', array( $this, 'card_colours' ), 20 );
 	}
 
 	/**
@@ -143,6 +154,132 @@ final class PenguinColours {
 		}
 
 		return __( 'Boja', 'cosypaw' );
+	}
+
+	/**
+	 * The product page's colour field: dots that drive the dropdown, which
+	 * stays in the markup (WooCommerce reads it) and is what the page shows
+	 * until the script has run.
+	 *
+	 * @param mixed $html Dropdown HTML.
+	 * @param mixed $args Field arguments (attribute, options, selected, id).
+	 * @return mixed
+	 */
+	public function swatch_field( $html, $args ) {
+		if ( ! is_string( $html ) || ! is_array( $args ) || self::ATTRIBUTE !== ( $args['attribute'] ?? '' ) ) {
+			return $html;
+		}
+
+		$options = array();
+		foreach ( (array) ( $args['options'] ?? array() ) as $value ) {
+			$value = (string) $value;
+			if ( isset( self::COLOURS[ $value ] ) ) {
+				$options[] = array(
+					'value'  => $value,
+					'label'  => (string) $this->translate( $value ),
+					'swatch' => self::COLOURS[ $value ]['swatch'],
+				);
+			}
+		}
+
+		if ( count( $options ) < 2 ) {
+			return $html;
+		}
+
+		$select = (string) ( $args['id'] ?? self::ATTRIBUTE_KEY );
+
+		return Swatches::radios( $options, (string) ( $args['selected'] ?? '' ), $select )
+			. '<div class="colour-swatches__select">' . $html . '</div>';
+	}
+
+	/**
+	 * Give the penguin's catalogue row its colours, for the dots on its card.
+	 *
+	 * Each colour carries what the card needs to switch to it without a page
+	 * load: the photograph, and the variation to put in the cart. A colour that
+	 * cannot be bought is left out.
+	 *
+	 * @param mixed $products Catalogue rows.
+	 * @return mixed
+	 */
+	public function card_colours( $products ) {
+		if ( ! is_array( $products ) || ! function_exists( 'wc_get_product' ) ) {
+			return $products;
+		}
+
+		foreach ( $products as $index => $row ) {
+			if ( ! is_array( $row ) || self::MOTIF !== ( $row['id'] ?? '' ) || empty( $row['product_id'] ) ) {
+				continue;
+			}
+
+			$parent = wc_get_product( (int) $row['product_id'] );
+			if ( ! $parent instanceof \WC_Product || ! $parent->is_type( 'variable' ) ) {
+				continue;
+			}
+
+			$colours = array();
+			foreach ( (array) $parent->get_children() as $child_id ) {
+				$colour = $this->card_colour( $parent, (int) $child_id );
+				if ( null !== $colour ) {
+					$colours[ $colour['value'] ] = $colour;
+				}
+			}
+
+			// In the order the product page lists them.
+			$ordered = array();
+			foreach ( array_keys( self::COLOURS ) as $name ) {
+				if ( isset( $colours[ $name ] ) ) {
+					$ordered[] = $colours[ $name ];
+				}
+			}
+
+			if ( count( $ordered ) > 1 ) {
+				$products[ $index ]['colours'] = $ordered;
+			}
+		}
+
+		return $products;
+	}
+
+	/**
+	 * One variation as a card colour, or null when it cannot be sold.
+	 *
+	 * @param \WC_Product $parent The penguin.
+	 * @param int         $id     Variation id.
+	 * @return array<string,mixed>|null
+	 */
+	private function card_colour( $parent, int $id ): ?array {
+		$variation = wc_get_product( $id );
+		if ( ! $variation instanceof \WC_Product || ! $variation->is_purchasable() || ! $variation->is_in_stock() ) {
+			return null;
+		}
+
+		$attributes = (array) $variation->get_attributes();
+		$value      = (string) ( $attributes[ self::ATTRIBUTE_KEY ] ?? '' );
+		if ( ! isset( self::COLOURS[ $value ] ) ) {
+			return null;
+		}
+
+		$image  = (int) $variation->get_image_id();
+		$source = $image > 0 ? wp_get_attachment_image_src( $image, 'woocommerce_single' ) : false;
+
+		return array(
+			'value'        => $value,
+			'label'        => (string) $this->translate( $value ),
+			'swatch'       => self::COLOURS[ $value ]['swatch'],
+			'variation_id' => $id,
+			'image'        => is_array( $source ) ? (string) $source[0] : '',
+			'srcset'       => $image > 0 ? (string) wp_get_attachment_image_srcset( $image, 'woocommerce_single' ) : '',
+			'url'          => esc_url_raw(
+				add_query_arg(
+					array(
+						'add-to-cart'  => $parent->get_id(),
+						'variation_id' => $id,
+						'attribute_' . self::ATTRIBUTE_KEY => $value,
+					)
+				)
+			),
+		);
 	}
 
 	/**

@@ -73,6 +73,7 @@ namespace Theme\Tests {
 
 	require_once __DIR__ . '/stubs.php';
 	require_once dirname( __DIR__ ) . '/inc/Stock.php';
+	require_once dirname( __DIR__ ) . '/inc/Swatches.php';
 	require_once dirname( __DIR__ ) . '/inc/ProductLine.php';
 	require_once dirname( __DIR__ ) . '/inc/Cloths.php';
 	require_once dirname( __DIR__ ) . '/inc/Pillows.php';
@@ -293,6 +294,43 @@ namespace Theme\Tests {
 			$this->assertSame( 1599, Pillows::from_price( $rows ) );
 
 			$this->assertSame( array( Pillows::ROUND ), array_column( Pillows::groups( array_slice( $rows, 0, 2 ) ), 'key' ) );
+		}
+
+		/**
+		 * A product page gets a dot for every colour of its own shape, the
+		 * current one marked — and nothing where it is the only colour on sale.
+		 *
+		 * @return void
+		 */
+		public function test_a_product_page_links_the_other_colours_of_its_shape(): void {
+			$this->options[ Pillows::MAP_OPTION ] = array(
+				'kruzic-braon'  => 1,
+				'kruzic-sivi'   => 2,
+				'kockasti-roze' => 3,
+			);
+
+			Functions\stubEscapeFunctions();
+			Functions\when( 'get_permalink' )->alias( fn( int $id ) => 'https://cosypaw.test/p/' . $id );
+
+			// The product on screen is the second round pillow.
+			Functions\when( 'wc_get_product' )->alias( fn( int $id = 2 ) => self::product( $id, '1599' ) );
+
+			ob_start();
+			( new Pillows() )->swatches();
+			$html = (string) ob_get_clean();
+
+			$this->assertSame( 2, substr_count( $html, 'class="colour-swatch"' ), 'the two round colours, not the square one' );
+			$this->assertStringContainsString( 'href="https://cosypaw.test/p/1"', $html );
+			$this->assertStringContainsString( 'href="https://cosypaw.test/p/2"', $html );
+			$this->assertStringNotContainsString( 'p/3', $html );
+			$this->assertSame( 1, substr_count( $html, 'aria-current' ) );
+
+			// The square pillow is the only colour of its shape on sale.
+			Functions\when( 'wc_get_product' )->alias( fn( int $id = 3 ) => self::product( $id, '1599' ) );
+
+			ob_start();
+			( new Pillows() )->swatches();
+			$this->assertSame( '', (string) ob_get_clean() );
 		}
 
 		/**

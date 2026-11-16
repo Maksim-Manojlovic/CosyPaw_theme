@@ -18,6 +18,8 @@ import { InViewVideo } from './components/InViewVideo.js';
 import { CartUpsell } from './components/CartUpsell.js';
 import { CartQuantity } from './components/CartQuantity.js';
 import { BundlePicker } from './components/BundlePicker.js';
+import { MotifColours } from './components/MotifColours.js';
+import { ColourSwatches } from './components/ColourSwatches.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -74,6 +76,15 @@ const boot = () => {
 	// of their own beyond this one, so it boots from here.
 	document.querySelectorAll('[data-bundle-picker]').forEach((picker) => {
 		new BundlePicker(picker);
+	});
+
+	// The colour dots: on a motif card (the penguin), and on a variable
+	// product's page in place of WooCommerce's dropdown.
+	document.querySelectorAll('[data-motif-colours]').forEach((card) => {
+		new MotifColours(card);
+	});
+	document.querySelectorAll('[data-colour-swatches]').forEach((swatches) => {
+		new ColourSwatches(swatches);
 	});
 
 	if (document.querySelector('[data-cart-drawer]')) {

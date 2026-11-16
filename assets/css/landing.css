@@ -2123,6 +2123,37 @@ a.testimonial__meta:focus-visible {
 	min-width: 0;
 }
 
+/* The colour dots on a motif card (the penguin), under the name and price row.
+   The same dots the swatch cards use. */
+.motif-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	min-width: 0;
+	margin: 0;
+	padding: 0 4px 2px;
+	border: 0;
+}
+
+/* A slightly smaller target than the 44px the swatch cards use, still well
+   above the 24px minimum, so six dots fit a card a third of the page wide. */
+.motif-swatches .swatch {
+	width: 38px;
+	height: 38px;
+}
+
+.motif-swatches__legend {
+	/* Six dots do not fit beside the legend on a card a third of the page
+	   wide, so it sits above them. */
+	float: none;
+	width: 100%;
+	padding: 0 4px 2px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
 .swatch-card__buy {
 	order: 4;
 	margin-top: auto;

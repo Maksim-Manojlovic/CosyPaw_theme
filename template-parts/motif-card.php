@@ -36,8 +36,16 @@ $cosypaw_link = isset( $p['permalink'] ) ? (string) $p['permalink'] : '';
 
 // Out of stock in wp-admin: the card stays, marked, and offers no way to buy.
 $cosypaw_sold_out = ! empty( $p['sold_out'] );
+
+// A motif that comes in colours (the penguin) is one variable product: the
+// card opens on the first colour, and the dots below switch the photograph and
+// the variation the single-buy link puts in the cart (assets/js/components/
+// MotifColours.js). WooCommerce's AJAX add takes a variation id as the
+// product id.
+$cosypaw_colours = array_values( (array) ( $p['colours'] ?? array() ) );
+$cosypaw_first   = $cosypaw_colours ? (array) $cosypaw_colours[0] : array();
 ?>
-<div class="motif-card<?php echo $cosypaw_sold_out ? ' is-sold-out' : ''; ?>">
+<div class="motif-card<?php echo $cosypaw_sold_out ? ' is-sold-out' : ''; ?>"<?php echo $cosypaw_colours ? ' data-motif-colours' : ''; ?>>
 	<?php
 	if ( '' !== $cosypaw_link ) :
 		// aria-hidden + tabindex="-1": the name below links to the
@@ -131,9 +139,9 @@ $cosypaw_sold_out = ! empty( $p['sold_out'] );
 				<span class="motif-single motif-single--sold-out"><?php esc_html_e( 'Trenutno nema na stanju', 'cosypaw' ); ?></span>
 			<?php elseif ( ! empty( $p['product_id'] ) ) : ?>
 				<a
-					href="<?php echo esc_url( $p['add_to_cart_url'] ); ?>"
+					href="<?php echo esc_url( (string) ( $cosypaw_first['url'] ?? $p['add_to_cart_url'] ) ); ?>"
 					class="motif-single add_to_cart_button ajax_add_to_cart"
-					data-product_id="<?php echo esc_attr( (string) (int) $p['product_id'] ); ?>"
+					data-product_id="<?php echo esc_attr( (string) (int) ( $cosypaw_first['variation_id'] ?? $p['product_id'] ) ); ?>"
 					data-quantity="1"
 					rel="nofollow"
 					aria-label="<?php echo esc_attr( sprintf( /* translators: %s: motif name. */ __( 'Kupi %s, 1 kom', 'cosypaw' ), $p['name'] ) ); ?>"
@@ -166,4 +174,26 @@ $cosypaw_sold_out = ! empty( $p['sold_out'] );
 			</button>
 		<?php endif; ?>
 	</div>
+	<?php if ( $cosypaw_colours && ! $cosypaw_sold_out ) : ?>
+		<fieldset class="motif-swatches">
+			<legend class="motif-swatches__legend"><?php esc_html_e( 'Izaberi boju', 'cosypaw' ); ?></legend>
+			<?php foreach ( $cosypaw_colours as $cosypaw_i => $cosypaw_c ) : ?>
+				<label class="swatch" title="<?php echo esc_attr( $cosypaw_c['label'] ); ?>">
+					<input
+						type="radio"
+						class="swatch__input"
+						name="<?php echo esc_attr( 'motif-colour-' . $p['id'] ); ?>"
+						value="<?php echo esc_attr( $cosypaw_c['value'] ); ?>"
+						data-variation="<?php echo esc_attr( (string) (int) $cosypaw_c['variation_id'] ); ?>"
+						data-url="<?php echo esc_url( $cosypaw_c['url'] ); ?>"
+						data-image="<?php echo esc_url( $cosypaw_c['image'] ); ?>"
+						data-srcset="<?php echo esc_attr( $cosypaw_c['srcset'] ); ?>"
+						<?php checked( 0, $cosypaw_i ); ?>
+					>
+					<span class="swatch__dot" style="--swatch: <?php echo esc_attr( $cosypaw_c['swatch'] ); ?>" aria-hidden="true"></span>
+					<span class="screen-reader-text"><?php echo esc_html( $cosypaw_c['label'] ); ?></span>
+				</label>
+			<?php endforeach; ?>
+		</fieldset>
+	<?php endif; ?>
 </div>

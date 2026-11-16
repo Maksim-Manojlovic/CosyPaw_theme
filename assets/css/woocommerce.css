@@ -1719,3 +1719,106 @@
 		display: none;
 	}
 }
+
+/* ---------- Colour swatches on a product page ----------
+   "Izaberi boju" and a dot per colour, the same dots the cards carry. Links on
+   the pillows and the Meda towel (a product per colour); radios on the penguin
+   (one variable product), which drive WooCommerce's own dropdown. */
+.colour-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px 8px;
+	margin: 0 0 16px;
+}
+
+.colour-swatches__legend {
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+.colour-swatches__list {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+}
+
+/* 44px target around a 28px dot. */
+.colour-swatch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.colour-swatch__input {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.colour-swatch__dot {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--swatch, var(--cream2));
+	/* The ring keeps cream and pale swatches visible against the page. */
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22);
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.colour-swatch:hover .colour-swatch__dot {
+	transform: scale(1.08);
+}
+
+.colour-swatch[aria-current="true"] .colour-swatch__dot,
+.colour-swatch__input:checked + .colour-swatch__dot {
+	box-shadow: inset 0 0 0 1px rgba(62, 51, 42, 0.22), 0 0 0 2px #fff, 0 0 0 4px var(--clay);
+}
+
+.colour-swatch:focus-visible .colour-swatch__dot,
+.colour-swatch__input:focus-visible + .colour-swatch__dot {
+	outline: 2px solid var(--ink);
+	outline-offset: 5px;
+}
+
+/* A variable product: the dots replace the dropdown once the script has run;
+   until then the dropdown is what there is. */
+.colour-swatches[data-colour-swatches]:not(.is-enhanced) {
+	display: none;
+}
+
+.colour-swatches[data-colour-swatches].is-enhanced ~ .colour-swatches__select {
+	display: none;
+}
+
+/* The dots carry their own legend, so the table's label cell and WooCommerce's
+   "Clear" link are redundant on a form that has them. */
+.woocommerce div.product form.cart .variations:has(.colour-swatches) {
+	display: block;
+	margin: 0;
+}
+
+.woocommerce div.product form.cart .variations:has(.colour-swatches) tbody,
+.woocommerce div.product form.cart .variations:has(.colour-swatches) tr,
+.woocommerce div.product form.cart .variations:has(.colour-swatches) td {
+	display: block;
+	padding: 0;
+	border: 0;
+}
+
+.woocommerce div.product form.cart .variations:has(.colour-swatches) th.label {
+	display: none;
+}
+
+.woocommerce div.product form.cart .variations:has(.colour-swatches) .reset_variations {
+	display: none !important;
+}

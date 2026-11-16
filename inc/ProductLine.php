@@ -67,6 +67,8 @@ abstract class ProductLine {
 		add_filter( 'woocommerce_product_get_description', array( $this, 'translate_product_text' ), 10, 2 );
 		add_filter( 'the_title', array( $this, 'translate_title' ), 10, 2 );
 
+		// Between the short description (20) and the add-to-cart form (30).
+		add_action( 'woocommerce_single_product_summary', array( $this, 'swatches' ), 25 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'specs' ), 45 );
 	}
 
@@ -493,6 +495,34 @@ abstract class ProductLine {
 	/* ---------------------------------------------------------------------
 	 * Product page
 	 * ------------------------------------------------------------------ */
+
+	/**
+	 * The colour row on a product page: a dot for every colour of the design,
+	 * each a link to that colour's own page, the current one marked.
+	 *
+	 * Only for items that name a `group`, and only where more than one colour
+	 * of it is on sale — a lone colour has nothing to choose.
+	 *
+	 * @return void
+	 */
+	public function swatches(): void {
+		$product = function_exists( 'wc_get_product' ) ? wc_get_product() : null;
+		$key     = $product instanceof \WC_Product ? static::key_of( (int) $product->get_id() ) : '';
+		$group   = '' !== $key ? (string) ( static::ITEMS[ $key ]['group'] ?? '' ) : '';
+
+		if ( '' === $group ) {
+			return;
+		}
+
+		foreach ( static::groups( static::products() ) as $candidate ) {
+			if ( $group === $candidate['key'] ) {
+				// Built from escaped parts in Swatches.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo Swatches::links( $candidate['variants'], $key );
+				return;
+			}
+		}
+	}
 
 	/**
 	 * The spec list under one of the line's products, in the towel pages'

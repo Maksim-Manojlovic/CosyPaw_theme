@@ -130,6 +130,7 @@ namespace Theme\Tests {
 	require_once dirname( __DIR__ ) . '/inc/Catalog.php';
 	require_once dirname( __DIR__ ) . '/inc/WooCommerce.php';
 	require_once dirname( __DIR__ ) . '/inc/ProductLine.php';
+	require_once dirname( __DIR__ ) . '/inc/Swatches.php';
 	require_once dirname( __DIR__ ) . '/inc/PenguinColours.php';
 	require_once dirname( __DIR__ ) . '/inc/PenguinFamily.php';
 
@@ -175,6 +176,7 @@ namespace Theme\Tests {
 			};
 
 			Functions\stubTranslationFunctions();
+			Functions\stubEscapeFunctions();
 			Functions\stubs(
 				array(
 					'add_action'             => true,
@@ -284,6 +286,121 @@ namespace Theme\Tests {
 
 			$colours->maybe_run();
 			$this->assertCount( 6, \WC_Product_Variation::$saved );
+		}
+
+		/**
+		 * On the product page the dots stand in for the dropdown, which stays
+		 * in the markup; any other attribute is left as WooCommerce made it.
+		 *
+		 * @return void
+		 */
+		public function test_the_dots_replace_the_colour_dropdown(): void {
+			$colours = new PenguinColours();
+			$select  = '<select id="boja"></select>';
+
+			$html = $colours->swatch_field(
+				$select,
+				array(
+					'attribute' => 'Boja',
+					'options'   => array( 'Plava', 'Braon', 'Roze', 'Nepoznata' ),
+					'selected'  => 'Braon',
+					'id'        => 'boja',
+				)
+			);
+
+			$this->assertStringContainsString( 'data-colour-swatches="boja"', $html );
+			$this->assertSame( 3, substr_count( $html, 'type="radio"' ), 'unknown colours get no dot' );
+			$this->assertStringContainsString( 'value="Braon" checked', $html );
+			$this->assertStringContainsString( '--swatch: #b08a62', $html );
+			$this->assertStringContainsString( $select, $html );
+
+			$other = array(
+				'attribute' => 'Veličina',
+				'options'   => array( 'S', 'M' ),
+			);
+			$this->assertSame( $select, $colours->swatch_field( $select, $other ) );
+
+			$lone = array(
+				'attribute' => 'Boja',
+				'options'   => array( 'Plava' ),
+			);
+			$this->assertSame( $select, $colours->swatch_field( $select, $lone ), 'one colour is nothing to choose' );
+		}
+
+		/**
+		 * The penguin's catalogue row gets its buyable colours, in the product
+		 * page's order, each with the variation to put in the cart.
+		 *
+		 * @return void
+		 */
+		public function test_the_card_gets_the_colours_that_can_be_bought(): void {
+			$make = static fn( int $id, string $colour, bool $in_stock ) => new class( $id, $colour, $in_stock ) extends \WC_Product {
+				private string $colour;
+				private bool $stock;
+
+				public function __construct( int $id, string $colour, bool $stock ) {
+					parent::__construct( 'Pingvin', '790', true, $id );
+					$this->colour = $colour;
+					$this->stock  = $stock;
+				}
+
+				public function get_attributes(): array {
+					return array( 'boja' => $this->colour );
+				}
+
+				public function get_image_id(): int {
+					return $this->get_id() + 1000;
+				}
+
+				public function is_in_stock(): bool {
+					return $this->stock;
+				}
+			};
+
+			$variations = array(
+				101 => $make( 101, 'Braon', true ),
+				102 => $make( 102, 'Plava', true ),
+				103 => $make( 103, 'Siva', false ),
+				104 => $make( 104, 'Roze', true ),
+			);
+
+			$parent = new class( 'Pingvin', '790', true, 10 ) extends \WC_Product {
+				public function is_type( $type ): bool {
+					return 'variable' === $type;
+				}
+
+				public function get_children(): array {
+					return array( 101, 102, 103, 104 );
+				}
+			};
+
+			Functions\when( 'wc_get_product' )->alias( fn( $id ) => 10 === (int) $id ? $parent : ( $variations[ (int) $id ] ?? false ) );
+			Functions\when( 'wp_get_attachment_image_src' )->alias( fn( int $id ) => array( 'https://x.test/img-' . $id . '.webp', 600, 800 ) );
+			Functions\when( 'wp_get_attachment_image_srcset' )->alias( fn( int $id ) => 'https://x.test/img-' . $id . '.webp 600w' );
+			Functions\when( 'add_query_arg' )->alias( fn( array $args ) => '/?' . http_build_query( $args ) );
+			Functions\when( 'esc_url_raw' )->returnArg();
+
+			$rows = ( new PenguinColours() )->card_colours(
+				array(
+					array(
+						'id'         => 'zirafa',
+						'product_id' => 5,
+					),
+					array(
+						'id'         => 'pingvin',
+						'product_id' => 10,
+					),
+				)
+			);
+
+			$this->assertArrayNotHasKey( 'colours', $rows[0] );
+
+			$colours = $rows[1]['colours'];
+			$this->assertSame( array( 'Plava', 'Braon', 'Roze' ), array_column( $colours, 'value' ), 'order of the page, sold-out Siva left out' );
+			$this->assertSame( 102, $colours[0]['variation_id'] );
+			$this->assertSame( 'https://x.test/img-1101.webp', $colours[1]['image'] );
+			$this->assertSame( '#b08a62', $colours[1]['swatch'] );
+			$this->assertSame( '/?add-to-cart=10&variation_id=101&attribute_boja=Braon', $colours[1]['url'] );
 		}
 
 		/**

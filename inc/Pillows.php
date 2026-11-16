@@ -17,8 +17,9 @@
  * group photograph is the second picture in the gallery of every colour of
  * that shape, imported once.
  *
- * The copy describes what the photographs show and nothing else: no size and
- * no fibre content until the shop has them to state.
+ * The copy describes what the photographs show and nothing else, plus the
+ * sizes the shop has stated (round 41 cm x 45 cm, square 41 cm x 41 cm); no
+ * fibre content until the shop has it to state.
  *
  * @package CosyPaw
  */
@@ -85,6 +86,11 @@ final class Pillows extends ProductLine {
 	private const ROUND_FAMILY  = array( 'cuddle-puff-jastuci-kruzici-svih-boja.webp' => 'Šest Cuddle Puff jastuka u obliku kružića, u braon, sivoj, žutoj, roze i zelenoj boji, poređani na travi' );
 	private const SQUARE_FAMILY = array( 'cuddle-puff-jastuci-kockasti-svih-boja.webp' => 'Tri kockasta Cuddle Puff jastuka, roze, braon i sivi, na krem sofi' );
 	private const FLOWER_FAMILY = array( 'cuddle-puff-jastuci-cvetici-svih-boja.webp' => 'Šest Cuddle Puff jastuka u obliku cvetića, u mint zelenoj, žutoj, sivoj i roze boji, poređani na travi' );
+
+	/**
+	 * Long description of the square pillows: DESCRIPTION plus their size.
+	 */
+	private const SQUARE_DESCRIPTION = 'Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kockastog jastuka su 41 cm x 41 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma.';
 
 	/**
 	 * Long description of the flowers, which have none of what DESCRIPTION
@@ -175,6 +181,7 @@ final class Pillows extends ProductLine {
 			'alt'             => 'Roze kockasti Cuddle Puff jastuk sa talasastim ivicama, vezenim okicama i zelenim listićem, na krem fotelji',
 			'gallery'         => self::SQUARE_FAMILY,
 			'short'           => 'Mekani plišani kockasti jastuk sa talasastim ivicama, u roze boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu.',
+			'description'     => self::SQUARE_DESCRIPTION,
 			'seo_title'       => 'Cuddle Puff Kockasti Jastuk, Roze | Jastuk za Stolicu i Sofu',
 			'seo_description' => 'Roze kockasti Cuddle Puff jastuk sa vezenim okicama i listićem. Mekan ukrasni jastuk za stolicu, fotelju ili sofu. Plaćanje pouzećem!',
 		),
@@ -188,6 +195,7 @@ final class Pillows extends ProductLine {
 			'alt'             => 'Svetlobraon kockasti Cuddle Puff jastuk sa talasastim ivicama, vezenim okicama i zelenim listićem, na krem fotelji',
 			'gallery'         => self::SQUARE_FAMILY,
 			'short'           => 'Mekani plišani kockasti jastuk sa talasastim ivicama, u svetloj braon boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu.',
+			'description'     => self::SQUARE_DESCRIPTION,
 			'seo_title'       => 'Cuddle Puff Kockasti Jastuk, Braon | Jastuk za Stolicu i Sofu',
 			'seo_description' => 'Braon kockasti Cuddle Puff jastuk sa vezenim okicama i listićem. Mekan ukrasni jastuk za stolicu, fotelju ili sofu. Plaćanje pouzećem!',
 		),
@@ -201,6 +209,7 @@ final class Pillows extends ProductLine {
 			'alt'             => 'Sivi kockasti Cuddle Puff jastuk sa talasastim ivicama, vezenim okicama i zelenim listićem, na krem fotelji',
 			'gallery'         => self::SQUARE_FAMILY,
 			'short'           => 'Mekani plišani kockasti jastuk sa talasastim ivicama, u sivoj boji, sa vezenim okicama, kljunićem i zelenim listićem. Jastuk za stolicu, fotelju ili sofu.',
+			'description'     => self::SQUARE_DESCRIPTION,
 			'seo_title'       => 'Cuddle Puff Kockasti Jastuk, Sivi | Jastuk za Stolicu i Sofu',
 			'seo_description' => 'Sivi kockasti Cuddle Puff jastuk sa vezenim okicama i listićem. Mekan ukrasni jastuk za stolicu, fotelju ili sofu. Plaćanje pouzećem!',
 		),
@@ -265,7 +274,7 @@ final class Pillows extends ProductLine {
 	/**
 	 * Long description, shared by every pillow that does not bring its own.
 	 */
-	protected const DESCRIPTION = 'Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma.';
+	protected const DESCRIPTION = 'Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kružića su 41 cm x 45 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma.';
 
 	/**
 	 * The spec list under a pillow's summary.
@@ -276,7 +285,7 @@ final class Pillows extends ProductLine {
 	protected function spec_rows( string $key ): array {
 		$item = self::ITEMS[ $key ];
 
-		return array(
+		$specs = array(
 			__( 'Oblik', 'cosypaw' )   => match ( $item['group'] ) {
 				self::SQUARE => __( 'Kockasti, sa talasastim ivicama.', 'cosypaw' ),
 				self::FLOWER => __( 'Cvetić, sa punašnim laticama.', 'cosypaw' ),
@@ -289,5 +298,20 @@ final class Pillows extends ProductLine {
 			__( 'Namena', 'cosypaw' )  => __( 'Stolica, fotelja, sofa i dečija soba.', 'cosypaw' ),
 			__( 'Dostava', 'cosypaw' ) => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),
 		);
+
+		// Sizes the shop has stated, by shape; the flowers have none yet.
+		$size = match ( $item['group'] ) {
+			self::SQUARE => __( '41 cm x 41 cm.', 'cosypaw' ),
+			self::ROUND  => __( '41 cm x 45 cm.', 'cosypaw' ),
+			default      => '',
+		};
+
+		if ( '' !== $size ) {
+			$specs = array_slice( $specs, 0, 1, true )
+				+ array( __( 'Dimenzije', 'cosypaw' ) => $size )
+				+ array_slice( $specs, 1, null, true );
+		}
+
+		return $specs;
 	}
 }

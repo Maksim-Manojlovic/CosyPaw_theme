@@ -17,8 +17,8 @@
  *
  * Creation, storefront rows, translation and the spec list are
  * \Theme\ProductLine's; the photographs ship in assets/long-towels/. The copy
- * describes what the photographs show and nothing else: no size and no fibre
- * content until the shop has them to state.
+ * describes what the photographs show and nothing else, plus the size the shop
+ * has stated (50 cm x 25 cm); no fibre content until it has that to state.
  *
  * @package CosyPaw
  */
@@ -141,7 +141,7 @@ final class LongTowels extends ProductLine {
 	/**
 	 * Long description, shared by every colour.
 	 */
-	protected const DESCRIPTION = 'Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije.';
+	protected const DESCRIPTION = 'Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Dimenzije peškira su 50 cm x 25 cm. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije.';
 
 	/**
 	 * The spec list under a long towel's summary.
@@ -152,6 +152,7 @@ final class LongTowels extends ProductLine {
 	protected function spec_rows( string $key ): array {
 		return array(
 			__( 'Boja', 'cosypaw' )    => self::translate( (string) self::ITEMS[ $key ]['color'] ),
+			__( 'Dimenzije', 'cosypaw' ) => __( '50 cm x 25 cm.', 'cosypaw' ),
 			__( 'Detalji', 'cosypaw' ) => __( 'Vezeni meda, šapica i natpis GOODLUCK.', 'cosypaw' ),
 			__( 'Namena', 'cosypaw' )  => __( 'Lice, ruke i kosa — za celu porodicu.', 'cosypaw' ),
 			__( 'Dostava', 'cosypaw' ) => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),

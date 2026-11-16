@@ -389,6 +389,9 @@ msgstr "Волшебная салфетка из микрофибры нежно
 msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Dimenzije su 29 cm x 21 cm. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
 msgstr "Рельефная микрофибра впитывает воду и собирает пыль, а не размазывает её, поэтому одна и та же салфетка одинаково хороша и как кухонная — для столешниц и посуды, — и как салфетка для стекла, зеркал и душевых кабин. Вытирает без разводов и ворса, без агрессивных средств. Размер — 29 см x 21 см. Многоразовая, стирается в машине при 40°C без кондиционера, чтобы сохранить впитываемость, — и заменяет гору бумажных полотенец."
 
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Рельефная микрофибра впитывает воду и собирает пыль, а не размазывает её, поэтому одна и та же салфетка одинаково хороша и как кухонная — для столешниц и посуды, — и как салфетка для стекла, зеркал и душевых кабин. Вытирает без разводов и ворса, без агрессивных средств. Многоразовая, стирается в машине при 40°C без кондиционера, чтобы сохранить впитываемость, — и заменяет гору бумажных полотенец."
+
 msgid "Namena"
 msgstr "Назначение"
 
@@ -533,6 +536,9 @@ msgstr "Мягкая квадратная плюшевая подушка с в�
 msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
 msgstr "Подушки Cuddle Puff — пухлые мягкие подушки из рельефного плюша, с вышитыми глазками, жёлтым клювиком и плюшевым зелёным листиком сверху. Волнистые края отделаны светлой пушистой тканью, а сбоку есть петелька для подвешивания. Они одинаково хороши как подушка на стул или кресло, как декоративная подушка на диване и как плюшевый друг в детской — и приносят улыбку в каждый уголок дома."
 
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kružića su 41 cm x 45 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Подушки Cuddle Puff — пухлые мягкие подушки из рельефного плюша, с вышитыми глазками, жёлтым клювиком и плюшевым зелёным листиком сверху. Волнистые края отделаны светлой пушистой тканью, а сбоку есть петелька для подвешивания. Размер круглой подушки — 41 см x 45 см. Они одинаково хороши как подушка на стул или кресло, как декоративная подушка на диване и как плюшевый друг в детской — и приносят улыбку в каждый уголок дома."
+
 msgid "Mekani plišani jastuk u obliku cvetića, u nežnoj žutoj boji, sa zaobljenim laticama i lila sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
 msgstr "Мягкая плюшевая подушка в форме цветка, нежно-жёлтая, с округлыми лепестками и сиреневой серединкой. Для стула, кресла, дивана или детской."
 
@@ -625,6 +631,9 @@ msgstr "Мягкое полотенце тёплого бежевого цвет
 
 msgid "Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
 msgstr "Полотенце из мягкой впитывающей ткани с вышитым мишкой, лапкой и надписью GOODLUCK на тканом бордюре. Оно полотенца для рук, поэтому подходит и для лица, и для волос — на держателе у раковины или на лестнице для полотенец. Нежные цвета легко впишутся в любую ванную, а приходит оно, как и все товары CosyPaw: с оплатой при получении и доставкой по всей Сербии."
+
+msgid "Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Dimenzije peškira su 50 cm x 25 cm. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgstr "Полотенце из мягкой впитывающей ткани с вышитым мишкой, лапкой и надписью GOODLUCK на тканом бордюре. Размер — 50 см x 25 см. Оно длиннее полотенца для рук, поэтому подходит и для лица, и для волос — на держателе у раковины или на лестнице для полотенец. Нежные цвета легко впишутся в любую ванную, а приходит оно, как и все товары CosyPaw: с оплатой при получении и доставкой по всей Сербии."
 
 msgid "Vezeni meda, šapica i natpis GOODLUCK."
 msgstr "Вышитый мишка, лапка и надпись GOODLUCK."
@@ -1589,8 +1598,20 @@ msgstr "Материал"
 msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
 msgstr "Плюшевая микрофибра — мягкая, лёгкая и очень впитывающая."
 
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kockastog jastuka su 41 cm x 41 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Подушки Cuddle Puff — пухлые мягкие подушки из рельефного плюша, с вышитыми глазками, жёлтым клювиком и плюшевым зелёным листиком сверху. Волнистые края отделаны светлой пушистой тканью, а сбоку есть петелька для подвешивания. Размер квадратной подушки — 41 см x 41 см. Они одинаково хороши как подушка на стул или кресло, как декоративная подушка на диване и как плюшевый друг в детской — и приносят улыбку в каждый уголок дома."
+
 msgid "Dimenzije"
 msgstr "Размеры"
+
+msgid "41 cm x 45 cm."
+msgstr "41 см x 45 см."
+
+msgid "50 cm x 25 cm."
+msgstr "50 см x 25 см."
+
+msgid "41 cm x 41 cm."
+msgstr "41 см x 41 см."
 
 msgid "29 cm x 21 cm."
 msgstr "29 см x 21 см."

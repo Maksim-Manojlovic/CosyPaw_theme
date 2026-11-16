@@ -389,6 +389,9 @@ msgstr "A microfiber magic cloth in soft sage green, with an embroidered smiling
 msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Dimenzije su 29 cm x 21 cm. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
 msgstr "Ribbed microfiber soaks up water and traps dust instead of smearing it, so the same cloth is just as good as a kitchen cloth for worktops and dishes as it is as a glass cloth for windows, mirrors and shower screens. It wipes without streaks or lint, and without harsh cleaners. It measures 29 cm x 21 cm. It is reusable and machine-washable at 40°C, without fabric softener so it keeps absorbing — and it replaces a pile of paper towels."
 
+msgid "Rebrasta mikrofibra upija vodu i hvata prašinu umesto da je razmazuje, pa je ista krpa jednako dobra kao kuhinjska krpa za radne površine i sudove i kao krpa za staklo, ogledala i tuš kabine. Briše bez tragova i dlačica, bez agresivnih sredstava. Višekratna je i pere se u mašini na 40°C, bez omekšivača, da zadrži upijanje — i zamenjuje gomilu papirnih ubrusa."
+msgstr "Ribbed microfiber soaks up water and traps dust instead of smearing it, so the same cloth is just as good as a kitchen cloth for worktops and dishes as it is as a glass cloth for windows, mirrors and shower screens. It wipes without streaks or lint, and without harsh cleaners. It is reusable and machine-washable at 40°C, without fabric softener so it keeps absorbing — and it replaces a pile of paper towels."
+
 msgid "Namena"
 msgstr "Use"
 
@@ -533,6 +536,9 @@ msgstr "A soft, square plush pillow with wavy edges in grey, with embroidered ey
 msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
 msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
 
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kružića su 41 cm x 45 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. The round pillow measures 41 cm x 45 cm. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
+
 msgid "Mekani plišani jastuk u obliku cvetića, u nežnoj žutoj boji, sa zaobljenim laticama i lila sredinom. Za stolicu, fotelju, sofu ili dečiju sobu."
 msgstr "A soft plush pillow shaped like a flower, in gentle yellow, with rounded petals and a lilac centre. For a chair, an armchair, the sofa or a child’s room."
 
@@ -625,6 +631,9 @@ msgstr "A soft towel in warm beige, with an embroidered teddy, a paw and the wor
 
 msgid "Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
 msgstr "A towel of soft, absorbent fabric, with an embroidered teddy, a paw and the word GOODLUCK on its woven border. It is longer than a hand towel, so it works for face and hair too — on the rail by the basin or draped over a towel ladder. Its soft colours suit any bathroom, and it arrives like every CosyPaw product: cash on delivery, shipped anywhere in Serbia."
+
+msgid "Peškir od mekane, upijajuće tkanine, sa vezenim medom, šapicom i natpisom GOODLUCK na tkanoj borduri. Dimenzije peškira su 50 cm x 25 cm. Duži je od peškira za ruke, pa je zgodan i za lice i kosu — na držaču pored lavaboa ili prebačen preko merdevina za peškire. Nežne boje lako se uklope u svako kupatilo, a stiže kao i ostali CosyPaw proizvodi: uz plaćanje pouzećem i dostavu širom Srbije."
+msgstr "A towel of soft, absorbent fabric, with an embroidered teddy, a paw and the word GOODLUCK on its woven border. It measures 50 cm x 25 cm. It is longer than a hand towel, so it works for face and hair too — on the rail by the basin or draped over a towel ladder. Its soft colours suit any bathroom, and it arrives like every CosyPaw product: cash on delivery, shipped anywhere in Serbia."
 
 msgid "Vezeni meda, šapica i natpis GOODLUCK."
 msgstr "Embroidered teddy, paw and the word GOODLUCK."
@@ -1589,8 +1598,20 @@ msgstr "Fabric"
 msgid "Plišana mikrofibra — mekana, lagana i jako upijajuća."
 msgstr "Plush microfibre — soft, light and highly absorbent."
 
+msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kockastog jastuka su 41 cm x 41 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
+msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. The square pillow measures 41 cm x 41 cm. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
+
 msgid "Dimenzije"
 msgstr "Size"
+
+msgid "41 cm x 45 cm."
+msgstr "41 cm x 45 cm."
+
+msgid "50 cm x 25 cm."
+msgstr "50 cm x 25 cm."
+
+msgid "41 cm x 41 cm."
+msgstr "41 cm x 41 cm."
 
 msgid "29 cm x 21 cm."
 msgstr "29 cm x 21 cm."

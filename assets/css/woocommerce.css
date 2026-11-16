@@ -317,8 +317,11 @@
 
 @media (max-width: 768px) {
 	.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs {
+		position: relative; /* the offset GalleryThumbs scrolls by */
 		display: flex;
 		gap: 10px;
+		-webkit-overflow-scrolling: touch;
+		overscroll-behavior-x: contain;
 		margin-top: 12px;
 		padding: 4px 4px 6px;
 		overflow-x: auto;

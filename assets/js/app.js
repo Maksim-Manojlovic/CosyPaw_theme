@@ -20,6 +20,7 @@ import { CartQuantity } from './components/CartQuantity.js';
 import { BundlePicker } from './components/BundlePicker.js';
 import { MotifColours } from './components/MotifColours.js';
 import { ColourSwatches } from './components/ColourSwatches.js';
+import { GalleryThumbs } from './components/GalleryThumbs.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -85,6 +86,11 @@ const boot = () => {
 	});
 	document.querySelectorAll('[data-colour-swatches]').forEach((swatches) => {
 		new ColourSwatches(swatches);
+	});
+
+	// A product gallery's thumbnail strip, which has to scroll by touch.
+	document.querySelectorAll('.woocommerce-product-gallery').forEach((gallery) => {
+		new GalleryThumbs(gallery);
 	});
 
 	if (document.querySelector('[data-cart-drawer]')) {

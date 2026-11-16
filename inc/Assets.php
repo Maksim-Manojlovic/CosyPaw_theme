@@ -114,6 +114,14 @@ final class Assets {
 		'wc-cart-fragments',
 		'sourcebuster-js',
 		'wc-order-attribution',
+		// A variable product's colour field: WooCommerce's variation script
+		// builds on wp.template, which wp-util defines with jQuery. Left
+		// blocking, wp-util ran before jQuery had loaded, wp.template was
+		// never defined, the script never found a variation and the add-to-cart
+		// button posted with none chosen.
+		'underscore',
+		'wp-util',
+		'wc-add-to-cart-variation',
 		// Site Kit hangs its WooCommerce event provider off the same chain; left
 		// blocking it would drag every handle above it back to blocking too.
 		'googlesitekit-events-provider-woocommerce',

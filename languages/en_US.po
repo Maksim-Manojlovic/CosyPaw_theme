@@ -1604,6 +1604,9 @@ msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroi
 msgid "Dimenzije"
 msgstr "Size"
 
+msgid "Prosečno 22 cm x 18 cm — tačna veličina zavisi od oblika i motiva."
+msgstr "On average 22 cm x 18 cm — the exact size depends on the shape and motif."
+
 msgid "41 cm x 45 cm."
 msgstr "41 cm x 45 cm."
 

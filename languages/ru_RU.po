@@ -1604,6 +1604,9 @@ msgstr "Подушки Cuddle Puff — пухлые мягкие подушки 
 msgid "Dimenzije"
 msgstr "Размеры"
 
+msgid "Prosečno 22 cm x 18 cm — tačna veličina zavisi od oblika i motiva."
+msgstr "В среднем 22 см x 18 см — точный размер зависит от формы и мотива."
+
 msgid "41 cm x 45 cm."
 msgstr "41 см x 45 см."
 

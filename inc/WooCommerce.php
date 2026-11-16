@@ -1533,7 +1533,8 @@ final class WooCommerce {
 		 * The shared spec list, label => value.
 		 *
 		 * Deliberately short and only what the shop already states elsewhere on
-		 * the site. Nothing here is measured, so no dimensions are claimed.
+		 * the site. The towels come in different shapes and motifs, so the size
+		 * is stated as an average, not as one measurement.
 		 *
 		 * @param array<string,string> $specs      Label => value.
 		 * @param int                  $product_id Product ID.
@@ -1542,6 +1543,7 @@ final class WooCommerce {
 			'cosypaw_product_specs',
 			array(
 				__( 'Materijal', 'cosypaw' )  => __( 'Plišana mikrofibra — mekana, lagana i jako upijajuća.', 'cosypaw' ),
+				__( 'Dimenzije', 'cosypaw' )  => __( 'Prosečno 22 cm x 18 cm — tačna veličina zavisi od oblika i motiva.', 'cosypaw' ),
 				__( 'Kačenje', 'cosypaw' )    => __( 'Alka za kačenje, da peškir uvek stoji na svom mestu.', 'cosypaw' ),
 				__( 'Održavanje', 'cosypaw' ) => __( 'Mašinsko pranje na 40°C, bez omekšivača. Suši se brzo i ne gubi oblik.', 'cosypaw' ),
 				__( 'Dostava', 'cosypaw' )    => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),

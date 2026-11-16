@@ -894,7 +894,7 @@ msgid "Za praznike"
 msgstr "For the holidays"
 
 msgid "U paketu"
-msgstr "In the bundle"
+msgstr "In the package"
 
 msgid "Prilika"
 msgstr "Occasion"
@@ -1600,6 +1600,24 @@ msgstr "Plush microfibre — soft, light and highly absorbent."
 
 msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kockastog jastuka su 41 cm x 41 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
 msgstr "Cuddle Puff pillows are plump, soft pillows of ribbed plush, with embroidered eyes, a yellow beak and a plush green leaf on top. Their wavy edges are trimmed with a light, fluffy fabric, and there is a little hanging loop on the side. The square pillow measures 41 cm x 41 cm. They look just as good as a chair or armchair cushion, as a decorative pillow on the sofa and as a plush friend in a child’s room — and they bring a smile to every corner of the home."
+
+msgid "Paket Porodica pingvina"
+msgstr "Penguin Family package"
+
+msgid "Svih šest pingvina u jednom paketu: plava, tamno plava, braon, roze, siva i tirkizna. Šest mekanih peškira sa alkom za kačenje, po jedan u svakoj boji."
+msgstr "All six penguins in one package: blue, dark blue, brown, pink, grey and turquoise. Six soft towels with a hanging loop, one in each colour."
+
+msgid "Porodica pingvina je šest mekanih peškira u obliku pingvina, po jedan u svakoj boji: plava, tamno plava, braon, roze, siva i tirkizna. Svaki pingvin ima vezeno lice sa žutim kljunom i belim stopalima, i alku za kačenje pored lavaboa, kade ili kuhinje. Odličan su poklon za dečiju sobu, za porodicu i za svakoga ko voli da u kupatilu ima malo osmeha — jer svaki član porodice dobija svog pingvina."
+msgstr "The Penguin Family is six soft penguin-shaped towels, one in each colour: blue, dark blue, brown, pink, grey and turquoise. Every penguin has an embroidered face with a yellow beak and white feet, and a hanging loop for beside the basin, the bath or the kitchen. They make a great gift for a child’s room, for a family and for anyone who likes a little smile in the bathroom — because every member of the family gets a penguin of their own."
+
+msgid "6 pingvina: plava, tamno plava, braon, roze, siva i tirkizna."
+msgstr "6 penguins: blue, dark blue, brown, pink, grey and turquoise."
+
+msgid "Tamno plava"
+msgstr "Dark blue"
+
+msgid "Tirkizna"
+msgstr "Turquoise"
 
 msgid "Dimenzije"
 msgstr "Size"

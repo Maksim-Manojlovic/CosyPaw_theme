@@ -146,6 +146,20 @@ final class Bootstrap {
 	private ?Wording $wording = null;
 
 	/**
+	 * The penguin towel as one product in six colours (WooCommerce only).
+	 *
+	 * @var PenguinColours|null
+	 */
+	private ?PenguinColours $penguin_colours = null;
+
+	/**
+	 * The "Porodica pingvina" package (WooCommerce only).
+	 *
+	 * @var PenguinFamily|null
+	 */
+	private ?PenguinFamily $penguin_family = null;
+
+	/**
 	 * Sizes carried into seeded descriptions (WooCommerce only).
 	 *
 	 * @var Sizes|null
@@ -229,6 +243,10 @@ final class Bootstrap {
 			// The sizes the shop has stated, added once to the descriptions the
 			// seeders wrote to the database.
 			$this->sizes = new Sizes();
+
+			// The penguin in six colours, and the box with all six.
+			$this->penguin_colours = new PenguinColours();
+			$this->penguin_family  = new PenguinFamily();
 
 			// The gift bundles: fixed combinations of the above, each one
 			// product at one price, in a category of their own.

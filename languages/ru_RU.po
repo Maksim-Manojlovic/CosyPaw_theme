@@ -1601,6 +1601,24 @@ msgstr "Плюшевая микрофибра — мягкая, лёгкая и 
 msgid "Cuddle Puff jastuci su punašni, mekani jastuci od rebraste plišane tkanine, sa vezenim okicama, žutim kljunićem i plišanim zelenim listićem na vrhu. Talasaste ivice obrubljene su svetlom, čupavom tkaninom, a sa strane je omčica za kačenje. Dimenzije kockastog jastuka su 41 cm x 41 cm. Jednako lepo stoje kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi i kao plišani drug u dečijoj sobi — i unose osmeh u svaki kutak doma."
 msgstr "Подушки Cuddle Puff — пухлые мягкие подушки из рельефного плюша, с вышитыми глазками, жёлтым клювиком и плюшевым зелёным листиком сверху. Волнистые края отделаны светлой пушистой тканью, а сбоку есть петелька для подвешивания. Размер квадратной подушки — 41 см x 41 см. Они одинаково хороши как подушка на стул или кресло, как декоративная подушка на диване и как плюшевый друг в детской — и приносят улыбку в каждый уголок дома."
 
+msgid "Paket Porodica pingvina"
+msgstr "Набор «Семья пингвинов»"
+
+msgid "Svih šest pingvina u jednom paketu: plava, tamno plava, braon, roze, siva i tirkizna. Šest mekanih peškira sa alkom za kačenje, po jedan u svakoj boji."
+msgstr "Все шесть пингвинов в одном наборе: голубой, тёмно-синий, коричневый, розовый, серый и бирюзовый. Шесть мягких полотенец с петелькой для подвешивания, по одному каждого цвета."
+
+msgid "Porodica pingvina je šest mekanih peškira u obliku pingvina, po jedan u svakoj boji: plava, tamno plava, braon, roze, siva i tirkizna. Svaki pingvin ima vezeno lice sa žutim kljunom i belim stopalima, i alku za kačenje pored lavaboa, kade ili kuhinje. Odličan su poklon za dečiju sobu, za porodicu i za svakoga ko voli da u kupatilu ima malo osmeha — jer svaki član porodice dobija svog pingvina."
+msgstr "Семья пингвинов — это шесть мягких полотенец в форме пингвинов, по одному каждого цвета: голубой, тёмно-синий, коричневый, розовый, серый и бирюзовый. У каждого пингвина вышитое личико с жёлтым клювом и белые лапки, а также петелька для подвешивания у раковины, ванны или на кухне. Отличный подарок для детской, для семьи и для всех, кто любит немного улыбок в ванной — ведь каждый член семьи получает своего пингвина."
+
+msgid "6 pingvina: plava, tamno plava, braon, roze, siva i tirkizna."
+msgstr "6 пингвинов: голубой, тёмно-синий, коричневый, розовый, серый и бирюзовый."
+
+msgid "Tamno plava"
+msgstr "Тёмно-синий"
+
+msgid "Tirkizna"
+msgstr "Бирюзовый"
+
 msgid "Dimenzije"
 msgstr "Размеры"
 

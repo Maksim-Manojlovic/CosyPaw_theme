@@ -52,6 +52,8 @@ require_once dirname( __DIR__ ) . '/inc/Pillows.php';
 require_once dirname( __DIR__ ) . '/inc/LongTowels.php';
 require_once dirname( __DIR__ ) . '/inc/Wording.php';
 require_once dirname( __DIR__ ) . '/inc/Sizes.php';
+require_once dirname( __DIR__ ) . '/inc/PenguinColours.php';
+require_once dirname( __DIR__ ) . '/inc/PenguinFamily.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundles.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundlePicker.php';
 require_once dirname( __DIR__ ) . '/inc/ProductVideos.php';

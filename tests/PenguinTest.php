@@ -48,6 +48,10 @@ namespace {
 				return (array) ( $this->props['attributes'] ?? array() );
 			}
 
+			public function get_image_id(): int {
+				return (int) ( $this->props['image_id'] ?? 0 );
+			}
+
 			public function save(): int {
 				$id                 = 900 + count( self::$saved );
 				self::$saved[ $id ] = $this;
@@ -89,6 +93,14 @@ namespace {
 
 			public function get_attributes(): array {
 				return (array) ( $this->props['attributes'] ?? array() );
+			}
+
+			public function get_image_id(): int {
+				return 77;
+			}
+
+			public function get_gallery_image_ids(): array {
+				return (array) ( $this->props['gallery_image_ids'] ?? array( 55 ) );
 			}
 
 			public function get_default_attributes(): array {
@@ -264,6 +276,33 @@ namespace Theme\Tests {
 
 			$this->assertTrue( $colours->convert() );
 			$this->assertCount( 6, \WC_Product_Variation::$saved );
+		}
+
+		/**
+		 * Every colour's photograph joins the product's gallery, ahead of the
+		 * pictures it held, so they are thumbnails beside the main picture;
+		 * the main picture itself is not repeated, and a rerun adds nothing.
+		 *
+		 * @return void
+		 */
+		public function test_the_colour_photographs_join_the_gallery(): void {
+			// Six variations already there, each with its own photograph; the
+			// blue one is the product's own (77).
+			foreach ( array_keys( PenguinColours::COLOURS ) as $i => $colour ) {
+				$variation = new \WC_Product_Variation();
+				$variation->set_attributes( array( 'boja' => $colour ) );
+				$variation->set_image_id( 0 === $i ? 77 : 200 + $i );
+				$variation->save();
+			}
+
+			$colours = new PenguinColours();
+			$colours->convert();
+
+			$parent = \WC_Product_Variable::$saved[10];
+			$this->assertSame( array( 201, 202, 203, 204, 205, 55 ), $parent->props['gallery_image_ids'] );
+
+			$colours->convert();
+			$this->assertSame( array( 201, 202, 203, 204, 205, 55 ), \WC_Product_Variable::$saved[10]->props['gallery_image_ids'] );
 		}
 
 		/**

@@ -276,6 +276,91 @@
 	border-radius: var(--radius-lg);
 }
 
+/* ---------- Gallery thumbnails ----------
+   Every picture of a product is a thumbnail next to the main one, as in any
+   shop's gallery, so a shopper who clicks nothing still sees there are more.
+   Down the left on a wide screen, in a scrolling row under the picture on a
+   phone. WooCommerce's slider builds the strip (.flex-control-thumbs) only
+   when there is more than one picture; without `:has()` it stays its own row
+   of quarter-width tiles under the picture, which is still a gallery. */
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs li {
+	margin: 0;
+	list-style: none;
+}
+
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 3 / 4;
+	object-fit: cover;
+	border-radius: 12px;
+	opacity: 0.55;
+	cursor: pointer;
+	transition: opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs img:hover,
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs img.flex-active {
+	opacity: 1;
+}
+
+.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs img.flex-active {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--clay);
+}
+
+@media (max-width: 768px) {
+	.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs {
+		display: flex;
+		gap: 10px;
+		margin-top: 12px;
+		padding: 4px 4px 6px;
+		overflow-x: auto;
+	}
+
+	.woocommerce div.product div.images.woocommerce-product-gallery .flex-control-thumbs li {
+		flex: 0 0 68px;
+		width: 68px;
+		float: none;
+	}
+}
+
+@media (min-width: 769px) {
+	.woocommerce div.product div.images.woocommerce-product-gallery:has(.flex-control-thumbs) {
+		display: grid;
+		grid-template-columns: 84px minmax(0, 1fr);
+		column-gap: 14px;
+		align-items: start;
+	}
+
+	.woocommerce div.product div.images.woocommerce-product-gallery:has(.flex-control-thumbs) .flex-viewport {
+		grid-column: 2;
+		grid-row: 1;
+		min-width: 0;
+	}
+
+	.woocommerce div.product div.images.woocommerce-product-gallery:has(.flex-control-thumbs) .flex-control-thumbs {
+		grid-column: 1;
+		grid-row: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		/* Room for the active ring, which sits outside the picture. */
+		padding: 4px;
+	}
+
+	.woocommerce div.product div.images.woocommerce-product-gallery:has(.flex-control-thumbs) .flex-control-thumbs li {
+		float: none;
+		width: 100%;
+	}
+}
+
 /* ---------- Promo clip in the gallery ---------- */
 
 /* The clip's slide (template-parts/product-video.php). It holds the shape of

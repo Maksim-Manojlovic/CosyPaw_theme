@@ -39,9 +39,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class PenguinColours {
 
 	/**
-	 * Bump when a colour is added to COLOURS.
+	 * Bump when a colour is added to COLOURS, or the product needs bringing up
+	 * to date again (2: the colour photographs join the product's gallery).
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which version this install has been brought up to.
@@ -186,7 +187,8 @@ final class PenguinColours {
 			return $html;
 		}
 
-		$select = (string) ( $args['id'] ?? self::ATTRIBUTE_KEY );
+		// WooCommerce passes the id empty and works it out itself.
+		$select = ! empty( $args['id'] ) ? (string) $args['id'] : self::ATTRIBUTE_KEY;
 
 		return Swatches::radios( $options, (string) ( $args['selected'] ?? '' ), $select )
 			. '<div class="colour-swatches__select">' . $html . '</div>';
@@ -353,12 +355,49 @@ final class PenguinColours {
 			$variant->save();
 		}
 
+		$this->fill_gallery( $product );
+
 		// Re-sync the parent's price range and stock from its variations.
 		if ( is_callable( array( \WC_Product_Variable::class, 'sync' ) ) ) {
 			\WC_Product_Variable::sync( $id );
 		}
 
 		return true;
+	}
+
+	/**
+	 * Put every colour's photograph in the product's gallery.
+	 *
+	 * A variation's photograph shows only once its colour is chosen, so a
+	 * shopper who has not chosen one would never know the others exist. In the
+	 * gallery they are thumbnails beside the main picture, like any shop's.
+	 * The colours come first, in the product page's order, then whatever the
+	 * gallery already held; a photograph already there is not added twice.
+	 *
+	 * @param \WC_Product $product The parent.
+	 * @return void
+	 */
+	private function fill_gallery( $product ): void {
+		$main    = (int) $product->get_image_id();
+		$found   = $this->variation_colours( $product );
+		$colours = array();
+
+		foreach ( array_keys( self::COLOURS ) as $colour ) {
+			if ( self::ORIGINAL === $colour || ! isset( $found[ $colour ] ) ) {
+				continue;
+			}
+
+			$variation = wc_get_product( $found[ $colour ] );
+			$image     = $variation instanceof \WC_Product ? (int) $variation->get_image_id() : 0;
+			if ( $image > 0 && $image !== $main ) {
+				$colours[] = $image;
+			}
+		}
+
+		$held = array_map( 'intval', (array) $product->get_gallery_image_ids() );
+
+		$product->set_gallery_image_ids( array_values( array_unique( array_merge( $colours, $held ) ) ) );
+		$product->save();
 	}
 
 	/**

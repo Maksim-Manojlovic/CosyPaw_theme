@@ -4,8 +4,9 @@
  * A native <dialog>: it brings its own focus trap, Esc to close and a
  * backdrop. Anything carrying [data-gift-open] opens it — the launcher pill,
  * the ladder in the cart, the "Promeni poklon" link under a gift line — and it
- * opens itself once per promotion, a few seconds into the first visit, except
- * on the cart and the checkout, where the shopper is already busy.
+ * opens itself once per promotion, as soon as the first page of a visit has
+ * painted — except on the cart and the checkout, where the shopper is
+ * already busy.
  *
  * The pick is posted to a wc-ajax endpoint that stores it in the WooCommerce
  * session; the cart reads it from there. It is also remembered in the browser,
@@ -14,7 +15,9 @@
  */
 const SEEN_KEY = 'cosypaw-gift-seen';
 const CHOICE_KEY = 'cosypaw-gift-choice';
-const AUTO_OPEN_MS = 5000;
+// Long enough for the page to paint behind the backdrop, short enough to read
+// as "at once": five seconds lost most visitors to their first click.
+const AUTO_OPEN_MS = 600;
 
 const store = {
 	get(key) {

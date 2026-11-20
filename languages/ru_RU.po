@@ -1739,6 +1739,36 @@ msgstr "Волшебная салфетка ваша. Ещё %s до полот�
 msgid "Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa."
 msgstr "Ваш подарок: %1$s. Ещё %2$s — и вы получите и полотенце «Мишка», и набор салфеток."
 
+msgid "Crni petak · do %s"
+msgstr "Чёрная пятница · до %s"
+
+msgid "Poklon uz %s"
+msgstr "Подарок к %s"
+
+msgid "svaku porudžbinu"
+msgstr "каждому заказу"
+
+msgid "Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis, uz besplatnu dostavu."
+msgstr "К заказу от %s вы выбираете полотенце «Мишка» или набор волшебных салфеток — бесплатно, с бесплатной доставкой."
+
+msgid "Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis."
+msgstr "К заказу от %s вы выбираете полотенце «Мишка» или набор волшебных салфеток — бесплатно."
+
+msgid "2 magične krpe"
+msgstr "2 волшебные салфетки"
+
+msgid "ili"
+msgstr "или"
+
+msgid "Peškir ili krpe + dostava"
+msgstr "Полотенце или салфетки + доставка"
+
+msgid "Peškir ili krpe"
+msgstr "Полотенце или салфетки"
+
+msgid "Peškir i krpe"
+msgstr "Полотенце и салфетки"
+
 msgid "Akcija uključena"
 msgstr "Акция включена"
 

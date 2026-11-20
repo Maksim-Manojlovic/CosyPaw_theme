@@ -1327,7 +1327,8 @@ h1, h2, h3, h4 {
 	animation: pop 0.25s ease;
 }
 
-.gift-fab[hidden] {
+.gift-fab[hidden],
+.gift-fab.is-tucked {
 	display: none;
 }
 

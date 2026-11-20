@@ -81,12 +81,28 @@ if ( $hero_deal ) {
 		$hero_ribbon .= ' · ' . __( 'besplatna dostava', 'cosypaw' );
 	}
 }
+
+$hero_buy_label = $hero_deal
+	? sprintf(
+		/* translators: 1: towels in the package, 2: towels paid for, e.g. "Uzmi 3 — plati 2". */
+		__( 'Uzmi %1$d — plati %2$d', 'cosypaw' ),
+		$hero_qty,
+		$hero_pay
+	)
+	: __( 'Izaberi paket', 'cosypaw' );
+$hero_buy_price = \Theme\Catalog::format_price( (int) $selected['price'] );
+
+// Crni petak takes over the opening screen on a phone (landing.css hides the
+// usual copy below 880px while .hero--bf is set); the desktop hero is as it was.
+$hero_bf = class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommerce' )
+	? \Theme\BlackFriday::hero( $hero_buy_label, $hero_buy_price )
+	: '';
 ?>
 
 <main id="primary" class="site-main" tabindex="-1">
 
 	<!-- HERO -->
-	<section id="top" class="hero">
+	<section id="top" class="hero<?php echo '' !== $hero_bf ? ' hero--bf' : ''; ?>">
 		<?php
 		/*
 		 * Falling motifs, phones only.
@@ -147,6 +163,8 @@ if ( $hero_deal ) {
 			</div>
 		<?php endif; ?>
 
+		<?php echo $hero_bf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- BlackFriday::hero() escapes every part it interpolates. ?>
+
 		<div class="hero__copy">
 			<?php
 			// The ribbon used to read "Mekani svet peškirića", which is the
@@ -192,21 +210,8 @@ if ( $hero_deal ) {
 				// price nor a button. This lands on the builder itself.
 				?>
 				<a href="#napravi-paket" class="btn btn--primary hero__buy">
-					<span class="hero__buy-label">
-						<?php
-						echo esc_html(
-							$hero_deal
-								? sprintf(
-									/* translators: 1: towels in the package, 2: towels paid for, e.g. "Uzmi 3 — plati 2". */
-									__( 'Uzmi %1$d — plati %2$d', 'cosypaw' ),
-									$hero_qty,
-									$hero_pay
-								)
-								: __( 'Izaberi paket', 'cosypaw' )
-						);
-						?>
-					</span>
-					<span class="hero__buy-price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $selected['price'] ) ); ?></span>
+					<span class="hero__buy-label"><?php echo esc_html( $hero_buy_label ); ?></span>
+					<span class="hero__buy-price"><?php echo esc_html( $hero_buy_price ); ?></span>
 				</a>
 
 				<a href="#galerija" class="hero__link">

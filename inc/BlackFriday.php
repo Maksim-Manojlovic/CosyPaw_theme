@@ -1293,13 +1293,183 @@ final class BlackFriday {
 		);
 	}
 
+	/* ---------------------------------------------------------------------
+	 * The phone hero.
+	 * ------------------------------------------------------------------- */
+
+	/**
+	 * The front page's opening screen on a phone, while the promotion runs.
+	 *
+	 * Printed inside .hero next to the usual copy; landing.css shows it and
+	 * hides that copy below 880px only, so the desktop hero is untouched. The
+	 * usual copy — with the page's H1 — stays in the document, only out of
+	 * sight on a phone for the weeks this runs.
+	 *
+	 * The buy button is the hero's own (label and price passed in), so the
+	 * offer it states is still derived from the package, never typed here.
+	 *
+	 * @param string $buy_label The hero button's label, e.g. "Uzmi 3 — plati 2".
+	 * @param string $buy_price The hero button's price, formatted.
+	 * @return string Empty outside the promotion or with no gift on sale.
+	 */
+	public static function hero( string $buy_label, string $buy_price ): string {
+		if ( ! self::active() ) {
+			return '';
+		}
+
+		$gifts = array();
+
+		foreach ( self::colours() as $key ) {
+			$row = LongTowels::row( $key );
+
+			if ( null !== $row && empty( $row['sold_out'] ) ) {
+				$gifts[] = self::hero_gift(
+					array( self::hero_image( $row, 'assets/long-towels/' . LongTowels::ITEMS[ $key ]['image'] ) ),
+					__( 'Peškir Meda', 'cosypaw' ),
+					(int) $row['price']
+				);
+				break;
+			}
+		}
+
+		$set = Cloths::row( Cloths::SET );
+
+		if ( null !== $set && empty( $set['sold_out'] ) ) {
+			$images = array();
+
+			foreach ( Cloths::ITEMS[ Cloths::SET ]['holds'] ?? array() as $held ) {
+				$held_row = Cloths::row( (string) $held );
+				$images[] = self::hero_image( $held_row, 'assets/cloths/' . Cloths::ITEMS[ $held ]['image'] );
+			}
+
+			// "2 magične krpe", not the popup's "Set od 2 …": the hero's card
+			// is ~140px wide, and a name on two lines put the two cards out of
+			// step.
+			$gifts[] = self::hero_gift( $images, __( '2 magične krpe', 'cosypaw' ), (int) $set['price'] );
+		}
+
+		if ( ! $gifts ) {
+			return '';
+		}
+
+		$steps = '';
+		foreach ( self::TIERS as $step => $min ) {
+			$steps .= sprintf(
+				'<li%1$s><strong>%2$s</strong><span>%3$s</span></li>',
+				self::CHOICE_TIER === $step ? ' class="is-main"' : '',
+				esc_html( Catalog::format_price( $min ) ),
+				esc_html( self::short_step( $step ) )
+			);
+		}
+
+		$lead = self::free_delivery_at_choice()
+			/* translators: %s: formatted order value, e.g. "2.500 RSD". */
+			? __( 'Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis, uz besplatnu dostavu.', 'cosypaw' )
+			/* translators: %s: formatted order value, e.g. "2.500 RSD". */
+			: __( 'Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis.', 'cosypaw' );
+
+		$end = ( new \DateTimeImmutable( self::END, new \DateTimeZone( self::TIMEZONE ) ) )->format( 'j.n.' );
+
+		return sprintf(
+			'<div class="bf-hero" role="region" aria-labelledby="bf-hero-title">' .
+				'<span class="bf-hero__badge">%1$s</span>' .
+				'<p class="bf-hero__title" id="bf-hero-title">%2$s</p>' .
+				'<p class="bf-hero__lead">%3$s</p>' .
+				'<div class="bf-hero__gifts">%4$s</div>' .
+				'<ol class="bf-hero__steps" aria-label="%5$s">%6$s</ol>' .
+				'<div class="bf-hero__cta">' .
+					'<a href="#napravi-paket" class="btn btn--primary hero__buy"><span class="hero__buy-label">%7$s</span><span class="hero__buy-price">%8$s</span></a>' .
+					'<button type="button" class="hero__link bf-hero__pick" data-gift-open>%9$s<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>' .
+				'</div>' .
+			'</div>',
+			esc_html(
+				sprintf(
+					/* translators: %s: last day of the promotion, e.g. "15.12.". */
+					__( 'Crni petak · do %s', 'cosypaw' ),
+					$end
+				)
+			),
+			wp_kses(
+				sprintf(
+					/* translators: %s: highlighted words "svaku porudžbinu". */
+					__( 'Poklon uz %s', 'cosypaw' ),
+					'<em>' . esc_html__( 'svaku porudžbinu', 'cosypaw' ) . '</em>'
+				),
+				array( 'em' => array() )
+			),
+			wp_kses( sprintf( $lead, '<strong>' . esc_html( Catalog::format_price( self::TIERS[ self::CHOICE_TIER ] ) ) . '</strong>' ), array( 'strong' => array() ) ),
+			implode( count( $gifts ) > 1 ? '<span class="bf-hero__or">' . esc_html__( 'ili', 'cosypaw' ) . '</span>' : '', $gifts ),
+			esc_attr__( 'Pokloni rastu sa korpom', 'cosypaw' ),
+			$steps,
+			esc_html( $buy_label ),
+			esc_html( $buy_price ),
+			esc_html__( 'Izaberite poklon', 'cosypaw' )
+		);
+	}
+
+	/**
+	 * One gift in the phone hero: photograph(s), name, struck price, "Gratis".
+	 *
+	 * @param array<int,string> $images Image URLs.
+	 * @param string            $name   Gift name.
+	 * @param int               $value  What it would cost.
+	 * @return string
+	 */
+	private static function hero_gift( array $images, string $name, int $value ): string {
+		$imgs = '';
+		foreach ( $images as $url ) {
+			$imgs .= sprintf( '<img src="%s" alt="" width="300" height="300" loading="lazy" decoding="async">', esc_url( $url ) );
+		}
+
+		return sprintf(
+			'<figure class="bf-hero__gift"><span class="bf-hero__media">%1$s</span><figcaption><strong>%2$s</strong><span>%3$s<b>%4$s</b></span></figcaption></figure>',
+			$imgs,
+			esc_html( $name ),
+			$value > 0 ? '<del>' . esc_html( Catalog::format_price( $value ) ) . '</del> ' : '',
+			esc_html__( 'Gratis', 'cosypaw' )
+		);
+	}
+
+	/**
+	 * A product's own thumbnail (a few kilobytes), else the theme's photograph.
+	 *
+	 * @param array<string,mixed>|null $row      ProductLine::row() output.
+	 * @param string                   $fallback Theme path of the photograph.
+	 * @return string
+	 */
+	private static function hero_image( ?array $row, string $fallback ): string {
+		$id  = (int) ( $row['image_id'] ?? 0 );
+		$url = $id > 0 && function_exists( 'wp_get_attachment_image_url' ) ? (string) wp_get_attachment_image_url( $id, 'woocommerce_thumbnail' ) : '';
+
+		return '' !== $url ? $url : self::asset( $fallback );
+	}
+
+	/**
+	 * A step in two or three words, for the hero's narrow columns.
+	 *
+	 * @param int $step Step.
+	 * @return string
+	 */
+	private static function short_step( int $step ): string {
+		switch ( $step ) {
+			case 1:
+				return __( 'Magična krpa', 'cosypaw' );
+			case 2:
+				return self::free_delivery_at_choice()
+					? __( 'Peškir ili krpe + dostava', 'cosypaw' )
+					: __( 'Peškir ili krpe', 'cosypaw' );
+		}
+
+		return __( 'Peškir i krpe', 'cosypaw' );
+	}
+
 	/**
 	 * URL of a file shipped with the theme.
 	 *
 	 * @param string $path Path inside the theme.
 	 * @return string
 	 */
-	private function asset( string $path ): string {
+	private static function asset( string $path ): string {
 		return trailingslashit( get_template_directory_uri() ) . $path;
 	}
 

@@ -55,6 +55,7 @@ export class GiftPopup {
 		dialog.addEventListener('close', () => this.onClose());
 
 		this.restore();
+		this.tuckBesideHero();
 
 		if (dialog.dataset.giftAuto === '1' && store.get(SEEN_KEY) !== this.promo) {
 			this.timer = window.setTimeout(() => {
@@ -62,6 +63,23 @@ export class GiftPopup {
 				if (!document.querySelector('dialog[open]')) this.open();
 			}, AUTO_OPEN_MS);
 		}
+	}
+
+	/**
+	 * The phone hero (.bf-hero) carries its own "Izaberite poklon", and the
+	 * launcher pill sat on top of its buy button on a short phone. The pill
+	 * steps aside while that hero is on screen and comes back once it scrolls
+	 * away. On a desktop the hero is display:none, never intersects, and the
+	 * pill stays.
+	 */
+	tuckBesideHero() {
+		const hero = document.querySelector('.bf-hero');
+		if (!hero || !this.fab || !('IntersectionObserver' in window)) return;
+
+		new IntersectionObserver((entries) => {
+			const entry = entries[entries.length - 1];
+			this.fab.classList.toggle('is-tucked', entry.isIntersecting);
+		}).observe(hero);
 	}
 
 	open() {

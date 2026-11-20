@@ -1655,6 +1655,93 @@ msgstr "Доставка"
 msgid "Plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
 msgstr "Оплата при получении, доставка 2–4 дня по всей Сербии."
 
+msgid "Crni petak"
+msgstr "Чёрная пятница"
+
+msgid "Crni petak: poklon uz svaku porudžbinu od %s"
+msgstr "Чёрная пятница: подарок к каждому заказу от %s"
+
+msgid "Crni petak — pokloni uz porudžbinu"
+msgstr "Чёрная пятница — подарки к заказу"
+
+msgid "Poklon"
+msgstr "Подарок"
+
+msgid "Izaberite poklon"
+msgstr "Выберите подарок"
+
+msgid "Promeni poklon"
+msgstr "Сменить подарок"
+
+msgid "Izaberite peškir"
+msgstr "Выбрать полотенце"
+
+msgid "Izaberite krpe"
+msgstr "Выбрать салфетки"
+
+msgid "Izabrano ✓"
+msgstr "Выбрано ✓"
+
+msgid "Izabraću kasnije"
+msgstr "Выберу позже"
+
+msgid "Boja peškira"
+msgstr "Цвет полотенца"
+
+msgid "Set od 2 magične krpe"
+msgstr "Набор из 2 волшебных салфеток"
+
+msgid "Limeta i žalfija zelena"
+msgstr "Лайм и шалфей"
+
+msgid "Magična krpa"
+msgstr "Волшебная салфетка"
+
+msgid "Peškir Meda ili set krpa + besplatna dostava"
+msgstr "Полотенце «Мишка» или набор салфеток + бесплатная доставка"
+
+msgid "Peškir Meda ili set krpa"
+msgstr "Полотенце «Мишка» или набор салфеток"
+
+msgid "Peškir Meda i set krpa"
+msgstr "Полотенце «Мишка» и набор салфеток"
+
+msgid "Pokloni rastu sa korpom"
+msgstr "Чем больше корзина, тем больше подарок"
+
+msgid "Uz porudžbinu od %s birate jedan poklon — gratis, uz besplatnu dostavu."
+msgstr "К заказу от %s вы выбираете один подарок — бесплатно, с бесплатной доставкой."
+
+msgid "Uz porudžbinu od %s birate jedan poklon — gratis."
+msgstr "К заказу от %s вы выбираете один подарок — бесплатно."
+
+msgid "Akcija traje do %s, dok traju zalihe."
+msgstr "Акция действует до %s, пока есть в наличии."
+
+msgid "Čuvanje nije uspelo — pokušajte ponovo."
+msgstr "Не удалось сохранить — попробуйте ещё раз."
+
+msgid "Akcija trenutno nije aktivna."
+msgstr "Акция сейчас не действует."
+
+msgid "Sačuvano: %1$s. Stiže gratis uz porudžbinu od %2$s."
+msgstr "Сохранено: %1$s. Придёт бесплатно к заказу от %2$s."
+
+msgid "Još %s do prvog poklona — magična krpa gratis."
+msgstr "Ещё %s до первого подарка — волшебная салфетка бесплатно."
+
+msgid "Magična krpa je vaša. Još %s do peškira Meda i besplatne dostave."
+msgstr "Волшебная салфетка ваша. Ещё %s до полотенца «Мишка» и бесплатной доставки."
+
+msgid "Magična krpa je vaša. Još %s do peškira Meda."
+msgstr "Волшебная салфетка ваша. Ещё %s до полотенца «Мишка»."
+
+msgid "Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa."
+msgstr "Ваш подарок: %1$s. Ещё %2$s — и вы получите и полотенце «Мишка», и набор салфеток."
+
+msgid "Svi pokloni su vaši: %s."
+msgstr "Все подарки ваши: %s."
+
 msgid "Nothing found."
 msgstr "Ничего не найдено."
 

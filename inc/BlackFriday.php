@@ -29,9 +29,11 @@
  * WooCommerce session, set through a wc-ajax endpoint from the popup. Without a
  * pick the cart gives the towel, in the first colour still in stock.
  *
- * Outside START–END every gift line is removed and nothing is rendered. A shop
- * manager can see it all ahead of time with ?crni-petak=1 (and switch it off
- * again with ?crni-petak=0); nobody else can.
+ * Outside START–END every gift line is removed and nothing is rendered. The
+ * shop can also end it early by hand: WooCommerce → Podešavanja → Opšte →
+ * "Crni petak" (ENABLED_OPTION), no deploy needed. A shop manager can see it
+ * while it is off with ?crni-petak=1 (and stop seeing it with ?crni-petak=0);
+ * nobody else can.
  *
  * @package CosyPaw
  */
@@ -52,17 +54,23 @@ final class BlackFriday {
 	/**
 	 * First moment of the promotion, Belgrade time.
 	 */
-	public const START = '2026-11-24 00:00:00';
+	public const START = '2026-11-20 00:00:00';
 
 	/**
 	 * Last moment of the promotion, Belgrade time.
 	 */
-	public const END = '2026-11-30 23:59:59';
+	public const END = '2026-12-15 23:59:59';
 
 	/**
 	 * Time zone START and END are written in.
 	 */
 	public const TIMEZONE = 'Europe/Belgrade';
+
+	/**
+	 * Option behind the switch in WooCommerce's general settings: "no" ends the
+	 * promotion before END. A checkbox, so WooCommerce stores "yes" or "no".
+	 */
+	public const ENABLED_OPTION = 'cosypaw_black_friday_enabled';
 
 	/**
 	 * Step => least the order has to be worth for it (RSD).
@@ -175,6 +183,7 @@ final class BlackFriday {
 		$this->pricing = $pricing;
 
 		add_action( 'init', array( $this, 'maybe_set_preview' ) );
+		add_filter( 'woocommerce_general_settings', array( $this, 'settings' ) );
 
 		// The zero price, on every calculation and on every line restored from
 		// the session (which is what the cart table prints before any
@@ -215,10 +224,10 @@ final class BlackFriday {
 	 * @return bool
 	 */
 	public static function active( ?int $now = null ): bool {
-		if ( self::in_window( $now ?? time() ) ) {
+		if ( self::in_window( $now ?? time() ) && self::enabled() ) {
 			/**
-			 * Switch the promotion off inside its window without a deploy of
-			 * new dates.
+			 * Switch the promotion off inside its window from code. The shop's
+			 * own switch is ENABLED_OPTION.
 			 *
 			 * @param bool $active Whether the gifts are given.
 			 */
@@ -240,6 +249,50 @@ final class BlackFriday {
 		$end   = ( new \DateTimeImmutable( self::END, $zone ) )->getTimestamp();
 
 		return $now >= $start && $now <= $end;
+	}
+
+	/**
+	 * Whether the shop has left the switch on. On until it is switched off.
+	 *
+	 * @return bool
+	 */
+	public static function enabled(): bool {
+		return 'no' !== get_option( self::ENABLED_OPTION, 'yes' );
+	}
+
+	/**
+	 * The switch, under WooCommerce → Podešavanja → Opšte.
+	 *
+	 * @param array<int,array<string,mixed>> $settings General settings fields.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public function settings( $settings ) {
+		if ( ! is_array( $settings ) ) {
+			return $settings;
+		}
+
+		$end = ( new \DateTimeImmutable( self::END, new \DateTimeZone( self::TIMEZONE ) ) )->format( 'j.n.Y.' );
+
+		$settings[] = array(
+			'title' => __( 'Crni petak', 'cosypaw' ),
+			'type'  => 'title',
+			/* translators: %s: last day of the promotion, e.g. "15.12.2026.". */
+			'desc'  => sprintf( __( 'Pokloni uz porudžbinu od 1.490, 2.500 i 3.500 RSD. Akcija se sama završava %s; ovde je možete ugasiti ranije.', 'cosypaw' ), $end ),
+			'id'    => 'cosypaw_black_friday',
+		);
+		$settings[] = array(
+			'title'   => __( 'Akcija uključena', 'cosypaw' ),
+			'desc'    => __( 'Prikazuj popup i dodaj poklone u korpu', 'cosypaw' ),
+			'id'      => self::ENABLED_OPTION,
+			'type'    => 'checkbox',
+			'default' => 'yes',
+		);
+		$settings[] = array(
+			'type' => 'sectionend',
+			'id'   => 'cosypaw_black_friday',
+		);
+
+		return $settings;
 	}
 
 	/**

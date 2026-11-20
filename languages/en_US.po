@@ -1739,6 +1739,15 @@ msgstr "The magic cloth is yours. %s more to the Teddy towel."
 msgid "Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa."
 msgstr "Your gift: %1$s. %2$s more and you get both the Teddy towel and the cloth set."
 
+msgid "Akcija uključena"
+msgstr "Offer on"
+
+msgid "Prikazuj popup i dodaj poklone u korpu"
+msgstr "Show the popup and add the gifts to the cart"
+
+msgid "Pokloni uz porudžbinu od 1.490, 2.500 i 3.500 RSD. Akcija se sama završava %s; ovde je možete ugasiti ranije."
+msgstr "Gifts with orders from 1.490, 2.500 and 3.500 RSD. The offer ends by itself on %s; you can switch it off earlier here."
+
 msgid "Svi pokloni su vaši: %s."
 msgstr "Every gift is yours: %s."
 

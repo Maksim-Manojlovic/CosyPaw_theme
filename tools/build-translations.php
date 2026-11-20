@@ -664,7 +664,10 @@ $sr_source = array(
 	'Magična krpa je vaša. Još %s do peškira Meda i besplatne dostave.'                       => array( 'The magic cloth is yours. %s more to the Teddy towel and free delivery.', 'Волшебная салфетка ваша. Ещё %s до полотенца «Мишка» и бесплатной доставки.' ),
 	'Magična krpa je vaša. Još %s do peškira Meda.'                                           => array( 'The magic cloth is yours. %s more to the Teddy towel.', 'Волшебная салфетка ваша. Ещё %s до полотенца «Мишка».' ),
 	'Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa.'                => array( 'Your gift: %1$s. %2$s more and you get both the Teddy towel and the cloth set.', 'Ваш подарок: %1$s. Ещё %2$s — и вы получите и полотенце «Мишка», и набор салфеток.' ),
-	'Svi pokloni su vaši: %s.'                                                                => array( 'Every gift is yours: %s.', 'Все подарки ваши: %s.' ),
+	'Akcija uključena'                                                                        => array( 'Offer on', 'Акция включена' ),
+	'Prikazuj popup i dodaj poklone u korpu'                                                  => array( 'Show the popup and add the gifts to the cart', 'Показывать всплывающее окно и добавлять подарки в корзину' ),
+	'Pokloni uz porudžbinu od 1.490, 2.500 i 3.500 RSD. Akcija se sama završava %s; ovde je možete ugasiti ranije.' => array( 'Gifts with orders from 1.490, 2.500 and 3.500 RSD. The offer ends by itself on %s; you can switch it off earlier here.', 'Подарки к заказам от 1.490, 2.500 и 3.500 RSD. Акция завершится сама %s; здесь её можно выключить раньше.' ),
+	'Svi pokloni su vaši: %s.'                                                              => array( 'Every gift is yours: %s.', 'Все подарки ваши: %s.' ),
 );
 
 // English-source msgid => [ serbian, russian ].

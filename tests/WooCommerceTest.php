@@ -58,6 +58,7 @@ require_once dirname( __DIR__ ) . '/inc/PenguinFamily.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundles.php';
 require_once dirname( __DIR__ ) . '/inc/GiftBundlePicker.php';
 require_once dirname( __DIR__ ) . '/inc/ProductVideos.php';
+require_once dirname( __DIR__ ) . '/inc/BlackFriday.php';
 require_once dirname( __DIR__ ) . '/inc/ReviewRequest.php';
 require_once dirname( __DIR__ ) . '/inc/Reviews.php';
 require_once dirname( __DIR__ ) . '/inc/Bootstrap.php';

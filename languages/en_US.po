@@ -1655,3 +1655,90 @@ msgstr "Delivery"
 msgid "Plaćanje pouzećem, isporuka 2–4 dana širom Srbije."
 msgstr "Cash on delivery, 2–4 days anywhere in Serbia."
 
+msgid "Crni petak"
+msgstr "Black Friday"
+
+msgid "Crni petak: poklon uz svaku porudžbinu od %s"
+msgstr "Black Friday: a gift with every order from %s"
+
+msgid "Crni petak — pokloni uz porudžbinu"
+msgstr "Black Friday — gifts with your order"
+
+msgid "Poklon"
+msgstr "Gift"
+
+msgid "Izaberite poklon"
+msgstr "Choose your gift"
+
+msgid "Promeni poklon"
+msgstr "Change gift"
+
+msgid "Izaberite peškir"
+msgstr "Choose the towel"
+
+msgid "Izaberite krpe"
+msgstr "Choose the cloths"
+
+msgid "Izabrano ✓"
+msgstr "Chosen ✓"
+
+msgid "Izabraću kasnije"
+msgstr "I’ll choose later"
+
+msgid "Boja peškira"
+msgstr "Towel colour"
+
+msgid "Set od 2 magične krpe"
+msgstr "Set of 2 magic cloths"
+
+msgid "Limeta i žalfija zelena"
+msgstr "Lime and sage green"
+
+msgid "Magična krpa"
+msgstr "Magic cloth"
+
+msgid "Peškir Meda ili set krpa + besplatna dostava"
+msgstr "Teddy towel or the cloth set + free delivery"
+
+msgid "Peškir Meda ili set krpa"
+msgstr "Teddy towel or the cloth set"
+
+msgid "Peškir Meda i set krpa"
+msgstr "Teddy towel and the cloth set"
+
+msgid "Pokloni rastu sa korpom"
+msgstr "The bigger the cart, the bigger the gift"
+
+msgid "Uz porudžbinu od %s birate jedan poklon — gratis, uz besplatnu dostavu."
+msgstr "With an order from %s you choose one gift — free, with free delivery."
+
+msgid "Uz porudžbinu od %s birate jedan poklon — gratis."
+msgstr "With an order from %s you choose one gift — free."
+
+msgid "Akcija traje do %s, dok traju zalihe."
+msgstr "Offer runs until %s, while stocks last."
+
+msgid "Čuvanje nije uspelo — pokušajte ponovo."
+msgstr "Could not save — please try again."
+
+msgid "Akcija trenutno nije aktivna."
+msgstr "The offer is not running right now."
+
+msgid "Sačuvano: %1$s. Stiže gratis uz porudžbinu od %2$s."
+msgstr "Saved: %1$s. It comes free with an order from %2$s."
+
+msgid "Još %s do prvog poklona — magična krpa gratis."
+msgstr "%s more to your first gift — a free magic cloth."
+
+msgid "Magična krpa je vaša. Još %s do peškira Meda i besplatne dostave."
+msgstr "The magic cloth is yours. %s more to the Teddy towel and free delivery."
+
+msgid "Magična krpa je vaša. Još %s do peškira Meda."
+msgstr "The magic cloth is yours. %s more to the Teddy towel."
+
+msgid "Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa."
+msgstr "Your gift: %1$s. %2$s more and you get both the Teddy towel and the cloth set."
+
+msgid "Svi pokloni su vaši: %s."
+msgstr "Every gift is yours: %s."
+

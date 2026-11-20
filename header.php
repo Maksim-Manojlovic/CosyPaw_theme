@@ -33,6 +33,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	$announcements = array( __( 'Ručni rad sa puno ljubavi', 'cosypaw' ) );
 
+	// Crni petak leads the bar while it runs, with its first step's amount.
+	if ( class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommerce' ) && \Theme\BlackFriday::active() ) {
+		array_unshift(
+			$announcements,
+			sprintf(
+				/* translators: %s: formatted order value, e.g. "1.490 RSD". */
+				__( 'Crni petak: poklon uz svaku porudžbinu od %s', 'cosypaw' ),
+				\Theme\Catalog::format_price( \Theme\BlackFriday::TIERS[1] )
+			)
+		);
+	}
+
 	if ( $cosypaw_free_min > 0 ) {
 		$announcements[] = sprintf(
 			/* translators: %s: formatted free-delivery threshold, e.g. "2.000 RSD". */

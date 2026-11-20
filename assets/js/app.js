@@ -21,6 +21,7 @@ import { BundlePicker } from './components/BundlePicker.js';
 import { MotifColours } from './components/MotifColours.js';
 import { ColourSwatches } from './components/ColourSwatches.js';
 import { GalleryThumbs } from './components/GalleryThumbs.js';
+import { GiftPopup } from './components/GiftPopup.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -92,6 +93,10 @@ const boot = () => {
 	document.querySelectorAll('.woocommerce-product-gallery').forEach((gallery) => {
 		new GalleryThumbs(gallery);
 	});
+
+	// Crni petak: the gift picker, printed in the footer while it runs.
+	const giftPopup = document.querySelector('[data-gift-popup]');
+	if (giftPopup) new GiftPopup(giftPopup);
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

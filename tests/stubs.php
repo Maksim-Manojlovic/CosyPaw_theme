@@ -97,6 +97,17 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
+		 * Change the selling price for this instance only, as a cart line's
+		 * product copy is repriced.
+		 *
+		 * @param string|int|float $price New price.
+		 * @return void
+		 */
+		public function set_price( $price ): void {
+			$this->price = (string) $price;
+		}
+
+		/**
 		 * Whether the product can be bought.
 		 *
 		 * @return bool
@@ -210,6 +221,108 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		 */
 		public function get_cart(): array {
 			return $this->contents;
+		}
+
+		/**
+		 * Totals calculations requested of this cart.
+		 *
+		 * @var int
+		 */
+		public int $calculations = 0;
+
+		/**
+		 * One cart line by key.
+		 *
+		 * @param string $key Cart item key.
+		 * @return array<string,mixed>
+		 */
+		public function get_cart_item( $key ): array {
+			return $this->contents[ $key ] ?? array();
+		}
+
+		/**
+		 * Add a line the way WooCommerce does: keyed by product and item data,
+		 * the product as `data`.
+		 *
+		 * @param int                 $product_id     Product id.
+		 * @param int                 $quantity       Quantity.
+		 * @param int                 $variation_id   Unused.
+		 * @param array<string,mixed> $variation      Unused.
+		 * @param array<string,mixed> $cart_item_data Extra item data.
+		 * @return string Cart item key.
+		 */
+		public function add_to_cart( $product_id = 0, $quantity = 1, $variation_id = 0, $variation = array(), $cart_item_data = array() ) {
+			unset( $variation_id, $variation );
+
+			$key = md5( $product_id . serialize( $cart_item_data ) );
+
+			$this->contents[ $key ] = array_merge(
+				$cart_item_data,
+				array(
+					'key'        => $key,
+					'product_id' => (int) $product_id,
+					'quantity'   => (int) $quantity,
+					'data'       => new \WC_Product( 'Proizvod ' . $product_id, '399', true, (int) $product_id ),
+				)
+			);
+
+			return $key;
+		}
+
+		/**
+		 * Remove a line, keeping it in the removed list as WooCommerce does.
+		 *
+		 * @param string $key Cart item key.
+		 * @return bool
+		 */
+		public function remove_cart_item( $key ): bool {
+			if ( ! isset( $this->contents[ $key ] ) ) {
+				return false;
+			}
+
+			$this->removed[ $key ] = $this->contents[ $key ];
+			unset( $this->contents[ $key ] );
+
+			return true;
+		}
+
+		/**
+		 * Replace the removed list.
+		 *
+		 * @param array<string,array<string,mixed>> $removed Removed lines.
+		 * @return void
+		 */
+		public function set_removed_cart_contents( array $removed ): void {
+			$this->removed = $removed;
+		}
+
+		/**
+		 * Set a line's quantity.
+		 *
+		 * @param string $key      Cart item key.
+		 * @param int    $quantity Quantity.
+		 * @param bool   $refresh  Unused.
+		 * @return bool
+		 */
+		public function set_quantity( $key, $quantity = 1, $refresh = true ): bool {
+			unset( $refresh );
+
+			if ( ! isset( $this->contents[ $key ] ) ) {
+				return false;
+			}
+
+			$this->contents[ $key ]['quantity'] = (int) $quantity;
+
+			return true;
+		}
+
+		/**
+		 * Count a totals calculation.
+		 *
+		 * @return void
+		 */
+		public function calculate_totals(): void {
+			++$this->calculations;
 		}
 
 		/**
@@ -655,6 +768,13 @@ if ( ! class_exists( 'WC_Mock_WC' ) ) {
 		 * @var \WC_Cart|null
 		 */
 		public $cart = null;
+
+		/**
+		 * The session; none in these tests.
+		 *
+		 * @var object|null
+		 */
+		public $session = null;
 
 		/**
 		 * The shipping engine.

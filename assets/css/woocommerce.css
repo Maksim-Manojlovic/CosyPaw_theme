@@ -1910,3 +1910,131 @@
 .woocommerce div.product form.cart .variations:has(.colour-swatches) .reset_variations {
 	display: none !important;
 }
+
+/* ---------- Crni petak: the gift ladder and the gift lines ----------
+   Theme\BlackFriday. The ladder sits inside the cart form (WooCommerce's own
+   refresh of the form refreshes it too) and above the checkout. */
+
+.gift-ladder {
+	margin: 0 0 22px;
+	padding: 16px 18px;
+	border: 2px dashed var(--sandmid);
+	border-radius: var(--radius-lg);
+	background: #fff;
+	color: var(--ink);
+}
+
+.gift-ladder__eyebrow {
+	display: inline-block;
+	margin: 0 0 8px;
+	padding: 4px 12px;
+	border-radius: var(--radius-pill);
+	background: var(--ink);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.gift-ladder__status {
+	margin: 0 0 10px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.gift-ladder__bar {
+	display: block;
+	height: 8px;
+	border-radius: var(--radius-pill);
+	background: var(--cream2);
+	overflow: hidden;
+}
+
+.gift-ladder__fill {
+	display: block;
+	height: 100%;
+	border-radius: var(--radius-pill);
+	background: var(--clay);
+}
+
+.gift-ladder__steps {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: 13px;
+	line-height: 1.3;
+}
+
+.gift-ladder__step {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	color: var(--muted);
+	text-align: right;
+}
+
+.gift-ladder__step strong {
+	font-family: var(--font-heading);
+	font-size: 14px;
+}
+
+.gift-ladder__step.is-reached {
+	color: var(--sage);
+}
+
+.gift-ladder__step.is-reached strong::before {
+	content: "✓ ";
+}
+
+.gift-ladder__change,
+.gift-line__change {
+	margin-top: 12px;
+	padding: 8px 16px;
+	border: none;
+	border-radius: var(--radius-pill);
+	background: var(--clay);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 14px;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.gift-ladder__change:hover,
+.gift-line__change:hover {
+	background: var(--claydk);
+}
+
+.gift-line__change {
+	display: block;
+	margin-top: 6px;
+	padding: 5px 12px;
+	font-size: 13px;
+}
+
+.gift-line__free {
+	color: var(--sage);
+	font-family: var(--font-heading);
+	font-weight: 800;
+}
+
+.gift-line__qty {
+	display: inline-block;
+	min-width: 2ch;
+	font-weight: 700;
+}
+
+@media (max-width: 560px) {
+	.gift-ladder {
+		padding: 14px;
+	}
+
+	.gift-ladder__steps {
+		font-size: 12px;
+	}
+}

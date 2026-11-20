@@ -196,6 +196,14 @@ final class Bootstrap {
 	private ?ProductVideos $product_videos = null;
 
 	/**
+	 * "Crni petak": gifts in the cart that grow with the order (WooCommerce
+	 * only).
+	 *
+	 * @var BlackFriday|null
+	 */
+	private ?BlackFriday $black_friday = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -262,6 +270,10 @@ final class Bootstrap {
 
 			// A towel's promo clip, as the last slide of its own gallery.
 			$this->product_videos = new ProductVideos();
+
+			// Crni petak. Measured on the package pricing's number, so a gift
+			// step and the free-delivery bar always read the same cart alike.
+			$this->black_friday = new BlackFriday( $this->bundle_pricing );
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

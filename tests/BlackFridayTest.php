@@ -496,4 +496,28 @@ final class BlackFridayTest extends TestCase {
 		$this->assertStringContainsString( 'data-gift-auto="0"', $html );
 		$this->assertStringNotContainsString( 'data-gift-fab', $html );
 	}
+
+	public function test_the_phone_hero_shows_both_gifts_and_keeps_the_hero_button(): void {
+		$html = BlackFriday::hero( 'Uzmi 3 — plati 2', '1.490 RSD' );
+
+		$this->assertStringContainsString( 'class="bf-hero"', $html );
+		$this->assertSame( 2, substr_count( $html, 'class="bf-hero__gift"' ) );
+		$this->assertStringContainsString( '<span class="bf-hero__or">ili</span>', $html );
+		$this->assertStringContainsString( 'Uzmi 3 — plati 2', $html );
+		$this->assertStringContainsString( '1.490 RSD', $html );
+		$this->assertStringContainsString( 'data-gift-open', $html );
+		$this->assertStringContainsString( 'do 15.12.', $html );
+	}
+
+	public function test_the_phone_hero_drops_a_sold_out_gift_and_goes_quiet_when_off(): void {
+		$this->sold_out[ self::CLOTH_IDS['avokado-limeta'] ] = true;
+
+		$html = BlackFriday::hero( 'Izaberi paket', '790 RSD' );
+		$this->assertSame( 1, substr_count( $html, 'class="bf-hero__gift"' ) );
+		$this->assertStringNotContainsString( 'bf-hero__or', $html );
+
+		$this->options[ BlackFriday::ENABLED_OPTION ] = 'no';
+		unset( $_COOKIE[ BlackFriday::PREVIEW_COOKIE ] );
+		$this->assertSame( '', BlackFriday::hero( 'Izaberi paket', '790 RSD' ) );
+	}
 }

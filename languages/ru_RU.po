@@ -1739,6 +1739,15 @@ msgstr "Волшебная салфетка ваша. Ещё %s до полот�
 msgid "Vaš poklon: %1$s. Još %2$s i dobijate i peškir Meda i set magičnih krpa."
 msgstr "Ваш подарок: %1$s. Ещё %2$s — и вы получите и полотенце «Мишка», и набор салфеток."
 
+msgid "Akcija uključena"
+msgstr "Акция включена"
+
+msgid "Prikazuj popup i dodaj poklone u korpu"
+msgstr "Показывать всплывающее окно и добавлять подарки в корзину"
+
+msgid "Pokloni uz porudžbinu od 1.490, 2.500 i 3.500 RSD. Akcija se sama završava %s; ovde je možete ugasiti ranije."
+msgstr "Подарки к заказам от 1.490, 2.500 и 3.500 RSD. Акция завершится сама %s; здесь её можно выключить раньше."
+
 msgid "Svi pokloni su vaši: %s."
 msgstr "Все подарки ваши: %s."
 

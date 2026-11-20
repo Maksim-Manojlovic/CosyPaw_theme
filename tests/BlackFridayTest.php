@@ -196,14 +196,35 @@ final class BlackFridayTest extends TestCase {
 	public function test_the_window_is_belgrade_time_and_inclusive(): void {
 		$zone = new \DateTimeZone( BlackFriday::TIMEZONE );
 
-		$this->assertFalse( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-11-23 23:59:59', $zone ) )->getTimestamp() ) );
-		$this->assertTrue( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-11-24 00:00:00', $zone ) )->getTimestamp() ) );
-		$this->assertTrue( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-11-30 23:59:59', $zone ) )->getTimestamp() ) );
-		$this->assertFalse( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-12-01 00:00:00', $zone ) )->getTimestamp() ) );
+		$this->assertFalse( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-11-19 23:59:59', $zone ) )->getTimestamp() ) );
+		$this->assertTrue( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-11-20 00:00:00', $zone ) )->getTimestamp() ) );
+		$this->assertTrue( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-12-15 23:59:59', $zone ) )->getTimestamp() ) );
+		$this->assertFalse( BlackFriday::in_window( ( new \DateTimeImmutable( '2026-12-16 00:00:00', $zone ) )->getTimestamp() ) );
+	}
+
+	public function test_the_shop_can_switch_it_off_before_the_end(): void {
+		$during = ( new \DateTimeImmutable( '2026-12-01 12:00:00', new \DateTimeZone( BlackFriday::TIMEZONE ) ) )->getTimestamp();
+		unset( $_COOKIE[ BlackFriday::PREVIEW_COOKIE ] );
+
+		$this->assertTrue( BlackFriday::active( $during ), 'On by default, with the option never saved.' );
+
+		$this->options[ BlackFriday::ENABLED_OPTION ] = 'no';
+		$this->assertFalse( BlackFriday::active( $during ) );
+
+		$this->options[ BlackFriday::ENABLED_OPTION ] = 'yes';
+		$this->assertTrue( BlackFriday::active( $during ) );
+	}
+
+	public function test_the_switch_sits_in_woocommerces_general_settings(): void {
+		$settings = ( new BlackFriday( $this->pricing() ) )->settings( array( array( 'id' => 'woocommerce_store_address' ) ) );
+		$ids      = array_column( $settings, 'id' );
+
+		$this->assertContains( BlackFriday::ENABLED_OPTION, $ids );
+		$this->assertSame( 'woocommerce_store_address', $ids[0], 'Appended, never in front of the shop\'s own fields.' );
 	}
 
 	public function test_outside_the_window_only_a_shop_manager_previewing_sees_it(): void {
-		$before = ( new \DateTimeImmutable( '2026-11-20 12:00:00', new \DateTimeZone( BlackFriday::TIMEZONE ) ) )->getTimestamp();
+		$before = ( new \DateTimeImmutable( '2026-11-19 12:00:00', new \DateTimeZone( BlackFriday::TIMEZONE ) ) )->getTimestamp();
 
 		$this->assertTrue( BlackFriday::active( $before ) );
 
@@ -384,7 +405,10 @@ final class BlackFridayTest extends TestCase {
 		$cart = new \WC_Cart( array( 'paid' => self::paid_line( 3600 ) ) );
 		$bf   = new BlackFriday( $this->pricing() );
 		$bf->reconcile( $cart );
+		$this->assertCount( 3, $cart->get_cart() );
 
+		// Switched off by the shop, and nobody previewing.
+		$this->options[ BlackFriday::ENABLED_OPTION ] = 'no';
 		unset( $_COOKIE[ BlackFriday::PREVIEW_COOKIE ] );
 		$bf->reconcile( $cart );
 

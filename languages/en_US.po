@@ -1754,6 +1754,9 @@ msgstr "With an order from %s you choose the Teddy towel or the magic cloth set 
 msgid "Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis."
 msgstr "With an order from %s you choose the Teddy towel or the magic cloth set — free."
 
+msgid "Sledeći korak: izaberite peškire. Poklon se sam dodaje u korpu kad porudžbina pređe %s."
+msgstr "Next step: choose your towels. The gift is added to the cart by itself once the order passes %s."
+
 msgid "2 magične krpe"
 msgstr "2 magic cloths"
 

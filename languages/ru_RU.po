@@ -1754,6 +1754,9 @@ msgstr "К заказу от %s вы выбираете полотенце «М�
 msgid "Uz porudžbinu od %s birate peškir Meda ili set magičnih krpa — gratis."
 msgstr "К заказу от %s вы выбираете полотенце «Мишка» или набор волшебных салфеток — бесплатно."
 
+msgid "Sledeći korak: izaberite peškire. Poklon se sam dodaje u korpu kad porudžbina pređe %s."
+msgstr "Следующий шаг: выберите полотенца. Подарок сам добавится в корзину, когда заказ превысит %s."
+
 msgid "2 magične krpe"
 msgstr "2 волшебные салфетки"
 

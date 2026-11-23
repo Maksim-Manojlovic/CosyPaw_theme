@@ -82,15 +82,9 @@ if ( $hero_deal ) {
 	}
 }
 
-$hero_buy_label = $hero_deal
-	? sprintf(
-		/* translators: 1: towels in the package, 2: towels paid for, e.g. "Uzmi 3 — plati 2". */
-		__( 'Uzmi %1$d — plati %2$d', 'cosypaw' ),
-		$hero_qty,
-		$hero_pay
-	)
-	: __( 'Izaberi paket', 'cosypaw' );
-$hero_buy_price = \Theme\Catalog::format_price( (int) $selected['price'] );
+$hero_buy       = \Theme\Storefront::buy_button( $selected );
+$hero_buy_label = $hero_buy['label'];
+$hero_buy_price = $hero_buy['price'];
 
 // Crni petak takes over the opening screen on a phone (landing.css hides the
 // usual copy below 880px while .hero--bf is set); the desktop hero is as it was.

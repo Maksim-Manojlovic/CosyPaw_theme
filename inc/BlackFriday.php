@@ -1151,6 +1151,7 @@ final class BlackFriday {
 					'<p class="gift-popup__lead">%9$s</p>' .
 					'<div class="gift-popup__cards">%10$s%11$s</div>' .
 					'<p class="gift-popup__status" data-gift-status role="status" aria-live="polite"></p>' .
+					'%16$s' .
 					'<div class="gift-popup__ladder"><p class="gift-popup__ladder-title">%12$s</p><ol>%13$s</ol></div>' .
 					'<form method="dialog" class="gift-popup__later"><button type="submit">%14$s</button></form>' .
 					'<p class="gift-popup__fine">%15$s</p>' .
@@ -1176,7 +1177,46 @@ final class BlackFriday {
 					__( 'Akcija traje do %s, dok traju zalihe.', 'cosypaw' ),
 					( new \DateTimeImmutable( self::END, new \DateTimeZone( self::TIMEZONE ) ) )->format( 'j.n.' )
 				)
-			)
+			),
+			// On the cart and the checkout the gift lands in the order itself;
+			// sending the shopper back to the builder from there is a detour.
+			$on_till ? '' : self::next_step()
+		);
+	}
+
+	/**
+	 * What to do once a gift is picked: the hero's own buy button, to the
+	 * package builder, with a line saying the gift then comes by itself.
+	 *
+	 * Hidden until a pick is made (or restored); GiftPopup.js shows it. The link
+	 * goes to the front page's builder; on a page that has the builder itself
+	 * the script scrolls there instead of reloading.
+	 *
+	 * @return string
+	 */
+	private static function next_step(): string {
+		$button = Storefront::buy_button(
+			Storefront::opening_package( ( new Catalog() )->packages(), ( new Catalog() )->default_package() )
+		);
+
+		return sprintf(
+			'<div class="gift-popup__next" data-gift-next hidden>' .
+				'<p class="gift-popup__next-note">%1$s</p>' .
+				'<a href="%2$s" class="btn btn--primary gift-popup__buy" data-gift-buy>' .
+					'<span class="gift-popup__buy-label">%3$s</span><span class="gift-popup__buy-price">%4$s</span>' .
+				'</a>' .
+			'</div>',
+			esc_html(
+				sprintf(
+					/* translators: %s: formatted order value, e.g. "2.500 RSD". */
+					__( 'Sledeći korak: izaberite peškire. Poklon se sam dodaje u korpu kad porudžbina pređe %s.', 'cosypaw' ),
+					// No break between the amount and its currency.
+					str_replace( ' ', " ", Catalog::format_price( self::TIERS[ self::CHOICE_TIER ] ) )
+				)
+			),
+			esc_url( home_url( '/' ) . '#napravi-paket' ),
+			esc_html( $button['label'] ),
+			esc_html( $button['price'] )
 		);
 	}
 

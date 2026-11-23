@@ -88,13 +88,7 @@ final class Storefront {
 		}
 
 		// The package the builder opens on; every offer claim is read off it.
-		$selected = $packages[0];
-		foreach ( $packages as $pkg ) {
-			if ( $pkg['id'] === $default_pkg ) {
-				$selected = $pkg;
-				break;
-			}
-		}
+		$selected = self::opening_package( $packages, $default_pkg );
 
 		return array(
 			'products'    => $products,
@@ -106,6 +100,52 @@ final class Storefront {
 			// Read once per page: the hero, the builder and the gift banner all
 			// quote it, and they have to agree.
 			'free_min'    => Catalog::free_shipping_min(),
+		);
+	}
+
+	/**
+	 * The package the builder opens on.
+	 *
+	 * @param array<int,array<string,mixed>> $packages    Catalog::packages() output.
+	 * @param string                         $default_pkg Catalog::default_package().
+	 * @return array<string,mixed>
+	 */
+	public static function opening_package( array $packages, string $default_pkg ): array {
+		foreach ( $packages as $pkg ) {
+			if ( ( $pkg['id'] ?? '' ) === $default_pkg ) {
+				return $pkg;
+			}
+		}
+
+		return $packages[0] ?? array();
+	}
+
+	/**
+	 * The hero's buy button: "Uzmi 3 — plati 2" and the package price.
+	 *
+	 * Derived from the package the builder opens on, never typed: reprice it in
+	 * wp-admin and the button stops making the promise instead of making a false
+	 * one. Shared by the front-page hero, the Crni petak phone hero and the gift
+	 * popup, so all three say the same thing.
+	 *
+	 * @param array<string,mixed> $selected opening_package() output.
+	 * @return array{label:string,price:string}
+	 */
+	public static function buy_button( array $selected ): array {
+		$qty    = (int) ( $selected['qty'] ?? 0 );
+		$gratis = (int) ( $selected['gratis'] ?? 0 );
+		$pay    = $qty - $gratis;
+
+		return array(
+			'label' => $qty > 1 && $gratis > 0 && $pay > 0
+				? sprintf(
+					/* translators: 1: towels in the package, 2: towels paid for, e.g. "Uzmi 3 — plati 2". */
+					__( 'Uzmi %1$d — plati %2$d', 'cosypaw' ),
+					$qty,
+					$pay
+				)
+				: __( 'Izaberi paket', 'cosypaw' ),
+			'price' => Catalog::format_price( (int) ( $selected['price'] ?? 0 ) ),
 		);
 	}
 

@@ -96,6 +96,7 @@ final class BlackFridayTest extends TestCase {
 				'get_template_directory_uri' => 'https://example.test/wp-content/themes/cosypaw',
 				'trailingslashit'            => static fn( $path ) => rtrim( (string) $path, '/' ) . '/',
 				'wp_kses'                    => static fn( $html ) => $html,
+				'home_url'                   => static fn( $path = '' ) => 'https://example.test' . $path,
 			)
 		);
 		Functions\when( 'apply_filters' )->alias( static fn( $hook, $value ) => $value );
@@ -476,6 +477,11 @@ final class BlackFridayTest extends TestCase {
 		$this->assertStringContainsString( 'od 1.490 RSD', $html );
 		$this->assertStringContainsString( 'od 3.500 RSD', $html );
 		$this->assertStringContainsString( 'data-gift-fab', $html );
+
+		// After a pick: the hero's button, to the builder, hidden until then.
+		$this->assertStringContainsString( '<div class="gift-popup__next" data-gift-next hidden>', $html );
+		$this->assertStringContainsString( 'href="https://example.test/#napravi-paket"', $html );
+		$this->assertMatchesRegularExpression( '/gift-popup__buy-label">(Uzmi \d — plati \d|Izaberi paket)</', $html );
 	}
 
 	public function test_a_sold_out_colour_cannot_be_picked_in_the_popup(): void {
@@ -495,6 +501,7 @@ final class BlackFridayTest extends TestCase {
 		// On the cart it waits to be asked, and the cart has its own button.
 		$this->assertStringContainsString( 'data-gift-auto="0"', $html );
 		$this->assertStringNotContainsString( 'data-gift-fab', $html );
+		$this->assertStringNotContainsString( 'data-gift-next', $html );
 	}
 
 	public function test_the_phone_hero_shows_both_gifts_and_keeps_the_hero_button(): void {

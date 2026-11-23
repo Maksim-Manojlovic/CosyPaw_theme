@@ -332,6 +332,15 @@ final class MiniCartTest extends TestCase {
 		$this->assertStringContainsString( 'data-gift-open>Promeni poklon', $html );
 	}
 
+	public function test_the_first_steps_cloth_is_not_offered_as_a_choice(): void {
+		$gift                          = self::line( 'g', 81 );
+		$gift[ BlackFriday::ITEM_KEY ] = 'cloth:avokado-limeta';
+
+		$this->cart = new \WC_Cart( array( 'g' => $gift ) );
+
+		$this->assertStringNotContainsString( 'Promeni poklon', $this->mini_cart()->body() );
+	}
+
 	public function test_the_shell_is_not_printed_on_the_cart(): void {
 		Functions\when( 'is_cart' )->justReturn( true );
 

@@ -486,8 +486,12 @@ final class MiniCart {
 			$meta     = function_exists( 'wc_get_formatted_cart_item_data' ) ? trim( (string) wc_get_formatted_cart_item_data( $item, true ) ) : '';
 			$max      = is_callable( array( $product, 'get_max_purchase_quantity' ) ) ? (int) $product->get_max_purchase_quantity() : -1;
 
+			// Only the gift the shopper picked can be changed: the first step's
+			// single cloth is not a choice, as on the cart page.
+			$choice = $gift && 0 !== strpos( (string) $item[ BlackFriday::ITEM_KEY ], BlackFriday::SLOT_CLOTH . ':' );
+
 			$controls = $gift
-				? sprintf( '<button type="button" class="mini-cart__gift-link" data-gift-open>%s</button>', esc_html__( 'Promeni poklon', 'cosypaw' ) )
+				? ( $choice ? sprintf( '<button type="button" class="mini-cart__gift-link" data-gift-open>%s</button>', esc_html__( 'Promeni poklon', 'cosypaw' ) ) : '<span></span>' )
 				: sprintf(
 					'<div class="mini-cart__qty">' .
 						'<button type="button" data-qty="%1$d" aria-label="%2$s">&minus;</button>' .

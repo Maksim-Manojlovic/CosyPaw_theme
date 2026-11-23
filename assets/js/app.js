@@ -22,6 +22,7 @@ import { MotifColours } from './components/MotifColours.js';
 import { ColourSwatches } from './components/ColourSwatches.js';
 import { GalleryThumbs } from './components/GalleryThumbs.js';
 import { GiftPopup } from './components/GiftPopup.js';
+import { MiniCart } from './components/MiniCart.js';
 
 /**
  * Publish the sticky header's height as --header-h, which main.css turns into
@@ -97,6 +98,11 @@ const boot = () => {
 	// Crni petak: the gift picker, printed in the footer while it runs.
 	const giftPopup = document.querySelector('[data-gift-popup]');
 	if (giftPopup) new GiftPopup(giftPopup);
+
+	// The cart as a panel from the right. Published so the landing entry can
+	// tell it is there and leave the confirmation to it.
+	const miniCart = document.querySelector('[data-mini-cart]');
+	if (miniCart) window.CosyPawMiniCart = new MiniCart(miniCart);
 
 	if (document.querySelector('[data-cart-drawer]')) {
 		window.CosyPawCart = new CartDrawer(document, l10n);

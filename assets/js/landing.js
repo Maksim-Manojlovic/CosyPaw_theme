@@ -101,7 +101,9 @@ const boot = () => {
 	const $ = window.jQuery;
 	if ($) {
 		$(document.body).on('added_to_cart', (e, fragments, cartHash, $button) => {
-			if (cart) cart.toast(l10n.addedToCart || 'Dodato u korpu');
+			// The mini cart opens on the same event and is the confirmation;
+			// a toast under it would say it twice.
+			if (cart && !window.CosyPawMiniCart) cart.toast(l10n.addedToCart || 'Dodato u korpu');
 
 			const btn = $button && $button[0];
 			if (btn && !btn.dataset.cpwBusy) {

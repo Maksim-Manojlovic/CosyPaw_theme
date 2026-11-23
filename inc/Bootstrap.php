@@ -204,6 +204,13 @@ final class Bootstrap {
 	private ?BlackFriday $black_friday = null;
 
 	/**
+	 * The cart as a panel from the right (WooCommerce only).
+	 *
+	 * @var MiniCart|null
+	 */
+	private ?MiniCart $mini_cart = null;
+
+	/**
 	 * Constructor — builds and injects every sub-module.
 	 *
 	 * @param string $text_domain Theme text domain.
@@ -274,6 +281,11 @@ final class Bootstrap {
 			// Crni petak. Measured on the package pricing's number, so a gift
 			// step and the free-delivery bar always read the same cart alike.
 			$this->black_friday = new BlackFriday( $this->bundle_pricing );
+
+			// The cart pill and the header's cart icon open this instead of
+			// /cart/. It quotes the offer, the pill and the gift ladder rather
+			// than working any of them out again.
+			$this->mini_cart = new MiniCart( $this->upsell, $this->floating_cart, $this->black_friday );
 
 			// Registers a cron hook, so it has to be constructed on every
 			// request — including the one cron itself fires — not only where

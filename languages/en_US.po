@@ -1757,6 +1757,63 @@ msgstr "With an order from %s you choose the Teddy towel or the magic cloth set 
 msgid "Sledeći korak: izaberite peškire. Poklon se sam dodaje u korpu kad porudžbina pređe %s."
 msgstr "Next step: choose your towels. The gift is added to the cart by itself once the order passes %s."
 
+msgid "Učitavam korpu…"
+msgstr "Loading your cart…"
+
+msgid "Sesija je istekla — pokušajte ponovo."
+msgstr "Your session expired — please try again."
+
+msgid "Ta stavka više nije u korpi."
+msgstr "That item is no longer in the cart."
+
+msgid "Taj peškir trenutno nije u ponudi."
+msgstr "That towel is not on offer right now."
+
+msgid "Dodavanje nije uspelo — pokušajte ponovo."
+msgstr "Could not add it — please try again."
+
+msgid "Korpa je prazna"
+msgstr "Your cart is empty"
+
+msgid "Izaberite peškire za paket ili dodajte neki od ovih:"
+msgstr "Choose towels for a package, or add one of these:"
+
+msgid "(umesto %s poštarine)"
+msgstr "(instead of %s postage)"
+
+msgid "Jedan manje: %s"
+msgstr "One fewer: %s"
+
+msgid "Još jedan: %s"
+msgstr "One more: %s"
+
+msgid "Ukloni: %s"
+msgstr "Remove: %s"
+
+msgid "Sledeći peškir je gratis"
+msgstr "The next towel is free"
+
+msgid "Sledeći peškir za %s"
+msgstr "The next towel for %s"
+
+msgid "Dodajte još"
+msgstr "Add more"
+
+msgid "Dodaj u korpu: %s"
+msgstr "Add to cart: %s"
+
+msgid "+ Dodaj"
+msgstr "+ Add"
+
+msgid "Dostava: besplatna"
+msgstr "Delivery: free"
+
+msgid "Dostava: %s, plaća se kuriru"
+msgstr "Delivery: %s, paid to the courier"
+
+msgid "Završi porudžbinu"
+msgstr "Complete the order"
+
 msgid "2 magične krpe"
 msgstr "2 magic cloths"
 

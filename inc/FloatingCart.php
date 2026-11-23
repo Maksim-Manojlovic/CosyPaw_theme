@@ -87,6 +87,16 @@ final class FloatingCart {
 	}
 
 	/**
+	 * The pill, for a caller that refreshes it without a page load (the mini
+	 * cart, after a quantity change).
+	 *
+	 * @return string
+	 */
+	public function html(): string {
+		return $this->markup();
+	}
+
+	/**
 	 * The pill itself.
 	 *
 	 * @return string

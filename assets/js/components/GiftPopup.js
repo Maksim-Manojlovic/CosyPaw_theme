@@ -197,6 +197,7 @@ export class GiftPopup {
 			this.mark(choice);
 			this.say(json.data.message || '');
 			this.showNext(true);
+			document.dispatchEvent(new CustomEvent('cosypaw:gift-chosen', { detail: choice }));
 			this.refreshTill();
 		} catch {
 			this.say(this.dialog.dataset.giftError || '');
@@ -278,6 +279,11 @@ export class GiftPopup {
 		if (!builder) return;
 
 		event.preventDefault();
+		// The popup may sit over the mini cart; both make way for the builder.
+		document.querySelectorAll('dialog[open]').forEach((open) => {
+			if (open !== this.dialog && typeof open.close === 'function') open.close();
+		});
+		document.documentElement.classList.remove('has-mini-cart');
 		this.close();
 		// The page lock goes now, not when the close event comes round.
 		this.onClose();

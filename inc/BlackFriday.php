@@ -1011,6 +1011,39 @@ final class BlackFriday {
 	}
 
 	/**
+	 * Where the cart stands, for the mini cart: the ladder's sentence and how
+	 * full its bar is.
+	 *
+	 * @return array{text:string,pct:float,tier:int,covers_delivery:bool}|null Null outside the promotion or without a cart.
+	 */
+	public function summary(): ?array {
+		$cart = $this->cart();
+
+		if ( null === $cart || ! self::active() ) {
+			return null;
+		}
+
+		$amount = $this->amount( $cart );
+		$tier   = self::tier_for( $amount );
+		$gifts  = array();
+
+		foreach ( $cart->get_cart() as $item ) {
+			if ( self::is_gift( $item ) && isset( $item['data'] ) && is_callable( array( $item['data'], 'get_name' ) ) ) {
+				$gifts[] = (string) $item['data']->get_name();
+			}
+		}
+
+		return array(
+			'text'            => $this->status( $tier, $amount, $gifts ),
+			'pct'             => self::progress( $amount ),
+			'tier'            => $tier,
+			// From the first step on, the sentence names free delivery itself
+			// (or the step that wins it), so a delivery line would repeat it.
+			'covers_delivery' => $tier >= 1 && self::free_delivery_at_choice(),
+		);
+	}
+
+	/**
 	 * The sentence under the ladder's heading.
 	 *
 	 * @param int               $tier   Step reached.

@@ -326,6 +326,42 @@ if ( ! class_exists( 'WC_Cart' ) ) {
 		}
 
 		/**
+		 * A line's subtotal, formatted.
+		 *
+		 * @param \WC_Product $product  Product.
+		 * @param int         $quantity Quantity.
+		 * @return string
+		 */
+		public function get_product_subtotal( $product, $quantity ): string {
+			return wc_price( (float) $product->get_price() * (int) $quantity );
+		}
+
+		/**
+		 * The fees booked, as WooCommerce's fee objects.
+		 *
+		 * @return array<int,object>
+		 */
+		public function get_fees(): array {
+			return array_map(
+				static fn( array $fee ): object => (object) array(
+					'name'   => $fee['name'],
+					'amount' => $fee['amount'],
+					'total'  => $fee['amount'],
+				),
+				$this->fees
+			);
+		}
+
+		/**
+		 * A hash of the contents.
+		 *
+		 * @return string
+		 */
+		public function get_cart_hash(): string {
+			return md5( implode( ',', array_keys( $this->contents ) ) );
+		}
+
+		/**
 		 * Record a fee.
 		 *
 		 * @param string $name    Fee label.

@@ -531,6 +531,37 @@ final class Upsell {
 	}
 
 	/**
+	 * What the mini cart offers: the next towel's price, where delivery
+	 * stands, the courier's price, and the first few motifs not in the cart.
+	 *
+	 * The same answers the cart page's strip gives, so the two cannot quote
+	 * different prices for the same next towel.
+	 *
+	 * @param int $limit How many motifs.
+	 * @return array{towel:array{price:int,saving:int}|null,shipping:array<string,int|string>|null,postage:string,motifs:array<int,array<string,mixed>>,unit:int}
+	 */
+	public function drawer_offer( int $limit ): array {
+		return array(
+			'towel'    => $this->next_towel(),
+			'shipping' => $this->free_shipping(),
+			'postage'  => $this->postage(),
+			'motifs'   => array_slice( $this->offer_motifs(), 0, max( 0, $limit ), true ),
+			'unit'     => $this->unit_price(),
+		);
+	}
+
+	/**
+	 * Whether a product is one of the motifs on sale — the only products the
+	 * mini cart's "Dodaj" will add.
+	 *
+	 * @param int $product_id Product id.
+	 * @return bool
+	 */
+	public function offers( int $product_id ): bool {
+		return isset( $this->motifs()[ $product_id ] );
+	}
+
+	/**
 	 * The motifs the strip offers: the catalogue less what the cart holds.
 	 *
 	 * Anything taken out of the cart this session leads the strip. Removing a

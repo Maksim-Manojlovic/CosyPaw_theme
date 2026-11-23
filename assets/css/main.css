@@ -1748,3 +1748,467 @@ html.has-gift-popup {
 		animation: none;
 	}
 }
+
+/* ==========================================================================
+   MINI CART
+   Theme\MiniCart: a native <dialog> sliding in from the right, full height,
+   the width of a phone (all of it on a phone). The contents are fetched over
+   wc-ajax; the head stays, the middle scrolls, the foot — total and the
+   checkout button — never leaves the bottom of the screen.
+   ========================================================================== */
+.mini-cart {
+	width: min(420px, 100vw);
+	max-width: 100vw;
+	height: 100dvh;
+	max-height: 100dvh;
+	margin: 0 0 0 auto;
+	padding: 0;
+	border: none;
+	background: var(--cream);
+	color: var(--ink);
+	box-shadow: var(--shadow-lg);
+	overflow: hidden;
+}
+
+.mini-cart[open] {
+	animation: mini-cart-in 0.22s ease-out;
+}
+
+@keyframes mini-cart-in {
+	from { transform: translateX(40px); opacity: 0; }
+	to { transform: none; opacity: 1; }
+}
+
+.mini-cart::backdrop {
+	background: rgba(62, 51, 42, 0.45);
+}
+
+html.has-mini-cart {
+	overflow: hidden;
+}
+
+.mini-cart__panel {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.mini-cart__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 12px 12px 20px;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+
+.mini-cart__title {
+	margin: 0;
+	font-size: 22px;
+	line-height: 1.2;
+}
+
+.mini-cart__count {
+	color: var(--muted);
+	font-size: 17px;
+}
+
+.mini-cart__head form {
+	margin: 0;
+}
+
+.mini-cart__close {
+	width: 44px;
+	height: 44px;
+	border: none;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--ink);
+	font-size: 30px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.mini-cart__close:hover {
+	background: var(--cream2);
+}
+
+.mini-cart__body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-height: 0;
+	transition: opacity 0.15s ease;
+}
+
+.mini-cart.is-busy .mini-cart__body {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.mini-cart__loading {
+	margin: 0;
+	padding: 28px 20px;
+	color: var(--muted);
+	text-align: center;
+}
+
+.mini-cart__scroll {
+	flex: 1;
+	min-height: 0;
+	padding: 14px 16px 18px;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+.mini-cart__error {
+	margin: 0 0 12px;
+	padding: 10px 12px;
+	border-radius: var(--radius-sm);
+	background: #fbe9e4;
+	color: var(--claydk);
+	font-weight: 700;
+	font-size: 14px;
+}
+
+/* --- Progress: the gift ladder and free delivery --- */
+.mini-cart__progress {
+	margin: 0 0 10px;
+	padding: 12px 14px;
+	border-radius: var(--radius-md);
+	background: #fff;
+	box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.mini-cart__progress--gift {
+	border: 2px dashed var(--sandmid);
+	box-shadow: none;
+}
+
+.mini-cart__progress-label {
+	display: inline-block;
+	margin: 0 0 6px;
+	padding: 3px 10px;
+	border-radius: var(--radius-pill);
+	background: var(--ink);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.mini-cart__progress-text {
+	margin: 0 0 8px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.mini-cart__bar {
+	display: block;
+	height: 7px;
+	border-radius: var(--radius-pill);
+	background: var(--cream2);
+	overflow: hidden;
+}
+
+.mini-cart__bar span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--clay);
+}
+
+.mini-cart__gift-link {
+	padding: 0;
+	border: none;
+	background: none;
+	color: var(--claydk);
+	font: inherit;
+	font-weight: 800;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
+}
+
+/* --- Lines --- */
+.mini-cart__lines {
+	margin: 4px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mini-cart__line {
+	display: grid;
+	grid-template-columns: 72px minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: start;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--line);
+}
+
+.mini-cart__thumb {
+	display: block;
+	width: 72px;
+	height: 72px;
+	border-radius: var(--radius-sm);
+	overflow: hidden;
+	background: var(--cream2);
+}
+
+.mini-cart__thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.mini-cart__info {
+	min-width: 0;
+}
+
+.mini-cart__name {
+	display: block;
+	color: var(--ink);
+	font-family: var(--font-heading);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.25;
+	text-decoration: none;
+}
+
+.mini-cart__meta {
+	margin: 2px 0 0;
+	color: var(--muted);
+	font-size: 12.5px;
+	line-height: 1.35;
+}
+
+.mini-cart__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-top: 8px;
+}
+
+.mini-cart__price {
+	font-weight: 800;
+	white-space: nowrap;
+}
+
+.mini-cart__price del {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.mini-cart__qty {
+	display: inline-flex;
+	align-items: center;
+	border-radius: var(--radius-pill);
+	background: #fff;
+	box-shadow: inset 0 0 0 1.5px var(--line-control);
+}
+
+.mini-cart__qty button {
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 50%;
+	background: none;
+	color: var(--ink);
+	font-size: 19px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.mini-cart__qty button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+.mini-cart__qty span {
+	min-width: 22px;
+	font-weight: 800;
+	text-align: center;
+}
+
+.mini-cart__remove {
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 50%;
+	background: none;
+	color: var(--muted);
+	cursor: pointer;
+}
+
+.mini-cart__remove:hover {
+	background: var(--cream2);
+	color: var(--ink);
+}
+
+.mini-cart__line.is-gift {
+	grid-template-columns: 72px minmax(0, 1fr);
+}
+
+.mini-cart__fees {
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: 14px;
+}
+
+.mini-cart__fees li {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	color: var(--sage);
+	font-weight: 700;
+}
+
+/* --- Picks --- */
+.mini-cart__picks {
+	margin: 18px 0 0;
+}
+
+.mini-cart__picks-title {
+	margin: 0 0 8px;
+	font-family: var(--font-heading);
+	font-size: 16px;
+	font-weight: 800;
+}
+
+.mini-cart__picks ul {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mini-cart__pick {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+	padding: 6px 6px 8px;
+	border-radius: var(--radius-md);
+	background: #fff;
+	box-shadow: inset 0 0 0 1px var(--line);
+	text-align: center;
+}
+
+.mini-cart__pick img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	border-radius: var(--radius-sm);
+	object-fit: cover;
+	background: var(--cream2);
+}
+
+.mini-cart__pick-name {
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.mini-cart__pick-price {
+	font-size: 12.5px;
+	font-weight: 800;
+	color: var(--claydk);
+}
+
+.mini-cart__pick-price del {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.mini-cart__pick-add {
+	width: 100%;
+	margin-top: auto;
+	padding: 7px 4px;
+	border: none;
+	border-radius: var(--radius-pill);
+	background: var(--sand);
+	color: var(--claydk);
+	font-family: var(--font-heading);
+	font-size: 13px;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.mini-cart__pick-add:hover {
+	background: var(--sandmid);
+}
+
+/* --- Empty --- */
+.mini-cart__empty {
+	padding: 8px 4px 14px;
+	text-align: center;
+	color: var(--muted);
+}
+
+.mini-cart__empty-title {
+	margin: 0 0 4px;
+	color: var(--ink);
+	font-family: var(--font-heading);
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.mini-cart__empty p {
+	margin: 0;
+}
+
+/* --- Foot --- */
+.mini-cart__foot {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+	border-top: 1px solid var(--line);
+	background: #fff;
+}
+
+.mini-cart__total {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	font-family: var(--font-heading);
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.mini-cart__delivery {
+	margin: -4px 0 2px;
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.mini-cart__checkout {
+	justify-content: center;
+	width: 100%;
+	padding: 14px 20px;
+	font-size: 17px;
+}
+
+.mini-cart__view {
+	align-self: center;
+	padding: 4px 8px;
+	color: var(--claydk);
+	font-size: 14px;
+	font-weight: 700;
+	text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mini-cart[open] {
+		animation: none;
+	}
+}

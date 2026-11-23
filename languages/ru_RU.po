@@ -1757,6 +1757,63 @@ msgstr "К заказу от %s вы выбираете полотенце «М�
 msgid "Sledeći korak: izaberite peškire. Poklon se sam dodaje u korpu kad porudžbina pređe %s."
 msgstr "Следующий шаг: выберите полотенца. Подарок сам добавится в корзину, когда заказ превысит %s."
 
+msgid "Učitavam korpu…"
+msgstr "Загружаю корзину…"
+
+msgid "Sesija je istekla — pokušajte ponovo."
+msgstr "Сессия истекла — попробуйте ещё раз."
+
+msgid "Ta stavka više nije u korpi."
+msgstr "Этого товара уже нет в корзине."
+
+msgid "Taj peškir trenutno nije u ponudi."
+msgstr "Это полотенце сейчас недоступно."
+
+msgid "Dodavanje nije uspelo — pokušajte ponovo."
+msgstr "Не удалось добавить — попробуйте ещё раз."
+
+msgid "Korpa je prazna"
+msgstr "Корзина пуста"
+
+msgid "Izaberite peškire za paket ili dodajte neki od ovih:"
+msgstr "Выберите полотенца для набора или добавьте одно из этих:"
+
+msgid "(umesto %s poštarine)"
+msgstr "(вместо %s за доставку)"
+
+msgid "Jedan manje: %s"
+msgstr "На одно меньше: %s"
+
+msgid "Još jedan: %s"
+msgstr "Ещё одно: %s"
+
+msgid "Ukloni: %s"
+msgstr "Удалить: %s"
+
+msgid "Sledeći peškir je gratis"
+msgstr "Следующее полотенце бесплатно"
+
+msgid "Sledeći peškir za %s"
+msgstr "Следующее полотенце за %s"
+
+msgid "Dodajte još"
+msgstr "Добавьте ещё"
+
+msgid "Dodaj u korpu: %s"
+msgstr "В корзину: %s"
+
+msgid "+ Dodaj"
+msgstr "+ Добавить"
+
+msgid "Dostava: besplatna"
+msgstr "Доставка: бесплатно"
+
+msgid "Dostava: %s, plaća se kuriru"
+msgstr "Доставка: %s, оплачивается курьеру"
+
+msgid "Završi porudžbinu"
+msgstr "Оформить заказ"
+
 msgid "2 magične krpe"
 msgstr "2 волшебные салфетки"
 

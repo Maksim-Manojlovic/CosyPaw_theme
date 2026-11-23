@@ -1615,6 +1615,50 @@ html.has-gift-popup {
 	display: none;
 }
 
+/* The next step once a gift is picked: the hero's buy button, to the builder.
+   Styled here rather than borrowing .hero__buy, which lives in landing.css and
+   is not loaded anywhere but the front page. */
+.gift-popup__next {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin: 12px 0 0;
+	animation: pop 0.25s ease;
+}
+
+.gift-popup__next[hidden] {
+	display: none;
+}
+
+.gift-popup__next-note {
+	max-width: 38ch;
+	margin: 0;
+	color: var(--muted);
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.gift-popup__buy {
+	flex-direction: column;
+	justify-content: center;
+	gap: 1px;
+	width: 100%;
+	max-width: 340px;
+	padding: 12px 24px;
+	line-height: 1.25;
+	text-align: center;
+}
+
+.gift-popup__buy-label {
+	font-size: 17px;
+}
+
+.gift-popup__buy-price {
+	font-size: 15px;
+	font-weight: 700;
+}
+
 .gift-popup__ladder {
 	margin: 16px 0 0;
 	padding: 12px 14px;
@@ -1699,6 +1743,7 @@ html.has-gift-popup {
 
 @media (prefers-reduced-motion: reduce) {
 	.gift-popup[open],
+	.gift-popup__next,
 	.gift-fab {
 		animation: none;
 	}

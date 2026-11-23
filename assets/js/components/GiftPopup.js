@@ -139,6 +139,12 @@ export class GiftPopup {
 
 		if (!(event.target instanceof Element)) return;
 
+		const buy = event.target.closest('[data-gift-buy]');
+		if (buy) {
+			this.toBuilder(event);
+			return;
+		}
+
 		const button = event.target.closest('[data-gift-pick]');
 		if (button) this.choose(button.dataset.giftPick || '');
 	}
@@ -190,6 +196,7 @@ export class GiftPopup {
 			store.set(CHOICE_KEY, JSON.stringify({ promo: this.promo, ...choice }));
 			this.mark(choice);
 			this.say(json.data.message || '');
+			this.showNext(true);
 			this.refreshTill();
 		} catch {
 			this.say(this.dialog.dataset.giftError || '');
@@ -221,6 +228,7 @@ export class GiftPopup {
 	 */
 	mark(choice) {
 		const chosenLabel = this.dialog.dataset.giftChosen || '';
+		this.showNext(false);
 
 		this.dialog.querySelectorAll('[data-gift-card]').forEach((card) => {
 			const chosen = card.dataset.giftCard === choice.pick;
@@ -239,6 +247,43 @@ export class GiftPopup {
 				input.checked = true;
 				input.dispatchEvent(new Event('change', { bubbles: true }));
 			}
+		}
+	}
+
+	/**
+	 * Show the next step (the buy button) once a gift is picked.
+	 *
+	 * @param {boolean} reveal Scroll it into view: true right after a pick,
+	 *                         when it appears under the visitor's thumb.
+	 */
+	showNext(reveal) {
+		const next = this.dialog.querySelector('[data-gift-next]');
+		if (!next) return;
+
+		next.hidden = false;
+		if (reveal) {
+			const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			next.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+		}
+	}
+
+	/**
+	 * The buy button: on a page that has the package builder, close the popup
+	 * and scroll to it rather than reload the front page.
+	 *
+	 * @param {MouseEvent} event
+	 */
+	toBuilder(event) {
+		const builder = document.getElementById('napravi-paket');
+		if (!builder) return;
+
+		event.preventDefault();
+		this.close();
+		// The page lock goes now, not when the close event comes round.
+		this.onClose();
+		builder.scrollIntoView({ block: 'start' });
+		if (window.history && window.history.replaceState) {
+			window.history.replaceState(null, '', '#napravi-paket');
 		}
 	}
 

@@ -263,11 +263,34 @@ final class PagesTest extends TestCase {
 	}
 
 	/**
-	 * A shop whose front page is the posts list has no page to reword.
+	 * The live shop shows the latest posts as its front page, so Yoast keeps
+	 * the description in its settings, not on a page.
 	 *
 	 * @return void
 	 */
-	public function test_without_a_static_front_page_there_is_nothing_to_reword(): void {
+	public function test_with_latest_posts_as_the_front_page_the_yoast_setting_is_replaced(): void {
+		$this->options['wpseo_titles'] = array(
+			'title-home-wpseo'    => 'Naslov',
+			'metadesc-home-wpseo' => 'Tražite najbolje dečije peškire? Naš ručno rađeni peskir od mikrofibera je mekan, upijajući i bezbedan. Srbija ih prepoznaje po kvalitetu. Naručite odmah!',
+		);
+
+		$this->assertSame( 1, ( new Pages() )->reword_front_page() );
+		$this->assertSame( Pages::FRONT_DESCRIPTION, $this->options['wpseo_titles']['metadesc-home-wpseo'] );
+		$this->assertSame( 'Naslov', $this->options['wpseo_titles']['title-home-wpseo'] );
+
+		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
+
+		$this->options['wpseo_titles']['metadesc-home-wpseo'] = 'Naš opis početne';
+		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
+		$this->assertSame( 'Naš opis početne', $this->options['wpseo_titles']['metadesc-home-wpseo'] );
+	}
+
+	/**
+	 * Without Yoast there is nothing to reword.
+	 *
+	 * @return void
+	 */
+	public function test_without_yoast_there_is_nothing_to_reword(): void {
 		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
 	}
 }

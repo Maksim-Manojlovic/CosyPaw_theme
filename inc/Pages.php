@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY or reworded (REWORDED), so
 	 * installs that already ran ensure() look again.
 	 */
-	public const VERSION = 8;
+	public const VERSION = 9;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -144,6 +144,11 @@ final class Pages {
 	private const FRONT_OLD_DESCRIPTION = 'Tražite najbolje dečije peškire? Naš ručno rađeni peskir od mikrofibera je mekan, upijajući i bezbedan. Srbija ih prepoznaje po kvalitetu. Naručite odmah!';
 
 	/**
+	 * The key in Yoast's `wpseo_titles` option that holds the home description.
+	 */
+	private const HOME_SETTING = 'metadesc-home-wpseo';
+
+	/**
 	 * What replaces it. Says what the towels are and what buying one involves,
 	 * in the shop's own words (see the front page's FAQ).
 	 */
@@ -204,23 +209,33 @@ final class Pages {
 	 * Google was showing.
 	 *
 	 * Same rule as reword(): only while the field holds exactly the old text,
-	 * so a description the shop has written since is never overwritten. The
-	 * front page is a WordPress page, so Yoast keeps its description as post
-	 * meta like any other.
+	 * so a description the shop has written since is never overwritten. Where
+	 * Yoast keeps it depends on what the front page is: a static page's
+	 * description is post meta like any other; with "latest posts" as the front
+	 * page — the live shop — it is the `metadesc-home-wpseo` setting.
 	 *
 	 * @return int 1 when the description was replaced, else 0.
 	 */
 	public function reword_front_page(): int {
 		$id = (int) get_option( 'page_on_front' );
-		if ( $id < 1 ) {
+
+		if ( $id > 0 ) {
+			if ( self::FRONT_OLD_DESCRIPTION !== (string) get_post_meta( $id, '_yoast_wpseo_metadesc', true ) ) {
+				return 0;
+			}
+
+			update_post_meta( $id, '_yoast_wpseo_metadesc', self::FRONT_DESCRIPTION );
+
+			return 1;
+		}
+
+		$titles = get_option( 'wpseo_titles' );
+		if ( ! is_array( $titles ) || self::FRONT_OLD_DESCRIPTION !== ( $titles[ self::HOME_SETTING ] ?? '' ) ) {
 			return 0;
 		}
 
-		if ( self::FRONT_OLD_DESCRIPTION !== (string) get_post_meta( $id, '_yoast_wpseo_metadesc', true ) ) {
-			return 0;
-		}
-
-		update_post_meta( $id, '_yoast_wpseo_metadesc', self::FRONT_DESCRIPTION );
+		$titles[ self::HOME_SETTING ] = self::FRONT_DESCRIPTION;
+		update_option( 'wpseo_titles', $titles );
 
 		return 1;
 	}

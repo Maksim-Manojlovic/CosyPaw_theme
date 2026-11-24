@@ -151,35 +151,22 @@ final class SeoTest extends TestCase {
 	}
 
 	/**
-	 * hreflang is the one thing Yoast (free) never writes, and the site serves
-	 * three languages off every URL — it has to survive the plugin.
+	 * hreflang pointed at ?lang= URLs that canonicalise to the bare address,
+	 * and handed Google an English copy of the front page to index. There is
+	 * none, with or without a plugin.
 	 *
 	 * @return void
 	 */
-	public function test_with_a_plugin_hreflang_is_still_emitted(): void {
+	public function test_no_hreflang_is_emitted(): void {
+		$this->assertStringNotContainsString( 'hreflang', $this->head() );
+
 		Filters\expectApplied( 'cosypaw_seo_plugin_active' )->andReturn( true );
 
-		$language = new class() {
-			/** @return string[] */
-			public function codes(): array {
-				return array( 'sr', 'en', 'ru' );
-			}
-
-			public function locale_for( string $code ): string {
-				return array( 'sr' => 'sr_RS', 'en' => 'en_US', 'ru' => 'ru_RU' )[ $code ];
-			}
-		};
-		Functions\when( 'cosypaw_language' )->justReturn( $language );
-
-		$html = $this->head();
-
-		foreach ( array( 'sr-RS', 'en-US', 'ru-RU', 'x-default' ) as $tag ) {
-			$this->assertStringContainsString( 'hreflang="' . $tag . '"', $html );
-		}
+		$this->assertStringNotContainsString( 'hreflang', $this->head() );
 	}
 
 	/**
-	 * The master switch still silences everything, hreflang included.
+	 * The master switch still silences everything.
 	 *
 	 * @return void
 	 */

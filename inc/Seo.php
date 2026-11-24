@@ -1,26 +1,30 @@
 <?php
 /**
- * SEO — meta description, social cards, hreflang and structured data.
+ * SEO — meta description, social cards and structured data.
  *
  * The theme previously emitted none of this. `title-tag` support was the only
- * SEO surface in the codebase, which left three concrete gaps:
+ * SEO surface in the codebase, which left two concrete gaps:
  *
  *  1. No meta description, so search engines wrote their own snippet from
  *     whatever text they found first.
  *  2. No Open Graph or Twitter tags. The shop sells through Instagram DMs, so
  *     every shared link rendered as a bare URL with no image or description.
- *  3. No hreflang, despite the site serving three languages off the same URLs
- *     via ?lang=. Search engines saw three different pages at one address with
- *     nothing to say they were translations of each other.
+ *
+ * There is deliberately no hreflang. The site serves three languages off one
+ * URL via ?lang= and a cookie, and Yoast canonicalises every variant to the
+ * bare URL, so hreflang pointed at addresses that declared themselves
+ * duplicates — and handed crawlers a list of ?lang= URLs to index. Google did:
+ * an English-bodied copy of the front page, under the Serbian title and
+ * description, turned up in the results with a snippet lifted from the page.
+ * The variants are one page; the canonical says so.
  *
  * Deliberately narrow: this is not a replacement for an SEO plugin. The live
  * shop runs Yoast, and for months both emitted a description, a set of og:*
  * tags and an Organization/WebSite graph — two of each on every page, with the
  * theme's description contradicting the one typed into Yoast. When an SEO
  * plugin is active it now owns all of that; the theme keeps only what Yoast
- * (free) does not do: hreflang for the ?lang= variants, and the ProductGroup
- * and FAQPage nodes for the front page. `cosypaw_seo_enabled` still stands the
- * whole module down.
+ * (free) does not do: the ProductGroup and FAQPage nodes for the front page.
+ * `cosypaw_seo_enabled` still stands the whole module down.
  *
  * @package CosyPaw
  */
@@ -84,7 +88,6 @@ final class Seo {
 			$this->render_social();
 		}
 
-		$this->render_hreflang();
 		$this->render_schema( $plugin );
 	}
 
@@ -246,44 +249,6 @@ final class Seo {
 		$permalink = is_singular() ? get_permalink() : home_url( add_query_arg( array() ) );
 
 		return is_string( $permalink ) && '' !== $permalink ? $permalink : home_url( '/' );
-	}
-
-	/* ---------------------------------------------------------------------
-	 * hreflang
-	 * ------------------------------------------------------------------ */
-
-	/**
-	 * Declare the sr/en/ru variants of the current URL as translations.
-	 *
-	 * Without these, three languages served off one URL look to a crawler like
-	 * one page whose content keeps changing.
-	 *
-	 * @return void
-	 */
-	private function render_hreflang(): void {
-		if ( ! function_exists( 'cosypaw_language' ) ) {
-			return;
-		}
-
-		$language = cosypaw_language();
-		$base     = $this->current_url();
-
-		foreach ( $language->codes() as $code ) {
-			// BCP-47 wants a hyphen; WordPress locales use an underscore.
-			$tag = str_replace( '_', '-', $language->locale_for( $code ) );
-
-			printf(
-				'<link rel="alternate" hreflang="%1$s" href="%2$s">' . "\n",
-				esc_attr( $tag ),
-				esc_url( add_query_arg( 'lang', $code, $base ) )
-			);
-		}
-
-		// The unparameterised URL serves the default language.
-		printf(
-			'<link rel="alternate" hreflang="x-default" href="%s">' . "\n",
-			esc_url( remove_query_arg( 'lang', $base ) )
-		);
 	}
 
 	/* ---------------------------------------------------------------------

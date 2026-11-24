@@ -44,6 +44,7 @@ require_once dirname( __DIR__ ) . '/inc/FloatingCart.php';
 require_once dirname( __DIR__ ) . '/inc/Upsell.php';
 require_once dirname( __DIR__ ) . '/inc/ShopStrings.php';
 require_once dirname( __DIR__ ) . '/inc/Seo.php';
+require_once dirname( __DIR__ ) . '/inc/SeoFallbacks.php';
 require_once dirname( __DIR__ ) . '/inc/Pages.php';
 require_once dirname( __DIR__ ) . '/inc/NavMenu.php';
 require_once dirname( __DIR__ ) . '/inc/ProductLine.php';

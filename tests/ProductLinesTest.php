@@ -166,10 +166,10 @@ namespace Theme\Tests {
 		public function test_it_creates_every_pillow_in_its_own_category(): void {
 			$this->assertSame( count( Pillows::ITEMS ), ( new Pillows() )->ensure() );
 
-			$this->assertCount( 12, \WC_Product_Simple::$saved );
+			$this->assertCount( 13, \WC_Product_Simple::$saved );
 			foreach ( \WC_Product_Simple::$saved as $id => $props ) {
 				$this->assertSame( array( 61 ), $props['category_ids'] );
-				$this->assertSame( (string) Pillows::PRICE, $props['regular_price'] );
+				$this->assertSame( (string) ( str_contains( (string) $props['slug'], '-premium-' ) ? Pillows::PREMIUM_PRICE : Pillows::PRICE ), $props['regular_price'] );
 				$this->assertSame( 'publish', $props['status'] );
 				$this->assertNotSame( '', $this->meta[ $id ]['_yoast_wpseo_title'] );
 				$this->assertNotSame( '', $this->meta[ $id ]['_yoast_wpseo_metadesc'] );
@@ -177,6 +177,7 @@ namespace Theme\Tests {
 
 			$this->assertSame( array_keys( Pillows::ITEMS ), array_keys( $this->options[ Pillows::MAP_OPTION ] ) );
 			$this->assertSame( 1599, Pillows::PRICE );
+			$this->assertSame( 1890, Pillows::PREMIUM_PRICE );
 		}
 
 		/**
@@ -190,6 +191,11 @@ namespace Theme\Tests {
 
 			$flowers = 0;
 			foreach ( \WC_Product_Simple::$saved as $props ) {
+				// The premium Šarenko has a description of its own, see below.
+				if ( str_contains( (string) $props['slug'], '-premium-' ) ) {
+					continue;
+				}
+
 				$flower   = str_contains( (string) $props['slug'], '-cvetic-' );
 				$flowers += (int) $flower;
 
@@ -199,6 +205,34 @@ namespace Theme\Tests {
 			}
 
 			$this->assertSame( 4, $flowers );
+		}
+
+		/**
+		 * The premium Šarenko is one product in a group of its own, at the
+		 * premium price, with its own description (no beak, leaf or loop) and
+		 * a second photograph in its gallery.
+		 *
+		 * @return void
+		 */
+		public function test_the_premium_sarenko_is_its_own_shape_at_its_own_price(): void {
+			$item = Pillows::ITEMS['sarenko'];
+
+			$this->assertSame( Pillows::RAINBOW, $item['group'] );
+			$this->assertSame( 1890, $item['price'] );
+			$this->assertGreaterThan( Pillows::PRICE, $item['price'] );
+			$this->assertCount( 1, $item['gallery'] );
+			$this->assertSame( 1, count( array_filter( Pillows::ITEMS, static fn( array $i ): bool => Pillows::RAINBOW === $i['group'] ) ) );
+
+			foreach ( array( 'kljun', 'listić', 'omčic', 'cm' ) as $promise ) {
+				$this->assertStringNotContainsString( $promise, $item['description'] );
+				$this->assertStringNotContainsString( $promise, $item['short'] );
+			}
+
+			( new Pillows() )->ensure();
+			$made = array_values( array_filter( \WC_Product_Simple::$saved, static fn( array $p ): bool => 'cuddle-puff-premium-jastuk-sarenko' === $p['slug'] ) );
+			$this->assertCount( 1, $made );
+			$this->assertSame( '1890', $made[0]['regular_price'] );
+			$this->assertSame( $item['description'], $made[0]['description'] );
 		}
 
 		/**
@@ -226,7 +260,7 @@ namespace Theme\Tests {
 		 */
 		public function test_each_line_runs_once_per_version_on_its_own(): void {
 			( new Pillows() )->maybe_ensure();
-			$this->assertCount( 12, \WC_Product_Simple::$saved );
+			$this->assertCount( 13, \WC_Product_Simple::$saved );
 			$this->assertArrayNotHasKey( LongTowels::MAP_OPTION, $this->options );
 
 			\WC_Product_Simple::$saved = array();

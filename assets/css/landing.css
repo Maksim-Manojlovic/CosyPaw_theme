@@ -2075,6 +2075,15 @@ a.testimonial__meta:focus-visible {
 	}
 }
 
+/* Four designs (the pillows' three shapes plus the premium one): one row on
+   desktop; below that the default two-by-two grid already fits. */
+@media (min-width: 981px) {
+	.swatch-cards--four {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		max-width: var(--maxw-content);
+	}
+}
+
 .swatch-card {
 	display: flex;
 	flex-direction: column;

@@ -486,7 +486,7 @@ $hero_bf = class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommer
 					echo esc_html(
 						sprintf(
 							/* translators: %s: formatted price of one pillow. */
-							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu.', 'cosypaw' ),
+							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu.', 'cosypaw' ),
 							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 						)
 					);

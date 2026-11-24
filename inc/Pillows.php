@@ -41,7 +41,7 @@ final class Pillows extends ProductLine {
 	/**
 	 * Bump when a product is added to ITEMS.
 	 */
-	public const VERSION = 3;
+	public const VERSION = 4;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -85,6 +85,7 @@ final class Pillows extends ProductLine {
 	public const ROUND   = 'kruzic';
 	public const SQUARE  = 'kockasti';
 	public const FLOWER  = 'cvetic';
+	public const SMILEY  = 'smajli';
 	public const RAINBOW = 'sarenko';
 
 	/**
@@ -104,6 +105,12 @@ final class Pillows extends ProductLine {
 	 * lists: no eyes, beak, leaf, trimmed edge or hanging loop.
 	 */
 	private const FLOWER_DESCRIPTION = 'Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma.';
+
+	/**
+	 * Long description of the Smajli: a flower whose round centre is an embroidered
+	 * smiling face. No beak, leaf, trimmed edge or hanging loop; no size or fibre.
+	 */
+	private const SMILEY_DESCRIPTION = 'Cuddle Puff jastuk Smajli je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom na kojoj je vezeno nasmejano lice — okice, osmeh i rumeni obrazi. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi osmeh u svaki kutak doma.';
 
 	/**
 	 * Long description of the premium Šarenko: a flower of five colourful
@@ -283,7 +290,72 @@ final class Pillows extends ProductLine {
 			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Sivi | Jastuk u Obliku Cveta',
 			'seo_description' => 'Sivi Cuddle Puff jastuk u obliku cveta, sa belom sredinom. Mekan plišani jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
 		),
-		'sarenko'          => array(
+		'smajli-zuti'     => array(
+			'name'            => 'Cuddle Puff jastuk Smajli, žuti',
+			'slug'            => 'cuddle-puff-jastuk-smajli-zuti',
+			'group'           => self::SMILEY,
+			'color'           => 'Žuta',
+			'swatch'          => '#f2b705',
+			'image'           => 'cuddle-puff-jastuk-smajli-zuti.webp',
+			'alt'             => 'Žuti Cuddle Puff jastuk Smajli u obliku cveta sa krem licem, vezenim okicama i osmehom, na sofi pored karirastog jastuka',
+			'short'           => 'Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u veseloj žutoj boji. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::SMILEY_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Smajli, Žuti | Jastuk u Obliku Cveta',
+			'seo_description' => 'Žuti Cuddle Puff jastuk Smajli u obliku cveta, sa vezenim nasmejanim licem. Mekan plišani jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'smajli-beli'     => array(
+			'name'            => 'Cuddle Puff jastuk Smajli, beli',
+			'slug'            => 'cuddle-puff-jastuk-smajli-beli',
+			'group'           => self::SMILEY,
+			'color'           => 'Bela',
+			'swatch'          => '#f3eee4',
+			'image'           => 'cuddle-puff-jastuk-smajli-beli.webp',
+			'alt'             => 'Beli Cuddle Puff jastuk Smajli u obliku cveta sa žutom sredinom i vezenim nasmejanim licem, na sivoj sofi pored žutog jastuka',
+			'short'           => 'Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u beloj boji, sa žutom sredinom. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::SMILEY_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Smajli, Beli | Jastuk u Obliku Cveta',
+			'seo_description' => 'Beli Cuddle Puff jastuk Smajli u obliku cveta, sa vezenim nasmejanim licem. Mekan plišani jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'smajli-roze'     => array(
+			'name'            => 'Cuddle Puff jastuk Smajli, roze',
+			'slug'            => 'cuddle-puff-jastuk-smajli-roze',
+			'group'           => self::SMILEY,
+			'color'           => 'Roze',
+			'swatch'          => '#e08aa0',
+			'image'           => 'cuddle-puff-jastuk-smajli-roze.webp',
+			'alt'             => 'Roze Cuddle Puff jastuk Smajli u obliku cveta sa krem licem i vezenim osmehom, na sofi pored jastuka sa šapicama',
+			'short'           => 'Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u nežnoj roze boji. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::SMILEY_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Smajli, Roze | Jastuk u Obliku Cveta',
+			'seo_description' => 'Roze Cuddle Puff jastuk Smajli u obliku cveta, sa vezenim nasmejanim licem. Mekan plišani jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'smajli-braon'    => array(
+			'name'            => 'Cuddle Puff jastuk Smajli, braon',
+			'slug'            => 'cuddle-puff-jastuk-smajli-braon',
+			'group'           => self::SMILEY,
+			'color'           => 'Braon',
+			'swatch'          => '#b98a56',
+			'image'           => 'cuddle-puff-jastuk-smajli-braon.webp',
+			'alt'             => 'Braon Cuddle Puff jastuk Smajli u obliku cveta sa krem licem i vezenim osmehom, na sofi pored karirastog jastuka',
+			'short'           => 'Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u toploj braon boji. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::SMILEY_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Smajli, Braon | Jastuk u Obliku Cveta',
+			'seo_description' => 'Braon Cuddle Puff jastuk Smajli u obliku cveta, sa vezenim nasmejanim licem. Mekan plišani jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'smajli-lila'     => array(
+			'name'            => 'Cuddle Puff jastuk Smajli, lila',
+			'slug'            => 'cuddle-puff-jastuk-smajli-lila',
+			'group'           => self::SMILEY,
+			'color'           => 'Lila',
+			'swatch'          => '#b79fd3',
+			'image'           => 'cuddle-puff-jastuk-smajli-lila.webp',
+			'alt'             => 'Lila Cuddle Puff jastuk Smajli u obliku cveta sa krem licem i vezenim osmehom, na sofi pored lila karirastog jastuka',
+			'short'           => 'Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u nežnoj lila boji. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::SMILEY_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Jastuk Smajli, Lila | Jastuk u Obliku Cveta',
+			'seo_description' => 'Lila Cuddle Puff jastuk Smajli u obliku cveta, sa vezenim nasmejanim licem. Mekan plišani jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
+		'sarenko'         => array(
 			'name'            => 'Cuddle Puff Premium jastuk Šarenko',
 			'slug'            => 'cuddle-puff-premium-jastuk-sarenko',
 			'group'           => self::RAINBOW,
@@ -318,12 +390,14 @@ final class Pillows extends ProductLine {
 			__( 'Oblik', 'cosypaw' )   => match ( $item['group'] ) {
 				self::SQUARE => __( 'Kockasti, sa talasastim ivicama.', 'cosypaw' ),
 				self::FLOWER  => __( 'Cvetić, sa punašnim laticama.', 'cosypaw' ),
+				self::SMILEY  => __( 'Smajli, cvet sa nasmejanim licem.', 'cosypaw' ),
 				self::RAINBOW => __( 'Cvet sa pet šarenih latica i vezenim licem.', 'cosypaw' ),
 				default       => __( 'Kružić, okrugao sa talasastim ivicama.', 'cosypaw' ),
 			},
 			__( 'Boja', 'cosypaw' )    => self::translate( (string) $item['color'] ),
 			__( 'Detalji', 'cosypaw' ) => match ( $item['group'] ) {
 				self::FLOWER  => __( 'Prošivene latice i sredina u drugoj boji.', 'cosypaw' ),
+				self::SMILEY  => __( 'Vezene okice, osmeh i rumeni obrazi, punašne latice.', 'cosypaw' ),
 				self::RAINBOW => __( 'Vezene okice, jezičak i srce na stomaku, rumeni obrazi.', 'cosypaw' ),
 				default       => __( 'Vezene okice i kljunić, plišani listić, omčica za kačenje.', 'cosypaw' ),
 			},

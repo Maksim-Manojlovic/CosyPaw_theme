@@ -166,7 +166,7 @@ namespace Theme\Tests {
 		public function test_it_creates_every_pillow_in_its_own_category(): void {
 			$this->assertSame( count( Pillows::ITEMS ), ( new Pillows() )->ensure() );
 
-			$this->assertCount( 13, \WC_Product_Simple::$saved );
+			$this->assertCount( 18, \WC_Product_Simple::$saved );
 			foreach ( \WC_Product_Simple::$saved as $id => $props ) {
 				$this->assertSame( array( 61 ), $props['category_ids'] );
 				$this->assertSame( (string) ( str_contains( (string) $props['slug'], '-premium-' ) ? Pillows::PREMIUM_PRICE : Pillows::PRICE ), $props['regular_price'] );
@@ -191,8 +191,8 @@ namespace Theme\Tests {
 
 			$flowers = 0;
 			foreach ( \WC_Product_Simple::$saved as $props ) {
-				// The premium Šarenko has a description of its own, see below.
-				if ( str_contains( (string) $props['slug'], '-premium-' ) ) {
+				// The premium Šarenko and the Smajli have descriptions of their own, see below.
+				if ( str_contains( (string) $props['slug'], '-premium-' ) || str_contains( (string) $props['slug'], '-smajli-' ) ) {
 					continue;
 				}
 
@@ -205,6 +205,36 @@ namespace Theme\Tests {
 			}
 
 			$this->assertSame( 4, $flowers );
+		}
+
+		/**
+		 * The Smajli are five colours of one shape at the line's price, each
+		 * with the flower-with-a-face description: no beak, leaf, loop or size.
+		 *
+		 * @return void
+		 */
+		public function test_the_smajli_are_five_colours_of_one_shape(): void {
+			$smajli = array_filter( Pillows::ITEMS, static fn( array $i ): bool => Pillows::SMILEY === $i['group'] );
+
+			$this->assertCount( 5, $smajli );
+			$this->assertCount( 5, array_unique( array_column( $smajli, 'color' ) ) );
+			$this->assertCount( 5, array_unique( array_column( $smajli, 'swatch' ) ) );
+
+			foreach ( $smajli as $key => $item ) {
+				$this->assertArrayNotHasKey( 'price', $item, $key );
+				$this->assertArrayNotHasKey( 'gallery', $item, $key );
+				foreach ( array( 'kljun', 'listić', 'omčic', 'cm' ) as $promise ) {
+					$this->assertStringNotContainsString( $promise, $item['description'], $key );
+					$this->assertStringNotContainsString( $promise, $item['short'], $key );
+				}
+			}
+
+			( new Pillows() )->ensure();
+			$made = array_filter( \WC_Product_Simple::$saved, static fn( array $p ): bool => str_contains( (string) $p['slug'], '-smajli-' ) );
+			$this->assertCount( 5, $made );
+			foreach ( $made as $props ) {
+				$this->assertSame( (string) Pillows::PRICE, $props['regular_price'] );
+			}
 		}
 
 		/**
@@ -260,7 +290,7 @@ namespace Theme\Tests {
 		 */
 		public function test_each_line_runs_once_per_version_on_its_own(): void {
 			( new Pillows() )->maybe_ensure();
-			$this->assertCount( 13, \WC_Product_Simple::$saved );
+			$this->assertCount( 18, \WC_Product_Simple::$saved );
 			$this->assertArrayNotHasKey( LongTowels::MAP_OPTION, $this->options );
 
 			\WC_Product_Simple::$saved = array();

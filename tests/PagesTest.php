@@ -236,4 +236,38 @@ final class PagesTest extends TestCase {
 		$this->assertSame( 'Naš opis', $this->pages[ $slug ]->post_excerpt );
 		$this->assertSame( 'Peškiri sa Vezenim Medom | Mekani Peškiri za Kupatilo', $this->meta[9]['_yoast_wpseo_title'] );
 	}
+
+	/**
+	 * The front page's description, as Google showed it, is replaced — once,
+	 * and only while it is still exactly that text.
+	 *
+	 * @return void
+	 */
+	public function test_the_front_page_description_is_replaced_only_while_untouched(): void {
+		$this->options['page_on_front'] = 5;
+		$this->meta[5]                  = array(
+			'_yoast_wpseo_metadesc' => 'Tražite najbolje dečije peškire? Naš ručno rađeni peskir od mikrofibera je mekan, upijajući i bezbedan. Srbija ih prepoznaje po kvalitetu. Naručite odmah!',
+		);
+
+		$this->assertSame( 1, ( new Pages() )->reword_front_page() );
+		$this->assertSame( Pages::FRONT_DESCRIPTION, $this->meta[5]['_yoast_wpseo_metadesc'] );
+		$this->assertLessThanOrEqual( 160, mb_strlen( Pages::FRONT_DESCRIPTION ) );
+
+		// Already replaced: nothing left to do.
+		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
+
+		// A description the shop wrote itself is never touched.
+		$this->meta[5]['_yoast_wpseo_metadesc'] = 'Naš opis početne';
+		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
+		$this->assertSame( 'Naš opis početne', $this->meta[5]['_yoast_wpseo_metadesc'] );
+	}
+
+	/**
+	 * A shop whose front page is the posts list has no page to reword.
+	 *
+	 * @return void
+	 */
+	public function test_without_a_static_front_page_there_is_nothing_to_reword(): void {
+		$this->assertSame( 0, ( new Pages() )->reword_front_page() );
+	}
 }

@@ -44,7 +44,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 				echo esc_html(
 					sprintf(
 						/* translators: %s: formatted price of one pillow. */
-						__( 'Punašni plišani jastuci u četiri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s.', 'cosypaw' ),
+						__( 'Punašni plišani jastuci u pet oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s.', 'cosypaw' ),
 						\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 					)
 				);
@@ -90,7 +90,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 		<div class="seo-copy__body">
 			<p><?php esc_html_e( 'Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi.', 'cosypaw' ); ?></p>
 
-			<p><?php esc_html_e( 'Biraš između četiri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti i Cvetić dolaze u nežnim bojama — od roze i žute do sive i braon.', 'cosypaw' ); ?></p>
+			<p><?php esc_html_e( 'Biraš između pet oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Smajli je takođe cvet, ali mu je sredina vezeno nasmejano lice. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti, Cvetić i Smajli dolaze u nežnim bojama — od roze i žute do sive, braon i lila.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda.', 'cosypaw' ); ?></p>
 

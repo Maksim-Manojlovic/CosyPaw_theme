@@ -2084,6 +2084,31 @@ a.testimonial__meta:focus-visible {
 	}
 }
 
+/* Five designs: three in the first row and the last two centred under them at
+   the same width, rather than one card stranded in a grid column. Two to a row
+   below 880px (the odd one centred), one to a row at 420px and below. */
+.swatch-cards--five {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-width: var(--maxw-content);
+}
+
+.swatch-cards--five > .swatch-card {
+	flex: 0 0 calc((100% - 36px) / 3);
+	min-width: 0;
+}
+
+@media (max-width: 880px) {
+	.swatch-cards--five {
+		max-width: 760px;
+	}
+
+	.swatch-cards--five > .swatch-card {
+		flex-basis: calc((100% - 18px) / 2);
+	}
+}
+
 .swatch-card {
 	display: flex;
 	flex-direction: column;
@@ -2248,6 +2273,7 @@ a.testimonial__meta:focus-visible {
 @media (max-width: 420px) {
 	.swatch-cards { grid-template-columns: 1fr; }
 	.swatch-cards--three > .swatch-card:last-child { width: 100%; }
+	.swatch-cards--five > .swatch-card { flex-basis: 100%; }
 }
 
 /* ---------- Responsive ---------- */

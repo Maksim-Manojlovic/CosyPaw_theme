@@ -554,6 +554,51 @@ msgstr "A soft plush pillow shaped like a flower, in gentle grey, with long peta
 msgid "Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma."
 msgstr "The Cuddle Puff flower pillow is a plump, soft plush pillow shaped like a flower, with quilted petals and a round centre in another colour. It looks just as good as a chair or armchair cushion, as a decorative pillow on the sofa or bed and as a plush friend in a child’s room — and it brings colour and a smile to every corner of the home."
 
+msgid "Cuddle Puff jastuk Smajli, žuti"
+msgstr "Cuddle Puff Smiley pillow, yellow"
+
+msgid "Cuddle Puff jastuk Smajli, beli"
+msgstr "Cuddle Puff Smiley pillow, white"
+
+msgid "Cuddle Puff jastuk Smajli, roze"
+msgstr "Cuddle Puff Smiley pillow, pink"
+
+msgid "Cuddle Puff jastuk Smajli, braon"
+msgstr "Cuddle Puff Smiley pillow, brown"
+
+msgid "Cuddle Puff jastuk Smajli, lila"
+msgstr "Cuddle Puff Smiley pillow, lilac"
+
+msgid "Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u veseloj žutoj boji. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, with an embroidered smiling face, in cheerful yellow. For the sofa, an armchair, the bed or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u beloj boji, sa žutom sredinom. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, with an embroidered smiling face, in white, with a yellow centre. For the sofa, an armchair, the bed or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u nežnoj roze boji. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, with an embroidered smiling face, in gentle pink. For the sofa, an armchair, the bed or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u toploj braon boji. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, with an embroidered smiling face, in warm brown. For the sofa, an armchair, the bed or a child’s room."
+
+msgid "Mekani plišani jastuk u obliku cveta sa vezenim nasmejanim licem, u nežnoj lila boji. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "A soft plush pillow shaped like a flower, with an embroidered smiling face, in gentle lilac. For the sofa, an armchair, the bed or a child’s room."
+
+msgid "Cuddle Puff jastuk Smajli je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom na kojoj je vezeno nasmejano lice — okice, osmeh i rumeni obrazi. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi osmeh u svaki kutak doma."
+msgstr "The Cuddle Puff Smiley pillow is a plump, soft plush pillow shaped like a flower, with quilted petals and a round centre with an embroidered smiling face — little eyes, a smile and rosy cheeks. It looks just as good as a chair or armchair cushion, as a decorative pillow on the sofa or bed and as a plush friend in a child’s room — and it brings a smile to every corner of the home."
+
+msgid "Bela"
+msgstr "White"
+
+msgid "Lila"
+msgstr "Lilac"
+
+msgid "Smajli, cvet sa nasmejanim licem."
+msgstr "Smiley, a flower with a smiling face."
+
+msgid "Vezene okice, osmeh i rumeni obrazi, punašne latice."
+msgstr "Embroidered eyes, a smile and rosy cheeks, plump petals."
+
 msgid "Cuddle Puff Premium jastuk Šarenko"
 msgstr "Cuddle Puff Premium pillow Šarenko"
 
@@ -674,8 +719,8 @@ msgstr "All about the towels"
 msgid "Cuddle Puff jastuci"
 msgstr "Cuddle Puff pillows"
 
-msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu."
-msgstr "Plump plush pillows: round and square ones with embroidered eyes and a leaf, flowers with colourful petals and the premium Šarenko with rainbow petals. For a chair, an armchair, the sofa or a child’s room — from %s each."
+msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu."
+msgstr "Plump plush pillows: round and square ones with embroidered eyes and a leaf, flowers with colourful petals, the smiling Smajli and the premium Šarenko with rainbow petals. For a chair, an armchair, the sofa or a child’s room — from %s each."
 
 msgid "Sve o Cuddle Puff jastucima"
 msgstr "All about the Cuddle Puff pillows"
@@ -719,8 +764,8 @@ msgstr "Order a towel"
 msgid "Mekani Cuddle Puff jastuci sa okicama"
 msgstr "Soft Cuddle Puff pillows with little eyes"
 
-msgid "Punašni plišani jastuci u četiri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s."
-msgstr "Plump plush pillows in four shapes: round and square with embroidered eyes, a little beak and a leaf, a flower with colourful petals and the premium Šarenko with rainbow petals and an embroidered face. For a chair, an armchair, the sofa or a child’s room, from %s."
+msgid "Punašni plišani jastuci u pet oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s."
+msgstr "Plump plush pillows in five shapes: round and square with embroidered eyes, a little beak and a leaf, a flower with colourful petals, the smiling Smajli and the premium Šarenko with rainbow petals and an embroidered face. For a chair, an armchair, the sofa or a child’s room, from %s."
 
 msgid "Jastuci za dom"
 msgstr "Pillows for the home"
@@ -731,8 +776,8 @@ msgstr "A chair cushion, a decorative pillow and a plush friend in one"
 msgid "Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi."
 msgstr "A Cuddle Puff pillow is the one everyone wants to hug. The ribbed plush is soft to the touch, and the plump, quilted shape makes it a comfortable chair or armchair cushion — in the kitchen, at the desk or in the living room."
 
-msgid "Biraš između četiri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti i Cvetić dolaze u nežnim bojama — od roze i žute do sive i braon."
-msgstr "You choose between four shapes. The round one has wavy edges, and the square one has the same wavy trim — both have embroidered eyes, a yellow beak, a green plush leaf and a hanging loop. The flower is a real little bloom: plump petals around a round centre in another colour. The premium Šarenko is a flower with five colourful petals and a sweet embroidered face, with a heart on its tummy. The round, the square and the flower come in soft colours — from pink and yellow to grey and brown."
+msgid "Biraš između pet oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Smajli je takođe cvet, ali mu je sredina vezeno nasmejano lice. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti, Cvetić i Smajli dolaze u nežnim bojama — od roze i žute do sive, braon i lila."
+msgstr "You choose between five shapes. The round one has wavy edges, and the square one has the same wavy trim — both have embroidered eyes, a yellow beak, a green plush leaf and a hanging loop. The flower is a real little bloom: plump petals around a round centre in another colour. Smajli is a flower too, but its centre is an embroidered smiling face. The premium Šarenko is a flower with five colourful petals and a sweet embroidered face, with a heart on its tummy. The round, the square, the flower and Smajli come in soft colours — from pink and yellow to grey, brown and lilac."
 
 msgid "Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda."
 msgstr "As a decorative pillow on the sofa or bed they bring colour and a smile, and in a child’s room they become a plush friend for cuddles, reading and play. They make a lovely gift too — for a housewarming, a birthday or no reason at all."

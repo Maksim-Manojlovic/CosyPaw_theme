@@ -130,8 +130,7 @@ final class Language {
 	}
 
 	/**
-	 * The WordPress locale a language code maps to. Used for hreflang, which
-	 * wants a BCP-47 tag (sr-RS) rather than a WordPress locale (sr_RS).
+	 * The WordPress locale a language code maps to.
 	 *
 	 * @param string $code Language code.
 	 * @return string Locale, or the default language's locale when unknown.

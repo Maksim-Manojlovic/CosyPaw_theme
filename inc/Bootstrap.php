@@ -104,6 +104,13 @@ final class Bootstrap {
 	private Seo $seo;
 
 	/**
+	 * Yoast's gaps filled, and the sample content kept out of the index.
+	 *
+	 * @var SeoFallbacks
+	 */
+	private SeoFallbacks $seo_fallbacks;
+
+	/**
 	 * Landing pages (the SEO plan's fixed-address pages).
 	 *
 	 * @var Pages
@@ -223,6 +230,8 @@ final class Bootstrap {
 		$this->assets = new Assets( $this->text_domain, get_template_directory(), get_template_directory_uri() );
 		$this->seo    = new Seo( new Catalog() );
 		$this->pages  = new Pages();
+
+		$this->seo_fallbacks = new SeoFallbacks();
 
 		// After Pages: the menu it seeds points at those pages.
 		$this->nav_menu = new NavMenu();

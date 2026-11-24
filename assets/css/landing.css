@@ -2171,9 +2171,12 @@ a.testimonial__meta:focus-visible {
 }
 
 .swatch-card__legend {
-	float: left; /* keeps the legend on the swatches' row instead of above it */
-	margin-right: 6px;
-	padding: 0 4px;
+	/* "Izaberi boju" on a row of its own, the dots under it: five or six dots
+	   beside the legend wrapped onto a second row and left it dangling. */
+	float: none;
+	width: 100%;
+	margin: 0;
+	padding: 0 4px 2px;
 	font-size: 14px;
 	font-weight: 600;
 	color: var(--muted);

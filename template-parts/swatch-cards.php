@@ -37,6 +37,7 @@ if ( ! $cosypaw_groups ) {
 $cosypaw_layout = array(
 	1 => ' swatch-cards--single',
 	3 => ' swatch-cards--three',
+	4 => ' swatch-cards--four',
 )[ count( $cosypaw_groups ) ] ?? '';
 ?>
 <div class="swatch-cards<?php echo esc_attr( $cosypaw_layout ); ?>">

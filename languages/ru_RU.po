@@ -554,6 +554,24 @@ msgstr "Мягкая плюшевая подушка в форме цветка,
 msgid "Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma."
 msgstr "Подушка Cuddle Puff «Цветочек» — пухлая мягкая плюшевая подушка в форме цветка, с простёганными лепестками и круглой серединкой другого цвета. Она одинаково хороша как подушка на стул или кресло, как декоративная подушка на диване или кровати и как плюшевый друг в детской — и приносит цвет и улыбку в каждый уголок дома."
 
+msgid "Cuddle Puff Premium jastuk Šarenko"
+msgstr "Премиальная подушка Cuddle Puff «Разноцветик»"
+
+msgid "Premium plišani jastuk u obliku cveta sa pet šarenih latica i slatkim vezenim licem. Za sofu, fotelju, krevet ili dečiju sobu."
+msgstr "Премиальная плюшевая подушка в форме цветка с пятью разноцветными лепестками и милой вышитой мордочкой. Для дивана, кресла, кровати или детской."
+
+msgid "Cuddle Puff Premium jastuk Šarenko je punašan, mekan plišani jastuk u obliku cveta, sa pet šarenih latica — fuksija, tirkiznom, žutom, lila i breskva — oko okrugle braon sredine koja je ujedno i slatko lice. Ima krem njuškicu, vezene okice, isplažen roze jezičak i rumene obraze, a na stomaku vezeno roze srce sa brkicama. Mali ušići i nožice drže ga uspravno, kao pravog plišanog drugara. Jednako lepo stoji kao ukrasni jastuk na sofi ili krevetu, kao jastuk za stolicu ili fotelju i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma."
+msgstr "Премиальная подушка Cuddle Puff «Разноцветик» — пухлая мягкая плюшевая подушка в форме цветка с пятью разноцветными лепестками — цвета фуксии, бирюзовым, жёлтым, сиреневым и персиковым — вокруг круглой коричневой серединки, которая заодно и милая мордочка. У неё кремовая мордашка, вышитые глазки, розовый высунутый язычок и румяные щёчки, а на животике — вышитое розовое сердечко с усиками. Маленькие ушки и лапки держат её прямо, как настоящего плюшевого дружка. Она одинаково хороша как декоративная подушка на диване или кровати, как подушка на стул или кресло и как плюшевый друг в детской — и приносит цвет и улыбку в каждый уголок дома."
+
+msgid "Šarena"
+msgstr "Разноцветная"
+
+msgid "Cvet sa pet šarenih latica i vezenim licem."
+msgstr "Цветок с пятью разноцветными лепестками и вышитой мордочкой."
+
+msgid "Vezene okice, jezičak i srce na stomaku, rumeni obrazi."
+msgstr "Вышитые глазки, язычок и сердечко на животике, румяные щёчки."
+
 msgid "Braon"
 msgstr "Коричневый"
 
@@ -656,8 +674,8 @@ msgstr "Всё о полотенцах"
 msgid "Cuddle Puff jastuci"
 msgstr "Подушки Cuddle Puff"
 
-msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, i cvetići sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu — %s po komadu."
-msgstr "Пухлые плюшевые подушки: круглые и квадратные с вышитыми глазками и листиком и цветочки с цветными лепестками. Для стула, кресла, дивана или детской — %s за штуку."
+msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu."
+msgstr "Пухлые плюшевые подушки: круглые и квадратные с вышитыми глазками и листиком, цветочки с цветными лепестками и премиальная «Разноцветик» с разноцветными лепестками. Для стула, кресла, дивана или детской — от %s за штуку."
 
 msgid "Sve o Cuddle Puff jastucima"
 msgstr "Всё о подушках Cuddle Puff"
@@ -701,8 +719,8 @@ msgstr "Заказать полотенце"
 msgid "Mekani Cuddle Puff jastuci sa okicama"
 msgstr "Мягкие подушки Cuddle Puff с глазками"
 
-msgid "Punašni plišani jastuci u tri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, i cvetić sa laticama u boji. Za stolicu, fotelju, sofu ili dečiju sobu, za %s."
-msgstr "Пухлые плюшевые подушки трёх форм: круглая и квадратная с вышитыми глазками, клювиком и листиком и цветочек с цветными лепестками. Для стула, кресла, дивана или детской — за %s."
+msgid "Punašni plišani jastuci u četiri oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s."
+msgstr "Пухлые плюшевые подушки четырёх форм: круглая и квадратная с вышитыми глазками, клювиком и листиком, цветочек с цветными лепестками и премиальная «Разноцветик» с разноцветными лепестками и вышитой мордочкой. Для стула, кресла, дивана или детской — от %s."
 
 msgid "Jastuci za dom"
 msgstr "Подушки для дома"
@@ -713,8 +731,8 @@ msgstr "Подушка на стул, декоративная подушка и
 msgid "Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi."
 msgstr "Подушку Cuddle Puff хочется обнять всем. Рельефный плюш мягкий на ощупь, а пухлая стёганая форма делает её удобной подушкой на стул или кресло — на кухне, за рабочим столом или в гостиной."
 
-msgid "Biraš između tri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Svi dolaze u nežnim bojama — od roze i žute do sive i braon."
-msgstr "Можно выбрать одну из трёх форм. «Кружок» с волнистыми краями, а «Квадрат» — квадратный, с той же волнистой окантовкой; у обеих вышитые глазки, жёлтый клювик, зелёный плюшевый листик и петелька для подвешивания. «Цветочек» — настоящий маленький цветок: пухлые лепестки вокруг круглой серединки другого цвета. Цвета у всех нежные — от розового и жёлтого до серого и коричневого."
+msgid "Biraš između četiri oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti i Cvetić dolaze u nežnim bojama — od roze i žute do sive i braon."
+msgstr "Можно выбрать одну из четырёх форм. «Кружок» с волнистыми краями, а «Квадрат» — квадратный, с той же волнистой окантовкой; у обеих вышитые глазки, жёлтый клювик, зелёный плюшевый листик и петелька для подвешивания. «Цветочек» — настоящий маленький цветок: пухлые лепестки вокруг круглой серединки другого цвета. Премиальная «Разноцветик» — цветок с пятью разноцветными лепестками и милой вышитой мордочкой, с сердечком на животике. «Кружок», «Квадрат» и «Цветочек» бывают в нежных цветах — от розового и жёлтого до серого и коричневого."
 
 msgid "Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda."
 msgstr "Как декоративная подушка на диване или кровати они добавляют цвета и улыбок, а в детской становятся плюшевым другом для обнимашек, чтения и игр. Это и милый подарок — на новоселье, день рождения или просто так."

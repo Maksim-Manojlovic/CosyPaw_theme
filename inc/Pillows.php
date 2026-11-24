@@ -6,7 +6,8 @@
  * and the square "Kockasti" (three) have embroidered eyes, a little yellow
  * beak and a felt leaf; the "Cvetić" (four) is a flower instead — petals around
  * a centre in another colour, no face — so it carries its own description and
- * spec rows. Each colour is a simple product of its own, so it has its own
+ * spec rows. The premium "Šarenko" (one product, at PREMIUM_PRICE) is a flower
+ * of five colourful petals around an embroidered face. Each colour is a simple product of its own, so it has its own
  * page, photograph, alt text and Yoast fields; the storefront folds the
  * colours of one shape back into a single card with colour swatches
  * (ProductLine::groups()).
@@ -40,7 +41,7 @@ final class Pillows extends ProductLine {
 	/**
 	 * Bump when a product is added to ITEMS.
 	 */
-	public const VERSION = 2;
+	public const VERSION = 3;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -69,6 +70,11 @@ final class Pillows extends ProductLine {
 	public const PRICE = 1599;
 
 	/**
+	 * Launch price (RSD) of the premium "Šarenko". Same rule as PRICE.
+	 */
+	public const PREMIUM_PRICE = 1890;
+
+	/**
 	 * Theme directory the photographs ship in.
 	 */
 	protected const IMAGE_DIR = 'assets/pillows/';
@@ -76,9 +82,10 @@ final class Pillows extends ProductLine {
 	/**
 	 * Group keys.
 	 */
-	public const ROUND  = 'kruzic';
-	public const SQUARE = 'kockasti';
-	public const FLOWER = 'cvetic';
+	public const ROUND   = 'kruzic';
+	public const SQUARE  = 'kockasti';
+	public const FLOWER  = 'cvetic';
+	public const RAINBOW = 'sarenko';
 
 	/**
 	 * The shapes' group photographs, file => alt.
@@ -97,6 +104,13 @@ final class Pillows extends ProductLine {
 	 * lists: no eyes, beak, leaf, trimmed edge or hanging loop.
 	 */
 	private const FLOWER_DESCRIPTION = 'Cuddle Puff jastuk Cvetić je punašan, mekan plišani jastuk u obliku cveta, sa prošivenim laticama i okruglom sredinom u drugoj boji. Jednako lepo stoji kao jastuk za stolicu ili fotelju, kao ukrasni jastuk na sofi ili krevetu i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma.';
+
+	/**
+	 * Long description of the premium Šarenko: a flower of five colourful
+	 * petals around a face, with none of what DESCRIPTION lists (beak, leaf,
+	 * trimmed edge, hanging loop). Sizes and fibre are not stated.
+	 */
+	private const RAINBOW_DESCRIPTION = 'Cuddle Puff Premium jastuk Šarenko je punašan, mekan plišani jastuk u obliku cveta, sa pet šarenih latica — fuksija, tirkiznom, žutom, lila i breskva — oko okrugle braon sredine koja je ujedno i slatko lice. Ima krem njuškicu, vezene okice, isplažen roze jezičak i rumene obraze, a na stomaku vezeno roze srce sa brkicama. Mali ušići i nožice drže ga uspravno, kao pravog plišanog drugara. Jednako lepo stoji kao ukrasni jastuk na sofi ili krevetu, kao jastuk za stolicu ili fotelju i kao plišani drug u dečijoj sobi — i unosi boju i osmeh u svaki kutak doma.';
 
 	/**
 	 * Key => product definition. Names, colours and copy are Serbian database
@@ -269,6 +283,21 @@ final class Pillows extends ProductLine {
 			'seo_title'       => 'Cuddle Puff Jastuk Cvetić, Sivi | Jastuk u Obliku Cveta',
 			'seo_description' => 'Sivi Cuddle Puff jastuk u obliku cveta, sa belom sredinom. Mekan plišani jastuk za stolicu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
 		),
+		'sarenko'          => array(
+			'name'            => 'Cuddle Puff Premium jastuk Šarenko',
+			'slug'            => 'cuddle-puff-premium-jastuk-sarenko',
+			'group'           => self::RAINBOW,
+			'color'           => 'Šarena',
+			'swatch'          => '#d94fb0',
+			'price'           => self::PREMIUM_PRICE,
+			'image'           => 'cuddle-puff-premium-jastuk-sarenko.webp',
+			'alt'             => 'Premium Cuddle Puff jastuk Šarenko u obliku cveta sa šarenim laticama i vezenim licem, na krem sofi sa roze ćebetom',
+			'gallery'         => array( 'cuddle-puff-premium-jastuk-sarenko-na-sofi.webp' => 'Šareni Cuddle Puff jastuk u obliku cveta sa vezenim srcem na stomaku, na sivoj sofi pored roze jastuka i krem ćebeta' ),
+			'short'           => 'Premium plišani jastuk u obliku cveta sa pet šarenih latica i slatkim vezenim licem. Za sofu, fotelju, krevet ili dečiju sobu.',
+			'description'     => self::RAINBOW_DESCRIPTION,
+			'seo_title'       => 'Cuddle Puff Premium Jastuk Šarenko | Šareni Jastuk u Obliku Cveta',
+			'seo_description' => 'Premium Cuddle Puff jastuk Šarenko: šareni plišani cvet sa slatkim vezenim licem i srcem. Mekan jastuk za sofu, fotelju ili dečiju sobu. Plaćanje pouzećem!',
+		),
 	);
 
 	/**
@@ -288,13 +317,16 @@ final class Pillows extends ProductLine {
 		$specs = array(
 			__( 'Oblik', 'cosypaw' )   => match ( $item['group'] ) {
 				self::SQUARE => __( 'Kockasti, sa talasastim ivicama.', 'cosypaw' ),
-				self::FLOWER => __( 'Cvetić, sa punašnim laticama.', 'cosypaw' ),
-				default      => __( 'Kružić, okrugao sa talasastim ivicama.', 'cosypaw' ),
+				self::FLOWER  => __( 'Cvetić, sa punašnim laticama.', 'cosypaw' ),
+				self::RAINBOW => __( 'Cvet sa pet šarenih latica i vezenim licem.', 'cosypaw' ),
+				default       => __( 'Kružić, okrugao sa talasastim ivicama.', 'cosypaw' ),
 			},
 			__( 'Boja', 'cosypaw' )    => self::translate( (string) $item['color'] ),
-			__( 'Detalji', 'cosypaw' ) => self::FLOWER === $item['group']
-				? __( 'Prošivene latice i sredina u drugoj boji.', 'cosypaw' )
-				: __( 'Vezene okice i kljunić, plišani listić, omčica za kačenje.', 'cosypaw' ),
+			__( 'Detalji', 'cosypaw' ) => match ( $item['group'] ) {
+				self::FLOWER  => __( 'Prošivene latice i sredina u drugoj boji.', 'cosypaw' ),
+				self::RAINBOW => __( 'Vezene okice, jezičak i srce na stomaku, rumeni obrazi.', 'cosypaw' ),
+				default       => __( 'Vezene okice i kljunić, plišani listić, omčica za kačenje.', 'cosypaw' ),
+			},
 			__( 'Namena', 'cosypaw' )  => __( 'Stolica, fotelja, sofa i dečija soba.', 'cosypaw' ),
 			__( 'Dostava', 'cosypaw' ) => __( 'Plaćanje pouzećem, isporuka 2–4 dana širom Srbije.', 'cosypaw' ),
 		);

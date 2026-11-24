@@ -36,7 +36,7 @@ final class Pages {
 	 * Bump when a page is added to REGISTRY or reworded (REWORDED), so
 	 * installs that already ran ensure() look again.
 	 */
-	public const VERSION = 7;
+	public const VERSION = 8;
 
 	/**
 	 * Option recording which registry version this install has been brought up to.
@@ -137,6 +137,19 @@ final class Pages {
 	);
 
 	/**
+	 * What the front page's Yoast description said when Google was showing it:
+	 * "peskir" without its diacritic, "dečije", and a claim of quality nobody
+	 * can check ("Srbija ih prepoznaje po kvalitetu").
+	 */
+	private const FRONT_OLD_DESCRIPTION = 'Tražite najbolje dečije peškire? Naš ručno rađeni peskir od mikrofibera je mekan, upijajući i bezbedan. Srbija ih prepoznaje po kvalitetu. Naručite odmah!';
+
+	/**
+	 * What replaces it. Says what the towels are and what buying one involves,
+	 * in the shop's own words (see the front page's FAQ).
+	 */
+	public const FRONT_DESCRIPTION = 'Dečiji peškiri od mikrofibera, ručno rađeni: mekani, upijajući, sa alkom za kačenje i preko 20 oblika. Plaćanje pouzećem, dostava 2–4 dana.';
+
+	/**
 	 * Bring existing pages up to their reworded REGISTRY copy.
 	 *
 	 * The one exception to "a page that exists is never touched", and a
@@ -183,7 +196,33 @@ final class Pages {
 			}
 		}
 
-		return $updated;
+		return $updated + $this->reword_front_page();
+	}
+
+	/**
+	 * Replace the front page's Yoast description, if it is still the one
+	 * Google was showing.
+	 *
+	 * Same rule as reword(): only while the field holds exactly the old text,
+	 * so a description the shop has written since is never overwritten. The
+	 * front page is a WordPress page, so Yoast keeps its description as post
+	 * meta like any other.
+	 *
+	 * @return int 1 when the description was replaced, else 0.
+	 */
+	public function reword_front_page(): int {
+		$id = (int) get_option( 'page_on_front' );
+		if ( $id < 1 ) {
+			return 0;
+		}
+
+		if ( self::FRONT_OLD_DESCRIPTION !== (string) get_post_meta( $id, '_yoast_wpseo_metadesc', true ) ) {
+			return 0;
+		}
+
+		update_post_meta( $id, '_yoast_wpseo_metadesc', self::FRONT_DESCRIPTION );
+
+		return 1;
 	}
 
 	/**

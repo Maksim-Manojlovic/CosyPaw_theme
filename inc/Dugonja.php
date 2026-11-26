@@ -10,13 +10,13 @@
  * heads — small round crops of their own photographs (HEAD_DIR) — on the
  * product page in place of the dropdown, and on its card on the pillow page.
  *
- * The product is created once per VERSION, the first time an administrator
- * opens wp-admin, in the pillows' category: the parent with the group
- * photograph as its image, a variation per friend at PRICE with its own
+ * The product is brought up to date once per VERSION, the first time an
+ * administrator opens wp-admin, in the pillows' category: the parent with the
+ * group photograph as its image, a variation per friend at PRICE with its own
  * photograph, every photograph in the gallery. No friend is preselected, so
  * the page opens on the group photograph. A product that already exists
- * (recorded, or made by hand under the same slug) is adopted and never
- * edited: price, text and stock are the shop's in wp-admin afterwards.
+ * (recorded, or made by hand under the same slug) is adopted and only given
+ * what it is missing: price, text and stock are the shop's in wp-admin.
  *
  * The copy says what the photographs show and what the shop has confirmed:
  * 100 cm, antiallergenic plush, keeps its shape. Nothing about washing.
@@ -38,9 +38,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Dugonja {
 
 	/**
-	 * Bump when a friend is added to FRIENDS.
+	 * Bump when a friend is added to FRIENDS, or the product needs bringing up
+	 * to date again (2: the first run stopped after the parent, before the
+	 * photographs and the variations).
 	 */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	/**
 	 * Option recording which version this install has been brought up to.
@@ -503,7 +505,13 @@ final class Dugonja {
 	}
 
 	/**
-	 * Create the product, or adopt the one already there.
+	 * Create the product, or adopt the one already there, and give it whatever
+	 * it is missing.
+	 *
+	 * Safe to repeat. A product found (recorded, or under the same slug) is
+	 * kept as it is; only what it does not have yet is added: a variation for
+	 * a friend that has none, the main photograph, the gallery, the Yoast
+	 * fields. A price, photograph or text changed in wp-admin stays.
 	 *
 	 * @return int The product's id, or 0 when it could not be made.
 	 */
@@ -514,11 +522,30 @@ final class Dugonja {
 			$id    = $found instanceof \WP_Post ? (int) $found->ID : 0;
 		}
 
-		if ( $id > 0 ) {
-			update_option( self::ID_OPTION, $id );
-			return $id;
+		if ( $id < 1 ) {
+			$id = $this->create();
+			if ( $id < 1 ) {
+				return 0;
+			}
 		}
 
+		update_option( self::ID_OPTION, $id );
+
+		// A product made by hand as a simple one is the shop's: left alone.
+		$product = wc_get_product( $id );
+		if ( $product instanceof \WC_Product && $product->is_type( 'variable' ) ) {
+			$this->complete( $product );
+		}
+
+		return $id;
+	}
+
+	/**
+	 * The parent product, with its copy, category and "Drugar" attribute.
+	 *
+	 * @return int Its id, or 0.
+	 */
+	private function create(): int {
 		$category = $this->category_id();
 		if ( $category < 1 ) {
 			return 0;
@@ -533,19 +560,40 @@ final class Dugonja {
 		$product->set_description( self::DESCRIPTION );
 		$product->set_category_ids( array( $category ) );
 		$product->set_attributes( array( self::ATTRIBUTE_KEY => $this->attribute() ) );
-		$id = (int) $product->save();
 
-		if ( $id < 1 ) {
-			return 0;
+		return (int) $product->save();
+	}
+
+	/**
+	 * Add what the product is missing: a variation per friend at PRICE with its
+	 * photograph, the group photograph as the main image, every photograph in
+	 * the gallery, the Yoast fields.
+	 *
+	 * @param \WC_Product $product The parent.
+	 * @return void
+	 */
+	private function complete( $product ): void {
+		$id    = (int) $product->get_id();
+		$found = self::variations( $product );
+
+		if ( (int) $product->get_image_id() < 1 ) {
+			$file  = (string) array_key_first( self::IMAGE );
+			$image = $this->import( $file, $id, self::IMAGE[ $file ] );
+			if ( $image > 0 ) {
+				$product->set_image_id( $image );
+			}
 		}
 
-		$image = $this->import( (string) array_key_first( self::IMAGE ), $id, (string) reset( self::IMAGE ) );
-		if ( $image > 0 ) {
-			$product->set_image_id( $image );
-		}
-
-		$gallery = array();
+		// The friends' photographs, in FRIENDS order: the ones already on a
+		// variation, and the ones imported for a new variation.
+		$photos = array();
 		foreach ( self::FRIENDS as $friend => $data ) {
+			if ( isset( $found[ $friend ] ) ) {
+				$variation = wc_get_product( $found[ $friend ] );
+				$photos[]  = $variation instanceof \WC_Product ? (int) $variation->get_image_id() : 0;
+				continue;
+			}
+
 			$photo = $this->import( $data['image'], $id, $data['alt'] );
 
 			$variation = new \WC_Product_Variation();
@@ -557,17 +605,22 @@ final class Dugonja {
 			$variation->set_stock_status( 'instock' );
 			if ( $photo > 0 ) {
 				$variation->set_image_id( $photo );
-				$gallery[] = $photo;
 			}
 			$variation->save();
+
+			$photos[] = $photo;
 		}
 
 		// A friend's photograph shows only once it is chosen, so in the gallery
-		// they are thumbnails beside the group photograph from the start.
-		foreach ( self::GALLERY as $file => $alt ) {
-			$gallery[] = $this->import( (string) $file, $id, (string) $alt );
+		// they are thumbnails beside the group photograph from the start. A
+		// gallery the shop has already arranged is left as it is.
+		if ( ! $product->get_gallery_image_ids() ) {
+			foreach ( self::GALLERY as $file => $alt ) {
+				$photos[] = $this->import( (string) $file, $id, (string) $alt );
+			}
+			$product->set_gallery_image_ids( array_values( array_filter( $photos ) ) );
 		}
-		$product->set_gallery_image_ids( array_values( array_filter( $gallery ) ) );
+
 		$product->save();
 
 		// The parent's price and stock from its variations.
@@ -576,12 +629,12 @@ final class Dugonja {
 		}
 
 		// Yoast's own post meta, written once like the other lines'.
-		update_post_meta( $id, '_yoast_wpseo_title', self::SEO_TITLE );
-		update_post_meta( $id, '_yoast_wpseo_metadesc', self::SEO_DESCRIPTION );
-
-		update_option( self::ID_OPTION, $id );
-
-		return $id;
+		if ( '' === (string) get_post_meta( $id, '_yoast_wpseo_title', true ) ) {
+			update_post_meta( $id, '_yoast_wpseo_title', self::SEO_TITLE );
+		}
+		if ( '' === (string) get_post_meta( $id, '_yoast_wpseo_metadesc', true ) ) {
+			update_post_meta( $id, '_yoast_wpseo_metadesc', self::SEO_DESCRIPTION );
+		}
 	}
 
 	/**

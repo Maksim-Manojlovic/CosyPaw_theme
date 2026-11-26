@@ -146,6 +146,13 @@ final class Bootstrap {
 	private ?LongTowels $long_towels = null;
 
 	/**
+	 * The Dugonja long pillow, one product with four friends (WooCommerce only).
+	 *
+	 * @var Dugonja|null
+	 */
+	private ?Dugonja $dugonja = null;
+
+	/**
 	 * Vocabulary changes carried into seeded database text (WooCommerce only).
 	 *
 	 * @var Wording|null
@@ -259,6 +266,10 @@ final class Bootstrap {
 			// its own category, none of them a motif or part of a 2+1.
 			$this->pillows     = new Pillows();
 			$this->long_towels = new LongTowels();
+
+			// The Dugonja: one variable product in the pillows' category, a
+			// friend per variation, picked by its head.
+			$this->dugonja = new Dugonja();
 
 			// "Peškirići" became "peškiri": the same swap, once, in the alt
 			// text and descriptions the seeders wrote to the database.

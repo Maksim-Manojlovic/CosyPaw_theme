@@ -2086,25 +2086,30 @@ a.testimonial__meta:focus-visible {
 
 /* Five designs: three in the first row and the last two centred under them at
    the same width, rather than one card stranded in a grid column. Two to a row
-   below 880px (the odd one centred), one to a row at 420px and below. */
-.swatch-cards--five {
+   below 880px (the odd one centred), one to a row at 420px and below. Six (the
+   pillows' five shapes and the Dugonja) are the same rows, three and three. */
+.swatch-cards--five,
+.swatch-cards--six {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	max-width: var(--maxw-content);
 }
 
-.swatch-cards--five > .swatch-card {
+.swatch-cards--five > .swatch-card,
+.swatch-cards--six > .swatch-card {
 	flex: 0 0 calc((100% - 36px) / 3);
 	min-width: 0;
 }
 
 @media (max-width: 880px) {
-	.swatch-cards--five {
+	.swatch-cards--five,
+	.swatch-cards--six {
 		max-width: 760px;
 	}
 
-	.swatch-cards--five > .swatch-card {
+	.swatch-cards--five > .swatch-card,
+	.swatch-cards--six > .swatch-card {
 		flex-basis: calc((100% - 18px) / 2);
 	}
 }
@@ -2249,6 +2254,24 @@ a.testimonial__meta:focus-visible {
 	outline-offset: 5px;
 }
 
+/* The Dugonja's friends: a round crop of each one's head in place of the dot,
+   a size up so the face reads. Same ring when picked. */
+.swatch--head {
+	width: 52px;
+	height: 52px;
+}
+
+.swatch__dot--head {
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+	background: #fff;
+}
+
+.swatch--head:hover .swatch__dot--head {
+	transform: translateY(-2px) scale(1.06);
+}
+
 @supports selector(:has(*)) {
 	.swatch-card__swatches {
 		display: flex;
@@ -2273,7 +2296,8 @@ a.testimonial__meta:focus-visible {
 @media (max-width: 420px) {
 	.swatch-cards { grid-template-columns: 1fr; }
 	.swatch-cards--three > .swatch-card:last-child { width: 100%; }
-	.swatch-cards--five > .swatch-card { flex-basis: 100%; }
+	.swatch-cards--five > .swatch-card,
+	.swatch-cards--six > .swatch-card { flex-basis: 100%; }
 }
 
 /* ---------- Responsive ---------- */

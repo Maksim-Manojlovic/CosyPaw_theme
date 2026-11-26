@@ -9,12 +9,14 @@
  * the button can never add a colour other than the one on screen. Where
  * `:has()` is not supported the colours simply stack, each fully usable.
  *
- * Shared by the front page sections and the product line pages.
+ * Shared by the front page sections and the product line pages. A group may
+ * bring its own `legend` (the Dugonja's "Izaberi drugara"), and a variant its
+ * `head`, a picture shown in place of its colour dot.
  *
  * @package CosyPaw
  *
  * @var array $args {
- *     @type array  $groups ProductLine::groups() output.
+ *     @type array  $groups ProductLine::groups() output, plus any group shaped like it (Dugonja::group()).
  *     @type string $id     Prefix for the radio group names, unique on the page.
  * }
  */
@@ -39,6 +41,7 @@ $cosypaw_layout = array(
 	3 => ' swatch-cards--three',
 	4 => ' swatch-cards--four',
 	5 => ' swatch-cards--five',
+	6 => ' swatch-cards--six',
 )[ count( $cosypaw_groups ) ] ?? '';
 ?>
 <div class="swatch-cards<?php echo esc_attr( $cosypaw_layout ); ?>">
@@ -60,9 +63,9 @@ $cosypaw_layout = array(
 		<div class="swatch-card">
 			<?php if ( count( $cosypaw_variants ) > 1 ) : ?>
 				<fieldset class="swatch-card__swatches">
-					<legend class="swatch-card__legend"><?php esc_html_e( 'Izaberi boju', 'cosypaw' ); ?></legend>
+					<legend class="swatch-card__legend"><?php echo esc_html( (string) ( $cosypaw_group['legend'] ?? __( 'Izaberi boju', 'cosypaw' ) ) ); ?></legend>
 					<?php foreach ( $cosypaw_variants as $cosypaw_i => $cosypaw_v ) : ?>
-						<label class="swatch" title="<?php echo esc_attr( $cosypaw_v['color'] ); ?>">
+						<label class="swatch<?php echo ! empty( $cosypaw_v['head'] ) ? ' swatch--head' : ''; ?>" title="<?php echo esc_attr( $cosypaw_v['color'] ); ?>">
 							<input
 								type="radio"
 								class="swatch__input"
@@ -70,7 +73,11 @@ $cosypaw_layout = array(
 								value="<?php echo esc_attr( $cosypaw_v['key'] ); ?>"
 								<?php checked( $cosypaw_open, $cosypaw_i ); ?>
 							>
-							<span class="swatch__dot" style="--swatch: <?php echo esc_attr( $cosypaw_v['swatch'] ); ?>" aria-hidden="true"></span>
+							<?php if ( ! empty( $cosypaw_v['head'] ) ) : ?>
+								<img class="swatch__dot swatch__dot--head" src="<?php echo esc_url( (string) $cosypaw_v['head'] ); ?>" alt="" width="40" height="40" loading="lazy" decoding="async">
+							<?php else : ?>
+								<span class="swatch__dot" style="--swatch: <?php echo esc_attr( $cosypaw_v['swatch'] ); ?>" aria-hidden="true"></span>
+							<?php endif; ?>
 							<span class="screen-reader-text"><?php echo esc_html( $cosypaw_v['color'] ); ?></span>
 						</label>
 					<?php endforeach; ?>

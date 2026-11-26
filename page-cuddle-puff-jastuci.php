@@ -2,8 +2,9 @@
 /**
  * Cuddle Puff jastuci — "Cuddle Puff jastuci sa okicama".
  *
- * The pillows' own page: one card per shape (Kružić, Kockasti, Cvetić) with
- * its colours as swatches, up top where they can be bought, then copy for what
+ * The pillows' own page: one card per shape (Kružić, Kockasti, Cvetić…) with
+ * its colours as swatches, and last the long Dugonja with its four friends'
+ * heads, up top where they can be bought, then copy for what
  * people search for (jastuk za stolicu, ukrasni jastuk, plišani jastuk, jastuk
  * za dečiju sobu…). It says only what the photographs show — no size or fibre
  * content until the shop has them to state.
@@ -25,6 +26,13 @@ get_header();
 
 $cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
 $cosypaw_long    = \Theme\Pages::url( 'dugi' );
+
+// The pillows' shapes, then the Dugonja (one variable product) as one more card.
+$cosypaw_groups  = $cosypaw_pillows ? \Theme\Pillows::groups( $cosypaw_pillows ) : array();
+$cosypaw_dugonja = class_exists( '\Theme\Dugonja' ) ? \Theme\Dugonja::group() : null;
+if ( null !== $cosypaw_dugonja ) {
+	$cosypaw_groups[] = $cosypaw_dugonja;
+}
 ?>
 
 <main id="primary" class="site-main collection" tabindex="-1">
@@ -44,7 +52,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 				echo esc_html(
 					sprintf(
 						/* translators: %s: formatted price of one pillow. */
-						__( 'Punašni plišani jastuci u pet oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama i vezenim licem. Za stolicu, fotelju, sofu ili dečiju sobu, od %s.', 'cosypaw' ),
+						__( 'Punašni plišani jastuci u pet oblika: kružić i kockasti sa vezenim okicama, kljunićem i listićem, cvetić sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama i vezenim licem — i novi dugi jastuk Dugonja od 100 cm, u četiri lika. Za stolicu, fotelju, sofu, krevet ili dečiju sobu, od %s.', 'cosypaw' ),
 						\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 					)
 				);
@@ -53,14 +61,14 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 		</div>
 	</section>
 
-	<?php if ( $cosypaw_pillows ) : ?>
+	<?php if ( $cosypaw_groups ) : ?>
 		<section class="section collection__group cloths-section" id="jastuci">
 			<?php
 			get_template_part(
 				'template-parts/swatch-cards',
 				null,
 				array(
-					'groups' => \Theme\Pillows::groups( $cosypaw_pillows ),
+					'groups' => $cosypaw_groups,
 					'id'     => 'jastuk',
 				)
 			);
@@ -91,6 +99,8 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 			<p><?php esc_html_e( 'Cuddle Puff jastuk je onaj koji svi požele da zagrle. Rebrasta plišana tkanina mekana je na dodir, a punašni, prošiveni oblik čini ga udobnim kao jastuk za stolicu ili fotelju — u kuhinji, za radnim stolom ili u dnevnoj sobi.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Biraš između pet oblika. Kružić ima talasaste ivice, a Kockasti je četvrtast, sa istim talasastim obrubom — oba imaju vezene okice, žuti kljunić, zeleni plišani listić i omčicu za kačenje. Cvetić je pravi mali cvet: punašne latice oko okrugle sredine u drugoj boji. Smajli je takođe cvet, ali mu je sredina vezeno nasmejano lice. Premium Šarenko je cvet sa pet šarenih latica i slatkim vezenim licem, sa srcem na stomaku. Kružić, Kockasti, Cvetić i Smajli dolaze u nežnim bojama — od roze i žute do sive, braon i lila.', 'cosypaw' ); ?></p>
+
+			<p><?php esc_html_e( 'Dugonja je dugi plišani jastuk od 100 cm za grljenje, spavanje na boku i odmor, od mekanog antialergijskog pliša koji zadržava oblik. Biraš svog drugara po glavici: lav Lavko, žuti mačak Žuća, sivi mačak Sivko ili roze prasence Slatkiš.', 'cosypaw' ); ?></p>
 
 			<p><?php esc_html_e( 'Kao ukrasni jastuk na sofi ili krevetu unose boju i osmeh, a u dečijoj sobi postaju plišani drug za maženje, čitanje i igru. Lepi su i kao poklon — za useljenje, rođendan ili bez povoda.', 'cosypaw' ); ?></p>
 
@@ -125,7 +135,7 @@ $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 			</p>
 		</div>
 
-		<?php if ( $cosypaw_pillows ) : ?>
+		<?php if ( $cosypaw_groups ) : ?>
 			<div class="seo-copy__cta">
 				<a href="#jastuci" class="btn btn--primary"><?php esc_html_e( 'Poruči Cuddle Puff jastuk', 'cosypaw' ); ?></a>
 			</div>

@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/stubs.php';
+require_once __DIR__ . '/stubs-variable.php';
 require_once dirname( __DIR__ ) . '/inc/Stock.php';
 require_once dirname( __DIR__ ) . '/inc/ProductLine.php';
 require_once dirname( __DIR__ ) . '/inc/Pillows.php';
@@ -321,5 +322,98 @@ final class DugonjaTest extends TestCase {
 		foreach ( $strings as $string ) {
 			$this->assertStringContainsString( "'" . str_replace( "'", "\\'", $string ) . "'", $map, $string );
 		}
+	}
+
+	/**
+	 * Stub what ensure() reaches for, with the half-made product of the first
+	 * run in the shop: the parent, recorded, with no variation.
+	 *
+	 * @param array<string,mixed> $meta Post meta, by key.
+	 * @return void
+	 */
+	private function half_made_product( array &$meta ): void {
+		\WC_Product_Variation::$saved = array();
+		\WC_Product_Variable::$saved  = array();
+		\WC_Product_Variable::$synced = array();
+		$this->options                = array( Dugonja::ID_OPTION => 382 );
+
+		Functions\stubs(
+			array(
+				'current_user_can'       => true,
+				'get_post'               => true,
+				'get_template_directory' => '/nonexistent-theme',
+			)
+		);
+		Functions\when( 'update_option' )->alias(
+			function ( string $name, $value ): bool {
+				$this->options[ $name ] = $value;
+				return true;
+			}
+		);
+		Functions\when( 'get_post_meta' )->alias( fn( int $id, string $key ) => $meta[ $key ] ?? '' );
+		Functions\when( 'update_post_meta' )->alias(
+			function ( int $id, string $key, $value ) use ( &$meta ): bool {
+				$meta[ $key ] = $value;
+				return true;
+			}
+		);
+		Functions\when( 'wc_get_product' )->alias(
+			fn( $id ) => 382 === (int) $id
+				? ( \WC_Product_Variable::$saved[382] ?? new \WC_Product_Variable( 382 ) )
+				: ( \WC_Product_Variation::$saved[ (int) $id ] ?? false )
+		);
+	}
+
+	/**
+	 * The product the first run left behind (the parent, nothing else) is
+	 * given a variation per friend at the launch price, in stock, and the
+	 * Yoast fields; the version is recorded.
+	 *
+	 * @return void
+	 */
+	public function test_a_half_made_product_is_completed(): void {
+		$meta = array();
+		$this->half_made_product( $meta );
+
+		( new Dugonja() )->maybe_run();
+
+		$saved = array_values( \WC_Product_Variation::$saved );
+		$this->assertCount( 4, $saved );
+		$this->assertSame(
+			array_keys( Dugonja::FRIENDS ),
+			array_map( static fn( $v ): string => $v->props['attributes'][ Dugonja::ATTRIBUTE_KEY ], $saved )
+		);
+		foreach ( $saved as $variation ) {
+			$this->assertSame( 382, $variation->props['parent_id'] );
+			$this->assertSame( '4490', $variation->props['regular_price'] );
+			$this->assertSame( 'instock', $variation->props['stock_status'] );
+		}
+
+		$this->assertSame( array( 382 ), \WC_Product_Variable::$synced );
+		$this->assertSame( Dugonja::SEO_TITLE, $meta['_yoast_wpseo_title'] );
+		$this->assertSame( Dugonja::VERSION, $this->options['cosypaw_dugonja_version'] );
+	}
+
+	/**
+	 * Run again, nothing is added twice; a friend the shop already has keeps
+	 * its variation, and a Yoast title typed in wp-admin stays.
+	 *
+	 * @return void
+	 */
+	public function test_completing_never_adds_twice(): void {
+		$meta = array( '_yoast_wpseo_title' => 'Naslov iz wp-admina' );
+		$this->half_made_product( $meta );
+
+		$lavko = new \WC_Product_Variation();
+		$lavko->set_attributes( array( Dugonja::ATTRIBUTE_KEY => 'Lavko' ) );
+		$lavko->save();
+
+		$dugonja = new Dugonja();
+		$this->assertSame( 382, $dugonja->ensure() );
+		$this->assertCount( 4, \WC_Product_Variation::$saved );
+
+		$dugonja->ensure();
+		$this->assertCount( 4, \WC_Product_Variation::$saved );
+		$this->assertSame( 'Naslov iz wp-admina', $meta['_yoast_wpseo_title'] );
 	}
 }

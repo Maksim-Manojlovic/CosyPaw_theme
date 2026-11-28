@@ -2,9 +2,9 @@
 /**
  * Cuddle Puff jastuci — "Cuddle Puff jastuci sa okicama".
  *
- * The pillows' own page: one card per shape (Kružić, Kockasti, Cvetić…) with
- * its colours as swatches, and last the long Dugonja with its four friends'
- * heads, up top where they can be bought, then copy for what
+ * The pillows' own page: first the long Dugonja with its four friends' heads,
+ * then one card per shape (Kružić, Kockasti, Cvetić…) with its colours as
+ * swatches, up top where they can be bought, then copy for what
  * people search for (jastuk za stolicu, ukrasni jastuk, plišani jastuk, jastuk
  * za dečiju sobu…). It says only what the photographs show — no size or fibre
  * content until the shop has them to state.
@@ -27,11 +27,12 @@ get_header();
 $cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
 $cosypaw_long    = \Theme\Pages::url( 'dugi' );
 
-// The pillows' shapes, then the Dugonja (one variable product) as one more card.
+// The Dugonja (one variable product, the dearest pillow and the newest) leads,
+// opening on its group photograph; the pillows' shapes follow.
 $cosypaw_groups  = $cosypaw_pillows ? \Theme\Pillows::groups( $cosypaw_pillows ) : array();
 $cosypaw_dugonja = class_exists( '\Theme\Dugonja' ) ? \Theme\Dugonja::group() : null;
 if ( null !== $cosypaw_dugonja ) {
-	$cosypaw_groups[] = $cosypaw_dugonja;
+	array_unshift( $cosypaw_groups, $cosypaw_dugonja );
 }
 ?>
 

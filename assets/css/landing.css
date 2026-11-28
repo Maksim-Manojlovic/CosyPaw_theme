@@ -2140,6 +2140,33 @@ a.testimonial__meta:focus-visible {
 	margin-bottom: 8px;
 }
 
+/* A card that opens on a cover (the Dugonja's group photograph) before any
+   swatch is picked. Without :has() it simply stacks after the variants. */
+.swatch-card__cover {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	width: 100%;
+}
+
+/* "Novo" between the cover photograph and the name, in the shop's accent:
+   on the photograph it would cover the promo picture's own headline. */
+.swatch-card__badge {
+	order: 1;
+	margin: -2px 0 0 4px;
+	padding: 5px 11px;
+	border-radius: var(--radius-pill);
+	background: var(--clay);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 13px;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
 .swatch-card__name {
 	order: 1;
 	padding-inline: 4px;
@@ -2290,6 +2317,15 @@ a.testimonial__meta:focus-visible {
 	.swatch-card:has(.swatch:nth-of-type(7) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(7),
 	.swatch-card:has(.swatch:nth-of-type(8) > .swatch__input:checked) > .swatch-card__variant:nth-of-type(8) {
 		display: contents;
+	}
+
+	/* The cover while nothing is picked; gone once a swatch is. */
+	.swatch-card:has(.swatch__input) > .swatch-card__cover {
+		display: contents;
+	}
+
+	.swatch-card:has(.swatch__input:checked) > .swatch-card__cover {
+		display: none;
 	}
 }
 

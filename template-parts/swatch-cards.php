@@ -11,7 +11,11 @@
  *
  * Shared by the front page sections and the product line pages. A group may
  * bring its own `legend` (the Dugonja's "Izaberi drugara"), and a variant its
- * `head`, a picture shown in place of its colour dot.
+ * `head`, a picture shown in place of its colour dot. A group with a `cover`
+ * (the Dugonja's group photograph) opens on it with no swatch picked; its
+ * button leads to the product page, and picking a swatch shows that variant
+ * in its place. The cover comes after the variants in the markup, so the
+ * variants keep the positions the `:has()` rules count.
  *
  * @package CosyPaw
  *
@@ -50,17 +54,20 @@ $cosypaw_layout = array(
 		$cosypaw_variants = (array) $cosypaw_group['variants'];
 		$cosypaw_name     = $cosypaw_prefix . '-' . sanitize_key( (string) $cosypaw_group['key'] );
 
+		$cosypaw_cover = ! empty( $cosypaw_group['cover'] ) ? (array) $cosypaw_group['cover'] : array();
+
 		// The card opens on the first colour that can be bought; a sold-out
-		// one is still a swatch, and shows "Rasprodato" when picked.
-		$cosypaw_open = 0;
-		foreach ( $cosypaw_variants as $cosypaw_i => $cosypaw_v ) {
+		// one is still a swatch, and shows "Rasprodato" when picked. A card
+		// with a cover opens on the cover, nothing picked.
+		$cosypaw_open = $cosypaw_cover ? -1 : 0;
+		foreach ( $cosypaw_cover ? array() : $cosypaw_variants as $cosypaw_i => $cosypaw_v ) {
 			if ( empty( $cosypaw_v['sold_out'] ) ) {
 				$cosypaw_open = $cosypaw_i;
 				break;
 			}
 		}
 		?>
-		<div class="swatch-card">
+		<div class="swatch-card<?php echo $cosypaw_cover ? ' swatch-card--cover' : ''; ?>">
 			<?php if ( count( $cosypaw_variants ) > 1 ) : ?>
 				<fieldset class="swatch-card__swatches">
 					<legend class="swatch-card__legend"><?php echo esc_html( (string) ( $cosypaw_group['legend'] ?? __( 'Izaberi boju', 'cosypaw' ) ) ); ?></legend>
@@ -132,6 +139,38 @@ $cosypaw_layout = array(
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
+
+			<?php if ( $cosypaw_cover ) : ?>
+				<div class="swatch-card__cover">
+					<a class="cloth-card__media swatch-card__media" href="<?php echo esc_url( (string) $cosypaw_cover['permalink'] ); ?>" aria-hidden="true" tabindex="-1">
+						<?php
+						if ( ! empty( $cosypaw_cover['image_id'] ) ) {
+							echo wp_get_attachment_image(
+								(int) $cosypaw_cover['image_id'],
+								'woocommerce_single',
+								false,
+								array(
+									'class'    => 'cloth-card__img',
+									'loading'  => 'lazy',
+									'decoding' => 'async',
+									'sizes'    => '(max-width: 560px) calc(100vw - 44px), 360px',
+								)
+							);
+						}
+						?>
+					</a>
+					<?php
+					// Under the photograph, not on it: the promo photograph carries
+					// its own headline in the top corner.
+					if ( ! empty( $cosypaw_cover['badge'] ) ) :
+						?>
+						<span class="swatch-card__badge"><?php echo esc_html( (string) $cosypaw_cover['badge'] ); ?></span>
+					<?php endif; ?>
+					<a class="cloth-card__name swatch-card__name" href="<?php echo esc_url( (string) $cosypaw_cover['permalink'] ); ?>"><?php echo esc_html( (string) $cosypaw_cover['name'] ); ?></a>
+					<span class="cloth-card__price swatch-card__price"><?php echo esc_html( \Theme\Catalog::format_price( (int) $cosypaw_cover['price'] ) ); ?></span>
+					<a href="<?php echo esc_url( (string) $cosypaw_cover['permalink'] ); ?>" class="btn btn--primary cloth-card__buy swatch-card__buy"><?php echo esc_html( (string) $cosypaw_cover['button'] ); ?></a>
+				</div>
+			<?php endif; ?>
 		</div>
 	<?php endforeach; ?>
 </div>

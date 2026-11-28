@@ -773,8 +773,8 @@ msgstr "Всё о полотенцах"
 msgid "Cuddle Puff jastuci"
 msgstr "Подушки Cuddle Puff"
 
-msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu."
-msgstr "Пухлые плюшевые подушки: круглые и квадратные с вышитыми глазками и листиком, цветочки с цветными лепестками, улыбчивый «Смайлик» и премиальный «Разноцветик» с разноцветными лепестками. Для стула, кресла, дивана или детской — от %s за штуку."
+msgid "Novo: dugi plišani jastuk Dugonja od 100 cm — lav, dva mačka ili prasence, za grljenje i spavanje. Uz njega punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko. Za stolicu, fotelju, sofu, krevet ili dečiju sobu — od %s po komadu."
+msgstr "Новинка: длинная плюшевая подушка «Длинныш» 100 см — львёнок, два котика или поросёнок, чтобы обнимать и спать. А рядом — пухлые плюшевые подушки: круглые и квадратные с вышитыми глазками и листиком, цветочки с цветными лепестками, улыбчивый «Смайлик» и премиальный «Разноцветик». Для стула, кресла, дивана, кровати или детской — от %s за штуку."
 
 msgid "Sve o Cuddle Puff jastucima"
 msgstr "Всё о подушках Cuddle Puff"

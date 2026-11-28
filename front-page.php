@@ -471,10 +471,17 @@ $hero_bf = class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommer
 	 *
 	 * One card per shape, the colours as swatches on it — twelve cards of the
 	 * same pillow in different colours would bury the three shapes. Printed
-	 * only while on sale (\Theme\Pillows).
+	 * only while on sale (\Theme\Pillows). The Dugonja, the newest and the
+	 * dearest, leads on its group photograph, its friends picked by their
+	 * heads (\Theme\Dugonja).
 	 */
 	$cosypaw_pillows = class_exists( '\Theme\Pillows' ) ? \Theme\Pillows::products() : array();
-	if ( $cosypaw_pillows ) :
+	$cosypaw_groups  = $cosypaw_pillows ? \Theme\Pillows::groups( $cosypaw_pillows ) : array();
+	$cosypaw_dugonja = class_exists( '\Theme\Dugonja' ) ? \Theme\Dugonja::group() : null;
+	if ( null !== $cosypaw_dugonja ) {
+		array_unshift( $cosypaw_groups, $cosypaw_dugonja );
+	}
+	if ( $cosypaw_groups ) :
 		$cosypaw_pillows_page = \Theme\Pages::url( 'jastuci' );
 		?>
 		<section id="cuddle-puff-jastuci" class="section cloths-section">
@@ -486,7 +493,7 @@ $hero_bf = class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommer
 					echo esc_html(
 						sprintf(
 							/* translators: %s: formatted price of one pillow. */
-							__( 'Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu.', 'cosypaw' ),
+							__( 'Novo: dugi plišani jastuk Dugonja od 100 cm — lav, dva mačka ili prasence, za grljenje i spavanje. Uz njega punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko. Za stolicu, fotelju, sofu, krevet ili dečiju sobu — od %s po komadu.', 'cosypaw' ),
 							\Theme\Catalog::format_price( \Theme\Pillows::from_price( $cosypaw_pillows ) )
 						)
 					);
@@ -499,7 +506,7 @@ $hero_bf = class_exists( \Theme\BlackFriday::class ) && class_exists( 'WooCommer
 				'template-parts/swatch-cards',
 				null,
 				array(
-					'groups' => \Theme\Pillows::groups( $cosypaw_pillows ),
+					'groups' => $cosypaw_groups,
 					'id'     => 'jastuk',
 				)
 			);

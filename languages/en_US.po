@@ -773,8 +773,8 @@ msgstr "All about the towels"
 msgid "Cuddle Puff jastuci"
 msgstr "Cuddle Puff pillows"
 
-msgid "Punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko sa šarenim laticama. Za stolicu, fotelju, sofu ili dečiju sobu — od %s po komadu."
-msgstr "Plump plush pillows: round and square ones with embroidered eyes and a leaf, flowers with colourful petals, the smiling Smajli and the premium Šarenko with rainbow petals. For a chair, an armchair, the sofa or a child’s room — from %s each."
+msgid "Novo: dugi plišani jastuk Dugonja od 100 cm — lav, dva mačka ili prasence, za grljenje i spavanje. Uz njega punašni plišani jastuci: kružići i kockasti sa vezenim okicama i listićem, cvetići sa laticama u boji, nasmejani Smajli i premium Šarenko. Za stolicu, fotelju, sofu, krevet ili dečiju sobu — od %s po komadu."
+msgstr "New: the 100 cm long plush pillow Dugonja — a lion, two cats or a piglet, for hugging and sleeping. Alongside it, plump plush pillows: round and square ones with embroidered eyes and a leaf, flowers with colourful petals, the smiling Smajli and the premium Šarenko. For a chair, an armchair, the sofa, the bed or a child’s room — from %s each."
 
 msgid "Sve o Cuddle Puff jastucima"
 msgstr "All about the Cuddle Puff pillows"

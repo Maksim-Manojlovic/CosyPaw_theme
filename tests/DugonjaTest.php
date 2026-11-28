@@ -208,6 +208,28 @@ final class DugonjaTest extends TestCase {
 	}
 
 	/**
+	 * The card opens on the group photograph: the parent's image, the price
+	 * of a friend on sale, the product page, a "Novo" badge and a button that
+	 * leads to the page to pick a friend on.
+	 *
+	 * @return void
+	 */
+	public function test_the_card_opens_on_the_group_photograph(): void {
+		$this->parent( array( 41, 42 ) )->image_id = 300;
+		$this->variation( 41, 'Lavko', true, false );
+		$this->variation( 42, 'Žuća' );
+
+		$cover = Dugonja::group()['cover'];
+
+		$this->assertSame( 300, $cover['image_id'] );
+		$this->assertSame( Dugonja::NAME, $cover['name'] );
+		$this->assertSame( 4490, $cover['price'] );
+		$this->assertSame( 'https://cosypaw.test/proizvod/dugonja/', $cover['permalink'] );
+		$this->assertSame( 'Novo', $cover['badge'] );
+		$this->assertSame( 'Izaberi drugara', $cover['button'] );
+	}
+
+	/**
 	 * No card before the product exists, while it is a draft, or with nothing
 	 * to sell.
 	 *

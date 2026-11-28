@@ -243,7 +243,11 @@ final class Dugonja {
 	 * Null until the product exists, or while it is not published or has no
 	 * friend to sell, so no card is printed for it.
 	 *
-	 * @return array{key:string,legend:string,variants:array<int,array<string,mixed>>}|null
+	 * The group also carries a `cover`: the group photograph the card opens
+	 * on before a friend is picked, with the name, the price, the product
+	 * page and a "Novo" badge.
+	 *
+	 * @return array{key:string,legend:string,variants:array<int,array<string,mixed>>,cover:array<string,mixed>}|null
 	 */
 	public static function group(): ?array {
 		if ( ! function_exists( 'wc_get_product' ) ) {
@@ -290,10 +294,24 @@ final class Dugonja {
 			return null;
 		}
 
+		// The card opens on the group photograph, not on one friend: the
+		// cheapest friend's price (they are one price at launch), the page to
+		// pick one on, and a "Novo" badge.
+		$on_sale = array_filter( $variants, static fn( array $v ): bool => empty( $v['sold_out'] ) );
+		$prices  = array_column( $on_sale ? $on_sale : $variants, 'price' );
+
 		return array(
 			'key'      => self::GROUP,
 			'legend'   => __( 'Izaberi drugara', 'cosypaw' ),
 			'variants' => $variants,
+			'cover'    => array(
+				'name'      => $name,
+				'price'     => (int) min( $prices ),
+				'permalink' => $permalink,
+				'image_id'  => (int) $parent->get_image_id(),
+				'badge'     => __( 'Novo', 'cosypaw' ),
+				'button'    => __( 'Izaberi drugara', 'cosypaw' ),
+			),
 		);
 	}
 
